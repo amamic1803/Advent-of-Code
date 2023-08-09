@@ -91,3 +91,13 @@ fn year2015_day09_part1() {
 fn year2015_day09_part2() {
     run_test(2015, 9, 2, "804");
 }
+
+#[test]
+fn year2015_day10_part1() {
+    run_test(2015, 10, 1, "492982");
+}
+
+#[test]
+fn year2015_day10_part2() {
+    run_test(2015, 10, 2, "6989950");
+}
