@@ -10,3 +10,4 @@ authors = ["Antonio Mamić <antoniomamic007@gmail.com>"]
 [dependencies]
 clap = { version = "4.3.19", features = ["cargo"] }
 md5 = "0.7.0"
+serde_json = "1.0.104"

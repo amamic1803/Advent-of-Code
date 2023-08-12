@@ -111,3 +111,13 @@ fn year2015_day11_part1() {
 fn year2015_day11_part2() {
     run_test(2015, 11, 2, "cqkaabcc");
 }
+
+#[test]
+fn year2015_day12_part1() {
+    run_test(2015, 12, 1, "111754");
+}
+
+#[test]
+fn year2015_day12_part2() {
+    run_test(2015, 12, 2, "65402");
+}
