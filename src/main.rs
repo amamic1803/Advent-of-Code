@@ -3,6 +3,7 @@ use std::path::PathBuf;
 
 use clap::{Arg, ArgAction, command, value_parser};
 
+mod shared;
 mod challenges;
 use challenges::challenges;
 
