@@ -1,4 +1,5 @@
 use crate::shared::structures::Day;
+use crate::shared::graph::Graph;
 use std::collections::HashMap;
 
 pub fn day_09() -> Day {
@@ -13,177 +14,42 @@ pub fn day_09() -> Day {
 
 
 fn part1(input: &str) -> String {
-    let mut graph = Graph::new(input);
-    format!("{}", graph.shortest_connecting_path())
+    parse_input(input).path_min().0.to_string()
 }
 
 fn part2(input: &str) -> String {
-    let mut graph = Graph::new(input);
-    format!("{}", graph.longest_connecting_path())
+    parse_input(input).path_max().0.to_string()
 }
 
+type Edge<'a> = (&'a str, &'a str, usize);
 
-struct Graph<'a> {
-    nodes: Vec<Node<'a>>,
-    edges: Edges<'a>,
-    memoized_paths: HashMap<Vec<Node<'a>>, usize>,
-    temp_vec: Vec<Node<'a>>,
-}
+fn parse_input(input: &str) -> Graph {
+    let mut cities: HashMap<&str, usize> = HashMap::new();
+    let mut city_index: usize = 0;
+    let mut edges: Vec<Edge> = Vec::new();
 
-impl<'a> Graph <'a> {
-    fn new(input: &'a str) -> Self {
-        let mut nodes: Vec<Node> = Vec::new();
-        let mut edges: Edges = Edges::new();
-
-        for line in input.trim().lines() {
-            let words: Vec<&str> = line.split_whitespace().collect();
-            let from = Node::new(words[0]);
-            let to = Node::new(words[2]);
-            let distance = words[4].parse::<usize>().unwrap();
-
-            if !nodes.contains(&from) {
-                nodes.push(from);
-            }
-            if !nodes.contains(&to) {
-                nodes.push(to);
-            }
-            edges.add_edge(from, to, distance);
+    for line in input.trim().lines() {
+        let line: Vec<&str> = line.split_whitespace().collect();
+        let city1 = line[0];
+        let city2 = line[2];
+        let distance = line[4].parse::<usize>().unwrap();
+        edges.push((city1, city2, distance));
+        if !cities.contains_key(city1) {
+            cities.insert(city1, city_index);
+            city_index += 1;
         }
-
-        Self {
-            nodes,
-            edges,
-            memoized_paths: HashMap::new(),
-            temp_vec: Vec::new(),
+        if !cities.contains_key(city2) {
+            cities.insert(city2, city_index);
+            city_index += 1;
         }
     }
 
-    fn shortest_connecting_path(&mut self) -> usize {
-        let mut shortest_path: usize = usize::MAX;
-        for i in 0..(self.nodes.len() - 1) {
-            for j in (i + 1)..self.nodes.len() {
-                self.memoized_paths.clear();
-                let mut temp_path = vec![self.nodes[i]];
-                let distance = self.shortest_connecting_path_recursive(&mut temp_path, self.nodes[j]);
-                if distance < shortest_path {
-                    shortest_path = distance;
-                }
-            }
-        }
-        shortest_path
+    let mut graph = Graph::new(city_index);
+
+    for edge in edges {
+        graph.set_edge(cities[edge.0], cities[edge.1], isize::try_from(edge.2).unwrap());
+        graph.set_edge(cities[edge.1], cities[edge.0], isize::try_from(edge.2).unwrap());
     }
 
-    fn shortest_connecting_path_recursive(&mut self, temp_path: &mut Vec<Node<'a>>, end: Node<'a>) -> usize {
-        self.temp_vec = temp_path.clone();
-        self.temp_vec.sort();
-        if let Some(distance) = self.memoized_paths.get(&self.temp_vec) {
-            return *distance;
-        }
-
-        if self.nodes.len() - temp_path.len() == 1 {
-            let distance = self.edges.get_edge(temp_path[temp_path.len() - 1], end).unwrap();
-            self.memoized_paths.insert(temp_path.clone(), distance);
-            return distance;
-        }
-
-        let mut shortest_path: usize = usize::MAX;
-        for i in 0..self.nodes.len() {
-            if !temp_path.contains(&self.nodes[i]) && self.nodes[i] != end {
-                temp_path.push(self.nodes[i]);
-                let distance = self.shortest_connecting_path_recursive(temp_path, end) + self.edges.get_edge(temp_path[temp_path.len() - 2], temp_path[temp_path.len() - 1]).unwrap();
-                temp_path.pop();
-                if distance < shortest_path {
-                    shortest_path = distance;
-                }
-            }
-        }
-        self.memoized_paths.insert(temp_path.clone(), shortest_path);
-
-        shortest_path
-    }
-
-    fn longest_connecting_path(&mut self) -> usize {
-        let mut longest_path: usize = 0;
-        for i in 0..(self.nodes.len() - 1) {
-            for j in (i + 1)..self.nodes.len() {
-                self.memoized_paths.clear();
-                let mut temp_path = vec![self.nodes[i]];
-                let distance = self.longest_connecting_path_recursive(&mut temp_path, self.nodes[j]);
-                if distance > longest_path {
-                    longest_path = distance;
-                }
-            }
-        }
-        longest_path
-    }
-
-    fn longest_connecting_path_recursive(&mut self, temp_path: &mut Vec<Node<'a>>, end: Node<'a>) -> usize {
-        self.temp_vec = temp_path.clone();
-        self.temp_vec.sort();
-        if let Some(distance) = self.memoized_paths.get(&self.temp_vec) {
-            return *distance;
-        }
-
-        if self.nodes.len() - temp_path.len() == 1 {
-            let distance = self.edges.get_edge(temp_path[temp_path.len() - 1], end).unwrap();
-            self.memoized_paths.insert(temp_path.clone(), distance);
-            return distance;
-        }
-
-        let mut longest_path: usize = 0;
-        for i in 0..self.nodes.len() {
-            if !temp_path.contains(&self.nodes[i]) && self.nodes[i] != end {
-                temp_path.push(self.nodes[i]);
-                let distance = self.longest_connecting_path_recursive(temp_path, end) + self.edges.get_edge(temp_path[temp_path.len() - 2], temp_path[temp_path.len() - 1]).unwrap();
-                temp_path.pop();
-                if distance > longest_path {
-                    longest_path = distance;
-                }
-            }
-        }
-        self.memoized_paths.insert(temp_path.clone(), longest_path);
-
-        longest_path
-    }
-}
-
-
-#[derive(Copy, Clone, Hash, Eq, PartialEq, Debug, Ord, PartialOrd)]
-struct Node<'a> {
-    name: &'a str,
-}
-
-impl<'a> Node<'a> {
-    fn new(name: &'a str) -> Self {
-        Self {
-            name,
-        }
-    }
-}
-
-
-#[derive(Clone, Eq, PartialEq, Debug)]
-struct Edges<'a> {
-    edges: HashMap<(Node<'a>, Node<'a>), usize>,
-}
-
-impl<'a> Edges<'a> {
-    fn new() -> Self {
-        Self {
-            edges: HashMap::new(),
-        }
-    }
-
-    fn add_edge(&mut self, from: Node<'a>, to: Node<'a>, distance: usize) {
-        if !(self.edges.contains_key(&(from, to)) || self.edges.contains_key(&(to, from))) {
-            self.edges.insert((from, to), distance);
-        }
-    }
-
-    fn get_edge(&self, from: Node<'a>, to: Node<'a>) -> Option<usize> {
-        match self.edges.get(&(from, to)) {
-            Some(distance) => Some(*distance),
-            None => self.edges.get(&(to, from)).copied(),
-        }
-    }
+    graph
 }

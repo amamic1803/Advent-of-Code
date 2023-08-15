@@ -1,16 +1,18 @@
 //! A module for solving Graph problems.
 //!
 //! *List of problems:*
-//! - Travelling Salesman Problem (TSP) = the shortest Hamiltonian circle in a weighted graph
+//! - Shortest Hamiltonian circle (TSP)
+//! - Longest Hamiltonian circle
+//! - Shortest Hamiltonian path
+//! - Longest Hamiltonian path
 
-#![allow(dead_code)]
 
 use std::cmp::{Ordering, Reverse};
 use std::collections::BinaryHeap;
 
 
 #[derive(Clone)]
-pub(crate) struct Graph {
+pub struct Graph {
     vertices: usize,
     edges: Vec<Vec<Option<isize>>>,
 }
@@ -19,7 +21,7 @@ impl Graph {
     /// Instantiate new graph with given number of vertices.
     /// Vertices are indexed from 0 to `vertices - 1`.
     /// All edges are initialized with weight 0.
-    pub(crate) fn new(vertices: usize) -> Self {
+    pub fn new(vertices: usize) -> Self {
         assert!(vertices > 0);
         let mut edges = vec![vec![Some(0); vertices]; vertices];
         #[allow(clippy::needless_range_loop)]
@@ -34,19 +36,19 @@ impl Graph {
     }
 
     /// Set edge weight.
-    pub(crate) fn set_edge(&mut self, from: usize, to: usize, weight: isize) {
+    pub fn set_edge(&mut self, from: usize, to: usize, weight: isize) {
         assert_ne!(from, to);
         self.edges[from][to] = Some(weight);
     }
 
     /// Get edge weight.
-    pub(crate) fn get_edge(&self, from: usize, to: usize) -> isize {
+    pub fn get_edge(&self, from: usize, to: usize) -> isize {
         assert_ne!(from, to);
         self.edges[from][to].unwrap()
     }
 
     /// Find shortest Hamiltonian circle.
-    pub(crate) fn circle_min(&self, start_point: usize) -> (isize, Vec<usize>) {
+    pub fn circle_min(&self, start_point: usize) -> (isize, Vec<usize>) {
         assert!(start_point < self.vertices);
 
         let mut min_cost = isize::MAX;
@@ -91,7 +93,7 @@ impl Graph {
     }
 
     /// Find longest Hamiltonian circle.
-    pub(crate) fn circle_max(&self, start_point: usize) -> (isize, Vec<usize>) {
+    pub fn circle_max(&self, start_point: usize) -> (isize, Vec<usize>) {
         assert!(start_point < self.vertices);
 
         let mut max_cost = isize::MIN;
@@ -136,7 +138,7 @@ impl Graph {
     }
 
     /// Find shortest Hamiltonian path.
-    pub(crate) fn path_min(&self) -> (isize, Vec<usize>) {
+    pub fn path_min(&self) -> (isize, Vec<usize>) {
         let mut new_graph = self.clone();
         new_graph.vertices += 1;
         for row in &mut new_graph.edges {
@@ -152,7 +154,7 @@ impl Graph {
     }
 
     /// Find longest Hamiltonian path.
-    pub(crate) fn path_max(&self) -> (isize, Vec<usize>) {
+    pub fn path_max(&self) -> (isize, Vec<usize>) {
         let mut new_graph = self.clone();
         new_graph.vertices += 1;
         for row in &mut new_graph.edges {
