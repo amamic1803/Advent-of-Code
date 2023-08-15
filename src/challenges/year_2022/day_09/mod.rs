@@ -1,7 +1,8 @@
-use crate::challenges::Day;
+use crate::shared::structures::Day;
 
-pub(crate) fn day_09() -> Day {
+pub fn day_09() -> Day {
     Day::new(
+        9,
         include_str!("text.txt"),
         include_str!("input.txt"),
         part1,
@@ -10,7 +11,7 @@ pub(crate) fn day_09() -> Day {
 }
 
 
-fn part1(input: &str) {
+fn part1(input: &str) -> String {
     let mut head_pos: [i64; 2] = [0; 2];
     let mut tail_pos: [i64; 2] = [0; 2];
     let mut visited: Vec<[i64; 2]> = vec![tail_pos];
@@ -66,10 +67,10 @@ fn part1(input: &str) {
             steps -= 1;
         }
     }
-    println!("{}", visited.len());
+    visited.len().to_string()
 }
 
-fn part2(input: &str) {
+fn part2(input: &str) -> String {
     let mut knot_pos: [[i64; 2]; 10] = [[0; 2]; 10];
     let mut visited: Vec<[i64; 2]> = vec![knot_pos[0]];
     for command in input.trim().lines() {
@@ -131,5 +132,5 @@ fn part2(input: &str) {
             steps -= 1;
         }
     }
-    println!("{}", visited.len());
+    visited.len().to_string()
 }

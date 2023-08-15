@@ -1,7 +1,8 @@
-use crate::challenges::Day;
+use crate::shared::structures::Day;
 
-pub(crate) fn day_11() -> Day {
+pub fn day_11() -> Day {
     Day::new (
+        11,
         include_str!("text.txt"),
         include_str!("input.txt"),
         part1,
@@ -10,14 +11,12 @@ pub(crate) fn day_11() -> Day {
 }
 
 
-fn part1(input: &str) {
-    println!("{}", next_password(input.trim()));
+fn part1(input: &str) -> String {
+    next_password(input.trim())
 }
 
-fn part2(input: &str) {
-    let next1 = next_password(input.trim());
-    let next2 = next_password(&next1);
-    println!("{}", next2);
+fn part2(input: &str) -> String {
+    next_password(&next_password(input.trim()))
 }
 
 

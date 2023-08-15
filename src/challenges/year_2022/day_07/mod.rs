@@ -1,7 +1,8 @@
-use crate::challenges::Day;
+use crate::shared::structures::Day;
 
-pub(crate) fn day_07() -> Day {
+pub fn day_07() -> Day {
     Day::new(
+        7,
         include_str!("text.txt"),
         include_str!("input.txt"),
         part1,
@@ -10,19 +11,19 @@ pub(crate) fn day_07() -> Day {
 }
 
 
-fn part1(input: &str) {
+fn part1(input: &str) -> String {
     let base_dir = parse_input(input);
     let mut total_size = 0;
     part1_recursion(&base_dir, &mut total_size);
-    println!("{}", total_size);
+    total_size.to_string()
 }
 
-fn part2(input: &str) {
+fn part2(input: &str) -> String {
     let base_dir = parse_input(input);
     let needed_space: u64 = 30_000_000 - (70_000_000 - base_dir.size());
     let mut min_del: u64 = 70_000_001;
     part2_recursion(&base_dir, needed_space, &mut min_del);
-    println!("{}", min_del);
+    min_del.to_string()
 }
 
 #[derive(Debug)]

@@ -1,8 +1,9 @@
 #![allow(clippy::needless_range_loop)]
-use crate::challenges::Day;
+use crate::shared::structures::Day;
 
-pub(crate) fn day_06() -> Day {
+pub fn day_06() -> Day {
     Day::new (
+        6,
         include_str!("text.txt"),
         include_str!("input.txt"),
         part1,
@@ -11,7 +12,7 @@ pub(crate) fn day_06() -> Day {
 }
 
 
-fn part1(input: &str) {
+fn part1(input: &str) -> String {
     let instructions = parse_input(input);
     let mut grid = vec![vec![false; 1000]; 1000];
 
@@ -19,10 +20,10 @@ fn part1(input: &str) {
         execute_instruction(&mut grid, ins);
     }
 
-    println!("{}", lights_on(&grid));
+    format!("{}", lights_on(&grid))
 }
 
-fn part2(input: &str) {
+fn part2(input: &str) -> String {
     let instructions = parse_input(input);
     let mut grid: Vec<Vec<isize>> = vec![vec![0; 1000]; 1000];
 
@@ -30,7 +31,7 @@ fn part2(input: &str) {
         execute_instruction2(&mut grid, ins);
     }
 
-    println!("{}", brightness(&grid));
+    format!("{}", brightness(&grid))
 }
 
 

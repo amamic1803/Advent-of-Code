@@ -1,7 +1,8 @@
-use crate::challenges::Day;
+use crate::shared::structures::Day;
 
-pub(crate) fn day_03() -> Day {
+pub fn day_03() -> Day {
     Day::new(
+        3,
         include_str!("text.txt"),
         include_str!("input.txt"),
         part1,
@@ -10,7 +11,7 @@ pub(crate) fn day_03() -> Day {
 }
 
 
-fn part1(input: &str) {
+fn part1(input: &str) -> String {
     let mut result: u64 = 0;
     for line in input.lines() {
         if !line.is_empty() {
@@ -23,10 +24,10 @@ fn part1(input: &str) {
             }
         }
     }
-    println!("{}", result);
+    result.to_string()
 }
 
-fn part2(input: &str) {
+fn part2(input: &str) -> String {
     let mut result: u64 = 0;
     let mut curr_group_members: Vec<&str> = vec![];
     for line in input.lines() {
@@ -50,7 +51,7 @@ fn part2(input: &str) {
             }
         }
     }
-    println!("{}", result);
+    result.to_string()
 }
 
 const ALPHABET: &str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";

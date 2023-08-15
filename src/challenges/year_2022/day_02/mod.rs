@@ -1,7 +1,8 @@
-use crate::challenges::Day;
+use crate::shared::structures::Day;
 
-pub(crate) fn day_02() -> Day {
+pub fn day_02() -> Day {
     Day::new(
+        2,
         include_str!("text.txt"),
         include_str!("input.txt"),
         part1,
@@ -10,7 +11,7 @@ pub(crate) fn day_02() -> Day {
 }
 
 
-fn part1(input: &str) {
+fn part1(input: &str) -> String {
     let mut score: u32 = 0;
     let mut game_values: Vec<&str>;
 
@@ -34,10 +35,10 @@ fn part1(input: &str) {
             }
         }
     }
-    println!("{}", score);
+    score.to_string()
 }
 
-fn part2(input: &str) {
+fn part2(input: &str) -> String {
     let mut score: u32 = 0;
     let mut game_values: Vec<&str>;
 
@@ -79,5 +80,5 @@ fn part2(input: &str) {
             };
         }
     }
-    println!("{}", score);
+    score.to_string()
 }

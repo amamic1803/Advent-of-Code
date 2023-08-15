@@ -1,7 +1,8 @@
-use crate::challenges::Day;
+use crate::shared::structures::Day;
 
-pub(crate) fn day_01() -> Day {
+pub fn day_01() -> Day {
     Day::new(
+        1,
         include_str!("text.txt"),
         include_str!("input.txt"),
         part1,
@@ -10,7 +11,7 @@ pub(crate) fn day_01() -> Day {
 }
 
 
-fn part1(input: &str) {
+fn part1(input: &str) -> String {
     let mut sum: usize = 0;
 
     for num in input.trim().lines() {
@@ -18,10 +19,10 @@ fn part1(input: &str) {
         sum = sum.saturating_sub(2);
     }
 
-    println!("{}", sum);
+    sum.to_string()
 }
 
-fn part2(input: &str) {
+fn part2(input: &str) -> String {
     let mut sum: usize = 0;
 
     for num in input.trim().lines() {
@@ -29,7 +30,7 @@ fn part2(input: &str) {
         sum += module_fuel + fuel_for_fuel(module_fuel);
     }
 
-    println!("{}", sum);
+    sum.to_string()
 }
 
 fn fuel_for_fuel(mut fuel: usize) -> usize {

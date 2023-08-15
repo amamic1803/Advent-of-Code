@@ -1,7 +1,8 @@
-use crate::challenges::Day;
+use crate::shared::structures::Day;
 
-pub(crate) fn day_08() -> Day {
+pub fn day_08() -> Day {
     Day::new (
+        8,
         include_str!("text.txt"),
         include_str!("input.txt"),
         part1,
@@ -10,22 +11,22 @@ pub(crate) fn day_08() -> Day {
 }
 
 
-fn part1(input: &str) {
+fn part1(input: &str) -> String {
     let mut result: usize = 0;
     for line in input.trim().lines() {
         let (literal_len, memory_len) = string_len(line.trim());
         result += literal_len - memory_len;
     }
-    println!("{}", result);
+    format!("{}", result)
 }
 
-fn part2(input: &str) {
+fn part2(input: &str) -> String {
     let mut result: usize = 0;
     for line in input.trim().lines() {
         let (literal_len, memory_len) = encode_len(line.trim());
         result += literal_len - memory_len;
     }
-    println!("{}", result);
+    format!("{}", result)
 }
 
 fn string_len(string: &str) -> (usize, usize) {

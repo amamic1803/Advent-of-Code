@@ -1,7 +1,8 @@
-use crate::challenges::Day;
+use crate::shared::structures::Day;
 
-pub(crate) fn day_06() -> Day {
+pub fn day_06() -> Day {
     Day::new(
+        6,
         include_str!("text.txt"),
         include_str!("input.txt"),
         part1,
@@ -10,20 +11,20 @@ pub(crate) fn day_06() -> Day {
 }
 
 
-fn part1(input: &str) {
+fn part1(input: &str) -> String {
     let mut characters = 4;
     while !start_of_packet(&input[(characters - 4)..characters]) {
         characters += 1;
     }
-    println!("{}", characters);
+    characters.to_string()
 }
 
-fn part2(input: &str) {
+fn part2(input: &str) -> String {
     let mut characters = 14;
     while !start_of_packet(&input[(characters - 14)..characters]) {
         characters += 1;
     }
-    println!("{}", characters);
+    characters.to_string()
 }
 
 fn start_of_packet(inp: &str) -> bool {

@@ -1,7 +1,8 @@
-use crate::challenges::Day;
+use crate::shared::structures::Day;
 
-pub(crate) fn day_10() -> Day {
+pub fn day_10() -> Day {
     Day::new (
+        10,
         include_str!("text.txt"),
         include_str!("input.txt"),
         part1,
@@ -10,20 +11,20 @@ pub(crate) fn day_10() -> Day {
 }
 
 
-fn part1(input: &str) {
+fn part1(input: &str) -> String {
     let mut input = input.trim().to_string();
     for _ in 0..40 {
         execute_round(&mut input);
     }
-    println!("{}", input.chars().count());
+    format!("{}", input.chars().count())
 }
 
-fn part2(input: &str) {
+fn part2(input: &str) -> String {
     let mut input = input.trim().to_string();
     for _ in 0..50 {
         execute_round(&mut input);
     }
-    println!("{}", input.chars().count());
+    format!("{}", input.chars().count())
 }
 
 fn execute_round(input: &mut String) {

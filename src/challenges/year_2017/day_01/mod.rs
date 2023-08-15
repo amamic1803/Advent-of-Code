@@ -1,7 +1,8 @@
-use crate::challenges::Day;
+use crate::shared::structures::Day;
 
-pub(crate) fn day_01() -> Day {
+pub fn day_01() -> Day {
     Day::new(
+        1,
         include_str!("text.txt"),
         include_str!("input.txt"),
         part1,
@@ -10,7 +11,7 @@ pub(crate) fn day_01() -> Day {
 }
 
 
-fn part1(input: &str) {
+fn part1(input: &str) -> String {
     let sequence = parse_input(input);
     let mut sum: usize = 0;
 
@@ -20,10 +21,10 @@ fn part1(input: &str) {
         }
     }
 
-    println!("{}", sum);
+    sum.to_string()
 }
 
-fn part2(input: &str) {
+fn part2(input: &str) -> String {
     let sequence = parse_input(input);
     let halfway = sequence.len() >> 1;
     let mut sum: usize = 0;
@@ -34,7 +35,7 @@ fn part2(input: &str) {
         }
     }
 
-    println!("{}", sum);
+    sum.to_string()
 }
 
 fn parse_input(input: &str) -> Vec<u32> {

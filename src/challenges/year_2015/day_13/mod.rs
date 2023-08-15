@@ -1,9 +1,10 @@
-use crate::challenges::Day;
-use crate::shared::tsp::Graph;
+use crate::shared::structures::Day;
+use crate::shared::graph::Graph;
 use std::collections::HashMap;
 
-pub(crate) fn day_13() -> Day {
+pub fn day_13() -> Day {
     Day::new (
+        13,
         include_str!("text.txt"),
         include_str!("input.txt"),
         part1,
@@ -12,14 +13,13 @@ pub(crate) fn day_13() -> Day {
 }
 
 
-fn part1(input: &str) {
-    println!("{}", parse_input(input).tsp_max(0).0);
+fn part1(input: &str) -> String {
+    parse_input(input).circle_max(0).0.to_string()
 }
 
-fn part2(input: &str) {
-    println!("{}", input);
+fn part2(input: &str) -> String {
+    parse_input(input).path_max().0.to_string()
 }
-
 
 fn parse_input(input: &str) -> Graph {
     let mut names: Vec<&str> = Vec::new();

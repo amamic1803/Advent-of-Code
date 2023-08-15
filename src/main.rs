@@ -3,9 +3,7 @@ use std::path::PathBuf;
 
 use clap::{Arg, ArgAction, command, value_parser};
 
-mod shared;
-mod challenges;
-use challenges::challenges;
+use advent_of_code::get_challenges;
 
 
 fn main() {
@@ -14,7 +12,7 @@ fn main() {
             .value_name("YEAR")
             .help("The year of the Advent of Code challenge")
             .required_unless_present("list")
-            .value_parser(value_parser!(u32).range(2015..=2022))
+            .value_parser(value_parser!(u32).range(2015..))
         )
         .arg(Arg::new("day")
             .value_name("DAY")
@@ -85,10 +83,10 @@ fn main() {
     let show_input_flag: bool = argv.get_flag("show_input");
     let input = argv.get_one::<PathBuf>("input");
 
-    let challenges_list = challenges();
+    let challenges_list = get_challenges();
 
     if list_flag {
-        challenges_list.list();
+        println!("{}", challenges_list.list());
     } else {
         let year_num: usize = match year_num {
             Some(year_num) => *year_num as usize,
@@ -117,11 +115,29 @@ fn main() {
         };
 
         if solve_flag {
-            challenges_list.run_day(year_num, day_num, part_num, &input);
+            match challenges_list.run(year_num, day_num, part_num, &input) {
+                Ok(result) => println!("{}", result),
+                Err(err) => {
+                    eprintln!("Error running challenge: {}", err);
+                    std::process::exit(1);
+                }
+            }
         } else if text_flag {
-            challenges_list.show_text(year_num, day_num);
+            match challenges_list.show_text(year_num, day_num) {
+                Ok(text) => println!("{}", text),
+                Err(err) => {
+                    eprintln!("Error showing challenge text: {}", err);
+                    std::process::exit(1);
+                }
+            }
         } else if show_input_flag {
-            challenges_list.show_input(year_num, day_num, &input);
+            match challenges_list.show_input(year_num, day_num, &input) {
+                Ok(input) => println!("{}", input),
+                Err(err) => {
+                    eprintln!("Error showing challenge input: {}", err);
+                    std::process::exit(1);
+                }
+            }
         } else {
             unreachable!("All flags are false, but at least one should be true");
         }

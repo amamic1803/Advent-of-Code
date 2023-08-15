@@ -1,8 +1,9 @@
-use crate::challenges::Day;
+use crate::shared::structures::Day;
 use std::collections::HashMap;
 
-pub(crate) fn day_09() -> Day {
+pub fn day_09() -> Day {
     Day::new (
+        9,
         include_str!("text.txt"),
         include_str!("input.txt"),
         part1,
@@ -11,14 +12,14 @@ pub(crate) fn day_09() -> Day {
 }
 
 
-fn part1(input: &str) {
+fn part1(input: &str) -> String {
     let mut graph = Graph::new(input);
-    println!("{}", graph.shortest_connecting_path());
+    format!("{}", graph.shortest_connecting_path())
 }
 
-fn part2(input: &str) {
+fn part2(input: &str) -> String {
     let mut graph = Graph::new(input);
-    println!("{}", graph.longest_connecting_path());
+    format!("{}", graph.longest_connecting_path())
 }
 
 

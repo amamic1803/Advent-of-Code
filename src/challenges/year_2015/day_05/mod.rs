@@ -1,7 +1,8 @@
-use crate::challenges::Day;
+use crate::shared::structures::Day;
 
-pub(crate) fn day_05() -> Day {
+pub fn day_05() -> Day {
     Day::new (
+        5,
         include_str!("text.txt"),
         include_str!("input.txt"),
         part1,
@@ -10,12 +11,12 @@ pub(crate) fn day_05() -> Day {
 }
 
 
-fn part1(input: &str) {
-    println!("{}", count_nice_strings(input, nice_str));
+fn part1(input: &str) -> String {
+    format!("{}", count_nice_strings(input, nice_str))
 }
 
-fn part2(input: &str) {
-    println!("{}", count_nice_strings(input, nice_str_2));
+fn part2(input: &str) -> String {
+    format!("{}", count_nice_strings(input, nice_str_2))
 }
 
 fn count_nice_strings(input: &str, nice_str: fn(&str) -> bool) -> usize {

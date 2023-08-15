@@ -1,8 +1,9 @@
-use crate::challenges::Day;
+use crate::shared::structures::Day;
 use std::collections::HashMap;
 
-pub(crate) fn day_07() -> Day {
+pub fn day_07() -> Day {
     Day::new (
+        7,
         include_str!("text.txt"),
         include_str!("input.txt"),
         part1,
@@ -11,17 +12,17 @@ pub(crate) fn day_07() -> Day {
 }
 
 
-fn part1(input: &str) {
+fn part1(input: &str) -> String {
     let mut circuit = Circuit::new(input);
     circuit.simulate();
 
     match circuit.get_wire_value("a") {
-        Some(a) => println!("{a}"),
-        None => panic!("Wire 'a' not found!"),
+        Some(a) => format!("{a}"),
+        None => "Wire 'a' not found!".to_string(),
     }
 }
 
-fn part2(input: &str) {
+fn part2(input: &str) -> String {
     let mut circuit = Circuit::new(input);
     let mut circuit2 = circuit.clone();
 
@@ -34,8 +35,8 @@ fn part2(input: &str) {
     circuit2.wires.insert("b", a);
     circuit2.simulate();
     match circuit2.get_wire_value("a") {
-        Some(a) => println!("{a}"),
-        None => panic!("Wire 'a' not found!"),
+        Some(a) => format!("{a}"),
+        None => "Wire 'a' not found!".to_string(),
     }
 }
 

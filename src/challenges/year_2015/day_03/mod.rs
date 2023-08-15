@@ -1,8 +1,9 @@
-use crate::challenges::Day;
+use crate::shared::structures::Day;
 use std::collections::HashSet;
 
-pub(crate) fn day_03() -> Day {
+pub fn day_03() -> Day {
     Day::new (
+        3,
         include_str!("text.txt"),
         include_str!("input.txt"),
         part1,
@@ -11,7 +12,7 @@ pub(crate) fn day_03() -> Day {
 }
 
 
-fn part1(input: &str) {
+fn part1(input: &str) -> String {
     let mut x: isize = 0;
     let mut y: isize = 0;
     let mut visited: HashSet<(isize, isize)> = HashSet::new();
@@ -28,10 +29,10 @@ fn part1(input: &str) {
         visited.insert((x, y));
     }
 
-    println!("{}", visited.len());
+    format!("{}", visited.len())
 }
 
-fn part2(input: &str) {
+fn part2(input: &str) -> String {
     let mut x_santa: isize = 0;
     let mut x_robo: isize = 0;
     let mut y_santa: isize = 0;
@@ -63,5 +64,5 @@ fn part2(input: &str) {
         turn = !turn;
     }
 
-    println!("{}", visited.len());
+    format!("{}", visited.len())
 }

@@ -1,7 +1,8 @@
-use crate::challenges::Day;
+use crate::shared::structures::Day;
 
-pub(crate) fn day_11() -> Day {
+pub fn day_11() -> Day {
     Day::new(
+        11,
         include_str!("text.txt"),
         include_str!("input.txt"),
         part1,
@@ -10,7 +11,7 @@ pub(crate) fn day_11() -> Day {
 }
 
 
-fn part1(input: &str) {
+fn part1(input: &str) -> String {
     let mut monkeys = parse_monkeys(input);
 
     for _ in 0..20 {
@@ -31,10 +32,10 @@ fn part1(input: &str) {
     let first_max = monkeys.iter().max_by_key(|m| m.inspected_items).unwrap().inspected_items;
     let second_max = monkeys.iter().filter(|m| m.inspected_items != first_max).max_by_key(|m| m.inspected_items).unwrap().inspected_items;
 
-    println!("{}", first_max * second_max);
+    format!("{}", first_max * second_max)
 }
 
-fn part2(input: &str) {
+fn part2(input: &str) -> String {
     let mut monkeys = parse_monkeys(input);
 
     let common_divisor: u128 = monkeys.iter().map(|m| m.throw[0]).product();
@@ -61,11 +62,10 @@ fn part2(input: &str) {
     let first_max = monkeys.iter().max_by_key(|m| m.inspected_items).unwrap().inspected_items;
     let second_max = monkeys.iter().filter(|m| m.inspected_items != first_max).max_by_key(|m| m.inspected_items).unwrap().inspected_items;
 
-    println!("{}", first_max * second_max);
+    format!("{}", first_max * second_max)
 }
 
-#[derive(Debug)]
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 struct Monkey<'a> {
     id: u128,
     items: Vec<u128>,

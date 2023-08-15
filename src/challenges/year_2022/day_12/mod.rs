@@ -1,8 +1,9 @@
-use crate::challenges::Day;
+use crate::shared::structures::Day;
 use std::collections::VecDeque;
 
-pub(crate) fn day_12() -> Day {
+pub fn day_12() -> Day {
     Day::new(
+        12,
         include_str!("text.txt"),
         include_str!("input.txt"),
         part1,
@@ -11,14 +12,14 @@ pub(crate) fn day_12() -> Day {
 }
 
 
-fn part1(input: &str) {
+fn part1(input: &str) -> String {
     let (height_map, loc_start, loc_end) = parse_input(input);
-    println!("{}", dijkstra_1(&height_map, loc_start, loc_end));
+    dijkstra_1(&height_map, loc_start, loc_end).to_string()
 }
 
-fn part2(input: &str) {
+fn part2(input: &str) -> String {
     let (height_map, _, loc_end) = parse_input(input);
-    println!("{}", dijkstra_2(&height_map, loc_end, 0));
+    dijkstra_2(&height_map, loc_end, 0).to_string()
 }
 
 fn dijkstra_1(height_map: &Vec<Vec<u32>>, loc_start: [usize; 2], loc_end: [usize; 2]) -> u32 {

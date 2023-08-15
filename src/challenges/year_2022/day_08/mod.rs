@@ -1,7 +1,8 @@
-use crate::challenges::Day;
+use crate::shared::structures::Day;
 
-pub(crate) fn day_08() -> Day {
+pub fn day_08() -> Day {
     Day::new(
+        8,
         include_str!("text.txt"),
         include_str!("input.txt"),
         part1,
@@ -10,7 +11,7 @@ pub(crate) fn day_08() -> Day {
 }
 
 
-fn part1(input: &str) {
+fn part1(input: &str) -> String {
     let forest: Vec<Vec<u8>> = parse_forest(input);
     let mut visible_trees: u32 = 0;
     for x in 0..forest.len() {
@@ -66,10 +67,10 @@ fn part1(input: &str) {
         }
     }
 
-    println!("{}", visible_trees);
+    visible_trees.to_string()
 }
 
-fn part2(input: &str) {
+fn part2(input: &str) -> String {
     let forest: Vec<Vec<u8>> = parse_forest(input);
 
     let mut max_scenic_score: u32 = 1;
@@ -125,7 +126,7 @@ fn part2(input: &str) {
             }
         }
     }
-    println!("{}", max_scenic_score);
+    max_scenic_score.to_string()
 }
 
 fn parse_forest(input: &str) -> Vec<Vec<u8>> {

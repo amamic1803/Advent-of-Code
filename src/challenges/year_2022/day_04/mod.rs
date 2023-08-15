@@ -1,7 +1,8 @@
-use crate::challenges::Day;
+use crate::shared::structures::Day;
 
-pub(crate) fn day_04() -> Day {
+pub fn day_04() -> Day {
     Day::new(
+        4,
         include_str!("text.txt"),
         include_str!("input.txt"),
         part1,
@@ -10,12 +11,12 @@ pub(crate) fn day_04() -> Day {
 }
 
 
-fn part1(input: &str) {
-    println!("{}", process_input(input).0);
+fn part1(input: &str) -> String {
+    process_input(input).0.to_string()
 }
 
-fn part2(input: &str) {
-    println!("{}", process_input(input).1);
+fn part2(input: &str) -> String {
+    process_input(input).1.to_string()
 }
 
 fn process_input(input: &str) -> (usize, usize) {

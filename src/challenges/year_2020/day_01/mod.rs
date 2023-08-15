@@ -1,7 +1,8 @@
-use crate::challenges::Day;
+use crate::shared::structures::Day;
 
-pub(crate) fn day_01() -> Day {
+pub fn day_01() -> Day {
     Day::new(
+        1,
         include_str!("text.txt"),
         include_str!("input.txt"),
         part1,
@@ -10,26 +11,20 @@ pub(crate) fn day_01() -> Day {
 }
 
 
-fn part1(input: &str) {
+fn part1(input: &str) -> String {
     let set = store_input_in_set(input);
-    let mut broken: bool = false;
     for num in &set {
         let diff = 2020 - num;
         if set.contains(&diff) {
-            println!("{}", num * diff);
-            broken = true;
-            break;
+            return format!("{}", num * diff);
         }
     }
-    if !broken {
-        println!("No solution found");
-    }
+    String::from("No solution found")
 }
 
-fn part2(input: &str) {
+fn part2(input: &str) -> String {
     let set = store_input_in_set(input);
-    let mut broken: bool = false;
-    'outer: for (i, num1) in set.iter().enumerate() {
+    for (i, num1) in set.iter().enumerate() {
         let diff1 = 2020 - num1;
         for (j, num2) in set.iter().enumerate() {
             if i == j || num2 > &diff1{
@@ -37,15 +32,12 @@ fn part2(input: &str) {
             }
             let diff2 = diff1 - num2;
             if set.contains(&diff2) {
-                println!("{}", num1 * num2 * diff2);
-                broken = true;
-                break 'outer;
+                return format!("{}", num1 * num2 * diff2);
             }
         }
     }
-    if !broken {
-        println!("No solution found");
-    }
+
+    String::from("No solution found")
 }
 
 fn store_input_in_set(input: &str) -> Vec<usize> {

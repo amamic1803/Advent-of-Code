@@ -1,7 +1,8 @@
-use crate::challenges::Day;
+use crate::shared::structures::Day;
 
-pub(crate) fn day_10() -> Day {
+pub fn day_10() -> Day {
     Day::new(
+        10,
         include_str!("text.txt"),
         include_str!("input.txt"),
         part1,
@@ -10,7 +11,7 @@ pub(crate) fn day_10() -> Day {
 }
 
 
-fn part1(input: &str) {
+fn part1(input: &str) -> String {
     let mut register_state: [i32; 2] = [1; 2];
     let mut result: i32 = 0;
     let wanted_cycles: [i32; 6] = [20, 60, 100, 140, 180, 220];
@@ -40,10 +41,10 @@ fn part1(input: &str) {
             if wanted_cycle_ind > wanted_cycles.len() - 1 {break;}
         }
     }
-    println!("{}", result);
+    result.to_string()
 }
 
-fn part2(input: &str) {
+fn part2(input: &str) -> String {
     let mut register_state: i32 = 1;
     let mut cycle: i32 = 0;
     let mut render: String = String::new();
@@ -77,10 +78,14 @@ fn part2(input: &str) {
         cycle += 1;
     }
 
+    let mut result = String::new();
     let mut output: String = render;
     for _ in (40..241).step_by(40) {
         let splitt = output.split_at(40);
-        println!("{}", splitt.0);
+        result.push_str(splitt.0);
+        result.push('\n');
         output = splitt.1.to_string();
     }
+
+    result.trim().to_string()
 }

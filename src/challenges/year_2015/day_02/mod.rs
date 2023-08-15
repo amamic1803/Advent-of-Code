@@ -1,7 +1,8 @@
-use crate::challenges::Day;
+use crate::shared::structures::Day;
 
-pub(crate) fn day_02() -> Day {
+pub fn day_02() -> Day {
     Day::new (
+        2,
         include_str!("text.txt"),
         include_str!("input.txt"),
         part1,
@@ -10,7 +11,7 @@ pub(crate) fn day_02() -> Day {
 }
 
 
-fn part1(input: &str) {
+fn part1(input: &str) -> String {
     let mut total_paper = 0;
     let input = parse_input(input);
 
@@ -18,10 +19,10 @@ fn part1(input: &str) {
         total_paper += wrap_present(present);
     }
 
-    println!("{}", total_paper);
+    format!("{}", total_paper)
 }
 
-fn part2(input: &str) {
+fn part2(input: &str) -> String {
     let mut total_ribbon = 0;
     let input = parse_input(input);
 
@@ -29,7 +30,7 @@ fn part2(input: &str) {
         total_ribbon += ribbon_present(present);
     }
 
-    println!("{}", total_ribbon);
+    format!("{}", total_ribbon)
 }
 
 fn ribbon_present(present: [usize; 3]) -> usize {

@@ -1,16 +1,26 @@
+//! A module for solving Graph problems.
+//!
+//! *List of problems:*
+//! - Travelling Salesman Problem (TSP) = the shortest Hamiltonian circle in a weighted graph
+
 #![allow(dead_code)]
 
 use std::cmp::{Ordering, Reverse};
 use std::collections::BinaryHeap;
 
 
+#[derive(Clone)]
 pub(crate) struct Graph {
     vertices: usize,
     edges: Vec<Vec<Option<isize>>>,
 }
 
 impl Graph {
+    /// Instantiate new graph with given number of vertices.
+    /// Vertices are indexed from 0 to `vertices - 1`.
+    /// All edges are initialized with weight 0.
     pub(crate) fn new(vertices: usize) -> Self {
+        assert!(vertices > 0);
         let mut edges = vec![vec![Some(0); vertices]; vertices];
         #[allow(clippy::needless_range_loop)]
         for i in 0..vertices {
@@ -23,13 +33,21 @@ impl Graph {
         }
     }
 
+    /// Set edge weight.
     pub(crate) fn set_edge(&mut self, from: usize, to: usize, weight: isize) {
         assert_ne!(from, to);
         self.edges[from][to] = Some(weight);
     }
 
-    pub(crate) fn tsp(&mut self, starting_point: usize) -> (isize, Vec<usize>) {
-        assert!(starting_point < self.vertices);
+    /// Get edge weight.
+    pub(crate) fn get_edge(&self, from: usize, to: usize) -> isize {
+        assert_ne!(from, to);
+        self.edges[from][to].unwrap()
+    }
+
+    /// Find shortest Hamiltonian circle.
+    pub(crate) fn circle_min(&self, start_point: usize) -> (isize, Vec<usize>) {
+        assert!(start_point < self.vertices);
 
         let mut min_cost = isize::MAX;
         let mut min_path = Vec::with_capacity(self.vertices + 1);
@@ -39,7 +57,7 @@ impl Graph {
 
         queue.push(Reverse(Node::new(limit, {
             let mut vec = Vec::with_capacity(self.vertices + 1);
-            vec.push(starting_point);
+            vec.push(start_point);
             vec
         })));
 
@@ -47,8 +65,8 @@ impl Graph {
             let mut current_node = queue.pop().unwrap().0;
             if current_node.path.len() == self.vertices {
                 current_node.limit -= rows_minis[current_node.path[current_node.path.len() - 1]];
-                current_node.limit += self.edges[current_node.path[current_node.path.len() - 1]][starting_point].unwrap();
-                current_node.path.push(starting_point);
+                current_node.limit += self.edges[current_node.path[current_node.path.len() - 1]][start_point].unwrap();
+                current_node.path.push(start_point);
 
                 if current_node.limit < min_cost {
                     min_cost = current_node.limit;
@@ -72,8 +90,9 @@ impl Graph {
         (min_cost, min_path)
     }
 
-    pub(crate) fn tsp_max(&mut self, starting_point: usize) -> (isize, Vec<usize>) {
-        assert!(starting_point < self.vertices);
+    /// Find longest Hamiltonian circle.
+    pub(crate) fn circle_max(&self, start_point: usize) -> (isize, Vec<usize>) {
+        assert!(start_point < self.vertices);
 
         let mut max_cost = isize::MIN;
         let mut max_path = Vec::with_capacity(self.vertices + 1);
@@ -83,7 +102,7 @@ impl Graph {
 
         queue.push(Node::new(limit, {
             let mut vec = Vec::with_capacity(self.vertices + 1);
-            vec.push(starting_point);
+            vec.push(start_point);
             vec
         }));
 
@@ -91,8 +110,8 @@ impl Graph {
             let mut current_node = queue.pop().unwrap();
             if current_node.path.len() == self.vertices {
                 current_node.limit -= rows_maxes[current_node.path[current_node.path.len() - 1]];
-                current_node.limit += self.edges[current_node.path[current_node.path.len() - 1]][starting_point].unwrap();
-                current_node.path.push(starting_point);
+                current_node.limit += self.edges[current_node.path[current_node.path.len() - 1]][start_point].unwrap();
+                current_node.path.push(start_point);
 
                 if current_node.limit > max_cost {
                     max_cost = current_node.limit;
@@ -116,64 +135,36 @@ impl Graph {
         (max_cost, max_path)
     }
 
-    pub(crate) fn backtracking(&self, starting_point: usize) -> (isize, Vec<usize>) {
-        assert!(starting_point < self.vertices);
-        let mut min_cost = isize::MAX;
-        let mut min_path = Vec::with_capacity(self.vertices + 1);
-        let mut current_path = vec![starting_point];
-        let current_cost = 0;
-        self.backtracking_helper(&mut current_path, current_cost, &mut min_path, &mut min_cost);
+    /// Find shortest Hamiltonian path.
+    pub(crate) fn path_min(&self) -> (isize, Vec<usize>) {
+        let mut new_graph = self.clone();
+        new_graph.vertices += 1;
+        for row in &mut new_graph.edges {
+            row.push(Some(0));
+        }
+        new_graph.edges.push(vec![Some(0); new_graph.vertices + 1]);
+
+        let (min_cost, mut min_path) = new_graph.circle_min(new_graph.vertices - 1);
+        min_path.pop();
+        min_path.remove(0);
+
         (min_cost, min_path)
     }
 
-    fn backtracking_helper(&self, current_path: &mut Vec<usize>, mut current_cost: isize, min_path: &mut Vec<usize>, min_cost: &mut isize) {
-        if current_path.len() == self.vertices {
-            current_cost += self.edges[current_path[current_path.len() - 1]][current_path[0]].unwrap();
-            current_path.push(current_path[0]);
-            if current_cost < *min_cost {
-                *min_cost = current_cost;
-                *min_path = current_path.clone();
-            }
-            current_path.pop();
-        } else {
-            for i in 0..self.vertices {
-                if !current_path.contains(&i) {
-                    current_path.push(i);
-                    self.backtracking_helper(current_path, current_cost + self.edges[current_path[current_path.len() - 2]][i].unwrap(), min_path, min_cost);
-                    current_path.pop();
-                }
-            }
+    /// Find longest Hamiltonian path.
+    pub(crate) fn path_max(&self) -> (isize, Vec<usize>) {
+        let mut new_graph = self.clone();
+        new_graph.vertices += 1;
+        for row in &mut new_graph.edges {
+            row.push(Some(0));
         }
-    }
+        new_graph.edges.push(vec![Some(0); new_graph.vertices + 1]);
 
-    pub(crate) fn backtracking_max(&self, starting_point: usize) -> (isize, Vec<usize>) {
-        assert!(starting_point < self.vertices);
-        let mut max_cost = isize::MIN;
-        let mut max_path = Vec::with_capacity(self.vertices + 1);
-        let mut current_path = vec![starting_point];
-        let current_cost = 0;
-        self.backtracking_max_helper(&mut current_path, current_cost, &mut max_path, &mut max_cost);
+        let (max_cost, mut max_path) = new_graph.circle_max(new_graph.vertices - 1);
+        max_path.pop();
+        max_path.remove(0);
+
         (max_cost, max_path)
-    }
-
-    fn backtracking_max_helper(&self, current_path: &mut Vec<usize>, mut current_cost: isize, max_path: &mut Vec<usize>, max_cost: &mut isize) {
-        if current_path.len() == self.vertices {
-            current_cost += self.edges[current_path[current_path.len() - 1]][current_path[0]].unwrap();
-            current_path.push(current_path[0]);
-            if current_cost > *max_cost {
-                *max_cost = current_cost;
-                *max_path = current_path.clone();
-            }
-            current_path.pop();
-        } else {
-            for i in 0..self.vertices {
-                if !current_path.contains(&i) {
-                    current_path.push(i);
-                    self.backtracking_max_helper(current_path, current_cost + self.edges[current_path[current_path.len() - 2]][i].unwrap(), max_path, max_cost);
-                    current_path.pop();
-                }
-            }
-        }
     }
 }
 

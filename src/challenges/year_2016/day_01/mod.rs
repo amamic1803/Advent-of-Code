@@ -1,7 +1,8 @@
-use crate::challenges::Day;
+use crate::shared::structures::Day;
 
-pub(crate) fn day_01() -> Day {
+pub fn day_01() -> Day {
     Day::new(
+        1,
         include_str!("text.txt"),
         include_str!("input.txt"),
         part1,
@@ -10,12 +11,12 @@ pub(crate) fn day_01() -> Day {
 }
 
 
-fn part1(input: &str) {
+fn part1(input: &str) -> String {
     let end_position = calculate_position(parse_input(input));
-    println!("{}", end_position.0.abs() + end_position.1.abs());
+    format!("{}", end_position.0.abs() + end_position.1.abs())
 }
 
-fn part2(input: &str) {
+fn part2(input: &str) -> String {
     let instructions: Vec<(u8, usize)> = parse_input(input);
     let mut visited_positions: Vec<(isize, isize)> = Vec::new();
 
@@ -27,9 +28,7 @@ fn part2(input: &str) {
     // 2 = South
     // 3 = West
 
-    let mut broken: bool = false;
-
-    'outer: for instruction in instructions {
+    for instruction in instructions {
         direction = change_direction(direction, instruction.0);
         for _ in 0..instruction.1 {
             match direction {
@@ -40,18 +39,14 @@ fn part2(input: &str) {
                 _ => panic!("Invalid direction value"),
             }
             if visited_positions.contains(&(x, y)) {
-                println!("{}", x.abs() + y.abs());
-                broken = true;
-                break 'outer;
+                return format!("{}", x.abs() + y.abs());
             } else {
                 visited_positions.push((x, y));
             }
         }
     }
 
-    if !broken {
-        println!("No position visited twice");
-    }
+    "No position visited twice!".to_string()
 }
 
 fn parse_input(input: &str) -> Vec<(u8, usize)> {

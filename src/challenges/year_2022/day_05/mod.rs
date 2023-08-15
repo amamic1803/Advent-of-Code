@@ -1,7 +1,8 @@
-use crate::challenges::Day;
+use crate::shared::structures::Day;
 
-pub(crate) fn day_05() -> Day {
+pub fn day_05() -> Day {
     Day::new(
+        5,
         include_str!("text.txt"),
         include_str!("input.txt"),
         part1,
@@ -10,7 +11,7 @@ pub(crate) fn day_05() -> Day {
 }
 
 
-fn part1(input: &str) {
+fn part1(input: &str) -> String {
     let num_of_piles = count_piles(input);
     let mut piles: Vec<Vec<char>> = vec![];
     for _ in 0..num_of_piles {
@@ -38,10 +39,10 @@ fn part1(input: &str) {
     for pile in piles {
         output.push(pile[pile.len() - 1]);
     }
-    println!("{}", output);
+    output.to_string()
 }
 
-fn part2(input: &str) {
+fn part2(input: &str) -> String {
     let num_of_piles = count_piles(input);
     let mut piles: Vec<Vec<char>> = vec![];
     for _ in 0..num_of_piles {
@@ -70,7 +71,7 @@ fn part2(input: &str) {
     for pile_part in piles {
         output.push(pile_part[pile_part.len() - 1]);
     }
-    println!("{}", output);
+    output.to_string()
 }
 
 fn count_piles(input: &str) -> usize {

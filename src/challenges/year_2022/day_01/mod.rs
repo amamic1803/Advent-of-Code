@@ -1,7 +1,8 @@
-use crate::challenges::Day;
+use crate::shared::structures::Day;
 
-pub(crate) fn day_01() -> Day {
+pub fn day_01() -> Day {
     Day::new(
+        1,
         include_str!("text.txt"),
         include_str!("input.txt"),
         part1,
@@ -10,14 +11,14 @@ pub(crate) fn day_01() -> Day {
 }
 
 
-fn part1(input: &str) {
+fn part1(input: &str) -> String {
     let elf_calories = count_calories(input);
-    println!("{}", elf_calories[elf_calories.len() - 1]);
+    elf_calories[elf_calories.len() - 1].to_string()
 }
 
-fn part2(input: &str) {
+fn part2(input: &str) -> String {
     let elf_calories = count_calories(input);
-    println!("{}", elf_calories[(elf_calories.len() - 3)..].iter().sum::<usize>());
+    elf_calories[(elf_calories.len() - 3)..].iter().sum::<usize>().to_string()
 }
 
 fn count_calories(input: &str) -> Vec<usize> {

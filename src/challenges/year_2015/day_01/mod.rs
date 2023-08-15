@@ -1,7 +1,8 @@
-use crate::challenges::Day;
+use crate::shared::structures::Day;
 
-pub(crate) fn day_01() -> Day {
+pub fn day_01() -> Day {
     Day::new(
+        1,
         include_str!("text.txt"),
         include_str!("input.txt"),
         part1,
@@ -10,7 +11,7 @@ pub(crate) fn day_01() -> Day {
 }
 
 
-fn part1(input: &str) {
+fn part1(input: &str) -> String {
     let mut floor: isize = 0;
     for c in input.trim().chars() {
         match c {
@@ -19,12 +20,11 @@ fn part1(input: &str) {
             _ => (),
         }
     }
-    println!("{}", floor);
+    floor.to_string()
 }
 
-fn part2(input: &str) {
+fn part2(input: &str) -> String {
     let mut floor: isize = 0;
-    let mut broken: bool = false;
     for (i, c) in input.trim().chars().enumerate() {
         match c {
             '(' => floor += 1,
@@ -32,12 +32,9 @@ fn part2(input: &str) {
             _ => (),
         }
         if floor == -1 {
-            println!("{}", i + 1);
-            broken = true;
-            break;
+            return format!("{}", i + 1);
         }
     }
-    if !broken {
-        println!("Not found!");
-    }
+
+    "Not found!".to_string()
 }

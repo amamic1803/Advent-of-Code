@@ -1,8 +1,9 @@
-use crate::challenges::Day;
+use crate::shared::structures::Day;
 use serde_json::{from_str, Value};
 
-pub(crate) fn day_12() -> Day {
+pub fn day_12() -> Day {
     Day::new (
+        12,
         include_str!("text.txt"),
         include_str!("input.txt"),
         part1,
@@ -11,14 +12,14 @@ pub(crate) fn day_12() -> Day {
 }
 
 
-fn part1(input: &str) {
+fn part1(input: &str) -> String {
     let json_val: Value = from_str(input).unwrap();
-    println!("{}", sum_ints(&json_val));
+    sum_ints(&json_val).to_string()
 }
 
-fn part2(input: &str) {
+fn part2(input: &str) -> String {
     let json_val: Value = from_str(input).unwrap();
-    println!("{}", sum_ints_wo_red(&json_val));
+    sum_ints_wo_red(&json_val).to_string()
 }
 
 fn sum_ints(json_val: &Value) -> i64 {

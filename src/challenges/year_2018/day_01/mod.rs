@@ -1,8 +1,9 @@
-use crate::challenges::Day;
+use crate::shared::structures::Day;
 use std::collections::HashSet;
 
-pub(crate) fn day_01() -> Day {
+pub fn day_01() -> Day {
     Day::new(
+        1,
         include_str!("text.txt"),
         include_str!("input.txt"),
         part1,
@@ -11,13 +12,13 @@ pub(crate) fn day_01() -> Day {
 }
 
 
-fn part1(input: &str) {
+fn part1(input: &str) -> String {
     let input = parse_input(input);
 
-    println!("{:?}", input.iter().sum::<isize>());
+    input.iter().sum::<isize>().to_string()
 }
 
-fn part2(input: &str) {
+fn part2(input: &str) -> String {
     let input = parse_input(input);
     let mut i: usize = 0;
     let mut encountered_frequencies: HashSet<isize> = HashSet::new();
@@ -28,8 +29,7 @@ fn part2(input: &str) {
         if encountered_frequencies.insert(frequency) {
             i = (i + 1) % input.len();
         } else {
-            println!("{:?}", frequency);
-            break;
+            return frequency.to_string();
         }
     }
 }
