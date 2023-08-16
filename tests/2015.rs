@@ -151,3 +151,13 @@ fn year2015_day15_part1() {
 fn year2015_day15_part2() {
     run_test(2015, 15, 2, "1766400");
 }
+
+#[test]
+fn year2015_day16_part1() {
+    run_test(2015, 16, 1, "40");
+}
+
+#[test]
+fn year2015_day16_part2() {
+    run_test(2015, 16, 2, "241");
+}
