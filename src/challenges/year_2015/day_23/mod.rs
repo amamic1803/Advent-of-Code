@@ -22,7 +22,7 @@ fn part1(input: &str) -> String {
 }
 
 fn part2(input: &str) -> String {
-        let instructions = parse_input(input);
+    let instructions = parse_input(input);
     let mut registers: [usize; 2] = [1, 0];
 
     simulate(&mut registers, &instructions);
