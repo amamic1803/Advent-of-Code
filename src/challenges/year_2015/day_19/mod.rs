@@ -1,5 +1,6 @@
 use crate::shared::structures::Day;
 use std::collections::HashSet;
+use regex::Regex;
 
 pub fn day_19() -> Day {
     Day::new (
@@ -31,7 +32,60 @@ fn part1(input: &str) -> String {
 }
 
 fn part2(input: &str) -> String {
-    String::new()
+    // wanted input molecule
+    let mut molecule_str = String::from(parse_input(input).1);
+
+    // solution using insights provided by u/askalski, confirmed by u/topaz2078 (creator of the AoC)
+    // possible substitutions are
+    // e => XX
+    // X => XX
+    // X => X Rn X Ar
+    // X => X Rn X Y X Ar
+    // X => X Rn X Y X Y X Ar
+    // where X is any atom ("token"), for example Ca, Ti, P, B, ..., except Rn, Ar, Y
+    // Rn can be replaced with ( and Ar with )
+    // Y can be replaced with ,
+    // That transforms substitutions to
+    // e => XX
+    // X => XX
+    // X => X ( X )
+    // X => X ( X , X )
+    // X => X ( X , X , X )
+
+    // first we need to replace Rn and Ar with ( and ), and Y with ,
+    // then we need to replace all atoms/tokens with X
+
+    // replace all Rn with (
+    while let Some(pos) = molecule_str.find("Rn") {
+        molecule_str.replace_range(pos..(pos + 2), "(");
+    }
+
+    // replace all Ar with )
+    while let Some(pos) = molecule_str.find("Ar") {
+        molecule_str.replace_range(pos..(pos + 2), ")");
+    }
+
+    // replace all Y with ,
+    while let Some(pos) = molecule_str.find('Y') {
+        molecule_str.replace_range(pos..(pos + 1), ",");
+    }
+
+    // replace all tokens with X
+    let re = Regex::new(r"[A-Z][a-z]?").unwrap();
+    molecule_str = re.replace_all(&molecule_str, "X").to_string();
+
+    // Now from this information, we can calculate the number of steps needed to transform the molecule
+    // If we apply X => XX substitution , the molecule gets reduced by 1 so the total number of steps is:
+    // the length of the molecule - 1
+    // If we apply X => X ( X ) substitution, the molecule gets reduced by 3 so the total number of steps is:
+    // the length of the molecule - the number of ( or ) - 1
+    // If we apply X => X ( X , X ) substitution, the molecule gets reduced by 5
+    // If we apply X => X ( X , X , X ) substitution, the molecule gets reduced by 7
+    // That is for each , the molecule gets reduced by 2
+    // So the final equation for the number of steps is:
+    // the length of the molecule - the number of ( or ) - 2 * the number of , - 1
+
+    (molecule_str.chars().count() - molecule_str.matches(|x| (x == '(') || (x == ')')).count() - 2 * molecule_str.matches(',').count() - 1).to_string()
 }
 
 fn parse_input(input: &str) -> (Vec<(&str, &str)>, &str) {
