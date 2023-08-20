@@ -241,3 +241,13 @@ fn year2015_day24_part1() {
 fn year2015_day24_part2() {
     run_test(2015, 24, 2, "77387711");
 }
+
+#[test]
+fn year2015_day25_part1() {
+    run_test(2015, 25, 1, "19980801");
+}
+
+#[test]
+fn year2015_day25_part2() {
+    run_test(2015, 25, 2, "Advent of Code 2015 solved!");
+}
