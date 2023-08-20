@@ -41,3 +41,13 @@ fn year2016_day04_part1() {
 fn year2016_day04_part2() {
     run_test(2016, 4, 2, "548");
 }
+
+#[test]
+fn year2016_day05_part1() {
+    run_test(2016, 5, 1, "801b56a7");
+}
+
+#[test]
+fn year2016_day05_part2() {
+    run_test(2016, 5, 2, "424a0197");
+}
