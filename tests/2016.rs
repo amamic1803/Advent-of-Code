@@ -61,3 +61,13 @@ fn year2016_day06_part1() {
 fn year2016_day06_part2() {
     run_test(2016, 6, 2, "hnfbujie");
 }
+
+#[test]
+fn year2016_day07_part1() {
+    run_test(2016, 7, 1, "115");
+}
+
+#[test]
+fn year2016_day07_part2() {
+    run_test(2016, 7, 2, "231");
+}
