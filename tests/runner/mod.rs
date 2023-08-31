@@ -23,5 +23,5 @@ pub fn run_test(year: usize, day: usize, part: usize, expected: &str) {
     // let output_bin = String::from(String::from_utf8(output_bin.stdout).unwrap().trim());
     // assert_eq!(output_bin, expected);
 
-    assert_eq!(output_lib, expected);
+    assert_eq!(output_lib.trim(), expected.trim());
 }
