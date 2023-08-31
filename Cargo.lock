@@ -9,6 +9,7 @@ dependencies = [
  "clap",
  "itertools",
  "md5",
+ "once_cell",
  "regex",
  "serde_json",
 ]
