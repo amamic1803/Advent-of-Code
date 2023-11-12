@@ -52,6 +52,55 @@ fn part1(input: &str) -> String {
 fn part2(input: &str) -> String {
     let data = parse_input(input);
 
+    // oxygen
+    let mut data_oxygen = data.clone();
+    let mut i = 0;
+    while data_oxygen.len() != 1 {
+        let mut count = 0;
+        for data_line in &data_oxygen {
+            if data_line[i] {
+                count += 1;
+            } else {
+                count -= 1;
+            }
+        }
+        let pattern = count >= 0;
+        data_oxygen.retain(|data_line| data_line[i] == pattern);
+        i += 1;
+    }
+    let mut oxygen_value: u32 = 0;
+    for bit in data_oxygen[0].iter() {
+        oxygen_value <<= 1;
+        if *bit {
+            oxygen_value |= 1;
+        }
+    }
+
+    // carbon dioxide
+    let mut data_carbon = data;
+    let mut i = 0;
+    while data_carbon.len() != 1 {
+        let mut count = 0;
+        for data_line in &data_carbon {
+            if data_line[i] {
+                count += 1;
+            } else {
+                count -= 1;
+            }
+        }
+        let pattern = count < 0;
+        data_carbon.retain(|data_line| data_line[i] == pattern);
+        i += 1;
+    }
+    let mut carbon_value: u32 = 0;
+    for bit in data_carbon[0].iter() {
+        carbon_value <<= 1;
+        if *bit {
+            carbon_value |= 1;
+        }
+    }
+
+    (oxygen_value * carbon_value).to_string()
 }
 
 fn parse_input(input: &str) -> Vec<Vec<bool>> {
