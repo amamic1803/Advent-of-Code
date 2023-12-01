@@ -10,6 +10,7 @@ pub mod year_2019;
 pub mod year_2020;
 pub mod year_2021;
 pub mod year_2022;
+pub mod year_2023;
 
 use year_2015::year_2015;
 use year_2016::year_2016;
@@ -19,6 +20,7 @@ use year_2019::year_2019;
 use year_2020::year_2020;
 use year_2021::year_2021;
 use year_2022::year_2022;
+use year_2023::year_2023;
 
 
 /// Returns a `Challenges` struct containing all the challenges.
@@ -33,5 +35,6 @@ pub fn get_challenges() -> Challenges {
         year_2020(),
         year_2021(),
         year_2022(),
+        year_2023(),
     ])
 }
