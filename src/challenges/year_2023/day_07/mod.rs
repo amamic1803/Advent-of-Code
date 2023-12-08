@@ -70,7 +70,6 @@ fn part1(input: &str) -> String {
 }
 
 fn part2(input: &str) -> String {
-    //let input = "32T3K 765\nT55J5 684\nKK677 28\nKTJJT 220\nQQQJA 483";
     let mut hands = input.trim().lines().map(|hand| {
         let mut hand = Hand::new(hand);
         hand.calc_dec_val2();

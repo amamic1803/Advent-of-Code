@@ -2,3 +2,4 @@
 
 pub mod graph;
 pub mod structures;
+pub mod math;
