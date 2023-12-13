@@ -93,6 +93,16 @@ fn year2023_day09_part2() {
 }
 
 #[test]
+fn year2023_day10_part1() {
+    run_test(2023, 10, 1, "6903");
+}
+
+#[test]
+fn year2023_day10_part2() {
+    run_test(2023, 10, 2, "265");
+}
+
+#[test]
 fn year2023_day11_part1() {
     run_test(2023, 11, 1, "9724940");
 }
