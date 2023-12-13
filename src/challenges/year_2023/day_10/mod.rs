@@ -270,7 +270,6 @@ fn flood_fill_outside(expanded_field: &mut [Vec<char>]) {
         // up
         if current_tile.0 > 0
             && expanded_field[current_tile.0 - 1][current_tile.1] == '.'
-            && !current_tiles.contains(&(current_tile.0 - 1, current_tile.1))
         {
             current_tiles.insert((current_tile.0 - 1, current_tile.1));
         }
@@ -278,7 +277,6 @@ fn flood_fill_outside(expanded_field: &mut [Vec<char>]) {
         // down
         if current_tile.0 < expanded_field.len() - 1
             && expanded_field[current_tile.0 + 1][current_tile.1] == '.'
-            && !current_tiles.contains(&(current_tile.0 + 1, current_tile.1))
         {
             current_tiles.insert((current_tile.0 + 1, current_tile.1));
         }
@@ -286,7 +284,6 @@ fn flood_fill_outside(expanded_field: &mut [Vec<char>]) {
         // left
         if current_tile.1 > 0
             && expanded_field[current_tile.0][current_tile.1 - 1] == '.'
-            && !current_tiles.contains(&(current_tile.0, current_tile.1 - 1))
         {
             current_tiles.insert((current_tile.0, current_tile.1 - 1));
         }
@@ -294,7 +291,6 @@ fn flood_fill_outside(expanded_field: &mut [Vec<char>]) {
         // right
         if current_tile.1 < expanded_field[0].len() - 1
             && expanded_field[current_tile.0][current_tile.1 + 1] == '.'
-            && !current_tiles.contains(&(current_tile.0, current_tile.1 + 1))
         {
             current_tiles.insert((current_tile.0, current_tile.1 + 1));
         }
