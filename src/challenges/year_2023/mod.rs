@@ -12,6 +12,7 @@ pub mod day_08;
 pub mod day_09;
 pub mod day_10;
 pub mod day_11;
+pub mod day_14;
 
 
 use day_01::day_01;
@@ -25,6 +26,7 @@ use day_08::day_08;
 use day_09::day_09;
 use day_10::day_10;
 use day_11::day_11;
+use day_14::day_14;
 
 
 pub fn year_2023() -> Year {
@@ -42,6 +44,7 @@ pub fn year_2023() -> Year {
             day_09(),
             day_10(),
             day_11(),
+            day_14(),
         ],
     )
 }
