@@ -121,3 +121,13 @@ fn year2023_day14_part1() {
 fn year2023_day14_part2() {
     run_test(2023, 14, 2, "102943");
 }
+
+#[test]
+fn year2023_day15_part1() {
+    run_test(2023, 15, 1, "522547");
+}
+
+#[test]
+fn year2023_day15_part2() {
+    run_test(2023, 15, 2, "229271");
+}
