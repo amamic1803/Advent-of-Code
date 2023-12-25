@@ -21,3 +21,13 @@ fn year2019_day02_part1() {
 fn year2019_day02_part2() {
     run_test(2019, 2, 2, "4259");
 }
+
+#[test]
+fn year2019_day04_part1() {
+    run_test(2019, 4, 1, "1625");
+}
+
+#[test]
+fn year2019_day04_part2() {
+    run_test(2019, 4, 2, "1111");
+}
