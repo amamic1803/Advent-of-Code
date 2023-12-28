@@ -30,23 +30,18 @@ fn part1(input: &str) -> String {
 }
 
 fn part2(input: &str) -> String {
-    let lengths = input
-        .trim()
-        .chars()
-        .map(|c| c as u8)
-        .collect::<Vec<_>>();
     let mut knot_hash = KnotHash::new();
 
-    knot_hash.hash(&lengths)
+    knot_hash.hash(input.trim())
 }
 
-struct KnotHash {
+pub(crate) struct KnotHash {
     list: [u8; LIST_SIZE],
     current_position: usize,
     skip_size: usize,
 }
 impl KnotHash {
-    fn new() -> Self {
+    pub (crate) fn new() -> Self {
         let mut list = [0; LIST_SIZE];
         for (i, item) in list.iter_mut().enumerate() {
             *item = i as u8;
@@ -82,10 +77,13 @@ impl KnotHash {
         }
     }
 
-    fn hash(&mut self, lengths: &[u8]) -> String {
-        // add suffix
-        let mut lengths = lengths.to_vec();
-        lengths.extend_from_slice(&ASCII_SUFFIX);
+    pub (crate) fn hash(&mut self, input: &str) -> String {
+        // convert input to lengths
+        let lengths = input
+            .chars()
+            .map(|c| c as u8)
+            .chain(ASCII_SUFFIX.iter().copied())
+            .collect::<Vec<_>>();
 
         // run rounds
         for _ in 0..ROUNDS {

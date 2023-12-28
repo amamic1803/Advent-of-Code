@@ -62,7 +62,6 @@ fn year2017_day06_part2() {
     run_test(2017, 6, 2, "1610");
 }
 
-
 #[test]
 fn year2017_day08_part1() {
     run_test(2017, 8, 1, "4163");
@@ -81,4 +80,14 @@ fn year2017_day10_part1() {
 #[test]
 fn year2017_day10_part2() {
     run_test(2017, 10, 2, "e0387e2ad112b7c2ef344e44885fe4d8");
+}
+
+#[test]
+fn year2017_day14_part1() {
+    run_test(2017, 14, 1, "8148");
+}
+
+#[test]
+fn year2017_day14_part2() {
+    run_test(2017, 14, 2, "1180");
 }
