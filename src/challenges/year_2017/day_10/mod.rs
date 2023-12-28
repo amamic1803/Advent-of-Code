@@ -1,0 +1,110 @@
+use crate::shared::structures::Day;
+use std::fmt::Write;
+
+pub fn day_10() -> Day {
+    Day::new(
+        10,
+        include_str!("text.txt"),
+        include_str!("input.txt"),
+        part1,
+        part2,
+    )
+}
+
+
+const LIST_SIZE: usize = 256;
+const ASCII_SUFFIX: [u8; 5] = [17, 31, 73, 47, 23];
+const ROUNDS: usize = 64;
+
+fn part1(input: &str) -> String {
+    let lengths = input
+        .trim()
+        .split(',')
+        .map(|num| num.parse::<u8>().unwrap())
+        .collect::<Vec<_>>();
+    let mut knot_hash = KnotHash::new();
+
+    knot_hash.round(&lengths);
+
+    (knot_hash.list[0] as u16 * knot_hash.list[1] as u16).to_string()
+}
+
+fn part2(input: &str) -> String {
+    let lengths = input
+        .trim()
+        .chars()
+        .map(|c| c as u8)
+        .collect::<Vec<_>>();
+    let mut knot_hash = KnotHash::new();
+
+    knot_hash.hash(&lengths)
+}
+
+struct KnotHash {
+    list: [u8; LIST_SIZE],
+    current_position: usize,
+    skip_size: usize,
+}
+impl KnotHash {
+    fn new() -> Self {
+        let mut list = [0; LIST_SIZE];
+        for (i, item) in list.iter_mut().enumerate() {
+            *item = i as u8;
+        }
+        Self {
+            list,
+            current_position: 0,
+            skip_size: 0,
+        }
+    }
+
+    fn execute_step(&mut self, len: u8) {
+
+        // reverse order
+        let mut start = self.current_position;
+        let mut end = start + len as usize - 1;  // inclusive
+        while start < end {
+            self.list.swap(start % LIST_SIZE, end % LIST_SIZE);
+            start += 1;
+            end -= 1;
+        }
+
+        // move current position
+        self.current_position = (self.current_position + len as usize + self.skip_size) % LIST_SIZE;
+
+        // increment skip size
+        self.skip_size += 1;
+    }
+
+    fn round(&mut self, lengths: &[u8]) {
+        for len in lengths {
+            self.execute_step(*len);
+        }
+    }
+
+    fn hash(&mut self, lengths: &[u8]) -> String {
+        // add suffix
+        let mut lengths = lengths.to_vec();
+        lengths.extend_from_slice(&ASCII_SUFFIX);
+
+        // run rounds
+        for _ in 0..ROUNDS {
+            self.round(&lengths);
+        }
+
+        // condense data
+        let mut condensed = [0; LIST_SIZE / 16];
+        for (i, item) in condensed.iter_mut().enumerate() {
+            let start = i * 16;
+            let end = start + 16;
+            *item = self.list[start..end].iter().fold(0, |acc, &x| acc ^ x);
+        }
+
+        // format as hex
+        let mut result_str = String::with_capacity(condensed.len() * 2);
+        for byte in &condensed {
+            write!(result_str, "{:02x}", byte).unwrap();
+        }
+        result_str
+    }
+}
