@@ -62,7 +62,7 @@ fn calculate_passwords(input: &str, hash_fn: fn(&str, &mut String)) -> u64 {
     let mut i = 0;
     while passwords_found.len() < PASSWORDS_TO_FIND as usize
         || last_occurences_3.iter()
-        .filter_map(|v| v.get(0))
+        .filter_map(|v| v.front())
         .any(|&val| val < last_password)
     {
         hash_in.truncate(hash_in_len);
@@ -72,7 +72,7 @@ fn calculate_passwords(input: &str, hash_fn: fn(&str, &mut String)) -> u64 {
 
         // clean up last_occurences
         for last_occurences in last_occurences_3.iter_mut() {
-            while let Some(last_ind) = last_occurences.get(0) {
+            while let Some(last_ind) = last_occurences.front() {
                 if i - last_ind > 1000 {
                     last_occurences.pop_front();
                 } else {
