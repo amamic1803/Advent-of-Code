@@ -42,7 +42,7 @@ fn part2(input: &str) -> String {
     panic!("No solution found");
 }
 
-fn simulate(array: &mut Vec<usize>) {
+fn simulate(array: &mut [usize]) {
     for i in (0..(array.len() - 3)).step_by(4) {
         match array[i] {
             1 => {

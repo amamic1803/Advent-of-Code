@@ -22,7 +22,7 @@ fn part2(input: &str) -> String {
     dijkstra_2(&height_map, loc_end, 0).to_string()
 }
 
-fn dijkstra_1(height_map: &Vec<Vec<u32>>, loc_start: [usize; 2], loc_end: [usize; 2]) -> u32 {
+fn dijkstra_1(height_map: &[Vec<u32>], loc_start: [usize; 2], loc_end: [usize; 2]) -> u32 {
     //! Returns the fewest number of steps required to reach the end location
     //! Or 0 if there is no path
     //! Solves Part 1
@@ -84,7 +84,7 @@ fn dijkstra_1(height_map: &Vec<Vec<u32>>, loc_start: [usize; 2], loc_end: [usize
     0
 }
 
-fn dijkstra_2(height_map: &Vec<Vec<u32>>, loc_end: [usize; 2], lowest_level: u32) -> u32 {
+fn dijkstra_2(height_map: &[Vec<u32>], loc_end: [usize; 2], lowest_level: u32) -> u32 {
     //! Returns the fewest number of steps required to reach the end location from lowest level
     //! Or 0 if there is no path
     //! Solves Part 2

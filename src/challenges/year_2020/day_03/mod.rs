@@ -35,7 +35,7 @@ fn part2(input: &str) -> String {
     }).product::<u64>().to_string()
 }
 
-fn count_trees(slope: [usize; 2], map: &Vec<Vec<bool>>) -> u64 {
+fn count_trees(slope: [usize; 2], map: &[Vec<bool>]) -> u64 {
     let mut position = [0, 0];
     let mut tree_count = 0;
 
