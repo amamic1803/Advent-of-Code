@@ -5,8 +5,6 @@ version = "0.1.0"
 edition = "2021"
 authors = ["Antonio Mamić <antoniomamic007@gmail.com>"]
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [profile.release]
 lto = true
 
@@ -14,9 +12,9 @@ lto = true
 opt-level = 3
 
 [dependencies]
-clap = { version = "4.4.8", features = ["cargo"] }
-itertools = "0.12.0"
+clap = { version = "4.5.2", features = ["cargo"] }
+itertools = "0.12.1"
 md5 = "0.7.0"
-once_cell = "1.18.0"
-regex = "1.10.2"
-serde_json = "1.0.108"
+once_cell = "1.19.0"
+regex = "1.10.3"
+serde_json = "1.0.114"
