@@ -103,6 +103,16 @@ fn year2017_day15_part2() {
 }
 
 #[test]
+fn year2017_day16_part1() {
+    run_test(2017, 16, 1, "doeaimlbnpjchfkg");
+}
+
+#[test]
+fn year2017_day16_part2() {
+    run_test(2017, 16, 2, "agndefjhibklmocp");
+}
+
+#[test]
 fn year2017_day18_part1() {
     run_test(2017, 18, 1, "9423");
 }
