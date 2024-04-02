@@ -1,7 +1,7 @@
 use crate::shared::structures::Day;
 
 pub fn day_18() -> Day {
-    Day::new (
+    Day::new(
         18,
         include_str!("text.txt"),
         include_str!("input.txt"),
@@ -9,7 +9,6 @@ pub fn day_18() -> Day {
         part2,
     )
 }
-
 
 fn part1(input: &str) -> String {
     let mut grid = parse_input(input);
@@ -22,7 +21,9 @@ fn part1(input: &str) -> String {
 
     for row in &grid {
         for cell in row {
-            if cell[0] { lights_on += 1; }
+            if cell[0] {
+                lights_on += 1;
+            }
         }
     }
 
@@ -44,7 +45,9 @@ fn part2(input: &str) -> String {
 
     for row in &grid {
         for cell in row {
-            if cell[0] { lights_on += 1; }
+            if cell[0] {
+                lights_on += 1;
+            }
         }
     }
 
@@ -110,30 +113,66 @@ fn get_neighbors(grid: &[Vec<[bool; 2]>], loc: (usize, usize)) -> usize {
     let mut count = 0;
 
     let prev_row = loc.0.checked_sub(1);
-    let next_row = if grid.get(loc.0 + 1).is_some() { Some(loc.0 + 1) } else { None };
+    let next_row = if grid.get(loc.0 + 1).is_some() {
+        Some(loc.0 + 1)
+    } else {
+        None
+    };
 
     let prev_col = loc.1.checked_sub(1);
-    let next_col = if grid[loc.0].get(loc.1 + 1).is_some() { Some(loc.1 + 1) } else { None };
+    let next_col = if grid[loc.0].get(loc.1 + 1).is_some() {
+        Some(loc.1 + 1)
+    } else {
+        None
+    };
 
     // right-side
     if let Some(right_col) = next_col {
-        if grid[loc.0][right_col][0] { count += 1; };
-        if let Some(up_row) = prev_row { if grid[up_row][right_col][0] { count += 1 } };
-        if let Some(down_row) = next_row { if grid[down_row][right_col][0] { count += 1 } };
+        if grid[loc.0][right_col][0] {
+            count += 1;
+        };
+        if let Some(up_row) = prev_row {
+            if grid[up_row][right_col][0] {
+                count += 1
+            }
+        };
+        if let Some(down_row) = next_row {
+            if grid[down_row][right_col][0] {
+                count += 1
+            }
+        };
     }
 
     // left-side
     if let Some(left_col) = prev_col {
-        if grid[loc.0][left_col][0] { count += 1; };
-        if let Some(up_row) = prev_row { if grid[up_row][left_col][0] { count += 1 } };
-        if let Some(down_row) = next_row { if grid[down_row][left_col][0] { count += 1 } };
+        if grid[loc.0][left_col][0] {
+            count += 1;
+        };
+        if let Some(up_row) = prev_row {
+            if grid[up_row][left_col][0] {
+                count += 1
+            }
+        };
+        if let Some(down_row) = next_row {
+            if grid[down_row][left_col][0] {
+                count += 1
+            }
+        };
     }
 
     // up
-    if let Some(up_row) = prev_row { if grid[up_row][loc.1][0] { count += 1 } };
+    if let Some(up_row) = prev_row {
+        if grid[up_row][loc.1][0] {
+            count += 1
+        }
+    };
 
     // down
-    if let Some(down_row) = next_row { if grid[down_row][loc.1][0] { count += 1 } };
+    if let Some(down_row) = next_row {
+        if grid[down_row][loc.1][0] {
+            count += 1
+        }
+    };
 
     count
 }

@@ -10,7 +10,6 @@ pub fn day_12() -> Day {
     )
 }
 
-
 use std::collections::HashMap;
 
 const GENERATIONS1: u64 = 20;
@@ -32,7 +31,7 @@ struct Pots {
     relevant: Vec<i64>,
     first_pot: i64,
     old_relevant: Vec<i64>,
-    old_first_pot: i64,    
+    old_first_pot: i64,
     rules: HashMap<[bool; 5], bool>,
 }
 impl Pots {
@@ -40,9 +39,12 @@ impl Pots {
         let mut lines = input.lines();
 
         let mut initial_state: Vec<bool> = lines
-            .next().unwrap()
+            .next()
+            .unwrap()
             .trim_start_matches("initial state: ")
-            .chars().map(|c| c == '#').collect();
+            .chars()
+            .map(|c| c == '#')
+            .collect();
         let mut first_pot = 0;
         while !initial_state[0] {
             initial_state.remove(0);
@@ -108,7 +110,7 @@ impl Pots {
         self.relevant.iter_mut().for_each(|i| *i += norm);
         self.first_pot -= norm;
     }
-    
+
     fn simulate_generations(&mut self, mut generations: u64) {
         while generations > 0 {
             self.next_generation();

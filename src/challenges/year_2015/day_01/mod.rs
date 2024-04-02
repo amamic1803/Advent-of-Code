@@ -10,7 +10,6 @@ pub fn day_01() -> Day {
     )
 }
 
-
 fn part1(input: &str) -> String {
     let mut floor: isize = 0;
     for c in input.trim().chars() {

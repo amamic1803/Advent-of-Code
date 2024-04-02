@@ -10,7 +10,6 @@ pub fn day_01() -> Day {
     )
 }
 
-
 fn part1(input: &str) -> String {
     let set = store_input_in_set(input);
     for num in &set {
@@ -27,7 +26,7 @@ fn part2(input: &str) -> String {
     for (i, num1) in set.iter().enumerate() {
         let diff1 = 2020 - num1;
         for (j, num2) in set.iter().enumerate() {
-            if i == j || num2 > &diff1{
+            if i == j || num2 > &diff1 {
                 continue;
             }
             let diff2 = diff1 - num2;

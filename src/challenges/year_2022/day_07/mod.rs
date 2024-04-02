@@ -10,7 +10,6 @@ pub fn day_07() -> Day {
     )
 }
 
-
 fn part1(input: &str) -> String {
     let base_dir = parse_input(input);
     let mut total_size = 0;
@@ -40,16 +39,13 @@ struct Folder {
 }
 
 impl File {
-    fn new (name: String, size: u64) -> File {
-        File {
-            name,
-            size,
-        }
+    fn new(name: String, size: u64) -> File {
+        File { name, size }
     }
 }
 
 impl Folder {
-    fn new (name: String) -> Folder {
+    fn new(name: String) -> Folder {
         Folder {
             name,
             files: Vec::new(),
@@ -80,7 +76,8 @@ impl Folder {
     }
 
     fn size(&self) -> u64 {
-        self.files.iter().map(|f| f.size).sum::<u64>() + self.folders.iter().map(|f| f.size()).sum::<u64>()
+        self.files.iter().map(|f| f.size).sum::<u64>()
+            + self.folders.iter().map(|f| f.size()).sum::<u64>()
     }
 }
 
@@ -115,7 +112,9 @@ fn parse_input(input: &str) -> Folder {
         if line_contents[0] == String::from('$') {
             if line_contents[1] == "cd" {
                 if line_contents[2] == ".." {
-                    if current_location.len() > 1 {current_location.pop();}
+                    if current_location.len() > 1 {
+                        current_location.pop();
+                    }
                 } else if line_contents[2] == "/" {
                     current_location = vec!["/".to_string()];
                 } else {
@@ -125,7 +124,11 @@ fn parse_input(input: &str) -> Folder {
         } else if line_contents[0] == "dir" {
             base_dir.new_entity(&current_location, line_contents[1].to_string(), None);
         } else {
-            base_dir.new_entity(&current_location, line_contents[1].to_string(), Some(line_contents[0].parse::<u64>().unwrap()));
+            base_dir.new_entity(
+                &current_location,
+                line_contents[1].to_string(),
+                Some(line_contents[0].parse::<u64>().unwrap()),
+            );
         }
     }
 

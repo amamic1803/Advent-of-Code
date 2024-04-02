@@ -2,7 +2,7 @@ use crate::shared::structures::Day;
 use md5::compute;
 
 pub fn day_04() -> Day {
-    Day::new (
+    Day::new(
         4,
         include_str!("text.txt"),
         include_str!("input.txt"),
@@ -10,7 +10,6 @@ pub fn day_04() -> Day {
         part2,
     )
 }
-
 
 fn part1(input: &str) -> String {
     find_with_zeros(input, 5)

@@ -10,7 +10,6 @@ pub fn day_02() -> Day {
     )
 }
 
-
 fn part1(input: &str) -> String {
     let mut forward = 0;
     let mut depth = 0;
@@ -45,7 +44,7 @@ fn part2(input: &str) -> String {
             "forward" => {
                 forward += amount;
                 depth += aim * amount;
-            },
+            }
             "down" => aim += amount,
             "up" => aim -= amount,
             _ => panic!("Invalid command type"),

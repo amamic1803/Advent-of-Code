@@ -11,7 +11,6 @@ pub fn day_01() -> Day {
     )
 }
 
-
 fn part1(input: &str) -> String {
     let input = parse_input(input);
 

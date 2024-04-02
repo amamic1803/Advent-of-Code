@@ -2,7 +2,7 @@ use crate::shared::structures::Day;
 use itertools::Itertools;
 
 pub fn day_24() -> Day {
-    Day::new (
+    Day::new(
         24,
         include_str!("text.txt"),
         include_str!("input.txt"),
@@ -10,7 +10,6 @@ pub fn day_24() -> Day {
         part2,
     )
 }
-
 
 fn part1(input: &str) -> String {
     let weights = parse_input(input);
@@ -29,7 +28,9 @@ fn part1(input: &str) -> String {
                 }
             }
         }
-        if found { break; }
+        if found {
+            break;
+        }
     }
 
     min_qe.to_string()
@@ -52,7 +53,9 @@ fn part2(input: &str) -> String {
                 }
             }
         }
-        if found { break; }
+        if found {
+            break;
+        }
     }
 
     min_qe.to_string()

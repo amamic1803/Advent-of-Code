@@ -10,16 +10,14 @@ pub fn day_06() -> Day {
     )
 }
 
-
-
 fn part1(input: &str) -> String {
     let mut group_answers = [false; 26];
     let mut counts_sum = 0;
-    
+
     for line in input.lines() {
         if line.is_empty() {
             counts_sum += group_answers.iter().filter(|&&x| x).count();
-            group_answers = [false; 26];            
+            group_answers = [false; 26];
         } else {
             for c in line.chars() {
                 group_answers[(c as u32 - 'a' as u32) as usize] = true;
@@ -27,7 +25,7 @@ fn part1(input: &str) -> String {
         }
     }
     counts_sum += group_answers.iter().filter(|&&x| x).count();
-    
+
     counts_sum.to_string()
 }
 

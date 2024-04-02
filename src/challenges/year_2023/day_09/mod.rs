@@ -10,11 +10,9 @@ pub fn day_09() -> Day {
     )
 }
 
-
 fn part1(input: &str) -> String {
     let data = parse_input(input);
-    data
-        .into_iter()
+    data.into_iter()
         .map(|row| predict_next(&row))
         .sum::<i64>()
         .to_string()
@@ -22,8 +20,7 @@ fn part1(input: &str) -> String {
 
 fn part2(input: &str) -> String {
     let data = parse_input(input);
-    data
-        .into_iter()
+    data.into_iter()
         .map(|row| predict_prev(&row))
         .sum::<i64>()
         .to_string()
@@ -33,11 +30,11 @@ fn parse_input(input: &str) -> Vec<Vec<i64>> {
     input
         .trim()
         .lines()
-        .map(|line| line
-            .split_whitespace()
-            .map(|num| num.parse::<i64>().unwrap())
-            .collect::<Vec<_>>()
-        )
+        .map(|line| {
+            line.split_whitespace()
+                .map(|num| num.parse::<i64>().unwrap())
+                .collect::<Vec<_>>()
+        })
         .collect()
 }
 
@@ -73,6 +70,9 @@ fn predict_prev(data: &[i64]) -> i64 {
     }
 
     let mut result = 0;
-    first_values.into_iter().rev().for_each(|val| result = val - result);
+    first_values
+        .into_iter()
+        .rev()
+        .for_each(|val| result = val - result);
     result
 }

@@ -10,7 +10,6 @@ pub fn day_16() -> Day {
     )
 }
 
-
 const LEN1: usize = 272;
 const LEN2: usize = 35651584;
 

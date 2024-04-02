@@ -1,7 +1,7 @@
 use crate::shared::structures::Day;
 
 pub fn day_25() -> Day {
-    Day::new (
+    Day::new(
         25,
         include_str!("text.txt"),
         include_str!("input.txt"),
@@ -9,7 +9,6 @@ pub fn day_25() -> Day {
         part2,
     )
 }
-
 
 fn part1(input: &str) -> String {
     let (row, col) = parse_input(input);
@@ -25,11 +24,25 @@ fn parse_input(input: &str) -> (usize, usize) {
     let mut line_iter = input.trim().lines().next().unwrap().split_whitespace();
 
     let mut element = line_iter.next().unwrap();
-    while element != "row" { element = line_iter.next().unwrap(); }
-    let row = line_iter.next().unwrap().trim_end_matches([',', '.']).parse::<usize>().unwrap();
+    while element != "row" {
+        element = line_iter.next().unwrap();
+    }
+    let row = line_iter
+        .next()
+        .unwrap()
+        .trim_end_matches([',', '.'])
+        .parse::<usize>()
+        .unwrap();
 
-    while element != "column" { element = line_iter.next().unwrap(); }
-    let col = line_iter.next().unwrap().trim_end_matches([',', '.']).parse::<usize>().unwrap();
+    while element != "column" {
+        element = line_iter.next().unwrap();
+    }
+    let col = line_iter
+        .next()
+        .unwrap()
+        .trim_end_matches([',', '.'])
+        .parse::<usize>()
+        .unwrap();
 
     // (row, column)
     (row, col)

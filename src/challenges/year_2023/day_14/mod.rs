@@ -10,9 +10,7 @@ pub fn day_14() -> Day {
     )
 }
 
-
 use std::collections::HashSet;
-
 
 const CYCLES: u32 = 1_000_000_000;
 
@@ -32,9 +30,9 @@ fn part2(input: &str) -> String {
 
 #[derive(Copy, Clone, Hash, Eq, PartialEq)]
 enum RockType {
-    Round,  // movable rock
+    Round, // movable rock
     Cube,  // immovable rock
-    Empty,  // no rock
+    Empty, // no rock
 }
 
 struct Platform {
@@ -45,16 +43,16 @@ impl Platform {
         let rocks = input
             .trim()
             .lines()
-            .map(|line| line
-                .chars()
-                .map(|c| match c {
-                    'O' => RockType::Round,
-                    '#' => RockType::Cube,
-                    '.' => RockType::Empty,
-                    _ => panic!("Invalid rock type"),
-                })
-                .collect()
-            )
+            .map(|line| {
+                line.chars()
+                    .map(|c| match c {
+                        'O' => RockType::Round,
+                        '#' => RockType::Cube,
+                        '.' => RockType::Empty,
+                        _ => panic!("Invalid rock type"),
+                    })
+                    .collect()
+            })
             .collect();
 
         Self { rocks }
@@ -77,7 +75,7 @@ impl Platform {
             let mut empty_pos = 0;
             for i in 0..row.len() {
                 match row[i] {
-                    RockType::Empty => {},
+                    RockType::Empty => {}
                     RockType::Round => {
                         row[i] = RockType::Empty;
                         row[empty_pos] = RockType::Round;
@@ -94,7 +92,7 @@ impl Platform {
             let mut empty_pos = row.len() - 1;
             for i in (0..row.len()).rev() {
                 match row[i] {
-                    RockType::Empty => {},
+                    RockType::Empty => {}
                     RockType::Round => {
                         row[i] = RockType::Empty;
                         row[empty_pos] = RockType::Round;
@@ -131,7 +129,10 @@ impl Platform {
             }
         }
 
-        let cycle_start = seen_states_vector.iter().position(|state| state == &self.rocks).unwrap();
+        let cycle_start = seen_states_vector
+            .iter()
+            .position(|state| state == &self.rocks)
+            .unwrap();
         let cycle_length = seen_states_vector.len() - cycle_start;
 
         let cycle_index = ((CYCLES - cycle_start as u32) % cycle_length as u32) as usize;
@@ -143,13 +144,8 @@ impl Platform {
         let mut load = 0;
 
         for (i, row) in self.rocks.iter().enumerate() {
-            load += (
-                row
-                    .iter()
-                    .filter(|&&rock| rock == RockType::Round)
-                    .count()
-                    * (row.len() - i)
-            ) as u64;
+            load += (row.iter().filter(|&&rock| rock == RockType::Round).count() * (row.len() - i))
+                as u64;
         }
 
         load

@@ -1,5 +1,5 @@
 use crate::shared::structures::Day;
-use std::cmp::{min, max};
+use std::cmp::{max, min};
 use std::iter::zip;
 
 pub fn day_05() -> Day {
@@ -11,7 +11,6 @@ pub fn day_05() -> Day {
         part2,
     )
 }
-
 
 fn part1(input: &str) -> String {
     let mut lines = parse_input(input);
@@ -107,10 +106,13 @@ fn draw_line(grid: &mut [Vec<u32>], line: &[[u32; 2]; 2]) {
     if line[0][1] == line[1][1] {
         grid[line[0][1] as usize]
             [min(line[0][0], line[1][0]) as usize..=max(line[0][0], line[1][0]) as usize]
-            .iter_mut().for_each(|point| *point += 1);
-    } else if line[0][0] == line[1][0] {  // vertical line (x1 == x2)
+            .iter_mut()
+            .for_each(|point| *point += 1);
+    } else if line[0][0] == line[1][0] {
+        // vertical line (x1 == x2)
         grid[min(line[0][1], line[1][1]) as usize..=max(line[0][1], line[1][1]) as usize]
-            .iter_mut().for_each(|row| row[line[0][0] as usize] += 1);
+            .iter_mut()
+            .for_each(|row| row[line[0][0] as usize] += 1);
     } else {
         // diagonal line
         let x_iter = if line[0][0] < line[1][0] {

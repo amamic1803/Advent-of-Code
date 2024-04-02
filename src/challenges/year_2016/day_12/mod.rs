@@ -10,7 +10,6 @@ pub fn day_12() -> Day {
     )
 }
 
-
 fn part1(input: &str) -> String {
     let mut cpu = Cpu::new(input);
     cpu.execute();
@@ -20,26 +19,30 @@ fn part1(input: &str) -> String {
 
 fn part2(input: &str) -> String {
     let mut cpu = Cpu::new(input);
-    cpu.registers[2] = 1;  // c = 1
+    cpu.registers[2] = 1; // c = 1
     cpu.execute();
 
     cpu.registers[0].to_string()
 }
 
 struct Cpu {
-    registers: [i64; 4],  // a, b, c, d
+    registers: [i64; 4], // a, b, c, d
     instructions: Vec<Instruction>,
 }
 impl Cpu {
     fn new(input: &str) -> Self {
-        let instructions = input.trim().lines().map(|line| {
-            let mut parts = line.split(' ');
-            let instruction = parts.next().unwrap();
-            let op1 = parts.next().unwrap();
-            let op2 = parts.next().unwrap_or("");
+        let instructions = input
+            .trim()
+            .lines()
+            .map(|line| {
+                let mut parts = line.split(' ');
+                let instruction = parts.next().unwrap();
+                let op1 = parts.next().unwrap();
+                let op2 = parts.next().unwrap_or("");
 
-            Instruction::new(instruction, op1, op2)
-        }).collect();
+                Instruction::new(instruction, op1, op2)
+            })
+            .collect();
 
         Self {
             registers: [0; 4],
@@ -64,7 +67,7 @@ impl Cpu {
                     }
 
                     ins_index += 1;
-                },
+                }
                 Instruction::Inc(op) => {
                     match op {
                         Operand::Register(reg) => self.registers[*reg] += 1,
@@ -72,7 +75,7 @@ impl Cpu {
                     }
 
                     ins_index += 1;
-                },
+                }
                 Instruction::Dec(op) => {
                     match op {
                         Operand::Register(reg) => self.registers[*reg] -= 1,
@@ -80,7 +83,7 @@ impl Cpu {
                     }
 
                     ins_index += 1;
-                },
+                }
                 Instruction::Jnz(op1, op2) => {
                     let offset = match op2 {
                         Operand::Value(value) => *value,
@@ -97,7 +100,7 @@ impl Cpu {
                     } else {
                         ins_index += 1;
                     }
-                },
+                }
             }
         }
     }

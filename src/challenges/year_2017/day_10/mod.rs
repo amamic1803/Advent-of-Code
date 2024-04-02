@@ -11,7 +11,6 @@ pub fn day_10() -> Day {
     )
 }
 
-
 const LIST_SIZE: usize = 256;
 const ASCII_SUFFIX: [u8; 5] = [17, 31, 73, 47, 23];
 const ROUNDS: usize = 64;
@@ -41,7 +40,7 @@ pub(crate) struct KnotHash {
     skip_size: usize,
 }
 impl KnotHash {
-    pub (crate) fn new() -> Self {
+    pub(crate) fn new() -> Self {
         let mut list = [0; LIST_SIZE];
         for (i, item) in list.iter_mut().enumerate() {
             *item = i as u8;
@@ -54,10 +53,9 @@ impl KnotHash {
     }
 
     fn execute_step(&mut self, len: u8) {
-
         // reverse order
         let mut start = self.current_position;
-        let mut end = start + len as usize - 1;  // inclusive
+        let mut end = start + len as usize - 1; // inclusive
         while start < end {
             self.list.swap(start % LIST_SIZE, end % LIST_SIZE);
             start += 1;
@@ -77,7 +75,7 @@ impl KnotHash {
         }
     }
 
-    pub (crate) fn hash(&mut self, input: &str) -> String {
+    pub(crate) fn hash(&mut self, input: &str) -> String {
         // convert input to lengths
         let lengths = input
             .chars()

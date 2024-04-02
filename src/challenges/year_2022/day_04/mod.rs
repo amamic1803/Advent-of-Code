@@ -10,7 +10,6 @@ pub fn day_04() -> Day {
     )
 }
 
-
 fn part1(input: &str) -> String {
     process_input(input).0.to_string()
 }
@@ -30,12 +29,14 @@ fn process_input(input: &str) -> (usize, usize) {
                 elves.push(sectors.parse::<usize>().unwrap())
             }
         }
-        if ((elves[0] <= elves[2]) && (elves[1] >= elves[3])) ||
-            ((elves[2] <= elves[0]) && (elves[3] >= elves[1])) {
+        if ((elves[0] <= elves[2]) && (elves[1] >= elves[3]))
+            || ((elves[2] <= elves[0]) && (elves[3] >= elves[1]))
+        {
             contain += 1;
             overlap += 1;
-        } else if ((elves[0] >= elves[2]) && (elves[0] <= elves[3])) ||
-            ((elves[1] >= elves[2]) && (elves[1] <= elves[3])) {
+        } else if ((elves[0] >= elves[2]) && (elves[0] <= elves[3]))
+            || ((elves[1] >= elves[2]) && (elves[1] <= elves[3]))
+        {
             overlap += 1;
         }
     }

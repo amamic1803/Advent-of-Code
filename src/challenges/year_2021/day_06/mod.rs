@@ -10,7 +10,6 @@ pub fn day_06() -> Day {
     )
 }
 
-
 const DAYS_1: u16 = 80;
 const DAYS_2: u16 = 256;
 
@@ -41,7 +40,11 @@ struct Lanternfish {
 impl Lanternfish {
     fn new(input: &str) -> Self {
         let mut fish_counts = [0; 9];
-        for fish_state in input.trim().split(',').map(|num_str| num_str.parse::<usize>().unwrap()) {
+        for fish_state in input
+            .trim()
+            .split(',')
+            .map(|num_str| num_str.parse::<usize>().unwrap())
+        {
             fish_counts[fish_state] += 1;
         }
         Self { fish_counts }

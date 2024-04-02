@@ -1,9 +1,9 @@
-use crate::shared::structures::Day;
 use crate::shared::graph::Graph;
+use crate::shared::structures::Day;
 use std::collections::HashMap;
 
 pub fn day_13() -> Day {
-    Day::new (
+    Day::new(
         13,
         include_str!("text.txt"),
         include_str!("input.txt"),
@@ -11,7 +11,6 @@ pub fn day_13() -> Day {
         part2,
     )
 }
-
 
 fn part1(input: &str) -> String {
     parse_input(input).circle_max(0).0.to_string()

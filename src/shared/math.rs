@@ -1,9 +1,5 @@
 //! Math functions.
 
-
-
-
-
 /// Finds the greatest common divisor of two numbers.
 /// Uses the Euclidean algorithm.
 /// # Arguments

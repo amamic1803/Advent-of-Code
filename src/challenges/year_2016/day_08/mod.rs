@@ -11,7 +11,6 @@ pub fn day_08() -> Day {
     )
 }
 
-
 fn part1(input: &str) -> String {
     let screen = simulate_screen(input);
     screen.pixels_on().to_string()
@@ -46,16 +45,18 @@ fn simulate_screen(input: &str) -> Screen {
                     .collect_tuple()
                     .unwrap();
                 screen.rectangle(x, y);
-            },
+            }
             "rotate" => {
-                let n_th = line_contents[2].split('=').collect::<Vec<&str>>()[1].parse::<usize>().unwrap();
+                let n_th = line_contents[2].split('=').collect::<Vec<&str>>()[1]
+                    .parse::<usize>()
+                    .unwrap();
                 let by = line_contents[4].parse::<usize>().unwrap();
                 match line_contents[1] {
                     "row" => screen.rotate_row(n_th, by),
                     "column" => screen.rotate_col(n_th, by),
                     _ => panic!("Invalid instruction"),
                 }
-            },
+            }
             _ => panic!("Invalid instruction"),
         }
     }

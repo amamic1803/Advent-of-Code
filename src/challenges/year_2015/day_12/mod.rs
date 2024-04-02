@@ -2,7 +2,7 @@ use crate::shared::structures::Day;
 use serde_json::{from_str, Value};
 
 pub fn day_12() -> Day {
-    Day::new (
+    Day::new(
         12,
         include_str!("text.txt"),
         include_str!("input.txt"),
@@ -10,7 +10,6 @@ pub fn day_12() -> Day {
         part2,
     )
 }
-
 
 fn part1(input: &str) -> String {
     let json_val: Value = from_str(input).unwrap();
@@ -46,6 +45,6 @@ fn sum_ints_wo_red(json_val: &Value) -> i64 {
             } else {
                 obj.iter().map(|x| sum_ints_wo_red(x.1)).sum()
             }
-        },
+        }
     }
 }

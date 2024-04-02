@@ -10,16 +10,9 @@ pub fn day_03() -> Day {
     )
 }
 
-
 // right, down
 const SLOPE_PART1: [usize; 2] = [3, 1];
-const SLOPES_PART2: [[usize; 2]; 5] = [
-    [1, 1],
-    [3, 1],
-    [5, 1],
-    [7, 1],
-    [1, 2],
-];
+const SLOPES_PART2: [[usize; 2]; 5] = [[1, 1], [3, 1], [5, 1], [7, 1], [1, 2]];
 
 fn part1(input: &str) -> String {
     let map = parse_input(input);
@@ -30,9 +23,11 @@ fn part1(input: &str) -> String {
 fn part2(input: &str) -> String {
     let map = parse_input(input);
 
-    SLOPES_PART2.into_iter().map(|slope| {
-        count_trees(slope, &map)
-    }).product::<u64>().to_string()
+    SLOPES_PART2
+        .into_iter()
+        .map(|slope| count_trees(slope, &map))
+        .product::<u64>()
+        .to_string()
 }
 
 fn count_trees(slope: [usize; 2], map: &[Vec<bool>]) -> u64 {

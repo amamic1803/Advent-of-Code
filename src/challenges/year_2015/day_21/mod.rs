@@ -2,7 +2,7 @@ use crate::shared::structures::Day;
 use itertools::Itertools;
 
 pub fn day_21() -> Day {
-    Day::new (
+    Day::new(
         21,
         include_str!("text.txt"),
         include_str!("input.txt"),
@@ -10,7 +10,6 @@ pub fn day_21() -> Day {
         part2,
     )
 }
-
 
 fn part1(input: &str) -> String {
     let boss_stats = parse_input(input);
@@ -90,7 +89,12 @@ fn parse_input(input: &str) -> [usize; 3] {
     let mut boss = [0; 3];
 
     for (i, line) in input.trim().lines().enumerate() {
-        boss[i] = line.split_whitespace().next_back().unwrap().parse::<usize>().unwrap();
+        boss[i] = line
+            .split_whitespace()
+            .next_back()
+            .unwrap()
+            .parse::<usize>()
+            .unwrap();
     }
 
     boss
@@ -102,14 +106,18 @@ fn victory(mut me: [usize; 3], mut boss: [usize; 3]) -> bool {
     loop {
         if my_turn {
             let mut taken_dmg = me[1].saturating_sub(boss[2]);
-            if taken_dmg == 0 { taken_dmg = 1; };
+            if taken_dmg == 0 {
+                taken_dmg = 1;
+            };
             boss[0] = boss[0].saturating_sub(taken_dmg);
             if boss[0] == 0 {
                 return true;
             }
         } else {
             let mut taken_dmg = boss[1].saturating_sub(me[2]);
-            if taken_dmg == 0 { taken_dmg = 1; };
+            if taken_dmg == 0 {
+                taken_dmg = 1;
+            };
             me[0] = me[0].saturating_sub(taken_dmg);
             if me[0] == 0 {
                 return false;
@@ -118,7 +126,6 @@ fn victory(mut me: [usize; 3], mut boss: [usize; 3]) -> bool {
         my_turn = !my_turn;
     }
 }
-
 
 const WEAPONS: [(&str, usize, usize, usize); 5] = [
     ("Dagger", 8, 4, 0),

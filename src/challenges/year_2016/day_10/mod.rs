@@ -11,7 +11,6 @@ pub fn day_10() -> Day {
     )
 }
 
-
 fn part1(input: &str) -> String {
     let mut processor = Processor::new(input);
     match processor.simulate(1) {
@@ -28,7 +27,6 @@ fn part2(input: &str) -> String {
     }
 }
 
-
 struct Processor {
     bots: Vec<Bot>,
     outputs: Vec<Out>,
@@ -44,7 +42,10 @@ impl Processor {
         for line in input.trim().lines() {
             let line_contents = line.split_whitespace().collect::<Vec<_>>();
             match line_contents[0] {
-                "value" => values.push((line_contents[1].parse().unwrap(), line_contents[5].parse().unwrap())),
+                "value" => values.push((
+                    line_contents[1].parse().unwrap(),
+                    line_contents[5].parse().unwrap(),
+                )),
                 "bot" => {
                     let bot_id = line_contents[1].parse().unwrap();
                     let low_id = line_contents[6].parse().unwrap();
@@ -57,7 +58,7 @@ impl Processor {
                                 outputs.push(output);
                             }
                             PassType::Out(low_id)
-                        },
+                        }
                         _ => panic!("Invalid input"),
                     };
                     let high_pass_type = match line_contents[10] {
@@ -68,12 +69,12 @@ impl Processor {
                                 outputs.push(output);
                             }
                             PassType::Out(high_id)
-                        },
+                        }
                         _ => panic!("Invalid input"),
                     };
 
                     bots.push(Bot::new(bot_id, low_pass_type, high_pass_type));
-                },
+                }
                 _ => panic!("Invalid input"),
             }
         }
@@ -97,10 +98,7 @@ impl Processor {
         assert_eq!(bots.len(), bots[bots.len() - 1].id as usize + 1);
         assert_eq!(outputs.len(), outputs[outputs.len() - 1].id as usize + 1);
 
-        Self {
-            bots,
-            outputs,
-        }
+        Self { bots, outputs }
     }
 
     fn simulate(&mut self, part: u8) -> Option<u64> {
@@ -115,8 +113,20 @@ impl Processor {
             let step_count = current_bots.len();
             for _ in 0..step_count {
                 let working_bot = self.bots[current_bots.pop_front().unwrap() as usize];
-                let lower_value = working_bot.values.iter().filter(|value| value.is_some()).min().unwrap().unwrap();
-                let higher_value = working_bot.values.iter().filter(|value| value.is_some()).max().unwrap().unwrap();
+                let lower_value = working_bot
+                    .values
+                    .iter()
+                    .filter(|value| value.is_some())
+                    .min()
+                    .unwrap()
+                    .unwrap();
+                let higher_value = working_bot
+                    .values
+                    .iter()
+                    .filter(|value| value.is_some())
+                    .max()
+                    .unwrap()
+                    .unwrap();
 
                 if part == 1 && lower_value == 17 && higher_value == 61 {
                     return Some(working_bot.id as u64);
@@ -128,7 +138,7 @@ impl Processor {
                         if self.bots[id as usize].values() == 2 {
                             current_bots.push_back(id);
                         }
-                    },
+                    }
                     PassType::Out(id) => self.outputs[id as usize].value = Some(lower_value),
                 }
 
@@ -138,7 +148,7 @@ impl Processor {
                         if self.bots[id as usize].values() == 2 {
                             current_bots.push_back(id);
                         }
-                    },
+                    }
                     PassType::Out(id) => self.outputs[id as usize].value = Some(higher_value),
                 }
             }
@@ -166,7 +176,7 @@ struct Bot {
     id: u16,
     low: PassType,
     high: PassType,
-    values: [Option<u16>; 2]
+    values: [Option<u16>; 2],
 }
 impl Bot {
     fn new(id: u16, low: PassType, high: PassType) -> Self {
@@ -174,7 +184,7 @@ impl Bot {
             id,
             low,
             high,
-            values: [None, None]
+            values: [None, None],
         }
     }
 
@@ -200,10 +210,7 @@ struct Out {
 }
 impl Out {
     fn new(id: u16, value: Option<u16>) -> Self {
-        Self {
-            id,
-            value,
-        }
+        Self { id, value }
     }
 }
 

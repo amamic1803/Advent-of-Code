@@ -10,11 +10,10 @@ pub fn day_07() -> Day {
     )
 }
 
-
-use std::collections::HashMap;
-use std::cmp::Ordering;
-use once_cell::sync::Lazy;
 use itertools::Itertools;
+use once_cell::sync::Lazy;
+use std::cmp::Ordering;
+use std::collections::HashMap;
 
 static CARD_ORDER_1: Lazy<HashMap<char, u64>> = Lazy::new(|| {
     let mut map = HashMap::new();
@@ -56,31 +55,45 @@ static CARD_ORDER_2: Lazy<HashMap<char, u64>> = Lazy::new(|| {
 });
 
 fn part1(input: &str) -> String {
-    let mut hands = input.trim().lines().map(|hand| {
-        let mut hand = Hand::new(hand);
-        hand.calc_dec_val1();
-        hand
-    }).collect_vec();
+    let mut hands = input
+        .trim()
+        .lines()
+        .map(|hand| {
+            let mut hand = Hand::new(hand);
+            hand.calc_dec_val1();
+            hand
+        })
+        .collect_vec();
 
     hands.sort();
 
-    hands.into_iter().enumerate().map(|(i, hand)| {
-        hand.bid * (i as u64 + 1)
-    }).sum::<u64>().to_string()
+    hands
+        .into_iter()
+        .enumerate()
+        .map(|(i, hand)| hand.bid * (i as u64 + 1))
+        .sum::<u64>()
+        .to_string()
 }
 
 fn part2(input: &str) -> String {
-    let mut hands = input.trim().lines().map(|hand| {
-        let mut hand = Hand::new(hand);
-        hand.calc_dec_val2();
-        hand
-    }).collect_vec();
+    let mut hands = input
+        .trim()
+        .lines()
+        .map(|hand| {
+            let mut hand = Hand::new(hand);
+            hand.calc_dec_val2();
+            hand
+        })
+        .collect_vec();
 
     hands.sort();
 
-    hands.into_iter().enumerate().map(|(i, hand)| {
-        hand.bid * (i as u64 + 1)
-    }).sum::<u64>().to_string()
+    hands
+        .into_iter()
+        .enumerate()
+        .map(|(i, hand)| hand.bid * (i as u64 + 1))
+        .sum::<u64>()
+        .to_string()
 }
 
 struct Hand<'a> {
@@ -128,7 +141,9 @@ impl PartialEq<Self> for Hand<'_> {
 }
 impl Eq for Hand<'_> {}
 impl PartialOrd<Self> for Hand<'_> {
-    fn partial_cmp(&self, other: &Self) -> Option<Ordering> { Some(self.cmp(other)) }
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+        Some(self.cmp(other))
+    }
 }
 impl Ord for Hand<'_> {
     fn cmp(&self, other: &Self) -> Ordering {
@@ -220,7 +235,9 @@ impl HandTypes {
     }
 }
 impl PartialOrd for HandTypes {
-    fn partial_cmp(&self, other: &Self) -> Option<Ordering> { Some(self.cmp(other)) }
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+        Some(self.cmp(other))
+    }
 }
 impl Ord for HandTypes {
     fn cmp(&self, other: &Self) -> Ordering {

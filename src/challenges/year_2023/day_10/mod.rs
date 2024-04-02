@@ -10,10 +10,8 @@ pub fn day_10() -> Day {
     )
 }
 
-
-use std::collections::{HashMap, HashSet, BTreeSet};
 use once_cell::sync::Lazy;
-
+use std::collections::{BTreeSet, HashMap, HashSet};
 
 fn part1(input: &str) -> String {
     let field = parse_input(input);
@@ -85,7 +83,6 @@ fn parse_input(input: &str) -> Vec<Vec<char>> {
         .collect::<Vec<Vec<char>>>()
 }
 
-
 fn find_start(field: &[Vec<char>]) -> (usize, usize) {
     for (i, row) in field.iter().enumerate() {
         for (j, cell) in row.iter().enumerate() {
@@ -123,7 +120,7 @@ fn find_adjacent_pipes(pipe: (usize, usize), field: &[Vec<char>]) -> [(usize, us
             }
 
             result
-        },
+        }
         '|' => [(pipe.0 - 1, pipe.1), (pipe.0 + 1, pipe.1)],
         '-' => [(pipe.0, pipe.1 - 1), (pipe.0, pipe.1 + 1)],
         'L' => [(pipe.0, pipe.1 + 1), (pipe.0 - 1, pipe.1)],
@@ -156,7 +153,6 @@ fn find_loop(field: &[Vec<char>]) -> HashSet<(usize, usize)> {
     visited
 }
 
-
 /// Finds the S and returns its coordinates and type
 fn determine_s(field: &[Vec<char>]) -> ((usize, usize), char) {
     let s_coord = find_start(field);
@@ -178,10 +174,10 @@ fn determine_s(field: &[Vec<char>]) -> ((usize, usize), char) {
         left = true;
     }
 
-    if s_coord.1 < field[0].len() - 1 && ['-', '7', 'J'].contains(&field[s_coord.0][s_coord.1 + 1]) {
+    if s_coord.1 < field[0].len() - 1 && ['-', '7', 'J'].contains(&field[s_coord.0][s_coord.1 + 1])
+    {
         right = true;
     }
-
 
     let mut s_type = ' ';
 
@@ -205,41 +201,17 @@ fn determine_s(field: &[Vec<char>]) -> ((usize, usize), char) {
 static PIPE_EXPANSIONS: Lazy<HashMap<char, [[char; 3]; 3]>> = Lazy::new(|| {
     let mut map = HashMap::new();
 
-    map.insert('|', [
-        ['.', '#', '.'],
-        ['.', '#', '.'],
-        ['.', '#', '.'],
-    ]);
+    map.insert('|', [['.', '#', '.'], ['.', '#', '.'], ['.', '#', '.']]);
 
-    map.insert('-', [
-        ['.', '.', '.'],
-        ['#', '#', '#'],
-        ['.', '.', '.'],
-    ]);
+    map.insert('-', [['.', '.', '.'], ['#', '#', '#'], ['.', '.', '.']]);
 
-    map.insert('L', [
-        ['.', '#', '.'],
-        ['.', '.', '#'],
-        ['.', '.', '.'],
-    ]);
+    map.insert('L', [['.', '#', '.'], ['.', '.', '#'], ['.', '.', '.']]);
 
-    map.insert('J', [
-        ['.', '#', '.'],
-        ['#', '.', '.'],
-        ['.', '.', '.'],
-    ]);
+    map.insert('J', [['.', '#', '.'], ['#', '.', '.'], ['.', '.', '.']]);
 
-    map.insert('F', [
-        ['.', '.', '.'],
-        ['.', '.', '#'],
-        ['.', '#', '.'],
-    ]);
+    map.insert('F', [['.', '.', '.'], ['.', '.', '#'], ['.', '#', '.']]);
 
-    map.insert('7', [
-        ['.', '.', '.'],
-        ['#', '.', '.'],
-        ['.', '#', '.'],
-    ]);
+    map.insert('7', [['.', '.', '.'], ['#', '.', '.'], ['.', '#', '.']]);
 
     map
 });
@@ -268,9 +240,7 @@ fn flood_fill_outside(expanded_field: &mut [Vec<char>]) {
         expanded_field[current_tile.0][current_tile.1] = 'O';
 
         // up
-        if current_tile.0 > 0
-            && expanded_field[current_tile.0 - 1][current_tile.1] == '.'
-        {
+        if current_tile.0 > 0 && expanded_field[current_tile.0 - 1][current_tile.1] == '.' {
             current_tiles.insert((current_tile.0 - 1, current_tile.1));
         }
 
@@ -282,9 +252,7 @@ fn flood_fill_outside(expanded_field: &mut [Vec<char>]) {
         }
 
         // left
-        if current_tile.1 > 0
-            && expanded_field[current_tile.0][current_tile.1 - 1] == '.'
-        {
+        if current_tile.1 > 0 && expanded_field[current_tile.0][current_tile.1 - 1] == '.' {
             current_tiles.insert((current_tile.0, current_tile.1 - 1));
         }
 

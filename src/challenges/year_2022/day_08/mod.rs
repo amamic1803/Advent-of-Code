@@ -10,7 +10,6 @@ pub fn day_08() -> Day {
     )
 }
 
-
 fn part1(input: &str) -> String {
     let forest: Vec<Vec<u8>> = parse_forest(input);
     let mut visible_trees: u32 = 0;

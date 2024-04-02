@@ -10,7 +10,6 @@ pub fn day_20() -> Day {
     )
 }
 
-
 fn part1(input: &str) -> String {
     let allowed_ips = find_allowed_ips(input);
     allowed_ips[0].0.to_string()
@@ -19,11 +18,11 @@ fn part1(input: &str) -> String {
 fn part2(input: &str) -> String {
     let mut allowed_count = 0_u32;
     let allowed_ips = find_allowed_ips(input);
-    
+
     for allowed_ip_range in allowed_ips {
         allowed_count += allowed_ip_range.1 - allowed_ip_range.0 + 1;
     }
-    
+
     allowed_count.to_string()
 }
 
@@ -50,18 +49,16 @@ fn find_allowed_ips(input: &str) -> Vec<(u32, u32)> {
             }
         }
     }
-    
+
     allowed_ips.sort_by_key(|(start, _)| *start);
     allowed_ips
 }
 
-fn parse_input(input: &str) -> impl Iterator<Item=(u32, u32)> + '_ {
-    input
-        .lines()
-        .map(|line| {
-            let (start, end) = line.split_once('-').unwrap();
-            let start = start.parse().unwrap();
-            let end = end.parse().unwrap();
-            (start, end)
-        })
+fn parse_input(input: &str) -> impl Iterator<Item = (u32, u32)> + '_ {
+    input.lines().map(|line| {
+        let (start, end) = line.split_once('-').unwrap();
+        let start = start.parse().unwrap();
+        let end = end.parse().unwrap();
+        (start, end)
+    })
 }

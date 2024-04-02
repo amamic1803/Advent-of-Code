@@ -10,10 +10,8 @@ pub fn day_14() -> Day {
     )
 }
 
-
-use std::collections::VecDeque;
 use super::day_10::KnotHash;
-
+use std::collections::VecDeque;
 
 const ROWS: usize = 128;
 
@@ -67,7 +65,7 @@ fn part2(input: &str) -> String {
 
 fn generate_grid(input: &str) -> Vec<Vec<bool>> {
     let input_str = input.trim();
-    let mut grid = Vec::with_capacity(ROWS);  // 128x128 grid, true = used, false = free
+    let mut grid = Vec::with_capacity(ROWS); // 128x128 grid, true = used, false = free
 
     for i in 0..ROWS {
         let mut knot_hash = KnotHash::new();

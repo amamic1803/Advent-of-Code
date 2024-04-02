@@ -1,9 +1,7 @@
 //! A module containing structures used to represent challenges.
 
-
 use std::error::Error;
 use std::fmt::{self, Display, Formatter};
-
 
 /// An enum representing the errors that can occur when using these structures.
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -22,7 +20,6 @@ impl Display for ChallengeError {
     }
 }
 impl Error for ChallengeError {}
-
 
 /// A structure representing the challenges.
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -114,7 +111,12 @@ impl Challenges {
     /// # Errors
     /// * `ChallengeError::UnavailableYear` - The year is unavailable.
     /// * `ChallengeError::UnavailableDay` - The day is unavailable.
-    pub fn show_input(&self, year_num: usize, day_num: usize, input: &str) -> Result<String, ChallengeError> {
+    pub fn show_input(
+        &self,
+        year_num: usize,
+        day_num: usize,
+        input: &str,
+    ) -> Result<String, ChallengeError> {
         match self.years.iter().position(|year| year.year_num == year_num) {
             Some(index) => Ok(self.years[index].show_input(day_num, input)?),
             None => Err(ChallengeError::UnavailableYear),
@@ -132,14 +134,19 @@ impl Challenges {
     /// # Errors
     /// * `ChallengeError::UnavailableYear` - The year is unavailable.
     /// * `ChallengeError::UnavailableDay` - The day is unavailable.
-    pub fn run(&self, year_num: usize, day_num: usize, part_num: usize, input: &str) -> Result<String, ChallengeError> {
+    pub fn run(
+        &self,
+        year_num: usize,
+        day_num: usize,
+        part_num: usize,
+        input: &str,
+    ) -> Result<String, ChallengeError> {
         match self.years.iter().position(|year| year.year_num == year_num) {
             Some(index) => Ok(self.years[index].run(day_num, part_num, input)?),
             None => Err(ChallengeError::UnavailableYear),
         }
     }
 }
-
 
 /// A structure representing a year.
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -158,10 +165,7 @@ impl Year {
     /// A `Year` structure.
     pub fn new(year_num: usize, mut days: Vec<Day>) -> Self {
         days.sort_by_key(|day| day.day_num);
-        Self {
-            year_num,
-            days,
-        }
+        Self { year_num, days }
     }
 
     /// Lists all available days in the year.
@@ -186,7 +190,7 @@ impl Year {
     /// # Errors
     /// * `ChallengeError::UnavailableDay` - The day is unavailable.
     pub fn show_text(&self, day_num: usize) -> Result<String, ChallengeError> {
-         match self.days.iter().position(|day| day.day_num == day_num) {
+        match self.days.iter().position(|day| day.day_num == day_num) {
             Some(index) => Ok(self.days[index].show_text()),
             None => Err(ChallengeError::UnavailableDay),
         }
@@ -217,14 +221,18 @@ impl Year {
     /// A `Result` containing a string with the answer to the challenge or the `ChallengeError`.
     /// # Errors
     /// * `ChallengeError::UnavailableDay` - The day is unavailable.
-    pub fn run(&self, day_num: usize, part_num: usize, input: &str) -> Result<String, ChallengeError> {
+    pub fn run(
+        &self,
+        day_num: usize,
+        part_num: usize,
+        input: &str,
+    ) -> Result<String, ChallengeError> {
         match self.days.iter().position(|day| day.day_num == day_num) {
             Some(index) => Ok(self.days[index].run(part_num, input)),
             None => Err(ChallengeError::UnavailableDay),
         }
     }
 }
-
 
 /// A structure representing a day.
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -252,7 +260,13 @@ impl Day {
     /// * `part2` - The function to run part 2 of the challenge.
     /// # Returns
     /// A `Day` structure.
-    pub fn new(day_num: usize, text: &str, default_input: &str, part1: fn(&str) -> String, part2: fn(&str) -> String) -> Self {
+    pub fn new(
+        day_num: usize,
+        text: &str,
+        default_input: &str,
+        part1: fn(&str) -> String,
+        part2: fn(&str) -> String,
+    ) -> Self {
         Self {
             day_num,
             name: text.trim().lines().next().unwrap_or("").to_string(),

@@ -10,9 +10,7 @@ pub fn day_18() -> Day {
     )
 }
 
-
 use std::collections::{HashMap, VecDeque};
-
 
 fn part1(input: &str) -> String {
     let mut cpu = Cpu::new(input);
@@ -38,7 +36,10 @@ impl Cpu {
             .map(Instruction::new)
             .collect::<Vec<_>>();
 
-        Self { registers, instructions }
+        Self {
+            registers,
+            instructions,
+        }
     }
 
     fn simulate(&mut self) -> i64 {
@@ -53,7 +54,7 @@ impl Cpu {
                         Operand::Register(r) => *self.registers.entry(*r).or_insert(0),
                     };
                     ins_ptr += 1;
-                },
+                }
                 Instruction::Set(oper1, oper2) => {
                     if let Operand::Register(r) = oper1 {
                         let val_y = match oper2 {
@@ -63,7 +64,7 @@ impl Cpu {
                         self.registers.insert(*r, val_y);
                     }
                     ins_ptr += 1;
-                },
+                }
                 Instruction::Add(oper1, oper2) => {
                     if let Operand::Register(r) = oper1 {
                         let val_y = match oper2 {
@@ -73,7 +74,7 @@ impl Cpu {
                         *self.registers.entry(*r).or_insert(0) += val_y;
                     }
                     ins_ptr += 1;
-                },
+                }
                 Instruction::Mul(oper1, oper2) => {
                     if let Operand::Register(r) = oper1 {
                         let val_y = match oper2 {
@@ -83,7 +84,7 @@ impl Cpu {
                         *self.registers.entry(*r).or_insert(0) *= val_y;
                     }
                     ins_ptr += 1;
-                },
+                }
                 Instruction::Mod(oper1, oper2) => {
                     if let Operand::Register(r) = oper1 {
                         let val_y = match oper2 {
@@ -93,7 +94,7 @@ impl Cpu {
                         *self.registers.entry(*r).or_insert(0) %= val_y;
                     }
                     ins_ptr += 1;
-                },
+                }
                 Instruction::Rcv(oper1) => {
                     let val = match oper1 {
                         Operand::Value(i) => *i,
@@ -103,7 +104,7 @@ impl Cpu {
                         break;
                     }
                     ins_ptr += 1;
-                },
+                }
                 Instruction::Jgz(oper1, oper2) => {
                     let val_x = match oper1 {
                         Operand::Value(i) => *i,
@@ -150,8 +151,12 @@ impl MultiCpu {
             .map(Instruction::new)
             .collect::<Vec<_>>();
 
-        Self { registers, ins_ptrs, queues, instructions }
-
+        Self {
+            registers,
+            ins_ptrs,
+            queues,
+            instructions,
+        }
     }
 
     fn simulate(&mut self) -> u32 {
@@ -162,7 +167,10 @@ impl MultiCpu {
         let mut prog_waiting = [false; 2];
 
         loop {
-            if prog_waiting[turn] && self.queues[turn].is_empty() && self.queues[1 - turn].is_empty() {
+            if prog_waiting[turn]
+                && self.queues[turn].is_empty()
+                && self.queues[1 - turn].is_empty()
+            {
                 break;
             }
 
@@ -177,7 +185,7 @@ impl MultiCpu {
                         prog1_sends += 1;
                     }
                     self.ins_ptrs[turn] += 1;
-                },
+                }
                 Instruction::Set(oper1, oper2) => {
                     if let Operand::Register(r) = oper1 {
                         let val_y = match oper2 {
@@ -187,7 +195,7 @@ impl MultiCpu {
                         self.registers[turn].insert(*r, val_y);
                     }
                     self.ins_ptrs[turn] += 1;
-                },
+                }
                 Instruction::Add(oper1, oper2) => {
                     if let Operand::Register(r) = oper1 {
                         let val_y = match oper2 {
@@ -197,7 +205,7 @@ impl MultiCpu {
                         *self.registers[turn].entry(*r).or_insert(0) += val_y;
                     }
                     self.ins_ptrs[turn] += 1;
-                },
+                }
                 Instruction::Mul(oper1, oper2) => {
                     if let Operand::Register(r) = oper1 {
                         let val_y = match oper2 {
@@ -207,7 +215,7 @@ impl MultiCpu {
                         *self.registers[turn].entry(*r).or_insert(0) *= val_y;
                     }
                     self.ins_ptrs[turn] += 1;
-                },
+                }
                 Instruction::Mod(oper1, oper2) => {
                     if let Operand::Register(r) = oper1 {
                         let val_y = match oper2 {
@@ -217,7 +225,7 @@ impl MultiCpu {
                         *self.registers[turn].entry(*r).or_insert(0) %= val_y;
                     }
                     self.ins_ptrs[turn] += 1;
-                },
+                }
                 Instruction::Rcv(oper1) => {
                     if let Some(val) = self.queues[turn].pop_front() {
                         if let Operand::Register(r) = oper1 {
@@ -230,7 +238,7 @@ impl MultiCpu {
                         prog_waiting[turn] = true;
                         turn = 1 - turn;
                     }
-                },
+                }
                 Instruction::Jgz(oper1, oper2) => {
                     let val_x = match oper1 {
                         Operand::Value(i) => *i,
@@ -278,24 +286,24 @@ impl Instruction {
             "set" => {
                 let arg2 = Operand::new(split.next().unwrap());
                 Self::Set(arg1, arg2)
-            },
+            }
             "add" => {
                 let arg2 = Operand::new(split.next().unwrap());
                 Self::Add(arg1, arg2)
-            },
+            }
             "mul" => {
                 let arg2 = Operand::new(split.next().unwrap());
                 Self::Mul(arg1, arg2)
-            },
+            }
             "mod" => {
                 let arg2 = Operand::new(split.next().unwrap());
                 Self::Mod(arg1, arg2)
-            },
+            }
             "rcv" => Self::Rcv(arg1),
             "jgz" => {
                 let arg2 = Operand::new(split.next().unwrap());
                 Self::Jgz(arg1, arg2)
-            },
+            }
             _ => panic!("Unknown instruction"),
         }
     }

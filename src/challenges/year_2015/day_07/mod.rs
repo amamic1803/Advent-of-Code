@@ -2,7 +2,7 @@ use crate::shared::structures::Day;
 use std::collections::HashMap;
 
 pub fn day_07() -> Day {
-    Day::new (
+    Day::new(
         7,
         include_str!("text.txt"),
         include_str!("input.txt"),
@@ -10,7 +10,6 @@ pub fn day_07() -> Day {
         part2,
     )
 }
-
 
 fn part1(input: &str) -> String {
     let mut circuit = Circuit::new(input);
@@ -40,7 +39,6 @@ fn part2(input: &str) -> String {
     }
 }
 
-
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
 enum Instruction<'a> {
     Assign(&'a str, &'a str),
@@ -62,15 +60,26 @@ impl<'a> Instruction<'a> {
         } else if line.contains("OR") {
             Self::Or(line_elements[0], line_elements[2], line_elements[4])
         } else if line.contains("LSHIFT") {
-            Self::LShift(line_elements[0], line_elements[2].parse::<u16>().expect("Invalid left-shift amount!"), line_elements[4])
+            Self::LShift(
+                line_elements[0],
+                line_elements[2]
+                    .parse::<u16>()
+                    .expect("Invalid left-shift amount!"),
+                line_elements[4],
+            )
         } else if line.contains("RSHIFT") {
-            Self::RShift(line_elements[0], line_elements[2].parse::<u16>().expect("Invalid right-shift amount!"), line_elements[4])
+            Self::RShift(
+                line_elements[0],
+                line_elements[2]
+                    .parse::<u16>()
+                    .expect("Invalid right-shift amount!"),
+                line_elements[4],
+            )
         } else {
             Self::Assign(line_elements[0], line_elements[2])
         }
     }
 }
-
 
 #[derive(Clone, Debug, PartialEq, Eq)]
 struct Circuit<'a> {
@@ -107,16 +116,16 @@ impl<'a> Circuit<'a> {
                                 self.wires.insert(b, a);
                                 self.instructions.remove(i - deleted);
                                 deleted += 1;
-                            },
+                            }
                             Err(_) => {
                                 if self.wires.contains_key(a) {
                                     self.wires.insert(b, self.wires[a]);
                                     self.instructions.remove(i - deleted);
                                     deleted += 1;
                                 }
-                            },
+                            }
                         }
-                    },
+                    }
                     Instruction::Not(a, b) => {
                         if self.wires.contains_key(b) {
                             self.instructions.remove(i - deleted);
@@ -128,16 +137,16 @@ impl<'a> Circuit<'a> {
                                 self.wires.insert(b, !a);
                                 self.instructions.remove(i - deleted);
                                 deleted += 1;
-                            },
+                            }
                             Err(_) => {
                                 if self.wires.contains_key(a) {
                                     self.wires.insert(b, !self.wires[a]);
                                     self.instructions.remove(i - deleted);
                                     deleted += 1;
                                 }
-                            },
+                            }
                         }
-                    },
+                    }
                     Instruction::And(a, b, c) => {
                         if self.wires.contains_key(c) {
                             self.instructions.remove(i - deleted);
@@ -152,7 +161,7 @@ impl<'a> Circuit<'a> {
                                 } else {
                                     continue;
                                 }
-                            },
+                            }
                         };
                         let val2 = match b.parse::<u16>() {
                             Ok(b) => b,
@@ -162,12 +171,12 @@ impl<'a> Circuit<'a> {
                                 } else {
                                     continue;
                                 }
-                            },
+                            }
                         };
                         self.wires.insert(c, val1 & val2);
                         self.instructions.remove(i - deleted);
                         deleted += 1;
-                    },
+                    }
                     Instruction::Or(a, b, c) => {
                         if self.wires.contains_key(c) {
                             self.instructions.remove(i - deleted);
@@ -182,7 +191,7 @@ impl<'a> Circuit<'a> {
                                 } else {
                                     continue;
                                 }
-                            },
+                            }
                         };
                         let val2 = match b.parse::<u16>() {
                             Ok(b) => b,
@@ -192,12 +201,12 @@ impl<'a> Circuit<'a> {
                                 } else {
                                     continue;
                                 }
-                            },
+                            }
                         };
                         self.wires.insert(c, val1 | val2);
                         self.instructions.remove(i - deleted);
                         deleted += 1;
-                    },
+                    }
                     Instruction::LShift(a, b, c) => {
                         if self.wires.contains_key(c) {
                             self.instructions.remove(i - deleted);
@@ -209,16 +218,16 @@ impl<'a> Circuit<'a> {
                                 self.wires.insert(c, a << b);
                                 self.instructions.remove(i - deleted);
                                 deleted += 1;
-                            },
+                            }
                             Err(_) => {
                                 if self.wires.contains_key(a) {
                                     self.wires.insert(c, self.wires[a] << b);
                                     self.instructions.remove(i - deleted);
                                     deleted += 1;
                                 }
-                            },
+                            }
                         }
-                    },
+                    }
                     Instruction::RShift(a, b, c) => {
                         if self.wires.contains_key(c) {
                             self.instructions.remove(i - deleted);
@@ -230,16 +239,16 @@ impl<'a> Circuit<'a> {
                                 self.wires.insert(c, a >> b);
                                 self.instructions.remove(i - deleted);
                                 deleted += 1;
-                            },
+                            }
                             Err(_) => {
                                 if self.wires.contains_key(a) {
                                     self.wires.insert(c, self.wires[a] >> b);
                                     self.instructions.remove(i - deleted);
                                     deleted += 1;
                                 }
-                            },
+                            }
                         }
-                    },
+                    }
                 }
             }
         }

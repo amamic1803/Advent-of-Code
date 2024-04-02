@@ -16,7 +16,6 @@ use day_05::day_05;
 use day_06::day_06;
 use day_08::day_08;
 
-
 pub fn year_2020() -> Year {
     Year::new(
         2020,

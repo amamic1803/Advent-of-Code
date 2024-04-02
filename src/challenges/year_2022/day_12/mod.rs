@@ -11,7 +11,6 @@ pub fn day_12() -> Day {
     )
 }
 
-
 fn part1(input: &str) -> String {
     let (height_map, loc_start, loc_end) = parse_input(input);
     dijkstra_1(&height_map, loc_start, loc_end).to_string()
@@ -66,11 +65,12 @@ fn dijkstra_1(height_map: &[Vec<u32>], loc_start: [usize; 2], loc_end: [usize; 2
 
             next_location.retain(|x| {
                 let not_visited = !visit_map[x[0]][x[1]];
-                let possible_height = if height_map[x[0]][x[1]] > height_map[curr_loc[0]][curr_loc[1]] {
-                    height_map[x[0]][x[1]] - height_map[curr_loc[0]][curr_loc[1]] <= 1
-                } else {
-                    true
-                };
+                let possible_height =
+                    if height_map[x[0]][x[1]] > height_map[curr_loc[0]][curr_loc[1]] {
+                        height_map[x[0]][x[1]] - height_map[curr_loc[0]][curr_loc[1]] <= 1
+                    } else {
+                        true
+                    };
                 not_visited && possible_height
             });
 
@@ -128,11 +128,12 @@ fn dijkstra_2(height_map: &[Vec<u32>], loc_end: [usize; 2], lowest_level: u32) -
 
             next_location.retain(|x| {
                 let not_visited = !visit_map[x[0]][x[1]];
-                let possible_height = if height_map[x[0]][x[1]] < height_map[curr_loc[0]][curr_loc[1]] {
-                    height_map[curr_loc[0]][curr_loc[1]] - height_map[x[0]][x[1]] <= 1
-                } else {
-                    true
-                };
+                let possible_height =
+                    if height_map[x[0]][x[1]] < height_map[curr_loc[0]][curr_loc[1]] {
+                        height_map[curr_loc[0]][curr_loc[1]] - height_map[x[0]][x[1]] <= 1
+                    } else {
+                        true
+                    };
                 not_visited && possible_height
             });
 
@@ -150,7 +151,7 @@ fn char_value(mut character: char) -> u32 {
     match character {
         'S' => character = 'a',
         'E' => character = 'z',
-        _ => {},
+        _ => {}
     }
     character as u32 - 'a' as u32
 }

@@ -11,7 +11,6 @@ pub fn day_02() -> Day {
     )
 }
 
-
 fn part1(input: &str) -> String {
     let mut array = parse_input(input);
     array[1] = 12;
@@ -50,13 +49,13 @@ fn simulate(array: &mut [usize]) {
                 let pos2 = array[i + 2];
                 let pos3 = array[i + 3];
                 array[pos3] = array[pos1] + array[pos2];
-            },
+            }
             2 => {
                 let pos1 = array[i + 1];
                 let pos2 = array[i + 2];
                 let pos3 = array[i + 3];
                 array[pos3] = array[pos1] * array[pos2];
-            },
+            }
             99 => break,
             _ => panic!("Invalid opcode"),
         }

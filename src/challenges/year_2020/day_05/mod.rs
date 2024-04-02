@@ -10,8 +10,6 @@ pub fn day_05() -> Day {
     )
 }
 
-
-
 fn part1(input: &str) -> String {
     input
         .lines()

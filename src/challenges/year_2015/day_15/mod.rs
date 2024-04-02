@@ -1,7 +1,7 @@
 use crate::shared::structures::Day;
 
 pub fn day_15() -> Day {
-    Day::new (
+    Day::new(
         15,
         include_str!("text.txt"),
         include_str!("input.txt"),
@@ -10,19 +10,30 @@ pub fn day_15() -> Day {
     )
 }
 
-
 fn part1(input: &str) -> String {
     let ingredients = parse_input(input);
 
-    let mut max= isize::MIN;
+    let mut max = isize::MIN;
     for i in 0..101 {
         for j in 0..(101 - i) {
             for k in 0..(101 - i - j) {
                 let l = 100 - i - j - k;
-                let capacity = i * ingredients[0][0] + j * ingredients[1][0] + k * ingredients[2][0] + l * ingredients[3][0];
-                let durability = i * ingredients[0][1] + j * ingredients[1][1] + k * ingredients[2][1] + l * ingredients[3][1];
-                let flavor = i * ingredients[0][2] + j * ingredients[1][2] + k * ingredients[2][2] + l * ingredients[3][2];
-                let texture = i * ingredients[0][3] + j * ingredients[1][3] + k * ingredients[2][3] + l * ingredients[3][3];
+                let capacity = i * ingredients[0][0]
+                    + j * ingredients[1][0]
+                    + k * ingredients[2][0]
+                    + l * ingredients[3][0];
+                let durability = i * ingredients[0][1]
+                    + j * ingredients[1][1]
+                    + k * ingredients[2][1]
+                    + l * ingredients[3][1];
+                let flavor = i * ingredients[0][2]
+                    + j * ingredients[1][2]
+                    + k * ingredients[2][2]
+                    + l * ingredients[3][2];
+                let texture = i * ingredients[0][3]
+                    + j * ingredients[1][3]
+                    + k * ingredients[2][3]
+                    + l * ingredients[3][3];
 
                 let value = if capacity < 0 || durability < 0 || flavor < 0 || texture < 0 {
                     0
@@ -43,19 +54,36 @@ fn part1(input: &str) -> String {
 fn part2(input: &str) -> String {
     let ingredients = parse_input(input);
 
-    let mut max= isize::MIN;
+    let mut max = isize::MIN;
     for i in 0..101 {
         for j in 0..(101 - i) {
             for k in 0..(101 - i - j) {
                 let l = 100 - i - j - k;
 
-                let calories = i * ingredients[0][4] + j * ingredients[1][4] + k * ingredients[2][4] + l * ingredients[3][4];
-                if calories != 500 {continue;}
+                let calories = i * ingredients[0][4]
+                    + j * ingredients[1][4]
+                    + k * ingredients[2][4]
+                    + l * ingredients[3][4];
+                if calories != 500 {
+                    continue;
+                }
 
-                let capacity = i * ingredients[0][0] + j * ingredients[1][0] + k * ingredients[2][0] + l * ingredients[3][0];
-                let durability = i * ingredients[0][1] + j * ingredients[1][1] + k * ingredients[2][1] + l * ingredients[3][1];
-                let flavor = i * ingredients[0][2] + j * ingredients[1][2] + k * ingredients[2][2] + l * ingredients[3][2];
-                let texture = i * ingredients[0][3] + j * ingredients[1][3] + k * ingredients[2][3] + l * ingredients[3][3];
+                let capacity = i * ingredients[0][0]
+                    + j * ingredients[1][0]
+                    + k * ingredients[2][0]
+                    + l * ingredients[3][0];
+                let durability = i * ingredients[0][1]
+                    + j * ingredients[1][1]
+                    + k * ingredients[2][1]
+                    + l * ingredients[3][1];
+                let flavor = i * ingredients[0][2]
+                    + j * ingredients[1][2]
+                    + k * ingredients[2][2]
+                    + l * ingredients[3][2];
+                let texture = i * ingredients[0][3]
+                    + j * ingredients[1][3]
+                    + k * ingredients[2][3]
+                    + l * ingredients[3][3];
 
                 let value = if capacity < 0 || durability < 0 || flavor < 0 || texture < 0 {
                     0

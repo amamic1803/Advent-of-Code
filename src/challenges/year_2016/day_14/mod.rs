@@ -10,13 +10,11 @@ pub fn day_14() -> Day {
     )
 }
 
-
+use md5;
+use once_cell::sync::Lazy;
+use regex::Regex;
 use std::collections::VecDeque;
 use std::fmt::Write;
-use regex::Regex;
-use once_cell::sync::Lazy;
-use md5;
-
 
 fn part1(input: &str) -> String {
     calculate_passwords(input, calc_hash_1).to_string()
@@ -28,8 +26,7 @@ fn part2(input: &str) -> String {
 
 const PASSWORDS_TO_FIND: u8 = 64;
 const HEX_DIGITS: [char; 16] = [
-    '0', '1', '2', '3', '4', '5', '6', '7',
-    '8', '9','a', 'b', 'c', 'd', 'e', 'f',
+    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f',
 ];
 const ADDITIONAL_HASHES: usize = 2016;
 static RE_3: Lazy<Vec<Regex>> = Lazy::new(|| {
@@ -61,9 +58,10 @@ fn calculate_passwords(input: &str, hash_fn: fn(&str, &mut String)) -> u64 {
 
     let mut i = 0;
     while passwords_found.len() < PASSWORDS_TO_FIND as usize
-        || last_occurences_3.iter()
-        .filter_map(|v| v.front())
-        .any(|&val| val < last_password)
+        || last_occurences_3
+            .iter()
+            .filter_map(|v| v.front())
+            .any(|&val| val < last_password)
     {
         hash_in.truncate(hash_in_len);
         write!(&mut hash_in, "{i}").unwrap();

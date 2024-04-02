@@ -10,7 +10,6 @@ pub fn day_05() -> Day {
     )
 }
 
-
 fn part1(input: &str) -> String {
     let mut instructions = parse_input(input);
     let mut index = 0;

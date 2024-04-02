@@ -23,7 +23,7 @@ fn part1(input: &str) -> String {
             }
         }
     }
-    
+
     count.to_string()
 }
 
@@ -35,8 +35,11 @@ fn part2(input: &str) -> String {
         let y_start = claim[1];
         let x_end = x_start + claim[2];
         let y_end = y_start + claim[3];
-        
-        if fabric[y_start..y_end].iter().all(|row| row[x_start..x_end].iter().all(|&cell| cell == 1)) {
+
+        if fabric[y_start..y_end]
+            .iter()
+            .all(|row| row[x_start..x_end].iter().all(|&cell| cell == 1))
+        {
             return (i + 1).to_string();
         }
     }
@@ -44,7 +47,7 @@ fn part2(input: &str) -> String {
     panic!("No unique claim found!");
 }
 
-fn fabric_with_claims(claims: impl Iterator<Item=[usize; 4]>) -> Vec<[u8; FABRIC_SIZE]> {
+fn fabric_with_claims(claims: impl Iterator<Item = [usize; 4]>) -> Vec<[u8; FABRIC_SIZE]> {
     let mut fabric = vec![[0_u8; FABRIC_SIZE]; FABRIC_SIZE];
 
     for claim in claims {
@@ -53,14 +56,16 @@ fn fabric_with_claims(claims: impl Iterator<Item=[usize; 4]>) -> Vec<[u8; FABRIC
         let x_end = x_start + claim[2];
         let y_end = y_start + claim[3];
         for row in fabric[y_start..y_end].iter_mut() {
-            row[x_start..x_end].iter_mut().for_each(|cell| *cell = (*cell).saturating_add(1));
+            row[x_start..x_end]
+                .iter_mut()
+                .for_each(|cell| *cell = (*cell).saturating_add(1));
         }
     }
-    
-    fabric    
+
+    fabric
 }
 
-fn parse_input(input: &str) -> impl Iterator<Item=[usize; 4]> + '_ {
+fn parse_input(input: &str) -> impl Iterator<Item = [usize; 4]> + '_ {
     input.lines().map(|line| {
         let mut arr = [0_usize; 4];
         let mut i = 0;

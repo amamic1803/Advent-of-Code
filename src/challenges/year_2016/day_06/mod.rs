@@ -11,7 +11,6 @@ pub fn day_06() -> Day {
     )
 }
 
-
 fn part1(input: &str) -> String {
     solve(input, false)
 }
@@ -37,15 +36,12 @@ fn solve(input: &str, minimum: bool) -> String {
     let mut result = String::new();
 
     for val in message {
-        result.push(
-            if minimum {
-                *val.iter().min_by_key(|&(_, v)| v).unwrap().0
-            } else {
-                *val.iter().max_by_key(|&(_, v)| v).unwrap().0
-            }
-        );
+        result.push(if minimum {
+            *val.iter().min_by_key(|&(_, v)| v).unwrap().0
+        } else {
+            *val.iter().max_by_key(|&(_, v)| v).unwrap().0
+        });
     }
 
     result
-
 }

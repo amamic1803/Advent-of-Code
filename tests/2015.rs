@@ -1,7 +1,6 @@
 mod runner;
 use runner::run_test;
 
-
 #[test]
 fn year2015_day01_part1() {
     run_test(2015, 1, 1, "232");

@@ -10,7 +10,6 @@ pub fn day_03() -> Day {
     )
 }
 
-
 fn part1(input: &str) -> String {
     let data = parse_input(input);
     let mut gamma: u32 = 0;

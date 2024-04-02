@@ -1,6 +1,6 @@
 use crate::shared::structures::Day;
-use std::fmt::Write;
 use md5;
+use std::fmt::Write;
 
 pub fn day_05() -> Day {
     Day::new(
@@ -11,7 +11,6 @@ pub fn day_05() -> Day {
         part2,
     )
 }
-
 
 fn part1(input: &str) -> String {
     let mut password = String::new();

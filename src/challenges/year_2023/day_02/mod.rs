@@ -10,8 +10,7 @@ pub fn day_02() -> Day {
     )
 }
 
-
-const CUBE_AMOUNTS: [u32; 3] = [12, 13, 14];  // RGB
+const CUBE_AMOUNTS: [u32; 3] = [12, 13, 14]; // RGB
 
 fn part1(input: &str) -> String {
     let mut sum = 0;
@@ -40,13 +39,13 @@ fn part2(input: &str) -> String {
 
 struct Game {
     id: u32,
-    draws: Vec<[u32; 3]>  // RGB
+    draws: Vec<[u32; 3]>, // RGB
 }
 impl Game {
     fn new(id: u32) -> Self {
         Self {
             id,
-            draws: Vec::new()
+            draws: Vec::new(),
         }
     }
 
@@ -93,7 +92,12 @@ fn parse_input(input: &str) -> Vec<Game> {
             let mut values = [0; 3];
 
             for value in draw.split(',') {
-                let val_num = value.split_whitespace().next().unwrap().parse::<u32>().unwrap();
+                let val_num = value
+                    .split_whitespace()
+                    .next()
+                    .unwrap()
+                    .parse::<u32>()
+                    .unwrap();
                 if value.contains("green") {
                     values[1] = val_num;
                 } else if value.contains("blue") {

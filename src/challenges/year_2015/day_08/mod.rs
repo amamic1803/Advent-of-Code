@@ -1,7 +1,7 @@
 use crate::shared::structures::Day;
 
 pub fn day_08() -> Day {
-    Day::new (
+    Day::new(
         8,
         include_str!("text.txt"),
         include_str!("input.txt"),
@@ -9,7 +9,6 @@ pub fn day_08() -> Day {
         part2,
     )
 }
-
 
 fn part1(input: &str) -> String {
     let mut result: usize = 0;

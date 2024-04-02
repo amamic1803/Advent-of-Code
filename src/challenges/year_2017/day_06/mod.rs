@@ -11,7 +11,6 @@ pub fn day_06() -> Day {
     )
 }
 
-
 const NUM_BANKS: usize = 16;
 
 fn part1(input: &str) -> String {

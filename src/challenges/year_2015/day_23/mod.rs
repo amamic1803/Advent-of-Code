@@ -2,7 +2,7 @@ use crate::shared::structures::Day;
 use std::collections::HashMap;
 
 pub fn day_23() -> Day {
-    Day::new (
+    Day::new(
         23,
         include_str!("text.txt"),
         include_str!("input.txt"),
@@ -10,7 +10,6 @@ pub fn day_23() -> Day {
         part2,
     )
 }
-
 
 fn part1(input: &str) -> String {
     let instructions = parse_input(input);
@@ -53,8 +52,14 @@ fn parse_input(input: &str) -> Vec<Instruction> {
             "tpl" => instructions.push(Instruction::Tpl(*reg_map.get(line[1]).unwrap())),
             "inc" => instructions.push(Instruction::Inc(*reg_map.get(line[1]).unwrap())),
             "jmp" => instructions.push(Instruction::Jmp(line[1].parse::<isize>().unwrap())),
-            "jie" => instructions.push(Instruction::Jie(*reg_map.get(line[1].trim_end_matches(',')).unwrap(), line[2].parse::<isize>().unwrap())),
-            "jio" => instructions.push(Instruction::Jio(*reg_map.get(line[1].trim_end_matches(',')).unwrap(), line[2].parse::<isize>().unwrap())),
+            "jie" => instructions.push(Instruction::Jie(
+                *reg_map.get(line[1].trim_end_matches(',')).unwrap(),
+                line[2].parse::<isize>().unwrap(),
+            )),
+            "jio" => instructions.push(Instruction::Jio(
+                *reg_map.get(line[1].trim_end_matches(',')).unwrap(),
+                line[2].parse::<isize>().unwrap(),
+            )),
             _ => panic!("Invalid instruction"),
         }
     }
@@ -71,8 +76,16 @@ fn simulate(registers: &mut [usize; 2], instructions: &[Instruction]) {
             Instruction::Tpl(r) => registers[r] *= 3,
             Instruction::Inc(r) => registers[r] += 1,
             Instruction::Jmp(o) => pc += o - 1,
-            Instruction::Jie(r, o) => if registers[r] % 2 == 0 { pc += o - 1 },
-            Instruction::Jio(r, o) => if registers[r] == 1 { pc += o - 1 },
+            Instruction::Jie(r, o) => {
+                if registers[r] % 2 == 0 {
+                    pc += o - 1
+                }
+            }
+            Instruction::Jio(r, o) => {
+                if registers[r] == 1 {
+                    pc += o - 1
+                }
+            }
         }
 
         pc += 1;

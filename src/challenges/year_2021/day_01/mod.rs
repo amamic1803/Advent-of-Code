@@ -10,7 +10,6 @@ pub fn day_01() -> Day {
     )
 }
 
-
 fn part1(input: &str) -> String {
     let mut prev: usize = usize::MAX;
     let mut count: usize = 0;
@@ -27,7 +26,11 @@ fn part1(input: &str) -> String {
 }
 
 fn part2(input: &str) -> String {
-    let input: Vec<usize> = input.trim().lines().map(|line| line.parse::<usize>().unwrap()).collect();
+    let input: Vec<usize> = input
+        .trim()
+        .lines()
+        .map(|line| line.parse::<usize>().unwrap())
+        .collect();
     let mut count: usize = 0;
 
     for i in 0..(input.len() - 3) {

@@ -10,7 +10,6 @@ pub fn day_09() -> Day {
     )
 }
 
-
 fn part1(input: &str) -> String {
     let mut head_pos: [i64; 2] = [0; 2];
     let mut tail_pos: [i64; 2] = [0; 2];
@@ -31,7 +30,7 @@ fn part1(input: &str) -> String {
                     if !visited.contains(&tail_pos) {
                         visited.push(tail_pos);
                     }
-                },
+                }
                 "R" => {
                     head_pos[0] += 1;
                     if (tail_pos[0] - head_pos[0]).abs() > 1 {
@@ -41,7 +40,7 @@ fn part1(input: &str) -> String {
                     if !visited.contains(&tail_pos) {
                         visited.push(tail_pos);
                     }
-                },
+                }
                 "U" => {
                     head_pos[1] += 1;
                     if (tail_pos[1] - head_pos[1]).abs() > 1 {
@@ -51,7 +50,7 @@ fn part1(input: &str) -> String {
                     if !visited.contains(&tail_pos) {
                         visited.push(tail_pos);
                     }
-                },
+                }
                 "D" => {
                     head_pos[1] -= 1;
                     if (tail_pos[1] - head_pos[1]).abs() > 1 {
@@ -61,8 +60,8 @@ fn part1(input: &str) -> String {
                     if !visited.contains(&tail_pos) {
                         visited.push(tail_pos);
                     }
-                },
-                _ => panic!()
+                }
+                _ => panic!(),
             }
             steps -= 1;
         }
@@ -84,17 +83,26 @@ fn part2(input: &str) -> String {
                 "R" => knot_pos[0][0] += 1,
                 "U" => knot_pos[0][1] += 1,
                 "D" => knot_pos[0][1] -= 1,
-                _ => panic!()
+                _ => panic!(),
             }
             for i in 1..10 {
-                if ((knot_pos[i - 1][0] - knot_pos[i][0]).abs() > 1) || ((knot_pos[i - 1][1] - knot_pos[i][1]).abs() > 1) {
+                if ((knot_pos[i - 1][0] - knot_pos[i][0]).abs() > 1)
+                    || ((knot_pos[i - 1][1] - knot_pos[i][1]).abs() > 1)
+                {
                     let temp2_pos = knot_pos[i];
 
-                    if (((knot_pos[i - 1][0] - knot_pos[i][0]).abs() > 1) && ((temp_pos[0] - knot_pos[i][0]).abs() == 1) && ((temp_pos[1] - knot_pos[i][1]).abs() == 0)) ||
-                        (((knot_pos[i - 1][1] - knot_pos[i][1]).abs() > 1) && ((temp_pos[1] - knot_pos[i][1]).abs() == 1) && ((temp_pos[0] - knot_pos[i][0]).abs() == 0)) {
+                    if (((knot_pos[i - 1][0] - knot_pos[i][0]).abs() > 1)
+                        && ((temp_pos[0] - knot_pos[i][0]).abs() == 1)
+                        && ((temp_pos[1] - knot_pos[i][1]).abs() == 0))
+                        || (((knot_pos[i - 1][1] - knot_pos[i][1]).abs() > 1)
+                            && ((temp_pos[1] - knot_pos[i][1]).abs() == 1)
+                            && ((temp_pos[0] - knot_pos[i][0]).abs() == 0))
+                    {
                         knot_pos[i][0] += knot_pos[i - 1][0] - temp_pos[0];
                         knot_pos[i][1] += knot_pos[i - 1][1] - temp_pos[1];
-                    } else if ((knot_pos[i][0] - knot_pos[i - 1][0]).abs() > 1) && ((knot_pos[i][1] - knot_pos[i - 1][1]).abs() > 1) {
+                    } else if ((knot_pos[i][0] - knot_pos[i - 1][0]).abs() > 1)
+                        && ((knot_pos[i][1] - knot_pos[i - 1][1]).abs() > 1)
+                    {
                         if knot_pos[i][0] - knot_pos[i - 1][0] > 0 {
                             knot_pos[i][0] -= 1;
                         } else {
@@ -126,7 +134,7 @@ fn part2(input: &str) -> String {
             }
 
             if !visited.contains(&knot_pos[knot_pos.len() - 1]) {
-                visited.push(knot_pos[knot_pos.len() -  1])
+                visited.push(knot_pos[knot_pos.len() - 1])
             }
 
             steps -= 1;

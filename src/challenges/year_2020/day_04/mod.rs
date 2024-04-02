@@ -10,17 +10,24 @@ pub fn day_04() -> Day {
     )
 }
 
-
 fn part1(input: &str) -> String {
     let passports = parse_input(input);
 
-    passports.iter().filter(|p| p.is_valid1()).count().to_string()
+    passports
+        .iter()
+        .filter(|p| p.is_valid1())
+        .count()
+        .to_string()
 }
 
 fn part2(input: &str) -> String {
     let passports = parse_input(input);
 
-    passports.iter().filter(|p| p.is_valid2()).count().to_string()
+    passports
+        .iter()
+        .filter(|p| p.is_valid2())
+        .count()
+        .to_string()
 }
 
 struct Passport<'a> {
@@ -35,7 +42,6 @@ struct Passport<'a> {
 }
 impl<'a> Passport<'a> {
     fn new() -> Self {
-
         Self {
             byr: None,
             iyr: None,

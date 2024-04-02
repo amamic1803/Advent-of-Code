@@ -28,7 +28,6 @@ use day_11::day_11;
 use day_12::day_12;
 use day_18::day_18;
 
-
 pub fn year_2022() -> Year {
     Year::new(
         2022,

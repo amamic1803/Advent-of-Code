@@ -1,7 +1,7 @@
 use crate::shared::structures::Day;
 
 pub fn day_02() -> Day {
-    Day::new (
+    Day::new(
         2,
         include_str!("text.txt"),
         include_str!("input.txt"),
@@ -9,7 +9,6 @@ pub fn day_02() -> Day {
         part2,
     )
 }
-
 
 fn part1(input: &str) -> String {
     let mut total_paper = 0;
@@ -44,7 +43,11 @@ fn ribbon_present(present: [usize; 3]) -> usize {
 }
 
 fn wrap_present(present: [usize; 3]) -> usize {
-    let mut sides = [present[0] * present[1], present[1] * present[2], present[2] * present[0]];
+    let mut sides = [
+        present[0] * present[1],
+        present[1] * present[2],
+        present[2] * present[0],
+    ];
     sides.sort();
     3 * sides[0] + 2 * sides[1] + 2 * sides[2]
 }

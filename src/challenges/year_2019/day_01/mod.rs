@@ -10,7 +10,6 @@ pub fn day_01() -> Day {
     )
 }
 
-
 fn part1(input: &str) -> String {
     let mut sum: usize = 0;
 

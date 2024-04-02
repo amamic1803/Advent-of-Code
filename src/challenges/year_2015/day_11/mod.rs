@@ -1,7 +1,7 @@
 use crate::shared::structures::Day;
 
 pub fn day_11() -> Day {
-    Day::new (
+    Day::new(
         11,
         include_str!("text.txt"),
         include_str!("input.txt"),
@@ -10,7 +10,6 @@ pub fn day_11() -> Day {
     )
 }
 
-
 fn part1(input: &str) -> String {
     next_password(input.trim())
 }
@@ -18,7 +17,6 @@ fn part1(input: &str) -> String {
 fn part2(input: &str) -> String {
     next_password(&next_password(input.trim()))
 }
-
 
 fn next_password(old_pass: &str) -> String {
     let mut word: Vec<u32> = old_pass.chars().map(char_to_u32).collect();
@@ -92,7 +90,7 @@ fn two_pairs(word: &mut [u32]) -> bool {
 
 fn increasing_seq(word: &mut [u32]) -> bool {
     for i in 0..(word.len() - 2) {
-        if  (word[i] + 1 == word[i + 1]) && (word[i + 1] + 1 == word[i + 2]) {
+        if (word[i] + 1 == word[i + 1]) && (word[i + 1] + 1 == word[i + 2]) {
             return true;
         }
     }

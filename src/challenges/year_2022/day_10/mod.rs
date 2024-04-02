@@ -10,7 +10,6 @@ pub fn day_10() -> Day {
     )
 }
 
-
 fn part1(input: &str) -> String {
     let mut register_state: [i32; 2] = [1; 2];
     let mut result: i32 = 0;
@@ -22,23 +21,24 @@ fn part1(input: &str) -> String {
         match command_split.next().unwrap() {
             "noop" => {
                 cycle += 1;
-            },
+            }
             "addx" => {
                 cycle += 2;
                 register_state[0] = register_state[1];
                 register_state[1] += command_split.next().unwrap().parse::<i32>().unwrap();
-            },
-            _ => panic!()
+            }
+            _ => panic!(),
         }
         if cycle >= wanted_cycles[wanted_cycle_ind] - 1 {
-
             if cycle == wanted_cycles[wanted_cycle_ind] - 1 {
                 result += register_state[1] * wanted_cycles[wanted_cycle_ind];
             } else {
                 result += register_state[0] * wanted_cycles[wanted_cycle_ind];
             }
             wanted_cycle_ind += 1;
-            if wanted_cycle_ind > wanted_cycles.len() - 1 {break;}
+            if wanted_cycle_ind > wanted_cycles.len() - 1 {
+                break;
+            }
         }
     }
     result.to_string()
@@ -58,13 +58,13 @@ fn part2(input: &str) -> String {
                     prev_command[0] = 1;
                     register_state += prev_command[1];
                     prev_command[1] = 0;
-                },
+                }
                 "addx" => {
                     prev_command[0] = 2;
                     register_state += prev_command[1];
                     prev_command[1] = command_split.next().unwrap().parse::<i32>().unwrap();
-                },
-                _ => panic!()
+                }
+                _ => panic!(),
             }
         }
 

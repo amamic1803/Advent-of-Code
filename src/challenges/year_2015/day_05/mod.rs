@@ -1,7 +1,7 @@
 use crate::shared::structures::Day;
 
 pub fn day_05() -> Day {
-    Day::new (
+    Day::new(
         5,
         include_str!("text.txt"),
         include_str!("input.txt"),
@@ -9,7 +9,6 @@ pub fn day_05() -> Day {
         part2,
     )
 }
-
 
 fn part1(input: &str) -> String {
     format!("{}", count_nice_strings(input, nice_str))
@@ -33,7 +32,7 @@ fn count_nice_strings(input: &str, nice_str: fn(&str) -> bool) -> usize {
 fn nice_str(string: &str) -> bool {
     let vowel_count = string.chars().filter(|c| "aeiou".contains(*c)).count();
 
-    let mut last_char= ' ';
+    let mut last_char = ' ';
     let mut double_letter = false;
     for (i, c) in string.chars().enumerate() {
         if i == 0 {
@@ -45,11 +44,10 @@ fn nice_str(string: &str) -> bool {
         last_char = c;
     }
 
-    let disallowed_substrings: bool =
-        string.contains("ab") ||
-        string.contains("cd") ||
-        string.contains("pq") ||
-        string.contains("xy");
+    let disallowed_substrings: bool = string.contains("ab")
+        || string.contains("cd")
+        || string.contains("pq")
+        || string.contains("xy");
 
     vowel_count >= 3 && double_letter && !disallowed_substrings
 }

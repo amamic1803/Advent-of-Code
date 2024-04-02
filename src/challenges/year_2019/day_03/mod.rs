@@ -1,5 +1,5 @@
 use crate::shared::structures::Day;
-use std::cmp::{min, max};
+use std::cmp::{max, min};
 use std::collections::{HashMap, HashSet};
 
 pub fn day_03() -> Day {
@@ -11,7 +11,6 @@ pub fn day_03() -> Day {
         part2,
     )
 }
-
 
 fn part1(input: &str) -> String {
     let (line1, line2) = input.trim().split_once('\n').unwrap();
@@ -86,16 +85,20 @@ impl Wire {
                             }
                         }
                     } else {
-                        if other_pt1.1 >= min(self_pt1.1, self_pt2.1) && other_pt1.1 <= max(self_pt1.1, self_pt2.1)
-                            && self_pt1.0 >= min(other_pt1.0, other_pt2.0) && self_pt1.0 <= max(other_pt1.0, other_pt2.0)
+                        if other_pt1.1 >= min(self_pt1.1, self_pt2.1)
+                            && other_pt1.1 <= max(self_pt1.1, self_pt2.1)
+                            && self_pt1.0 >= min(other_pt1.0, other_pt2.0)
+                            && self_pt1.0 <= max(other_pt1.0, other_pt2.0)
                         {
                             crossings.push((self_pt1.0, other_pt1.1));
                         }
                     }
                 } else {
                     if other_pt1.0 == other_pt2.0 {
-                        if other_pt1.0 >= min(self_pt1.0, self_pt2.0) && other_pt1.0 <= max(self_pt1.0, self_pt2.0)
-                            && self_pt1.1 >= min(other_pt1.1, other_pt2.1) && self_pt1.1 <= max(other_pt1.1, other_pt2.1)
+                        if other_pt1.0 >= min(self_pt1.0, self_pt2.0)
+                            && other_pt1.0 <= max(self_pt1.0, self_pt2.0)
+                            && self_pt1.1 >= min(other_pt1.1, other_pt2.1)
+                            && self_pt1.1 <= max(other_pt1.1, other_pt2.1)
                         {
                             crossings.push((other_pt1.0, self_pt1.1));
                         }

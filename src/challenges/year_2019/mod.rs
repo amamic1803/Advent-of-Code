@@ -10,15 +10,6 @@ use day_02::day_02;
 use day_03::day_03;
 use day_04::day_04;
 
-
 pub fn year_2019() -> Year {
-    Year::new(
-        2019,
-        vec![
-            day_01(),
-            day_02(),
-            day_03(),
-            day_04(),
-        ],
-    )
+    Year::new(2019, vec![day_01(), day_02(), day_03(), day_04()])
 }

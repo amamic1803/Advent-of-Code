@@ -10,9 +10,7 @@ pub fn day_18() -> Day {
     )
 }
 
-
 use itertools::Itertools;
-
 
 fn part1(input: &str) -> String {
     let points = parse_input1(input);
@@ -76,7 +74,6 @@ fn parse_input2(input: &str) -> Vec<(i64, i64)> {
     }
 
     points
-
 }
 
 /// Get the area of a polygon using the shoelace formula
@@ -104,9 +101,13 @@ fn boundary_points(points: &[(i64, i64)]) -> i64 {
         // the result will be the distance between the two points
         // since we already counted all edge points, we just need to subtract 1
         // to get the number of points between the two points
-        points_count += (points[i].0.abs_diff(points[i + 1].0) + points[i].1.abs_diff(points[i + 1].1) - 1) as i64;
+        points_count += (points[i].0.abs_diff(points[i + 1].0)
+            + points[i].1.abs_diff(points[i + 1].1)
+            - 1) as i64;
     }
-    points_count += (points[0].0.abs_diff(points[points.len() - 1].0) + points[0].1.abs_diff(points[points.len() - 1].1) - 1) as i64;
+    points_count += (points[0].0.abs_diff(points[points.len() - 1].0)
+        + points[0].1.abs_diff(points[points.len() - 1].1)
+        - 1) as i64;
 
     points_count
 }

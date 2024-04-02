@@ -1,7 +1,7 @@
 use crate::shared::structures::Day;
+use regex::Regex;
 use std::cmp::Reverse;
 use std::collections::HashMap;
-use regex::Regex;
 
 pub fn day_04() -> Day {
     Day::new(
@@ -13,18 +13,24 @@ pub fn day_04() -> Day {
     )
 }
 
-
 fn part1(input: &str) -> String {
     let rooms = filter_rooms(parse_input(input));
-    rooms.iter().map(|(_,id,_)| id).sum::<usize>().to_string()
+    rooms.iter().map(|(_, id, _)| id).sum::<usize>().to_string()
 }
 
 fn part2(input: &str) -> String {
     let rooms = filter_rooms(parse_input(input));
-    rooms.iter().find(|(name, id, _)| {
-        let real_name = rotate_name(name, *id);
-        real_name.contains("north") && real_name.contains("pole") && real_name.contains("object")
-    }).unwrap().1.to_string()
+    rooms
+        .iter()
+        .find(|(name, id, _)| {
+            let real_name = rotate_name(name, *id);
+            real_name.contains("north")
+                && real_name.contains("pole")
+                && real_name.contains("object")
+        })
+        .unwrap()
+        .1
+        .to_string()
 }
 
 fn filter_rooms(rooms: Vec<(&str, usize, [char; 5])>) -> Vec<(&str, usize, [char; 5])> {
@@ -41,7 +47,13 @@ fn filter_rooms(rooms: Vec<(&str, usize, [char; 5])>) -> Vec<(&str, usize, [char
         }
         let mut char_counts: Vec<(char, usize)> = char_counts.into_iter().collect();
         char_counts.sort_by_key(|(c, count)| (Reverse(*count), *c));
-        let new_checksum: [char; 5] = char_counts.iter().map(|(c, _)| *c).take(5).collect::<Vec<char>>().try_into().unwrap();
+        let new_checksum: [char; 5] = char_counts
+            .iter()
+            .map(|(c, _)| *c)
+            .take(5)
+            .collect::<Vec<char>>()
+            .try_into()
+            .unwrap();
         if new_checksum == checksum {
             filtered_rooms.push((name, id, checksum));
         }
@@ -80,7 +92,17 @@ fn parse_input(input: &str) -> Vec<(&str, usize, [char; 5])> {
 
         let name = line.get(..id_match.start()).unwrap();
         let id = id_match.as_str().parse::<usize>().unwrap();
-        let checksum: [char; 5] = re_checksum.find(line).unwrap().as_str().chars().enumerate().filter(|(i, _)| *i > 0 && *i < 6).map(|(_, c)| c).collect::<Vec<char>>().try_into().unwrap();
+        let checksum: [char; 5] = re_checksum
+            .find(line)
+            .unwrap()
+            .as_str()
+            .chars()
+            .enumerate()
+            .filter(|(i, _)| *i > 0 && *i < 6)
+            .map(|(_, c)| c)
+            .collect::<Vec<char>>()
+            .try_into()
+            .unwrap();
 
         rooms.push((name, id, checksum));
     }

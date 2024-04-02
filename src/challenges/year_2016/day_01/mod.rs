@@ -10,7 +10,6 @@ pub fn day_01() -> Day {
     )
 }
 
-
 fn part1(input: &str) -> String {
     let end_position = calculate_position(parse_input(input));
     format!("{}", end_position.0.abs() + end_position.1.abs())
@@ -63,12 +62,12 @@ fn parse_input(input: &str) -> Vec<(u8, usize)> {
                 number.clear();
                 instructions.push(instruction);
                 instruction = (0, 0);
-            },
+            }
             _ => {
                 if c.is_ascii_digit() {
                     number.push(c);
                 }
-            },
+            }
         }
     }
     if !number.is_empty() {
@@ -110,14 +109,14 @@ fn change_direction(direction: u8, turn: u8) -> u8 {
             } else {
                 direction - 1
             }
-        },
+        }
         1 => {
             if direction == 3 {
                 0
             } else {
                 direction + 1
             }
-        },
+        }
         _ => panic!("Invalid turn value"),
     }
 }

@@ -10,9 +10,7 @@ pub fn day_18() -> Day {
     )
 }
 
-
 use std::collections::BTreeSet;
-
 
 fn part1(input: &str) -> String {
     let cubes = parse_input(input);
@@ -28,7 +26,7 @@ fn part1(input: &str) -> String {
         }
     }
 
-    let mut result = 6 * cubes_count;  // 6 faces of the cube
+    let mut result = 6 * cubes_count; // 6 faces of the cube
 
     // check for cubes that are adjacent to each other and their neighbouring faces from the result
 
@@ -78,22 +76,22 @@ fn part2(input: &str) -> String {
             match cubes[current_pos.0 - 1][current_pos.1][current_pos.2] {
                 Position::Cube => {
                     result += 1;
-                },
+                }
                 Position::Empty => {
                     encountered_pos.insert((current_pos.0 - 1, current_pos.1, current_pos.2));
-                },
-                Position::Filled => {},
+                }
+                Position::Filled => {}
             }
         }
         if current_pos.0 < cubes.len() - 1 {
             match cubes[current_pos.0 + 1][current_pos.1][current_pos.2] {
                 Position::Cube => {
                     result += 1;
-                },
+                }
                 Position::Empty => {
                     encountered_pos.insert((current_pos.0 + 1, current_pos.1, current_pos.2));
-                },
-                Position::Filled => {},
+                }
+                Position::Filled => {}
             }
         }
 
@@ -101,22 +99,22 @@ fn part2(input: &str) -> String {
             match cubes[current_pos.0][current_pos.1 - 1][current_pos.2] {
                 Position::Cube => {
                     result += 1;
-                },
+                }
                 Position::Empty => {
                     encountered_pos.insert((current_pos.0, current_pos.1 - 1, current_pos.2));
-                },
-                Position::Filled => {},
+                }
+                Position::Filled => {}
             }
         }
         if current_pos.1 < cubes[current_pos.0].len() - 1 {
             match cubes[current_pos.0][current_pos.1 + 1][current_pos.2] {
                 Position::Cube => {
                     result += 1;
-                },
+                }
                 Position::Empty => {
                     encountered_pos.insert((current_pos.0, current_pos.1 + 1, current_pos.2));
-                },
-                Position::Filled => {},
+                }
+                Position::Filled => {}
             }
         }
 
@@ -124,22 +122,22 @@ fn part2(input: &str) -> String {
             match cubes[current_pos.0][current_pos.1][current_pos.2 - 1] {
                 Position::Cube => {
                     result += 1;
-                },
+                }
                 Position::Empty => {
                     encountered_pos.insert((current_pos.0, current_pos.1, current_pos.2 - 1));
-                },
-                Position::Filled => {},
+                }
+                Position::Filled => {}
             }
         }
         if current_pos.2 < cubes[current_pos.0][current_pos.1].len() - 1 {
             match cubes[current_pos.0][current_pos.1][current_pos.2 + 1] {
                 Position::Cube => {
                     result += 1;
-                },
+                }
                 Position::Empty => {
                     encountered_pos.insert((current_pos.0, current_pos.1, current_pos.2 + 1));
-                },
-                Position::Filled => {},
+                }
+                Position::Filled => {}
             }
         }
     }
@@ -158,11 +156,11 @@ fn parse_input(input: &str) -> Vec<Vec<Vec<Position>>> {
     let mut cubes_coords = input
         .trim()
         .lines()
-        .map(|line| line
-            .split(',')
-            .map(|coord| coord.parse::<usize>().unwrap())
-            .collect::<Vec<_>>()
-        )
+        .map(|line| {
+            line.split(',')
+                .map(|coord| coord.parse::<usize>().unwrap())
+                .collect::<Vec<_>>()
+        })
         .collect::<Vec<Vec<usize>>>();
 
     // offset all cubes by 1 in each direction

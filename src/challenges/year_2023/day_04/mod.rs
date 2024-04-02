@@ -10,7 +10,6 @@ pub fn day_04() -> Day {
     )
 }
 
-
 fn part1(input: &str) -> String {
     let cards = parse_input(input);
     let mut point_sum = 0;

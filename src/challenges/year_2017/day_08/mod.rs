@@ -10,9 +10,7 @@ pub fn day_08() -> Day {
     )
 }
 
-
 use std::collections::HashMap;
-
 
 fn part1(input: &str) -> String {
     let mut cpu = Cpu::new(input);

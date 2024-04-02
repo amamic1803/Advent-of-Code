@@ -10,9 +10,7 @@ pub fn day_23() -> Day {
     )
 }
 
-
 use crate::shared::math::is_prime;
-
 
 fn part1(input: &str) -> String {
     let mut cpu = Cpu::new(input);
@@ -38,12 +36,47 @@ fn part2(input: &str) -> String {
 
     for (i, ins) in input.trim().lines().enumerate() {
         match i + 1 {
-            1 => x = ins.split_whitespace().last().unwrap().parse::<i64>().unwrap(),
-            5 => y = ins.split_whitespace().last().unwrap().parse::<i64>().unwrap(),
-            6 => z = -ins.split_whitespace().last().unwrap().parse::<i64>().unwrap(),
-            8 => w = -ins.split_whitespace().last().unwrap().parse::<i64>().unwrap(),
-            31 => step = -ins.split_whitespace().last().unwrap().parse::<i64>().unwrap(),
-            _ => {},
+            1 => {
+                x = ins
+                    .split_whitespace()
+                    .last()
+                    .unwrap()
+                    .parse::<i64>()
+                    .unwrap()
+            }
+            5 => {
+                y = ins
+                    .split_whitespace()
+                    .last()
+                    .unwrap()
+                    .parse::<i64>()
+                    .unwrap()
+            }
+            6 => {
+                z = -ins
+                    .split_whitespace()
+                    .last()
+                    .unwrap()
+                    .parse::<i64>()
+                    .unwrap()
+            }
+            8 => {
+                w = -ins
+                    .split_whitespace()
+                    .last()
+                    .unwrap()
+                    .parse::<i64>()
+                    .unwrap()
+            }
+            31 => {
+                step = -ins
+                    .split_whitespace()
+                    .last()
+                    .unwrap()
+                    .parse::<i64>()
+                    .unwrap()
+            }
+            _ => {}
         }
     }
 
@@ -69,7 +102,10 @@ impl<'a> Cpu<'a> {
             .map(Instruction::new)
             .collect::<Vec<_>>();
 
-        Self { registers, instructions }
+        Self {
+            registers,
+            instructions,
+        }
     }
 
     fn get_reg(&self, r: char) -> i64 {
@@ -95,7 +131,7 @@ impl<'a> Cpu<'a> {
                         *self.get_reg_mut(r) = y_val;
                     }
                     ins_ptr += 1;
-                },
+                }
                 "sub" => {
                     let y_val = match self.instructions[ins_ptr].arg2 {
                         Operand::Register(r) => self.get_reg(r),
@@ -105,7 +141,7 @@ impl<'a> Cpu<'a> {
                         *self.get_reg_mut(r) -= y_val;
                     }
                     ins_ptr += 1;
-                },
+                }
                 "mul" => {
                     let y_val = match self.instructions[ins_ptr].arg2 {
                         Operand::Register(r) => self.get_reg(r),
@@ -116,7 +152,7 @@ impl<'a> Cpu<'a> {
                     }
                     ins_ptr += 1;
                     mul_count += 1;
-                },
+                }
                 "jnz" => {
                     let x_val = match self.instructions[ins_ptr].arg1 {
                         Operand::Register(r) => self.get_reg(r),
@@ -136,7 +172,7 @@ impl<'a> Cpu<'a> {
                     } else {
                         ins_ptr += 1;
                     }
-                },
+                }
                 _ => panic!("Unknown instruction"),
             }
         }

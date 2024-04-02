@@ -10,15 +10,26 @@ pub fn day_02() -> Day {
     )
 }
 
-
 fn part1(input: &str) -> String {
     let passwords = parse_input(input);
-    passwords.iter().filter(|(min, max, character, password)| valid_password_1(*min, *max, *character, password)).count().to_string()
+    passwords
+        .iter()
+        .filter(|(min, max, character, password)| {
+            valid_password_1(*min, *max, *character, password)
+        })
+        .count()
+        .to_string()
 }
 
 fn part2(input: &str) -> String {
     let passwords = parse_input(input);
-    passwords.iter().filter(|(min, max, character, password)| valid_password_2(*min, *max, *character, password)).count().to_string()
+    passwords
+        .iter()
+        .filter(|(min, max, character, password)| {
+            valid_password_2(*min, *max, *character, password)
+        })
+        .count()
+        .to_string()
 }
 
 fn parse_input(input: &str) -> Vec<(usize, usize, char, &str)> {
@@ -43,5 +54,6 @@ fn valid_password_1(min: usize, max: usize, character: char, password: &str) -> 
 }
 
 fn valid_password_2(min: usize, max: usize, character: char, password: &str) -> bool {
-    (password.chars().nth(min - 1).unwrap() == character) ^ (password.chars().nth(max - 1).unwrap() == character)
+    (password.chars().nth(min - 1).unwrap() == character)
+        ^ (password.chars().nth(max - 1).unwrap() == character)
 }

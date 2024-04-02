@@ -1,6 +1,6 @@
 use crate::shared::structures::Day;
-use std::collections::HashSet;
 use itertools::Itertools;
+use std::collections::HashSet;
 
 pub fn day_04() -> Day {
     Day::new(
@@ -12,7 +12,6 @@ pub fn day_04() -> Day {
     )
 }
 
-
 fn part1(input: &str) -> String {
     let (start, end) = parse_input(input);
     let mut current = start;
@@ -23,7 +22,6 @@ fn part1(input: &str) -> String {
 
     // check all passwords in the given range
     while current <= end {
-
         // check if password is valid
         for i in 0..(current.len() - 1) {
             if current[i] == current[i + 1] {
@@ -53,7 +51,6 @@ fn part2(input: &str) -> String {
     let mut double_digit = HashSet::new();
     let mut triple_digit = HashSet::new();
     while current <= end {
-
         // check if password is valid
         double_digit.clear();
         for i in 0..(current.len() - 1) {
@@ -84,13 +81,13 @@ fn parse_input(input: &str) -> ([u8; 6], [u8; 6]) {
     input
         .trim()
         .split('-')
-        .map(|s| s
-            .chars()
-            .map(|c| c.to_digit(10).unwrap() as u8)
-            .collect::<Vec<u8>>()
-            .try_into()
-            .unwrap()
-        )
+        .map(|s| {
+            s.chars()
+                .map(|c| c.to_digit(10).unwrap() as u8)
+                .collect::<Vec<u8>>()
+                .try_into()
+                .unwrap()
+        })
         .collect_tuple()
         .unwrap()
 }

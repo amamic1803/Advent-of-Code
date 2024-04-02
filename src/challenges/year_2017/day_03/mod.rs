@@ -10,7 +10,6 @@ pub fn day_03() -> Day {
     )
 }
 
-
 fn part1(input: &str) -> String {
     let wanted = parse_input(input);
     let n = (((wanted as f64 - 1.0).sqrt() + 1.0) / 2.0).floor() as i32;
@@ -84,21 +83,55 @@ fn part2(input: &str) -> String {
         loop {
             let mut sum = 0;
             // right
-            sum += if table[new_coords[0]].get(new_coords[1] + 1).is_some() { table[new_coords[0]][new_coords[1] + 1] } else { 0 };
+            sum += if table[new_coords[0]].get(new_coords[1] + 1).is_some() {
+                table[new_coords[0]][new_coords[1] + 1]
+            } else {
+                0
+            };
             // down
-            sum += if table.get(new_coords[0] + 1).is_some() { table[new_coords[0] + 1][new_coords[1]] } else { 0 };
+            sum += if table.get(new_coords[0] + 1).is_some() {
+                table[new_coords[0] + 1][new_coords[1]]
+            } else {
+                0
+            };
             // right down
-            sum += if table.get(new_coords[0] + 1).is_some() && table[new_coords[0] + 1].get(new_coords[1] + 1).is_some() { table[new_coords[0] + 1][new_coords[1] + 1] } else { 0 };
+            sum += if table.get(new_coords[0] + 1).is_some()
+                && table[new_coords[0] + 1].get(new_coords[1] + 1).is_some()
+            {
+                table[new_coords[0] + 1][new_coords[1] + 1]
+            } else {
+                0
+            };
             // up
-            sum += if new_coords[0] > 0 { table[new_coords[0] - 1][new_coords[1]] } else { 0 };
+            sum += if new_coords[0] > 0 {
+                table[new_coords[0] - 1][new_coords[1]]
+            } else {
+                0
+            };
             // left
-            sum += if new_coords[1] > 0 { table[new_coords[0]][new_coords[1] - 1] } else { 0 };
+            sum += if new_coords[1] > 0 {
+                table[new_coords[0]][new_coords[1] - 1]
+            } else {
+                0
+            };
             // left down
-            sum += if new_coords[1] > 0 && table.get(new_coords[0] + 1).is_some() { table[new_coords[0] + 1][new_coords[1] - 1] } else { 0 };
+            sum += if new_coords[1] > 0 && table.get(new_coords[0] + 1).is_some() {
+                table[new_coords[0] + 1][new_coords[1] - 1]
+            } else {
+                0
+            };
             // up left
-            sum += if new_coords[0] > 0 && new_coords[1] > 0 { table[new_coords[0] - 1][new_coords[1] - 1] } else { 0 };
+            sum += if new_coords[0] > 0 && new_coords[1] > 0 {
+                table[new_coords[0] - 1][new_coords[1] - 1]
+            } else {
+                0
+            };
             // up right
-            sum += if new_coords[0] > 0 && table[new_coords[0]].get(new_coords[1] + 1).is_some() { table[new_coords[0] - 1][new_coords[1] + 1] } else { 0 };
+            sum += if new_coords[0] > 0 && table[new_coords[0]].get(new_coords[1] + 1).is_some() {
+                table[new_coords[0] - 1][new_coords[1] + 1]
+            } else {
+                0
+            };
 
             if sum > limit {
                 return sum.to_string();
@@ -129,7 +162,9 @@ fn part2(input: &str) -> String {
                     new_coords[0] -= 1;
                 }
 
-                if new_coords == coords { break; }
+                if new_coords == coords {
+                    break;
+                }
             }
         }
     }

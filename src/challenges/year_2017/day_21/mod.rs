@@ -10,13 +10,14 @@ pub fn day_21() -> Day {
     )
 }
 
-
 use std::collections::HashMap;
-
 
 fn part1(input: &str) -> String {
     let (rules_2x2, rules_3x3) = parse_rules(input);
-    let mut grid = INITIAL_GRID.into_iter().map(|row| row.to_vec()).collect::<Vec<_>>();
+    let mut grid = INITIAL_GRID
+        .into_iter()
+        .map(|row| row.to_vec())
+        .collect::<Vec<_>>();
 
     for _ in 0..5 {
         enhance_image(&mut grid, &rules_2x2, &rules_3x3);
@@ -27,7 +28,10 @@ fn part1(input: &str) -> String {
 
 fn part2(input: &str) -> String {
     let (rules_2x2, rules_3x3) = parse_rules(input);
-    let mut grid = INITIAL_GRID.into_iter().map(|row| row.to_vec()).collect::<Vec<_>>();
+    let mut grid = INITIAL_GRID
+        .into_iter()
+        .map(|row| row.to_vec())
+        .collect::<Vec<_>>();
 
     for _ in 0..18 {
         enhance_image(&mut grid, &rules_2x2, &rules_3x3);
@@ -35,7 +39,6 @@ fn part2(input: &str) -> String {
 
     grid.iter().flatten().filter(|&&b| b).count().to_string()
 }
-
 
 const INITIAL_GRID: [[bool; 3]; 3] = [
     [false, true, false],
@@ -109,7 +112,7 @@ fn parse_rules(input: &str) -> (Rules2x2, Rules3x3) {
                 rules_2x2_candidates.push((flip_vertical(rot_2), value));
                 rules_2x2_candidates.push((flip_horizontal(rot_3), value));
                 rules_2x2_candidates.push((flip_vertical(rot_3), value));
-            },
+            }
             5 => {
                 let (key_str, value_str) = line.split_once(" => ").unwrap();
                 let mut key = [[false; 3]; 3];
@@ -167,7 +170,7 @@ fn parse_rules(input: &str) -> (Rules2x2, Rules3x3) {
                 rules_3x3_candidates.push((flip_ver(rot_2), value));
                 rules_3x3_candidates.push((flip_hor(rot_3), value));
                 rules_3x3_candidates.push((flip_ver(rot_3), value));
-            },
+            }
             _ => panic!("Invalid input"),
         }
     }

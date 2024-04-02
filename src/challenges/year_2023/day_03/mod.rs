@@ -10,7 +10,6 @@ pub fn day_03() -> Day {
     )
 }
 
-
 fn part1(input: &str) -> String {
     Schematic::new(input).sum_part_numbers().to_string()
 }
@@ -22,7 +21,7 @@ fn part2(input: &str) -> String {
 struct Schematic {
     scheme: Vec<Vec<char>>,
     generated_part_numbers: bool,
-    part_numbers: Vec<(u64, usize, usize, usize)>  // (number, row, start, end)
+    part_numbers: Vec<(u64, usize, usize, usize)>, // (number, row, start, end)
 }
 impl Schematic {
     fn new(input: &str) -> Self {
@@ -49,7 +48,12 @@ impl Schematic {
         if i < 0 || j < 0 {
             '.'
         } else {
-            *self.scheme.get(i as usize).unwrap_or(&vec![]).get(j as usize).unwrap_or(&'.')
+            *self
+                .scheme
+                .get(i as usize)
+                .unwrap_or(&vec![])
+                .get(j as usize)
+                .unwrap_or(&'.')
         }
     }
 
@@ -70,7 +74,11 @@ impl Schematic {
                     }
                 } else if in_number {
                     in_number = false;
-                    let number = row[start_index..j].iter().collect::<String>().parse::<u64>().unwrap();
+                    let number = row[start_index..j]
+                        .iter()
+                        .collect::<String>()
+                        .parse::<u64>()
+                        .unwrap();
 
                     if self.adjacent_symbols(i, start_index, j - 1) != 0 {
                         self.part_numbers.push((number, i, start_index, j - 1));
@@ -79,10 +87,15 @@ impl Schematic {
             }
 
             if in_number {
-                let number = row[start_index..].iter().collect::<String>().parse::<u64>().unwrap();
+                let number = row[start_index..]
+                    .iter()
+                    .collect::<String>()
+                    .parse::<u64>()
+                    .unwrap();
 
                 if self.adjacent_symbols(i, start_index, row.len() - 1) != 0 {
-                    self.part_numbers.push((number, i, start_index, row.len() - 1));
+                    self.part_numbers
+                        .push((number, i, start_index, row.len() - 1));
                 }
             }
         }
@@ -93,7 +106,10 @@ impl Schematic {
     fn sum_part_numbers(&mut self) -> u64 {
         self.generate_part_numbers();
 
-        self.part_numbers.iter().map(|(number, _, _, _)| number).sum::<u64>()
+        self.part_numbers
+            .iter()
+            .map(|(number, _, _, _)| number)
+            .sum::<u64>()
     }
 
     fn adjacent_symbols(&self, row: usize, start: usize, end: usize) -> u64 {
@@ -105,8 +121,16 @@ impl Schematic {
             count += 1;
         }
 
-        ((start as isize - 1)..=(end + 1) as isize).for_each(|x| if self.get(row as isize - 1, x) != '.' { count += 1; });
-        ((start as isize - 1)..=(end + 1) as isize).for_each(|x| if self.get(row as isize + 1, x) != '.' { count += 1; });
+        ((start as isize - 1)..=(end + 1) as isize).for_each(|x| {
+            if self.get(row as isize - 1, x) != '.' {
+                count += 1;
+            }
+        });
+        ((start as isize - 1)..=(end + 1) as isize).for_each(|x| {
+            if self.get(row as isize + 1, x) != '.' {
+                count += 1;
+            }
+        });
 
         count
     }
@@ -157,10 +181,11 @@ impl Schematic {
         // up
         if i > 0 {
             for part_num in &self.part_numbers {
-                if part_num.1 == (i - 1) as usize && (
-                    (part_num.2..=part_num.3).contains(&(j as usize))
+                if part_num.1 == (i - 1) as usize
+                    && ((part_num.2..=part_num.3).contains(&(j as usize))
                         || (part_num.2..=part_num.3).contains(&((j - 1) as usize))
-                        || (part_num.2..=part_num.3).contains(&((j + 1) as usize))) {
+                        || (part_num.2..=part_num.3).contains(&((j + 1) as usize)))
+                {
                     numbers.push(part_num.0);
                 }
             }
@@ -169,11 +194,11 @@ impl Schematic {
         // down
         if (i as usize) < self.scheme.len() - 1 {
             for part_num in &self.part_numbers {
-                if part_num.1 == (i + 1) as usize && (
-                    (part_num.2..=part_num.3).contains(&(j as usize))
+                if part_num.1 == (i + 1) as usize
+                    && ((part_num.2..=part_num.3).contains(&(j as usize))
                         || (part_num.2..=part_num.3).contains(&((j - 1) as usize))
-                        || (part_num.2..=part_num.3).contains(&((j + 1) as usize))
-                ) {
+                        || (part_num.2..=part_num.3).contains(&((j + 1) as usize)))
+                {
                     numbers.push(part_num.0);
                 }
             }

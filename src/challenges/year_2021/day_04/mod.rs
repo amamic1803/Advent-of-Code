@@ -10,7 +10,6 @@ pub fn day_04() -> Day {
     )
 }
 
-
 fn part1(input: &str) -> String {
     let (draws, mut boards) = parse_input(input);
 
@@ -73,7 +72,9 @@ impl Board {
     fn mark_number(&mut self, n: u64) {
         for row in &mut self.values {
             for col in row {
-                if col.0 == n { col.1 = true; }
+                if col.0 == n {
+                    col.1 = true;
+                }
             }
         }
     }
@@ -98,7 +99,9 @@ impl Board {
         let mut sum = 0;
         for row in &self.values {
             for col in row {
-                if !col.1 { sum += col.0; }
+                if !col.1 {
+                    sum += col.0;
+                }
             }
         }
         sum
@@ -110,7 +113,11 @@ fn parse_input(input: &str) -> (Vec<u64>, Vec<Board>) {
     let mut boards = Vec::new();
 
     let mut lines = input.trim().lines();
-    lines.next().unwrap().split(',').for_each(|n| draws.push(n.parse::<u64>().unwrap()));
+    lines
+        .next()
+        .unwrap()
+        .split(',')
+        .for_each(|n| draws.push(n.parse::<u64>().unwrap()));
     lines.next();
 
     let mut board = Board::new(Vec::new());

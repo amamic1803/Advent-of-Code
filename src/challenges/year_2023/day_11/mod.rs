@@ -10,7 +10,6 @@ pub fn day_11() -> Day {
     )
 }
 
-
 const EXPANSION_1: u64 = 2;
 const EXPANSION_2: u64 = 1_000_000;
 
@@ -85,14 +84,14 @@ fn sum_of_distances(map: &[Vec<bool>], expansion: u64) -> u64 {
             // add expanded rows
             for empty_row in &empty_rows {
                 if *empty_row > x1 && *empty_row < x2 {
-                    delta_x += expansion - 1;  // -1 because we already counted the row once
+                    delta_x += expansion - 1; // -1 because we already counted the row once
                 }
             }
 
             // add expanded cols
             for empty_col in &empty_cols {
                 if *empty_col > y1 && *empty_col < y2 {
-                    delta_y += expansion - 1;  // -1 because we already counted the col once
+                    delta_y += expansion - 1; // -1 because we already counted the col once
                 }
             }
 

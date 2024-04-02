@@ -1,7 +1,6 @@
 mod runner;
 use runner::run_test;
 
-
 #[test]
 fn year2020_day01_part1() {
     run_test(2020, 1, 1, "299299");
@@ -60,4 +59,14 @@ fn year2020_day06_part1() {
 #[test]
 fn year2020_day06_part2() {
     run_test(2020, 6, 2, "3427");
+}
+
+#[test]
+fn year2020_day08_part1() {
+    run_test(2020, 8, 1, "1671");
+}
+
+#[test]
+fn year2020_day08_part2() {
+    run_test(2020, 8, 2, "892");
 }

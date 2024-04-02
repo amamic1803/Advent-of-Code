@@ -10,7 +10,6 @@ pub fn day_06() -> Day {
     )
 }
 
-
 fn part1(input: &str) -> String {
     let mut characters = 4;
     while !start_of_packet(&input[(characters - 4)..characters]) {
@@ -31,9 +30,13 @@ fn start_of_packet(inp: &str) -> bool {
     for x in inp.chars() {
         let mut counted = 0;
         for y in inp.chars() {
-            if x == y {counted += 1;}
+            if x == y {
+                counted += 1;
+            }
         }
-        if counted > 1 {return false;}
+        if counted > 1 {
+            return false;
+        }
     }
     true
 }

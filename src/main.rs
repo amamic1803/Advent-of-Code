@@ -1,76 +1,83 @@
 use std::fs::read_to_string;
 use std::path::PathBuf;
 
-use clap::{Arg, ArgAction, command, value_parser};
+use clap::{command, value_parser, Arg, ArgAction};
 
 use advent_of_code::get_challenges;
 
-
 fn main() {
     let argv = command!()
-        .arg(Arg::new("year")
-            .value_name("YEAR")
-            .help("The year of the Advent of Code challenge")
-            .required_unless_present("list")
-            .value_parser(value_parser!(u32).range(2015..))
+        .arg(
+            Arg::new("year")
+                .value_name("YEAR")
+                .help("The year of the Advent of Code challenge")
+                .required_unless_present("list")
+                .value_parser(value_parser!(u32).range(2015..)),
         )
-        .arg(Arg::new("day")
-            .value_name("DAY")
-            .help("The day of the Advent of Code challenge")
-            .required_unless_present("list")
-            .value_parser(value_parser!(u32).range(1..=25))
+        .arg(
+            Arg::new("day")
+                .value_name("DAY")
+                .help("The day of the Advent of Code challenge")
+                .required_unless_present("list")
+                .value_parser(value_parser!(u32).range(1..=25)),
         )
-        .arg(Arg::new("part")
-            .value_name("PART")
-            .help("The part of the Advent of Code challenge")
-            .required_unless_present("list")
-            .value_parser(value_parser!(u32).range(1..=2))
+        .arg(
+            Arg::new("part")
+                .value_name("PART")
+                .help("The part of the Advent of Code challenge")
+                .required_unless_present("list")
+                .value_parser(value_parser!(u32).range(1..=2)),
         )
-        .arg(Arg::new("list")
-            .short('l')
-            .long("list")
-            .action(ArgAction::SetTrue)
-            .help("List all Advent of Code challenges")
-            .conflicts_with_all(["solve", "text", "show_input"])
-            .required(false)
+        .arg(
+            Arg::new("list")
+                .short('l')
+                .long("list")
+                .action(ArgAction::SetTrue)
+                .help("List all Advent of Code challenges")
+                .conflicts_with_all(["solve", "text", "show_input"])
+                .required(false),
         )
-        .arg(Arg::new("solve")
-            .short('s')
-            .long("solve")
-            .action(ArgAction::SetTrue)
-            .help("Solve the Advent of Code challenge (default)")
-            .conflicts_with_all(["text", "show_input", "list"])
-            .required(false)
-            .default_value_ifs([
-                ("text", "true", Some("false")),
-                ("show_input", "true", Some("false")),
-                ("list", "true", Some("false")),
-            ])
-            .default_value("true")
+        .arg(
+            Arg::new("solve")
+                .short('s')
+                .long("solve")
+                .action(ArgAction::SetTrue)
+                .help("Solve the Advent of Code challenge (default)")
+                .conflicts_with_all(["text", "show_input", "list"])
+                .required(false)
+                .default_value_ifs([
+                    ("text", "true", Some("false")),
+                    ("show_input", "true", Some("false")),
+                    ("list", "true", Some("false")),
+                ])
+                .default_value("true"),
         )
-        .arg(Arg::new("text")
-            .short('t')
-            .long("text")
-            .action(ArgAction::SetTrue)
-            .help("Show the text of the Advent of Code challenge")
-            .conflicts_with_all(["solve", "show_input", "list"])
-            .required(false)
+        .arg(
+            Arg::new("text")
+                .short('t')
+                .long("text")
+                .action(ArgAction::SetTrue)
+                .help("Show the text of the Advent of Code challenge")
+                .conflicts_with_all(["solve", "show_input", "list"])
+                .required(false),
         )
-        .arg(Arg::new("show_input")
-            .short('p')
-            .long("show_input")
-            .action(ArgAction::SetTrue)
-            .help("Show the input of the Advent of Code challenge")
-            .conflicts_with_all(["text", "solve", "list"])
-            .required(false)
+        .arg(
+            Arg::new("show_input")
+                .short('p')
+                .long("show_input")
+                .action(ArgAction::SetTrue)
+                .help("Show the input of the Advent of Code challenge")
+                .conflicts_with_all(["text", "solve", "list"])
+                .required(false),
         )
-        .arg(Arg::new("input")
-            .short('i')
-            .long("input")
-            .help("Set the custom input to the Advent of Code challenge")
-            .value_parser(value_parser!(PathBuf))
-            .conflicts_with_all(["text", "list"])
-            .required(false)
+        .arg(
+            Arg::new("input")
+                .short('i')
+                .long("input")
+                .help("Set the custom input to the Advent of Code challenge")
+                .value_parser(value_parser!(PathBuf))
+                .conflicts_with_all(["text", "list"])
+                .required(false),
         )
         .get_matches();
 
@@ -102,13 +109,11 @@ fn main() {
         };
 
         let input: String = match input {
-            Some(input) => {
-                match read_to_string(input) {
-                    Ok(input_str) => input_str,
-                    Err(err) => {
-                        eprintln!("Error reading input file: {}", err);
-                        std::process::exit(1);
-                    }
+            Some(input) => match read_to_string(input) {
+                Ok(input_str) => input_str,
+                Err(err) => {
+                    eprintln!("Error reading input file: {}", err);
+                    std::process::exit(1);
                 }
             },
             None => String::from(""),

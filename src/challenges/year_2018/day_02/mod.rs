@@ -11,7 +11,6 @@ pub fn day_02() -> Day {
     )
 }
 
-
 fn part1(input: &str) -> String {
     let mut two_count = 0;
     let mut three_count = 0;
@@ -52,7 +51,6 @@ fn part2(input: &str) -> String {
                     .collect();
             }
         }
-
     }
 
     if different_chars(ids[0], ids[1]) == 1 {

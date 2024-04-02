@@ -2,7 +2,7 @@ use crate::shared::structures::Day;
 use std::collections::HashSet;
 
 pub fn day_03() -> Day {
-    Day::new (
+    Day::new(
         3,
         include_str!("text.txt"),
         include_str!("input.txt"),
@@ -10,7 +10,6 @@ pub fn day_03() -> Day {
         part2,
     )
 }
-
 
 fn part1(input: &str) -> String {
     let mut x: isize = 0;
@@ -37,7 +36,7 @@ fn part2(input: &str) -> String {
     let mut x_robo: isize = 0;
     let mut y_santa: isize = 0;
     let mut y_robo: isize = 0;
-    let mut turn: bool = true;  // true == santa, false == robo
+    let mut turn: bool = true; // true == santa, false == robo
     let mut visited: HashSet<(isize, isize)> = HashSet::new();
     visited.insert((x_santa, y_santa));
 

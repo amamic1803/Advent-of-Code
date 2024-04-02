@@ -12,7 +12,6 @@ pub fn day_09() -> Day {
     )
 }
 
-
 fn part1(input: &str) -> String {
     let mut file = String::from(input.trim());
     let re = Regex::new(r"\((\d+)x(\d+)\)").unwrap();
@@ -26,8 +25,24 @@ fn part1(input: &str) -> String {
         let start = re_match.start();
         let range = re_match.range();
 
-        let len = re_match.as_str().trim_start_matches('(').trim_end_matches(')').split('x').next().unwrap().parse::<usize>().unwrap();
-        let times = re_match.as_str().trim_start_matches('(').trim_end_matches(')').split('x').last().unwrap().parse::<usize>().unwrap();
+        let len = re_match
+            .as_str()
+            .trim_start_matches('(')
+            .trim_end_matches(')')
+            .split('x')
+            .next()
+            .unwrap()
+            .parse::<usize>()
+            .unwrap();
+        let times = re_match
+            .as_str()
+            .trim_start_matches('(')
+            .trim_end_matches(')')
+            .split('x')
+            .last()
+            .unwrap()
+            .parse::<usize>()
+            .unwrap();
 
         file.replace_range(range, "");
         let compressed_str = file.get(start..(start + len)).unwrap();
@@ -56,13 +71,29 @@ fn decompress(mut current_string: &str) -> u64 {
             None => {
                 file_len += current_string.chars().count() as u64;
                 break;
-            },
+            }
         };
         let start = re_match.start();
         let end = re_match.end();
 
-        let len = re_match.as_str().trim_start_matches('(').trim_end_matches(')').split('x').next().unwrap().parse::<usize>().unwrap();
-        let times = re_match.as_str().trim_start_matches('(').trim_end_matches(')').split('x').last().unwrap().parse::<usize>().unwrap();
+        let len = re_match
+            .as_str()
+            .trim_start_matches('(')
+            .trim_end_matches(')')
+            .split('x')
+            .next()
+            .unwrap()
+            .parse::<usize>()
+            .unwrap();
+        let times = re_match
+            .as_str()
+            .trim_start_matches('(')
+            .trim_end_matches(')')
+            .split('x')
+            .last()
+            .unwrap()
+            .parse::<usize>()
+            .unwrap();
 
         file_len += start as u64;
         file_len += decompress(&current_string[end..(end + len)]) * times as u64;

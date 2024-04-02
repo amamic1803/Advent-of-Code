@@ -10,7 +10,6 @@ pub fn day_15() -> Day {
     )
 }
 
-
 fn part1(input: &str) -> String {
     input
         .trim()

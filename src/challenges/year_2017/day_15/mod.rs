@@ -10,7 +10,6 @@ pub fn day_15() -> Day {
     )
 }
 
-
 const GEN_A_FACT: u64 = 16807;
 const GEN_B_FACT: u64 = 48271;
 const MOD: u64 = 2147483647;
@@ -59,7 +58,7 @@ fn part2(input: &str) -> String {
 
 fn parse_input(input: &str) -> (u64, u64) {
     let mut a = 0;
-    let mut b= 0;
+    let mut b = 0;
 
     for line in input.trim().lines() {
         if line.contains('A') {

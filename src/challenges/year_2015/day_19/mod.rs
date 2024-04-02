@@ -1,9 +1,9 @@
 use crate::shared::structures::Day;
-use std::collections::HashSet;
 use regex::Regex;
+use std::collections::HashSet;
 
 pub fn day_19() -> Day {
-    Day::new (
+    Day::new(
         19,
         include_str!("text.txt"),
         include_str!("input.txt"),
@@ -11,7 +11,6 @@ pub fn day_19() -> Day {
         part2,
     )
 }
-
 
 fn part1(input: &str) -> String {
     let (substitutions, molecule_str) = parse_input(input);
@@ -85,7 +84,11 @@ fn part2(input: &str) -> String {
     // So the final equation for the number of steps is:
     // the length of the molecule - the number of ( or ) - 2 * the number of , - 1
 
-    (molecule_str.chars().count() - molecule_str.matches(|x| (x == '(') || (x == ')')).count() - 2 * molecule_str.matches(',').count() - 1).to_string()
+    (molecule_str.chars().count()
+        - molecule_str.matches(|x| (x == '(') || (x == ')')).count()
+        - 2 * molecule_str.matches(',').count()
+        - 1)
+    .to_string()
 }
 
 fn parse_input(input: &str) -> (Vec<(&str, &str)>, &str) {

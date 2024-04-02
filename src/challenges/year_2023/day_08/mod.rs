@@ -10,9 +10,7 @@ pub fn day_08() -> Day {
     )
 }
 
-
 use crate::shared::math::lcm_multiple;
-
 
 fn part1(input: &str) -> String {
     let tree = Tree::new(input);
@@ -31,27 +29,27 @@ struct Node<'a> {
 }
 impl<'a> Node<'a> {
     fn new(id: &'a str, left: usize, right: usize) -> Self {
-        Self {
-            id,
-            left,
-            right,
-        }
+        Self { id, left, right }
     }
 }
 struct Tree<'a> {
     nodes: Vec<Node<'a>>,
     root: usize,
-    instructions: Vec<bool>  // false = left, true = right
+    instructions: Vec<bool>, // false = left, true = right
 }
 impl<'a> Tree<'a> {
     fn new(input: &'a str) -> Self {
         let mut input_lines = input.trim().lines();
-        let instructions = input_lines.next().unwrap().chars()
+        let instructions = input_lines
+            .next()
+            .unwrap()
+            .chars()
             .map(|c| match c {
                 'L' => false,
                 'R' => true,
-                _ => panic!("Invalid input")
-            }).collect::<Vec<bool>>();
+                _ => panic!("Invalid input"),
+            })
+            .collect::<Vec<bool>>();
 
         input_lines.next(); // Skip empty line
 
@@ -61,7 +59,8 @@ impl<'a> Tree<'a> {
             let (left, right) = left_right
                 .trim_start_matches('(')
                 .trim_end_matches(')')
-                .split_once(", ").unwrap();
+                .split_once(", ")
+                .unwrap();
             nodes_input.push((node_id, left, right));
         }
 
@@ -69,17 +68,26 @@ impl<'a> Tree<'a> {
         for node_info in &nodes_input {
             nodes.push(Node::new(
                 node_info.0,
-                nodes_input.iter().position(|(id, _, _)| id == &node_info.1).unwrap(),
-                nodes_input.iter().position(|(id, _, _)| id == &node_info.2).unwrap(),
+                nodes_input
+                    .iter()
+                    .position(|(id, _, _)| id == &node_info.1)
+                    .unwrap(),
+                nodes_input
+                    .iter()
+                    .position(|(id, _, _)| id == &node_info.2)
+                    .unwrap(),
             ));
         }
 
-        let root = nodes_input.iter().position(|(id, _, _)| id == &"AAA").unwrap();
+        let root = nodes_input
+            .iter()
+            .position(|(id, _, _)| id == &"AAA")
+            .unwrap();
 
         Self {
             nodes,
             root,
-            instructions
+            instructions,
         }
     }
 

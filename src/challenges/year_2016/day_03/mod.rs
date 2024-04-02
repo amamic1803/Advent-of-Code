@@ -10,7 +10,6 @@ pub fn day_03() -> Day {
     )
 }
 
-
 fn part1(input: &str) -> String {
     let triangles = parse_input(input);
     count_triangles(triangles).to_string()
@@ -36,9 +35,12 @@ fn count_triangles(triangles: Vec<Triangle>) -> usize {
 }
 
 fn parse_input(input: &str) -> Vec<Triangle> {
-    input.trim().lines()
+    input
+        .trim()
+        .lines()
         .map(|line| {
-            let mut sides = line.split_whitespace()
+            let mut sides = line
+                .split_whitespace()
                 .map(|s| s.parse::<usize>().unwrap())
                 .collect::<Vec<usize>>();
             sides.sort();
@@ -52,7 +54,11 @@ fn parse_input_2(input: &str) -> Vec<Triangle> {
     let mut triangle_block: Vec<Vec<usize>> = vec![Vec::new(), Vec::new(), Vec::new()];
 
     for line in input.trim().lines() {
-        for (i, side) in line.split_whitespace().map(|s| s.parse::<usize>().unwrap()).enumerate() {
+        for (i, side) in line
+            .split_whitespace()
+            .map(|s| s.parse::<usize>().unwrap())
+            .enumerate()
+        {
             triangle_block[i].push(side);
         }
 
