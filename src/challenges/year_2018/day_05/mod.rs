@@ -1,13 +1,7 @@
 use crate::shared::structures::Day;
 
 pub fn day_05() -> Day {
-    Day::new(
-        5,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(5, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 fn part1(input: &str) -> String {
@@ -39,10 +33,8 @@ fn react(polymer: &mut Vec<char>) {
 
         let limit = polymer.len() - 1;
         while i < limit {
-            if (polymer[i].is_ascii_lowercase()
-                && polymer[i + 1] == polymer[i].to_ascii_uppercase())
-                || (polymer[i].is_ascii_uppercase()
-                    && polymer[i + 1] == polymer[i].to_ascii_lowercase())
+            if (polymer[i].is_ascii_lowercase() && polymer[i + 1] == polymer[i].to_ascii_uppercase())
+                || (polymer[i].is_ascii_uppercase() && polymer[i + 1] == polymer[i].to_ascii_lowercase())
             {
                 i += 2;
             } else {

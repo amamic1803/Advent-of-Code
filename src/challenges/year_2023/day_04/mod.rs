@@ -1,13 +1,7 @@
 use crate::shared::structures::Day;
 
 pub fn day_04() -> Day {
-    Day::new(
-        4,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(4, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 fn part1(input: &str) -> String {
@@ -74,14 +68,8 @@ fn parse_input(input: &str) -> Vec<Scratchcard> {
         let (_, cards_part) = line.split_once(':').unwrap();
 
         let (winning_cards_part, my_cards_part) = cards_part.split_once('|').unwrap();
-        let winning_numbers = winning_cards_part
-            .split_whitespace()
-            .map(|n| n.parse::<u32>().unwrap())
-            .collect::<Vec<u32>>();
-        let my_numbers = my_cards_part
-            .split_whitespace()
-            .map(|n| n.parse::<u32>().unwrap())
-            .collect::<Vec<u32>>();
+        let winning_numbers = winning_cards_part.split_whitespace().map(|n| n.parse::<u32>().unwrap()).collect::<Vec<u32>>();
+        let my_numbers = my_cards_part.split_whitespace().map(|n| n.parse::<u32>().unwrap()).collect::<Vec<u32>>();
 
         cards.push(Scratchcard::new(winning_numbers, my_numbers));
     }

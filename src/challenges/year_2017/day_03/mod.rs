@@ -1,13 +1,7 @@
 use crate::shared::structures::Day;
 
 pub fn day_03() -> Day {
-    Day::new(
-        3,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(3, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 fn part1(input: &str) -> String {
@@ -95,25 +89,15 @@ fn part2(input: &str) -> String {
                 0
             };
             // right down
-            sum += if table.get(new_coords[0] + 1).is_some()
-                && table[new_coords[0] + 1].get(new_coords[1] + 1).is_some()
-            {
+            sum += if table.get(new_coords[0] + 1).is_some() && table[new_coords[0] + 1].get(new_coords[1] + 1).is_some() {
                 table[new_coords[0] + 1][new_coords[1] + 1]
             } else {
                 0
             };
             // up
-            sum += if new_coords[0] > 0 {
-                table[new_coords[0] - 1][new_coords[1]]
-            } else {
-                0
-            };
+            sum += if new_coords[0] > 0 { table[new_coords[0] - 1][new_coords[1]] } else { 0 };
             // left
-            sum += if new_coords[1] > 0 {
-                table[new_coords[0]][new_coords[1] - 1]
-            } else {
-                0
-            };
+            sum += if new_coords[1] > 0 { table[new_coords[0]][new_coords[1] - 1] } else { 0 };
             // left down
             sum += if new_coords[1] > 0 && table.get(new_coords[0] + 1).is_some() {
                 table[new_coords[0] + 1][new_coords[1] - 1]

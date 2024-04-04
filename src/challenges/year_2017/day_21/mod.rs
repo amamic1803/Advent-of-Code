@@ -1,23 +1,14 @@
 use crate::shared::structures::Day;
 
 pub fn day_21() -> Day {
-    Day::new(
-        21,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(21, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 use std::collections::HashMap;
 
 fn part1(input: &str) -> String {
     let (rules_2x2, rules_3x3) = parse_rules(input);
-    let mut grid = INITIAL_GRID
-        .into_iter()
-        .map(|row| row.to_vec())
-        .collect::<Vec<_>>();
+    let mut grid = INITIAL_GRID.into_iter().map(|row| row.to_vec()).collect::<Vec<_>>();
 
     for _ in 0..5 {
         enhance_image(&mut grid, &rules_2x2, &rules_3x3);
@@ -28,10 +19,7 @@ fn part1(input: &str) -> String {
 
 fn part2(input: &str) -> String {
     let (rules_2x2, rules_3x3) = parse_rules(input);
-    let mut grid = INITIAL_GRID
-        .into_iter()
-        .map(|row| row.to_vec())
-        .collect::<Vec<_>>();
+    let mut grid = INITIAL_GRID.into_iter().map(|row| row.to_vec()).collect::<Vec<_>>();
 
     for _ in 0..18 {
         enhance_image(&mut grid, &rules_2x2, &rules_3x3);
@@ -40,11 +28,7 @@ fn part2(input: &str) -> String {
     grid.iter().flatten().filter(|&&b| b).count().to_string()
 }
 
-const INITIAL_GRID: [[bool; 3]; 3] = [
-    [false, true, false],
-    [false, false, true],
-    [true, true, true],
-];
+const INITIAL_GRID: [[bool; 3]; 3] = [[false, true, false], [false, false, true], [true, true, true]];
 
 type Rules2x2 = HashMap<[[bool; 2]; 2], [[bool; 3]; 3]>;
 type Rules3x3 = HashMap<[[bool; 3]; 3], [[bool; 4]; 4]>;
@@ -192,10 +176,7 @@ fn enhance_image(grid: &mut Vec<Vec<bool>>, rules_2x2: &Rules2x2, rules_3x3: &Ru
 
         for (i, x) in (0..grid.len()).step_by(2).enumerate() {
             for (j, y) in (0..grid.len()).step_by(2).enumerate() {
-                let key = [
-                    [grid[x][y], grid[x][y + 1]],
-                    [grid[x + 1][y], grid[x + 1][y + 1]],
-                ];
+                let key = [[grid[x][y], grid[x][y + 1]], [grid[x + 1][y], grid[x + 1][y + 1]]];
                 let value = *rules_2x2.get(&key).unwrap();
 
                 for k in 0..3 {

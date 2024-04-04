@@ -1,13 +1,7 @@
 use crate::shared::structures::Day;
 
 pub fn day_05() -> Day {
-    Day::new(
-        5,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(5, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 fn part1(input: &str) -> String {
@@ -44,10 +38,7 @@ fn nice_str(string: &str) -> bool {
         last_char = c;
     }
 
-    let disallowed_substrings: bool = string.contains("ab")
-        || string.contains("cd")
-        || string.contains("pq")
-        || string.contains("xy");
+    let disallowed_substrings: bool = string.contains("ab") || string.contains("cd") || string.contains("pq") || string.contains("xy");
 
     vowel_count >= 3 && double_letter && !disallowed_substrings
 }

@@ -1,13 +1,7 @@
 use crate::shared::structures::Day;
 
 pub fn day_02() -> Day {
-    Day::new(
-        2,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(2, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 const CUBE_AMOUNTS: [u32; 3] = [12, 13, 14]; // RGB
@@ -43,10 +37,7 @@ struct Game {
 }
 impl Game {
     fn new(id: u32) -> Self {
-        Self {
-            id,
-            draws: Vec::new(),
-        }
+        Self { id, draws: Vec::new() }
     }
 
     fn add_draw(&mut self, draw: [u32; 3]) {
@@ -92,12 +83,7 @@ fn parse_input(input: &str) -> Vec<Game> {
             let mut values = [0; 3];
 
             for value in draw.split(',') {
-                let val_num = value
-                    .split_whitespace()
-                    .next()
-                    .unwrap()
-                    .parse::<u32>()
-                    .unwrap();
+                let val_num = value.split_whitespace().next().unwrap().parse::<u32>().unwrap();
                 if value.contains("green") {
                     values[1] = val_num;
                 } else if value.contains("blue") {

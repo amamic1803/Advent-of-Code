@@ -1,13 +1,7 @@
 use crate::shared::structures::Day;
 
 pub fn day_14() -> Day {
-    Day::new(
-        14,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(14, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 use std::collections::HashSet;
@@ -129,10 +123,7 @@ impl Platform {
             }
         }
 
-        let cycle_start = seen_states_vector
-            .iter()
-            .position(|state| state == &self.rocks)
-            .unwrap();
+        let cycle_start = seen_states_vector.iter().position(|state| state == &self.rocks).unwrap();
         let cycle_length = seen_states_vector.len() - cycle_start;
 
         let cycle_index = ((CYCLES - cycle_start as u32) % cycle_length as u32) as usize;
@@ -144,8 +135,7 @@ impl Platform {
         let mut load = 0;
 
         for (i, row) in self.rocks.iter().enumerate() {
-            load += (row.iter().filter(|&&rock| rock == RockType::Round).count() * (row.len() - i))
-                as u64;
+            load += (row.iter().filter(|&&rock| rock == RockType::Round).count() * (row.len() - i)) as u64;
         }
 
         load

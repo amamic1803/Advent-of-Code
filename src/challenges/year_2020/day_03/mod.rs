@@ -1,13 +1,7 @@
 use crate::shared::structures::Day;
 
 pub fn day_03() -> Day {
-    Day::new(
-        3,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(3, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 // right, down
@@ -23,11 +17,7 @@ fn part1(input: &str) -> String {
 fn part2(input: &str) -> String {
     let map = parse_input(input);
 
-    SLOPES_PART2
-        .into_iter()
-        .map(|slope| count_trees(slope, &map))
-        .product::<u64>()
-        .to_string()
+    SLOPES_PART2.into_iter().map(|slope| count_trees(slope, &map)).product::<u64>().to_string()
 }
 
 fn count_trees(slope: [usize; 2], map: &[Vec<bool>]) -> u64 {
@@ -47,9 +37,5 @@ fn count_trees(slope: [usize; 2], map: &[Vec<bool>]) -> u64 {
 }
 
 fn parse_input(input: &str) -> Vec<Vec<bool>> {
-    input
-        .trim()
-        .lines()
-        .map(|line| line.chars().map(|c| c == '#').collect())
-        .collect()
+    input.trim().lines().map(|line| line.chars().map(|c| c == '#').collect()).collect()
 }

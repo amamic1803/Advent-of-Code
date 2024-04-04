@@ -1,13 +1,7 @@
 use crate::shared::structures::Day;
 
 pub fn day_18() -> Day {
-    Day::new(
-        18,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(18, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 use itertools::Itertools;
@@ -101,13 +95,9 @@ fn boundary_points(points: &[(i64, i64)]) -> i64 {
         // the result will be the distance between the two points
         // since we already counted all edge points, we just need to subtract 1
         // to get the number of points between the two points
-        points_count += (points[i].0.abs_diff(points[i + 1].0)
-            + points[i].1.abs_diff(points[i + 1].1)
-            - 1) as i64;
+        points_count += (points[i].0.abs_diff(points[i + 1].0) + points[i].1.abs_diff(points[i + 1].1) - 1) as i64;
     }
-    points_count += (points[0].0.abs_diff(points[points.len() - 1].0)
-        + points[0].1.abs_diff(points[points.len() - 1].1)
-        - 1) as i64;
+    points_count += (points[0].0.abs_diff(points[points.len() - 1].0) + points[0].1.abs_diff(points[points.len() - 1].1) - 1) as i64;
 
     points_count
 }

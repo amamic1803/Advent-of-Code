@@ -1,13 +1,7 @@
 use crate::shared::structures::Day;
 
 pub fn day_07() -> Day {
-    Day::new(
-        7,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(7, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 use itertools::Itertools;
@@ -67,12 +61,7 @@ fn part1(input: &str) -> String {
 
     hands.sort();
 
-    hands
-        .into_iter()
-        .enumerate()
-        .map(|(i, hand)| hand.bid * (i as u64 + 1))
-        .sum::<u64>()
-        .to_string()
+    hands.into_iter().enumerate().map(|(i, hand)| hand.bid * (i as u64 + 1)).sum::<u64>().to_string()
 }
 
 fn part2(input: &str) -> String {
@@ -88,12 +77,7 @@ fn part2(input: &str) -> String {
 
     hands.sort();
 
-    hands
-        .into_iter()
-        .enumerate()
-        .map(|(i, hand)| hand.bid * (i as u64 + 1))
-        .sum::<u64>()
-        .to_string()
+    hands.into_iter().enumerate().map(|(i, hand)| hand.bid * (i as u64 + 1)).sum::<u64>().to_string()
 }
 
 struct Hand<'a> {

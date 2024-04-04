@@ -3,13 +3,7 @@ use crate::shared::structures::Day;
 use std::collections::HashMap;
 
 pub fn day_13() -> Day {
-    Day::new(
-        13,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(13, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 fn part1(input: &str) -> String {

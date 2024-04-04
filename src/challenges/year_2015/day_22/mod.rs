@@ -1,13 +1,7 @@
 use crate::shared::structures::Day;
 
 pub fn day_22() -> Day {
-    Day::new(
-        22,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(22, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 fn part1(input: &str) -> String {
@@ -30,12 +24,7 @@ fn part2(input: &str) -> String {
     mana.to_string()
 }
 
-fn least_mana_to_win(
-    mut boss_stats: [usize; 2],
-    mut my_stats: [usize; 2],
-    turn: bool,
-    mut active_spells: [Option<((&str, usize), usize)>; 3],
-) -> (bool, usize) {
+fn least_mana_to_win(mut boss_stats: [usize; 2], mut my_stats: [usize; 2], turn: bool, mut active_spells: [Option<((&str, usize), usize)>; 3]) -> (bool, usize) {
     // (true if I win, mana spent)
 
     // check if shield spell is active
@@ -93,8 +82,7 @@ fn least_mana_to_win(
         if new_boss_stats[0] == 0 {
             return (true, mana); // return immediately because 53 is the least mana possible to spend
         } else {
-            let (new_victory, mut new_mana) =
-                least_mana_to_win(new_boss_stats, new_my_stats, !turn, active_spells);
+            let (new_victory, mut new_mana) = least_mana_to_win(new_boss_stats, new_my_stats, !turn, active_spells);
             new_mana += mana;
             if victory {
                 // it was won already
@@ -123,8 +111,7 @@ fn least_mana_to_win(
                     least_mana = mana;
                 }
             } else {
-                let (new_victory, mut new_mana) =
-                    least_mana_to_win(new_boss_stats, new_my_stats, !turn, active_spells);
+                let (new_victory, mut new_mana) = least_mana_to_win(new_boss_stats, new_my_stats, !turn, active_spells);
                 new_mana += mana;
                 if victory {
                     // it was won already
@@ -149,8 +136,7 @@ fn least_mana_to_win(
             let new_my_stats = [my_stats[0], my_stats[1] - mana];
             let mut new_active_spells = active_spells;
             new_active_spells[0] = Some((SPELLS[2], 6 - 1));
-            let (new_victory, mut new_mana) =
-                least_mana_to_win(boss_stats, new_my_stats, !turn, new_active_spells);
+            let (new_victory, mut new_mana) = least_mana_to_win(boss_stats, new_my_stats, !turn, new_active_spells);
             new_mana += mana;
             if victory {
                 // it was won already
@@ -174,8 +160,7 @@ fn least_mana_to_win(
             let new_my_stats = [my_stats[0], my_stats[1] - mana];
             let mut new_active_spells = active_spells;
             new_active_spells[1] = Some((SPELLS[3], 6 - 1));
-            let (new_victory, mut new_mana) =
-                least_mana_to_win(boss_stats, new_my_stats, !turn, new_active_spells);
+            let (new_victory, mut new_mana) = least_mana_to_win(boss_stats, new_my_stats, !turn, new_active_spells);
             new_mana += mana;
             if victory {
                 // it was won already
@@ -199,8 +184,7 @@ fn least_mana_to_win(
             let new_my_stats = [my_stats[0], my_stats[1] - mana];
             let mut new_active_spells = active_spells;
             new_active_spells[2] = Some((SPELLS[4], 5 - 1));
-            let (new_victory, mut new_mana) =
-                least_mana_to_win(boss_stats, new_my_stats, !turn, new_active_spells);
+            let (new_victory, mut new_mana) = least_mana_to_win(boss_stats, new_my_stats, !turn, new_active_spells);
             new_mana += mana;
             if victory {
                 // it was won already
@@ -231,12 +215,7 @@ fn least_mana_to_win(
     }
 }
 
-fn least_mana_to_win_hard(
-    mut boss_stats: [usize; 2],
-    mut my_stats: [usize; 2],
-    turn: bool,
-    mut active_spells: [Option<((&str, usize), usize)>; 3],
-) -> (bool, usize) {
+fn least_mana_to_win_hard(mut boss_stats: [usize; 2], mut my_stats: [usize; 2], turn: bool, mut active_spells: [Option<((&str, usize), usize)>; 3]) -> (bool, usize) {
     // (true if I win, mana spent)
     if turn {
         my_stats[0] = my_stats[0].saturating_sub(1);
@@ -300,8 +279,7 @@ fn least_mana_to_win_hard(
         if new_boss_stats[0] == 0 {
             return (true, mana); // return immediately because 53 is the least mana possible to spend
         } else {
-            let (new_victory, mut new_mana) =
-                least_mana_to_win_hard(new_boss_stats, new_my_stats, !turn, active_spells);
+            let (new_victory, mut new_mana) = least_mana_to_win_hard(new_boss_stats, new_my_stats, !turn, active_spells);
             new_mana += mana;
             if victory {
                 // it was won already
@@ -330,8 +308,7 @@ fn least_mana_to_win_hard(
                     least_mana = mana;
                 }
             } else {
-                let (new_victory, mut new_mana) =
-                    least_mana_to_win_hard(new_boss_stats, new_my_stats, !turn, active_spells);
+                let (new_victory, mut new_mana) = least_mana_to_win_hard(new_boss_stats, new_my_stats, !turn, active_spells);
                 new_mana += mana;
                 if victory {
                     // it was won already
@@ -356,8 +333,7 @@ fn least_mana_to_win_hard(
             let new_my_stats = [my_stats[0], my_stats[1] - mana];
             let mut new_active_spells = active_spells;
             new_active_spells[0] = Some((SPELLS[2], 6 - 1));
-            let (new_victory, mut new_mana) =
-                least_mana_to_win_hard(boss_stats, new_my_stats, !turn, new_active_spells);
+            let (new_victory, mut new_mana) = least_mana_to_win_hard(boss_stats, new_my_stats, !turn, new_active_spells);
             new_mana += mana;
             if victory {
                 // it was won already
@@ -381,8 +357,7 @@ fn least_mana_to_win_hard(
             let new_my_stats = [my_stats[0], my_stats[1] - mana];
             let mut new_active_spells = active_spells;
             new_active_spells[1] = Some((SPELLS[3], 6 - 1));
-            let (new_victory, mut new_mana) =
-                least_mana_to_win_hard(boss_stats, new_my_stats, !turn, new_active_spells);
+            let (new_victory, mut new_mana) = least_mana_to_win_hard(boss_stats, new_my_stats, !turn, new_active_spells);
             new_mana += mana;
             if victory {
                 // it was won already
@@ -406,8 +381,7 @@ fn least_mana_to_win_hard(
             let new_my_stats = [my_stats[0], my_stats[1] - mana];
             let mut new_active_spells = active_spells;
             new_active_spells[2] = Some((SPELLS[4], 5 - 1));
-            let (new_victory, mut new_mana) =
-                least_mana_to_win_hard(boss_stats, new_my_stats, !turn, new_active_spells);
+            let (new_victory, mut new_mana) = least_mana_to_win_hard(boss_stats, new_my_stats, !turn, new_active_spells);
             new_mana += mana;
             if victory {
                 // it was won already
@@ -442,12 +416,7 @@ fn parse_input(input: &str) -> [usize; 2] {
     let mut boss = [0; 2]; // health, damage
 
     for (i, line) in input.trim().lines().enumerate() {
-        boss[i] = line
-            .split_whitespace()
-            .next_back()
-            .unwrap()
-            .parse::<usize>()
-            .unwrap();
+        boss[i] = line.split_whitespace().next_back().unwrap().parse::<usize>().unwrap();
     }
 
     boss

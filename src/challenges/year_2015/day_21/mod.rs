@@ -2,13 +2,7 @@ use crate::shared::structures::Day;
 use itertools::Itertools;
 
 pub fn day_21() -> Day {
-    Day::new(
-        21,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(21, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 fn part1(input: &str) -> String {
@@ -89,12 +83,7 @@ fn parse_input(input: &str) -> [usize; 3] {
     let mut boss = [0; 3];
 
     for (i, line) in input.trim().lines().enumerate() {
-        boss[i] = line
-            .split_whitespace()
-            .next_back()
-            .unwrap()
-            .parse::<usize>()
-            .unwrap();
+        boss[i] = line.split_whitespace().next_back().unwrap().parse::<usize>().unwrap();
     }
 
     boss

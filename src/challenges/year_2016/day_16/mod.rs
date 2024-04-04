@@ -1,13 +1,7 @@
 use crate::shared::structures::Day;
 
 pub fn day_16() -> Day {
-    Day::new(
-        16,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(16, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 const LEN1: usize = 272;

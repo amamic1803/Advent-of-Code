@@ -2,13 +2,7 @@ use crate::shared::structures::Day;
 use std::collections::HashMap;
 
 pub fn day_07() -> Day {
-    Day::new(
-        7,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(7, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 fn part1(input: &str) -> String {
@@ -60,21 +54,9 @@ impl<'a> Instruction<'a> {
         } else if line.contains("OR") {
             Self::Or(line_elements[0], line_elements[2], line_elements[4])
         } else if line.contains("LSHIFT") {
-            Self::LShift(
-                line_elements[0],
-                line_elements[2]
-                    .parse::<u16>()
-                    .expect("Invalid left-shift amount!"),
-                line_elements[4],
-            )
+            Self::LShift(line_elements[0], line_elements[2].parse::<u16>().expect("Invalid left-shift amount!"), line_elements[4])
         } else if line.contains("RSHIFT") {
-            Self::RShift(
-                line_elements[0],
-                line_elements[2]
-                    .parse::<u16>()
-                    .expect("Invalid right-shift amount!"),
-                line_elements[4],
-            )
+            Self::RShift(line_elements[0], line_elements[2].parse::<u16>().expect("Invalid right-shift amount!"), line_elements[4])
         } else {
             Self::Assign(line_elements[0], line_elements[2])
         }

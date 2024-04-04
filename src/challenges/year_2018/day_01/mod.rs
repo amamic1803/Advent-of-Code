@@ -2,13 +2,7 @@ use crate::shared::structures::Day;
 use std::collections::HashSet;
 
 pub fn day_01() -> Day {
-    Day::new(
-        1,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(1, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 fn part1(input: &str) -> String {
@@ -34,9 +28,5 @@ fn part2(input: &str) -> String {
 }
 
 fn parse_input(input: &str) -> Vec<isize> {
-    input
-        .trim()
-        .lines()
-        .map(|line| line.parse::<isize>().unwrap())
-        .collect()
+    input.trim().lines().map(|line| line.parse::<isize>().unwrap()).collect()
 }

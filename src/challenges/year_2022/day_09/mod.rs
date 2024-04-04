@@ -1,13 +1,7 @@
 use crate::shared::structures::Day;
 
 pub fn day_09() -> Day {
-    Day::new(
-        9,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(9, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 fn part1(input: &str) -> String {
@@ -86,23 +80,15 @@ fn part2(input: &str) -> String {
                 _ => panic!(),
             }
             for i in 1..10 {
-                if ((knot_pos[i - 1][0] - knot_pos[i][0]).abs() > 1)
-                    || ((knot_pos[i - 1][1] - knot_pos[i][1]).abs() > 1)
-                {
+                if ((knot_pos[i - 1][0] - knot_pos[i][0]).abs() > 1) || ((knot_pos[i - 1][1] - knot_pos[i][1]).abs() > 1) {
                     let temp2_pos = knot_pos[i];
 
-                    if (((knot_pos[i - 1][0] - knot_pos[i][0]).abs() > 1)
-                        && ((temp_pos[0] - knot_pos[i][0]).abs() == 1)
-                        && ((temp_pos[1] - knot_pos[i][1]).abs() == 0))
-                        || (((knot_pos[i - 1][1] - knot_pos[i][1]).abs() > 1)
-                            && ((temp_pos[1] - knot_pos[i][1]).abs() == 1)
-                            && ((temp_pos[0] - knot_pos[i][0]).abs() == 0))
+                    if (((knot_pos[i - 1][0] - knot_pos[i][0]).abs() > 1) && ((temp_pos[0] - knot_pos[i][0]).abs() == 1) && ((temp_pos[1] - knot_pos[i][1]).abs() == 0))
+                        || (((knot_pos[i - 1][1] - knot_pos[i][1]).abs() > 1) && ((temp_pos[1] - knot_pos[i][1]).abs() == 1) && ((temp_pos[0] - knot_pos[i][0]).abs() == 0))
                     {
                         knot_pos[i][0] += knot_pos[i - 1][0] - temp_pos[0];
                         knot_pos[i][1] += knot_pos[i - 1][1] - temp_pos[1];
-                    } else if ((knot_pos[i][0] - knot_pos[i - 1][0]).abs() > 1)
-                        && ((knot_pos[i][1] - knot_pos[i - 1][1]).abs() > 1)
-                    {
+                    } else if ((knot_pos[i][0] - knot_pos[i - 1][0]).abs() > 1) && ((knot_pos[i][1] - knot_pos[i - 1][1]).abs() > 1) {
                         if knot_pos[i][0] - knot_pos[i - 1][0] > 0 {
                             knot_pos[i][0] -= 1;
                         } else {

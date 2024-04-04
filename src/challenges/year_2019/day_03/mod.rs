@@ -3,13 +3,7 @@ use std::cmp::{max, min};
 use std::collections::{HashMap, HashSet};
 
 pub fn day_03() -> Day {
-    Day::new(
-        3,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(3, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 fn part1(input: &str) -> String {
@@ -18,12 +12,7 @@ fn part1(input: &str) -> String {
     let wire2 = Wire::new(line2);
     let intersections = wire1.intersections(&wire2);
 
-    intersections
-        .iter()
-        .map(|(x, y)| x.abs() + y.abs())
-        .min()
-        .unwrap()
-        .to_string()
+    intersections.iter().map(|(x, y)| x.abs() + y.abs()).min().unwrap().to_string()
 }
 
 fn part2(input: &str) -> String {
@@ -32,12 +21,7 @@ fn part2(input: &str) -> String {
     let wire2 = Wire::new(line2);
     let intersection_steps = wire1.intersections_steps(&wire2);
 
-    intersection_steps
-        .iter()
-        .map(|(steps_1, steps_2)| steps_1 + steps_2)
-        .min()
-        .unwrap()
-        .to_string()
+    intersection_steps.iter().map(|(steps_1, steps_2)| steps_1 + steps_2).min().unwrap().to_string()
 }
 
 struct Wire {

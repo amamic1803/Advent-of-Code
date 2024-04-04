@@ -3,13 +3,7 @@ use std::cmp::{max, min};
 use std::iter::zip;
 
 pub fn day_05() -> Day {
-    Day::new(
-        5,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(5, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 fn part1(input: &str) -> String {
@@ -104,8 +98,7 @@ fn grid_size(lines: &Vec<[[u32; 2]; 2]>) -> [usize; 2] {
 fn draw_line(grid: &mut [Vec<u32>], line: &[[u32; 2]; 2]) {
     // horizontal line (y1 == y2)
     if line[0][1] == line[1][1] {
-        grid[line[0][1] as usize]
-            [min(line[0][0], line[1][0]) as usize..=max(line[0][0], line[1][0]) as usize]
+        grid[line[0][1] as usize][min(line[0][0], line[1][0]) as usize..=max(line[0][0], line[1][0]) as usize]
             .iter_mut()
             .for_each(|point| *point += 1);
     } else if line[0][0] == line[1][0] {

@@ -1,13 +1,7 @@
 use crate::shared::structures::Day;
 
 pub fn day_18() -> Day {
-    Day::new(
-        18,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(18, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 fn part1(input: &str) -> String {
@@ -113,18 +107,10 @@ fn get_neighbors(grid: &[Vec<[bool; 2]>], loc: (usize, usize)) -> usize {
     let mut count = 0;
 
     let prev_row = loc.0.checked_sub(1);
-    let next_row = if grid.get(loc.0 + 1).is_some() {
-        Some(loc.0 + 1)
-    } else {
-        None
-    };
+    let next_row = if grid.get(loc.0 + 1).is_some() { Some(loc.0 + 1) } else { None };
 
     let prev_col = loc.1.checked_sub(1);
-    let next_col = if grid[loc.0].get(loc.1 + 1).is_some() {
-        Some(loc.1 + 1)
-    } else {
-        None
-    };
+    let next_col = if grid[loc.0].get(loc.1 + 1).is_some() { Some(loc.1 + 1) } else { None };
 
     // right-side
     if let Some(right_col) = next_col {

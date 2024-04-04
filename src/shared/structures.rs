@@ -111,12 +111,7 @@ impl Challenges {
     /// # Errors
     /// * `ChallengeError::UnavailableYear` - The year is unavailable.
     /// * `ChallengeError::UnavailableDay` - The day is unavailable.
-    pub fn show_input(
-        &self,
-        year_num: usize,
-        day_num: usize,
-        input: &str,
-    ) -> Result<String, ChallengeError> {
+    pub fn show_input(&self, year_num: usize, day_num: usize, input: &str) -> Result<String, ChallengeError> {
         match self.years.iter().position(|year| year.year_num == year_num) {
             Some(index) => Ok(self.years[index].show_input(day_num, input)?),
             None => Err(ChallengeError::UnavailableYear),
@@ -134,13 +129,7 @@ impl Challenges {
     /// # Errors
     /// * `ChallengeError::UnavailableYear` - The year is unavailable.
     /// * `ChallengeError::UnavailableDay` - The day is unavailable.
-    pub fn run(
-        &self,
-        year_num: usize,
-        day_num: usize,
-        part_num: usize,
-        input: &str,
-    ) -> Result<String, ChallengeError> {
+    pub fn run(&self, year_num: usize, day_num: usize, part_num: usize, input: &str) -> Result<String, ChallengeError> {
         match self.years.iter().position(|year| year.year_num == year_num) {
             Some(index) => Ok(self.years[index].run(day_num, part_num, input)?),
             None => Err(ChallengeError::UnavailableYear),
@@ -221,12 +210,7 @@ impl Year {
     /// A `Result` containing a string with the answer to the challenge or the `ChallengeError`.
     /// # Errors
     /// * `ChallengeError::UnavailableDay` - The day is unavailable.
-    pub fn run(
-        &self,
-        day_num: usize,
-        part_num: usize,
-        input: &str,
-    ) -> Result<String, ChallengeError> {
+    pub fn run(&self, day_num: usize, part_num: usize, input: &str) -> Result<String, ChallengeError> {
         match self.days.iter().position(|day| day.day_num == day_num) {
             Some(index) => Ok(self.days[index].run(part_num, input)),
             None => Err(ChallengeError::UnavailableDay),
@@ -260,13 +244,7 @@ impl Day {
     /// * `part2` - The function to run part 2 of the challenge.
     /// # Returns
     /// A `Day` structure.
-    pub fn new(
-        day_num: usize,
-        text: &str,
-        default_input: &str,
-        part1: fn(&str) -> String,
-        part2: fn(&str) -> String,
-    ) -> Self {
+    pub fn new(day_num: usize, text: &str, default_input: &str, part1: fn(&str) -> String, part2: fn(&str) -> String) -> Self {
         Self {
             day_num,
             name: text.trim().lines().next().unwrap_or("").to_string(),
@@ -313,11 +291,7 @@ impl Day {
     /// # Returns
     /// A string with the answer to the challenge.
     pub fn run(&self, part_num: usize, input: &str) -> String {
-        let input = if input.is_empty() {
-            &self.default_input
-        } else {
-            input
-        };
+        let input = if input.is_empty() { &self.default_input } else { input };
         match part_num {
             1 => (self.part1)(input),
             2 => (self.part2)(input),

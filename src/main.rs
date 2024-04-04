@@ -45,11 +45,7 @@ fn main() {
                 .help("Solve the Advent of Code challenge (default)")
                 .conflicts_with_all(["text", "show_input", "list"])
                 .required(false)
-                .default_value_ifs([
-                    ("text", "true", Some("false")),
-                    ("show_input", "true", Some("false")),
-                    ("list", "true", Some("false")),
-                ])
+                .default_value_ifs([("text", "true", Some("false")), ("show_input", "true", Some("false")), ("list", "true", Some("false"))])
                 .default_value("true"),
         )
         .arg(

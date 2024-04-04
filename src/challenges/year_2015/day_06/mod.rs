@@ -2,13 +2,7 @@
 use crate::shared::structures::Day;
 
 pub fn day_06() -> Day {
-    Day::new(
-        6,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(6, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 fn part1(input: &str) -> String {
@@ -107,14 +101,8 @@ fn parse_input(input: &str) -> Vec<Instruction> {
                 let mut split2 = line_vec[4].split(',');
                 result.push((
                     1,
-                    (
-                        split.next().unwrap().parse().unwrap(),
-                        split.next().unwrap().parse().unwrap(),
-                    ),
-                    (
-                        split2.next().unwrap().parse().unwrap(),
-                        split2.next().unwrap().parse().unwrap(),
-                    ),
+                    (split.next().unwrap().parse().unwrap(), split.next().unwrap().parse().unwrap()),
+                    (split2.next().unwrap().parse().unwrap(), split2.next().unwrap().parse().unwrap()),
                 ));
             }
             "off" => {
@@ -122,14 +110,8 @@ fn parse_input(input: &str) -> Vec<Instruction> {
                 let mut split2 = line_vec[4].split(',');
                 result.push((
                     0,
-                    (
-                        split.next().unwrap().parse().unwrap(),
-                        split.next().unwrap().parse().unwrap(),
-                    ),
-                    (
-                        split2.next().unwrap().parse().unwrap(),
-                        split2.next().unwrap().parse().unwrap(),
-                    ),
+                    (split.next().unwrap().parse().unwrap(), split.next().unwrap().parse().unwrap()),
+                    (split2.next().unwrap().parse().unwrap(), split2.next().unwrap().parse().unwrap()),
                 ));
             }
             _ => {
@@ -137,14 +119,8 @@ fn parse_input(input: &str) -> Vec<Instruction> {
                 let mut split2 = line_vec[3].split(',');
                 result.push((
                     2,
-                    (
-                        split.next().unwrap().parse().unwrap(),
-                        split.next().unwrap().parse().unwrap(),
-                    ),
-                    (
-                        split2.next().unwrap().parse().unwrap(),
-                        split2.next().unwrap().parse().unwrap(),
-                    ),
+                    (split.next().unwrap().parse().unwrap(), split.next().unwrap().parse().unwrap()),
+                    (split2.next().unwrap().parse().unwrap(), split2.next().unwrap().parse().unwrap()),
                 ));
             }
         }

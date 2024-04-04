@@ -2,13 +2,7 @@ use crate::shared::structures::Day;
 use itertools::Itertools;
 
 pub fn day_24() -> Day {
-    Day::new(
-        24,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(24, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 fn part1(input: &str) -> String {
@@ -62,9 +56,5 @@ fn part2(input: &str) -> String {
 }
 
 fn parse_input(input: &str) -> Vec<usize> {
-    input
-        .trim()
-        .lines()
-        .map(|line| line.parse::<usize>().unwrap())
-        .collect()
+    input.trim().lines().map(|line| line.parse::<usize>().unwrap()).collect()
 }

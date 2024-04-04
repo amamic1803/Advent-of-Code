@@ -1,13 +1,7 @@
 use crate::shared::structures::Day;
 
 pub fn day_08() -> Day {
-    Day::new(
-        8,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(8, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 use crate::shared::math::lcm_multiple;
@@ -56,11 +50,7 @@ impl<'a> Tree<'a> {
         let mut nodes_input = Vec::new();
         for line in input_lines {
             let (node_id, left_right) = line.split_once(" = ").unwrap();
-            let (left, right) = left_right
-                .trim_start_matches('(')
-                .trim_end_matches(')')
-                .split_once(", ")
-                .unwrap();
+            let (left, right) = left_right.trim_start_matches('(').trim_end_matches(')').split_once(", ").unwrap();
             nodes_input.push((node_id, left, right));
         }
 
@@ -68,27 +58,14 @@ impl<'a> Tree<'a> {
         for node_info in &nodes_input {
             nodes.push(Node::new(
                 node_info.0,
-                nodes_input
-                    .iter()
-                    .position(|(id, _, _)| id == &node_info.1)
-                    .unwrap(),
-                nodes_input
-                    .iter()
-                    .position(|(id, _, _)| id == &node_info.2)
-                    .unwrap(),
+                nodes_input.iter().position(|(id, _, _)| id == &node_info.1).unwrap(),
+                nodes_input.iter().position(|(id, _, _)| id == &node_info.2).unwrap(),
             ));
         }
 
-        let root = nodes_input
-            .iter()
-            .position(|(id, _, _)| id == &"AAA")
-            .unwrap();
+        let root = nodes_input.iter().position(|(id, _, _)| id == &"AAA").unwrap();
 
-        Self {
-            nodes,
-            root,
-            instructions,
-        }
+        Self { nodes, root, instructions }
     }
 
     fn simulate_1(&self) -> u64 {

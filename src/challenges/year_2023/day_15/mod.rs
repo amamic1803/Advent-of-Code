@@ -1,22 +1,11 @@
 use crate::shared::structures::Day;
 
 pub fn day_15() -> Day {
-    Day::new(
-        15,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(15, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 fn part1(input: &str) -> String {
-    input
-        .trim()
-        .split(',')
-        .map(calculate_hash)
-        .sum::<u32>()
-        .to_string()
+    input.trim().split(',').map(calculate_hash).sum::<u32>().to_string()
 }
 
 fn part2(input: &str) -> String {

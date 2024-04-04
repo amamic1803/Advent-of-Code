@@ -1,13 +1,7 @@
 use crate::shared::structures::Day;
 
 pub fn day_03() -> Day {
-    Day::new(
-        3,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(3, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 fn part1(input: &str) -> String {
@@ -32,9 +26,7 @@ fn part2(input: &str) -> String {
     for line in input.lines() {
         if curr_group_members.len() == 3 {
             for character in curr_group_members[0].chars() {
-                if curr_group_members[1].contains(character)
-                    && curr_group_members[2].contains(character)
-                {
+                if curr_group_members[1].contains(character) && curr_group_members[2].contains(character) {
                     result += letter_value(character);
                     break;
                 }
@@ -46,9 +38,7 @@ fn part2(input: &str) -> String {
     }
     if curr_group_members.len() == 3 {
         for character in curr_group_members[0].chars() {
-            if curr_group_members[1].contains(character)
-                && curr_group_members[2].contains(character)
-            {
+            if curr_group_members[1].contains(character) && curr_group_members[2].contains(character) {
                 result += letter_value(character);
                 break;
             }

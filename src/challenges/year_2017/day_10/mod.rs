@@ -2,13 +2,7 @@ use crate::shared::structures::Day;
 use std::fmt::Write;
 
 pub fn day_10() -> Day {
-    Day::new(
-        10,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(10, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 const LIST_SIZE: usize = 256;
@@ -16,11 +10,7 @@ const ASCII_SUFFIX: [u8; 5] = [17, 31, 73, 47, 23];
 const ROUNDS: usize = 64;
 
 fn part1(input: &str) -> String {
-    let lengths = input
-        .trim()
-        .split(',')
-        .map(|num| num.parse::<u8>().unwrap())
-        .collect::<Vec<_>>();
+    let lengths = input.trim().split(',').map(|num| num.parse::<u8>().unwrap()).collect::<Vec<_>>();
     let mut knot_hash = KnotHash::new();
 
     knot_hash.round(&lengths);
@@ -77,11 +67,7 @@ impl KnotHash {
 
     pub(crate) fn hash(&mut self, input: &str) -> String {
         // convert input to lengths
-        let lengths = input
-            .chars()
-            .map(|c| c as u8)
-            .chain(ASCII_SUFFIX.iter().copied())
-            .collect::<Vec<_>>();
+        let lengths = input.chars().map(|c| c as u8).chain(ASCII_SUFFIX.iter().copied()).collect::<Vec<_>>();
 
         // run rounds
         for _ in 0..ROUNDS {

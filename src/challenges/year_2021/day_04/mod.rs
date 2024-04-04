@@ -1,13 +1,7 @@
 use crate::shared::structures::Day;
 
 pub fn day_04() -> Day {
-    Day::new(
-        4,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(4, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 fn part1(input: &str) -> String {
@@ -113,11 +107,7 @@ fn parse_input(input: &str) -> (Vec<u64>, Vec<Board>) {
     let mut boards = Vec::new();
 
     let mut lines = input.trim().lines();
-    lines
-        .next()
-        .unwrap()
-        .split(',')
-        .for_each(|n| draws.push(n.parse::<u64>().unwrap()));
+    lines.next().unwrap().split(',').for_each(|n| draws.push(n.parse::<u64>().unwrap()));
     lines.next();
 
     let mut board = Board::new(Vec::new());

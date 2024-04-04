@@ -1,13 +1,7 @@
 use crate::shared::structures::Day;
 
 pub fn day_15() -> Day {
-    Day::new(
-        15,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(15, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 const GEN_A_FACT: u64 = 16807;

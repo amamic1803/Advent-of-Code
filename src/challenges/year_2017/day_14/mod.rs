@@ -1,13 +1,7 @@
 use crate::shared::structures::Day;
 
 pub fn day_14() -> Day {
-    Day::new(
-        14,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(14, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 use super::day_10::KnotHash;

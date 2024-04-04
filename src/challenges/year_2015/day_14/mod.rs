@@ -1,23 +1,12 @@
 use crate::shared::structures::Day;
 
 pub fn day_14() -> Day {
-    Day::new(
-        14,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(14, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 fn part1(input: &str) -> String {
     let reindeers = parse_input(input);
-    reindeers
-        .iter()
-        .map(|r| r.distance(2503))
-        .max()
-        .unwrap()
-        .to_string()
+    reindeers.iter().map(|r| r.distance(2503)).max().unwrap().to_string()
 }
 
 fn part2(input: &str) -> String {
@@ -64,22 +53,14 @@ struct Reindeer {
 
 impl Reindeer {
     fn new(speed: usize, fly_time: usize, rest_time: usize) -> Self {
-        Self {
-            speed,
-            fly_time,
-            rest_time,
-        }
+        Self { speed, fly_time, rest_time }
     }
 
     fn distance(&self, time: usize) -> usize {
         let cycle_time = self.fly_time + self.rest_time;
         let full_cycles = time / cycle_time;
         let leftover_time = time % cycle_time;
-        let leftover_fly_time = if leftover_time > self.fly_time {
-            self.fly_time
-        } else {
-            leftover_time
-        };
+        let leftover_fly_time = if leftover_time > self.fly_time { self.fly_time } else { leftover_time };
 
         (full_cycles * self.fly_time + leftover_fly_time) * self.speed
     }

@@ -3,13 +3,7 @@ use crate::shared::structures::Day;
 use std::collections::HashMap;
 
 pub fn day_09() -> Day {
-    Day::new(
-        9,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(9, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 fn part1(input: &str) -> String {
@@ -46,16 +40,8 @@ fn parse_input(input: &str) -> Graph {
     let mut graph = Graph::new(city_index);
 
     for edge in edges {
-        graph.set_edge(
-            cities[edge.0],
-            cities[edge.1],
-            isize::try_from(edge.2).unwrap(),
-        );
-        graph.set_edge(
-            cities[edge.1],
-            cities[edge.0],
-            isize::try_from(edge.2).unwrap(),
-        );
+        graph.set_edge(cities[edge.0], cities[edge.1], isize::try_from(edge.2).unwrap());
+        graph.set_edge(cities[edge.1], cities[edge.0], isize::try_from(edge.2).unwrap());
     }
 
     graph

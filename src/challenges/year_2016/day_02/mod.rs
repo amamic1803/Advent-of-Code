@@ -1,13 +1,7 @@
 use crate::shared::structures::Day;
 
 pub fn day_02() -> Day {
-    Day::new(
-        2,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(2, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 fn part1(input: &str) -> String {
@@ -52,11 +46,7 @@ fn part2(input: &str) -> String {
                     }
                 }
                 'R' => {
-                    let new_pos = if position[1] < 4 {
-                        position[1] + 1
-                    } else {
-                        position[1]
-                    };
+                    let new_pos = if position[1] < 4 { position[1] + 1 } else { position[1] };
                     if KEYPAD2[position[0]][new_pos] != ' ' {
                         position[1] = new_pos;
                     }
@@ -68,11 +58,7 @@ fn part2(input: &str) -> String {
                     }
                 }
                 'D' => {
-                    let new_pos = if position[0] < 4 {
-                        position[0] + 1
-                    } else {
-                        position[0]
-                    };
+                    let new_pos = if position[0] < 4 { position[0] + 1 } else { position[0] };
                     if KEYPAD2[new_pos][position[1]] != ' ' {
                         position[0] = new_pos;
                     }

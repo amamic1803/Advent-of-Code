@@ -1,22 +1,14 @@
 use crate::shared::structures::Day;
 
 pub fn day_02() -> Day {
-    Day::new(
-        2,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(2, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 fn part1(input: &str) -> String {
     let passwords = parse_input(input);
     passwords
         .iter()
-        .filter(|(min, max, character, password)| {
-            valid_password_1(*min, *max, *character, password)
-        })
+        .filter(|(min, max, character, password)| valid_password_1(*min, *max, *character, password))
         .count()
         .to_string()
 }
@@ -25,9 +17,7 @@ fn part2(input: &str) -> String {
     let passwords = parse_input(input);
     passwords
         .iter()
-        .filter(|(min, max, character, password)| {
-            valid_password_2(*min, *max, *character, password)
-        })
+        .filter(|(min, max, character, password)| valid_password_2(*min, *max, *character, password))
         .count()
         .to_string()
 }
@@ -54,6 +44,5 @@ fn valid_password_1(min: usize, max: usize, character: char, password: &str) -> 
 }
 
 fn valid_password_2(min: usize, max: usize, character: char, password: &str) -> bool {
-    (password.chars().nth(min - 1).unwrap() == character)
-        ^ (password.chars().nth(max - 1).unwrap() == character)
+    (password.chars().nth(min - 1).unwrap() == character) ^ (password.chars().nth(max - 1).unwrap() == character)
 }

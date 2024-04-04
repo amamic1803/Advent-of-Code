@@ -2,13 +2,7 @@ use crate::shared::structures::Day;
 use std::collections::HashMap;
 
 pub fn day_16() -> Day {
-    Day::new(
-        16,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(16, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 fn part1(input: &str) -> String {
@@ -91,27 +85,9 @@ fn parse_input(input: &str) -> Vec<HashMap<&str, usize>> {
         let mut new_sue = HashMap::new();
         let parsed_line: Vec<&str> = line.split_whitespace().collect();
 
-        new_sue.insert(
-            parsed_line[2].trim_end_matches(':'),
-            parsed_line[3]
-                .trim_end_matches(',')
-                .parse::<usize>()
-                .unwrap(),
-        );
-        new_sue.insert(
-            parsed_line[4].trim_end_matches(':'),
-            parsed_line[5]
-                .trim_end_matches(',')
-                .parse::<usize>()
-                .unwrap(),
-        );
-        new_sue.insert(
-            parsed_line[6].trim_end_matches(':'),
-            parsed_line[7]
-                .trim_end_matches(',')
-                .parse::<usize>()
-                .unwrap(),
-        );
+        new_sue.insert(parsed_line[2].trim_end_matches(':'), parsed_line[3].trim_end_matches(',').parse::<usize>().unwrap());
+        new_sue.insert(parsed_line[4].trim_end_matches(':'), parsed_line[5].trim_end_matches(',').parse::<usize>().unwrap());
+        new_sue.insert(parsed_line[6].trim_end_matches(':'), parsed_line[7].trim_end_matches(',').parse::<usize>().unwrap());
 
         sues.push(new_sue);
     }

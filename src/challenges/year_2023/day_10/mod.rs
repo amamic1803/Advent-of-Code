@@ -1,13 +1,7 @@
 use crate::shared::structures::Day;
 
 pub fn day_10() -> Day {
-    Day::new(
-        10,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(10, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 use once_cell::sync::Lazy;
@@ -76,11 +70,7 @@ fn part2(input: &str) -> String {
 }
 
 fn parse_input(input: &str) -> Vec<Vec<char>> {
-    input
-        .trim()
-        .lines()
-        .map(|line| line.chars().collect::<Vec<char>>())
-        .collect::<Vec<Vec<char>>>()
+    input.trim().lines().map(|line| line.chars().collect::<Vec<char>>()).collect::<Vec<Vec<char>>>()
 }
 
 fn find_start(field: &[Vec<char>]) -> (usize, usize) {
@@ -174,8 +164,7 @@ fn determine_s(field: &[Vec<char>]) -> ((usize, usize), char) {
         left = true;
     }
 
-    if s_coord.1 < field[0].len() - 1 && ['-', '7', 'J'].contains(&field[s_coord.0][s_coord.1 + 1])
-    {
+    if s_coord.1 < field[0].len() - 1 && ['-', '7', 'J'].contains(&field[s_coord.0][s_coord.1 + 1]) {
         right = true;
     }
 
@@ -245,9 +234,7 @@ fn flood_fill_outside(expanded_field: &mut [Vec<char>]) {
         }
 
         // down
-        if current_tile.0 < expanded_field.len() - 1
-            && expanded_field[current_tile.0 + 1][current_tile.1] == '.'
-        {
+        if current_tile.0 < expanded_field.len() - 1 && expanded_field[current_tile.0 + 1][current_tile.1] == '.' {
             current_tiles.insert((current_tile.0 + 1, current_tile.1));
         }
 
@@ -257,9 +244,7 @@ fn flood_fill_outside(expanded_field: &mut [Vec<char>]) {
         }
 
         // right
-        if current_tile.1 < expanded_field[0].len() - 1
-            && expanded_field[current_tile.0][current_tile.1 + 1] == '.'
-        {
+        if current_tile.1 < expanded_field[0].len() - 1 && expanded_field[current_tile.0][current_tile.1 + 1] == '.' {
             current_tiles.insert((current_tile.0, current_tile.1 + 1));
         }
     }

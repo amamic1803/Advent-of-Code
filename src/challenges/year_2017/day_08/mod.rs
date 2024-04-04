@@ -1,13 +1,7 @@
 use crate::shared::structures::Day;
 
 pub fn day_08() -> Day {
-    Day::new(
-        8,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(8, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 use std::collections::HashMap;
@@ -33,10 +27,7 @@ struct Cpu<'a> {
 impl<'a> Cpu<'a> {
     fn new(input: &'a str) -> Self {
         let registers = HashMap::new();
-        let instructions = input
-            .lines()
-            .map(Instruction::new)
-            .collect::<Vec<Instruction>>();
+        let instructions = input.lines().map(Instruction::new).collect::<Vec<Instruction>>();
 
         Self {
             registers,

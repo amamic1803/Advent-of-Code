@@ -1,13 +1,7 @@
 use crate::shared::structures::Day;
 
 pub fn day_01() -> Day {
-    Day::new(
-        1,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(1, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 fn part1(input: &str) -> String {
@@ -26,11 +20,7 @@ fn part1(input: &str) -> String {
 }
 
 fn part2(input: &str) -> String {
-    let input: Vec<usize> = input
-        .trim()
-        .lines()
-        .map(|line| line.parse::<usize>().unwrap())
-        .collect();
+    let input: Vec<usize> = input.trim().lines().map(|line| line.parse::<usize>().unwrap()).collect();
     let mut count: usize = 0;
 
     for i in 0..(input.len() - 3) {

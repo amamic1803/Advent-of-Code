@@ -49,11 +49,7 @@ impl Graph {
         let mut min_cost = isize::MAX;
         let mut min_path = Vec::with_capacity(self.vertices + 1);
         let mut queue: BinaryHeap<Reverse<Node>> = BinaryHeap::new();
-        let rows_minis: Vec<isize> = self
-            .edges
-            .iter()
-            .map(|row| row.iter().flatten().copied().min().unwrap())
-            .collect();
+        let rows_minis: Vec<isize> = self.edges.iter().map(|row| row.iter().flatten().copied().min().unwrap()).collect();
         let limit: isize = rows_minis.iter().sum();
 
         queue.push(Reverse(Node::new(limit, {
@@ -66,9 +62,7 @@ impl Graph {
             let mut current_node = queue.pop().unwrap().0;
             if current_node.path.len() == self.vertices {
                 current_node.limit -= rows_minis[current_node.path[current_node.path.len() - 1]];
-                current_node.limit += self.edges[current_node.path[current_node.path.len() - 1]]
-                    [start_point]
-                    .unwrap();
+                current_node.limit += self.edges[current_node.path[current_node.path.len() - 1]][start_point].unwrap();
                 current_node.path.push(start_point);
 
                 if current_node.limit < min_cost {
@@ -80,8 +74,7 @@ impl Graph {
                     if !current_node.path.contains(&i) {
                         let mut new_node = current_node.clone();
                         new_node.limit -= rows_minis[new_node.path[new_node.path.len() - 1]];
-                        new_node.limit +=
-                            self.edges[new_node.path[new_node.path.len() - 1]][i].unwrap();
+                        new_node.limit += self.edges[new_node.path[new_node.path.len() - 1]][i].unwrap();
                         if new_node.limit < min_cost {
                             new_node.path.push(i);
                             queue.push(Reverse(new_node));
@@ -101,11 +94,7 @@ impl Graph {
         let mut max_cost = isize::MIN;
         let mut max_path = Vec::with_capacity(self.vertices + 1);
         let mut queue: BinaryHeap<Node> = BinaryHeap::new();
-        let rows_maxes: Vec<isize> = self
-            .edges
-            .iter()
-            .map(|row| row.iter().flatten().copied().max().unwrap())
-            .collect();
+        let rows_maxes: Vec<isize> = self.edges.iter().map(|row| row.iter().flatten().copied().max().unwrap()).collect();
         let limit: isize = rows_maxes.iter().sum();
 
         queue.push(Node::new(limit, {
@@ -118,9 +107,7 @@ impl Graph {
             let mut current_node = queue.pop().unwrap();
             if current_node.path.len() == self.vertices {
                 current_node.limit -= rows_maxes[current_node.path[current_node.path.len() - 1]];
-                current_node.limit += self.edges[current_node.path[current_node.path.len() - 1]]
-                    [start_point]
-                    .unwrap();
+                current_node.limit += self.edges[current_node.path[current_node.path.len() - 1]][start_point].unwrap();
                 current_node.path.push(start_point);
 
                 if current_node.limit > max_cost {
@@ -132,8 +119,7 @@ impl Graph {
                     if !current_node.path.contains(&i) {
                         let mut new_node = current_node.clone();
                         new_node.limit -= rows_maxes[new_node.path[new_node.path.len() - 1]];
-                        new_node.limit +=
-                            self.edges[new_node.path[new_node.path.len() - 1]][i].unwrap();
+                        new_node.limit += self.edges[new_node.path[new_node.path.len() - 1]][i].unwrap();
                         if new_node.limit > max_cost {
                             new_node.path.push(i);
                             queue.push(new_node);

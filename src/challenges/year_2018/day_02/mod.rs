@@ -2,13 +2,7 @@ use crate::shared::structures::Day;
 use std::collections::HashMap;
 
 pub fn day_02() -> Day {
-    Day::new(
-        2,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(2, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 fn part1(input: &str) -> String {
@@ -43,23 +37,13 @@ fn part2(input: &str) -> String {
         let id = ids.pop().unwrap();
         for id2 in ids.iter() {
             if different_chars(id, id2) == 1 {
-                return id
-                    .chars()
-                    .zip(id2.chars())
-                    .filter(|(char1, char2)| char1 == char2)
-                    .map(|(char1, _)| char1)
-                    .collect();
+                return id.chars().zip(id2.chars()).filter(|(char1, char2)| char1 == char2).map(|(char1, _)| char1).collect();
             }
         }
     }
 
     if different_chars(ids[0], ids[1]) == 1 {
-        return ids[0]
-            .chars()
-            .zip(ids[1].chars())
-            .filter(|(char1, char2)| char1 == char2)
-            .map(|(char1, _)| char1)
-            .collect();
+        return ids[0].chars().zip(ids[1].chars()).filter(|(char1, char2)| char1 == char2).map(|(char1, _)| char1).collect();
     } else {
         panic!("No solution found");
     }

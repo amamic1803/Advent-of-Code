@@ -1,33 +1,19 @@
 use crate::shared::structures::Day;
 
 pub fn day_04() -> Day {
-    Day::new(
-        4,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(4, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 fn part1(input: &str) -> String {
     let passports = parse_input(input);
 
-    passports
-        .iter()
-        .filter(|p| p.is_valid1())
-        .count()
-        .to_string()
+    passports.iter().filter(|p| p.is_valid1()).count().to_string()
 }
 
 fn part2(input: &str) -> String {
     let passports = parse_input(input);
 
-    passports
-        .iter()
-        .filter(|p| p.is_valid2())
-        .count()
-        .to_string()
+    passports.iter().filter(|p| p.is_valid2()).count().to_string()
 }
 
 struct Passport<'a> {
@@ -55,13 +41,7 @@ impl<'a> Passport<'a> {
     }
 
     fn is_valid1(&self) -> bool {
-        self.byr.is_some()
-            && self.iyr.is_some()
-            && self.eyr.is_some()
-            && self.hgt.is_some()
-            && self.hcl.is_some()
-            && self.ecl.is_some()
-            && self.pid.is_some()
+        self.byr.is_some() && self.iyr.is_some() && self.eyr.is_some() && self.hgt.is_some() && self.hcl.is_some() && self.ecl.is_some() && self.pid.is_some()
     }
 
     fn is_valid2(&self) -> bool {

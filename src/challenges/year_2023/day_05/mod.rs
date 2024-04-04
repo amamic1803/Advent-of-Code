@@ -1,13 +1,7 @@
 use crate::shared::structures::Day;
 
 pub fn day_05() -> Day {
-    Day::new(
-        5,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(5, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 use itertools::Itertools;
@@ -35,10 +29,7 @@ impl Garden {
         let mut input = input.trim().lines();
 
         let seeds_str = input.next().unwrap().trim_start_matches("seeds:").trim();
-        let seeds = seeds_str
-            .split_whitespace()
-            .map(|s| s.parse::<u64>().unwrap())
-            .collect::<Vec<_>>();
+        let seeds = seeds_str.split_whitespace().map(|s| s.parse::<u64>().unwrap()).collect::<Vec<_>>();
 
         let mut line = "";
         while !line.starts_with("seed-to-soil map:") {
@@ -48,11 +39,7 @@ impl Garden {
         let mut seed_to_soil_map = Vec::new();
         while !line.is_empty() {
             let (dest, src, len) = line.split_whitespace().collect_tuple().unwrap();
-            seed_to_soil_map.push(Map::new(
-                src.parse().unwrap(),
-                dest.parse().unwrap(),
-                len.parse().unwrap(),
-            ));
+            seed_to_soil_map.push(Map::new(src.parse().unwrap(), dest.parse().unwrap(), len.parse().unwrap()));
             line = input.next().unwrap();
         }
 
@@ -63,11 +50,7 @@ impl Garden {
         let mut soil_to_fertilizer_map = Vec::new();
         while !line.is_empty() {
             let (dest, src, len) = line.split_whitespace().collect_tuple().unwrap();
-            soil_to_fertilizer_map.push(Map::new(
-                src.parse().unwrap(),
-                dest.parse().unwrap(),
-                len.parse().unwrap(),
-            ));
+            soil_to_fertilizer_map.push(Map::new(src.parse().unwrap(), dest.parse().unwrap(), len.parse().unwrap()));
             line = input.next().unwrap();
         }
 
@@ -78,11 +61,7 @@ impl Garden {
         let mut fertilizer_to_water_map = Vec::new();
         while !line.is_empty() {
             let (dest, src, len) = line.split_whitespace().collect_tuple().unwrap();
-            fertilizer_to_water_map.push(Map::new(
-                src.parse().unwrap(),
-                dest.parse().unwrap(),
-                len.parse().unwrap(),
-            ));
+            fertilizer_to_water_map.push(Map::new(src.parse().unwrap(), dest.parse().unwrap(), len.parse().unwrap()));
             line = input.next().unwrap();
         }
 
@@ -93,11 +72,7 @@ impl Garden {
         let mut water_to_light_map = Vec::new();
         while !line.is_empty() {
             let (dest, src, len) = line.split_whitespace().collect_tuple().unwrap();
-            water_to_light_map.push(Map::new(
-                src.parse().unwrap(),
-                dest.parse().unwrap(),
-                len.parse().unwrap(),
-            ));
+            water_to_light_map.push(Map::new(src.parse().unwrap(), dest.parse().unwrap(), len.parse().unwrap()));
             line = input.next().unwrap();
         }
 
@@ -108,11 +83,7 @@ impl Garden {
         let mut light_to_temperature_map = Vec::new();
         while !line.is_empty() {
             let (dest, src, len) = line.split_whitespace().collect_tuple().unwrap();
-            light_to_temperature_map.push(Map::new(
-                src.parse().unwrap(),
-                dest.parse().unwrap(),
-                len.parse().unwrap(),
-            ));
+            light_to_temperature_map.push(Map::new(src.parse().unwrap(), dest.parse().unwrap(), len.parse().unwrap()));
             line = input.next().unwrap();
         }
 
@@ -123,11 +94,7 @@ impl Garden {
         let mut temperature_to_humidity_map = Vec::new();
         while !line.is_empty() {
             let (dest, src, len) = line.split_whitespace().collect_tuple().unwrap();
-            temperature_to_humidity_map.push(Map::new(
-                src.parse().unwrap(),
-                dest.parse().unwrap(),
-                len.parse().unwrap(),
-            ));
+            temperature_to_humidity_map.push(Map::new(src.parse().unwrap(), dest.parse().unwrap(), len.parse().unwrap()));
             line = input.next().unwrap();
         }
 
@@ -138,11 +105,7 @@ impl Garden {
         let mut humidity_to_location_map = Vec::new();
         while !line.is_empty() {
             let (dest, src, len) = line.split_whitespace().collect_tuple().unwrap();
-            humidity_to_location_map.push(Map::new(
-                src.parse().unwrap(),
-                dest.parse().unwrap(),
-                len.parse().unwrap(),
-            ));
+            humidity_to_location_map.push(Map::new(src.parse().unwrap(), dest.parse().unwrap(), len.parse().unwrap()));
             line = input.next().unwrap_or("");
         }
 
@@ -159,11 +122,7 @@ impl Garden {
     }
 
     fn closest_location1(&self) -> u64 {
-        self.seeds
-            .iter()
-            .map(|&seed| self.seed_to_location(seed))
-            .min()
-            .unwrap()
+        self.seeds.iter().map(|&seed| self.seed_to_location(seed)).min().unwrap()
     }
 
     fn seed_to_location(&self, seed: u64) -> u64 {
@@ -199,11 +158,7 @@ impl Garden {
         intervals = Self::calculate_map_intervals(intervals, &self.temperature_to_humidity_map);
         intervals = Self::calculate_map_intervals(intervals, &self.humidity_to_location_map);
 
-        intervals
-            .into_iter()
-            .map(|interval| interval.start)
-            .min()
-            .unwrap()
+        intervals.into_iter().map(|interval| interval.start).min().unwrap()
     }
 
     fn calculate_map_intervals(mut intervals: Vec<Interval>, maps: &[Map]) -> Vec<Interval> {
@@ -213,9 +168,7 @@ impl Garden {
             let mut changed = false;
 
             for map in maps {
-                if map.src_start <= working_interval.start
-                    && working_interval.end <= (map.src_start + map.range_len - 1)
-                {
+                if map.src_start <= working_interval.start && working_interval.end <= (map.src_start + map.range_len - 1) {
                     // interval is completely contained in map (or equal to map)
 
                     output_intervals.push(Interval::new(
@@ -224,64 +177,46 @@ impl Garden {
                     ));
                     changed = true;
                     break;
-                } else if working_interval.start <= map.src_start
-                    && (map.src_start + map.range_len - 1) <= working_interval.end
-                {
+                } else if working_interval.start <= map.src_start && (map.src_start + map.range_len - 1) <= working_interval.end {
                     // interval is completely containing map (it can't be equal here)
 
                     // if it is zero this wouldn't work because of underflow, otherwise logic is correct
                     if map.src_start > 0 {
-                        let interval_left =
-                            Interval::new(working_interval.start, map.src_start - 1);
+                        let interval_left = Interval::new(working_interval.start, map.src_start - 1);
                         if interval_left.start <= interval_left.end {
                             intervals.push(interval_left);
                         }
                     }
 
                     // translate whole map to output (because it is contained in interval)
-                    output_intervals.push(Interval::new(
-                        map.dest_start,
-                        map.dest_start + map.range_len - 1,
-                    ));
+                    output_intervals.push(Interval::new(map.dest_start, map.dest_start + map.range_len - 1));
 
-                    let interval_right =
-                        Interval::new(map.src_start + map.range_len, working_interval.end);
+                    let interval_right = Interval::new(map.src_start + map.range_len, working_interval.end);
                     if interval_right.start <= interval_right.end {
                         intervals.push(interval_right);
                     }
 
                     changed = true;
                     break;
-                } else if map.src_start <= working_interval.start
-                    && working_interval.start <= (map.src_start + map.range_len - 1)
-                {
+                } else if map.src_start <= working_interval.start && working_interval.start <= (map.src_start + map.range_len - 1) {
                     // interval starts in map (it is not contained in map)
 
                     // translate part of map to output (because it is contained in interval)
-                    output_intervals.push(Interval::new(
-                        map.dest_start + (working_interval.start - map.src_start),
-                        map.dest_start + map.range_len - 1,
-                    ));
+                    output_intervals.push(Interval::new(map.dest_start + (working_interval.start - map.src_start), map.dest_start + map.range_len - 1));
 
-                    let interval_right =
-                        Interval::new(map.src_start + map.range_len, working_interval.end);
+                    let interval_right = Interval::new(map.src_start + map.range_len, working_interval.end);
                     intervals.push(interval_right);
 
                     changed = true;
                     break;
-                } else if map.src_start <= working_interval.end
-                    && working_interval.end <= (map.src_start + map.range_len - 1)
-                {
+                } else if map.src_start <= working_interval.end && working_interval.end <= (map.src_start + map.range_len - 1) {
                     // interval ends in map (it is not contained in map)
 
                     let interval_left = Interval::new(working_interval.start, map.src_start - 1);
                     intervals.push(interval_left);
 
                     // translate part of map to output (because it is contained in interval)
-                    output_intervals.push(Interval::new(
-                        map.dest_start,
-                        map.dest_start + (working_interval.end - map.src_start),
-                    ));
+                    output_intervals.push(Interval::new(map.dest_start, map.dest_start + (working_interval.end - map.src_start)));
 
                     changed = true;
                     break;
@@ -303,11 +238,7 @@ struct Map {
 }
 impl Map {
     fn new(src_start: u64, dest_start: u64, range_len: u64) -> Self {
-        Self {
-            src_start,
-            dest_start,
-            range_len,
-        }
+        Self { src_start, dest_start, range_len }
     }
     fn convert(&self, value: u64) -> Option<u64> {
         if (self.src_start..(self.src_start + self.range_len)).contains(&value) {

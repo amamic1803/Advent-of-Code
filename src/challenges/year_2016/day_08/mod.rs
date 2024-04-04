@@ -2,13 +2,7 @@ use crate::shared::structures::Day;
 use itertools::Itertools;
 
 pub fn day_08() -> Day {
-    Day::new(
-        8,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(8, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 fn part1(input: &str) -> String {
@@ -39,17 +33,11 @@ fn simulate_screen(input: &str) -> Screen {
         let line_contents = line.split_whitespace().collect::<Vec<&str>>();
         match line_contents[0] {
             "rect" => {
-                let (x, y) = line_contents[1]
-                    .split('x')
-                    .map(|num| num.parse::<usize>().unwrap())
-                    .collect_tuple()
-                    .unwrap();
+                let (x, y) = line_contents[1].split('x').map(|num| num.parse::<usize>().unwrap()).collect_tuple().unwrap();
                 screen.rectangle(x, y);
             }
             "rotate" => {
-                let n_th = line_contents[2].split('=').collect::<Vec<&str>>()[1]
-                    .parse::<usize>()
-                    .unwrap();
+                let n_th = line_contents[2].split('=').collect::<Vec<&str>>()[1].parse::<usize>().unwrap();
                 let by = line_contents[4].parse::<usize>().unwrap();
                 match line_contents[1] {
                     "row" => screen.rotate_row(n_th, by),
@@ -70,9 +58,7 @@ struct Screen {
 
 impl Screen {
     fn new() -> Self {
-        Self {
-            pixels: vec![vec![false; 50]; 6],
-        }
+        Self { pixels: vec![vec![false; 50]; 6] }
     }
 
     fn transpose(&mut self) {

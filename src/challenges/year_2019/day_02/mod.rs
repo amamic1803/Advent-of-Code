@@ -2,13 +2,7 @@ use crate::shared::structures::Day;
 use itertools::Itertools;
 
 pub fn day_02() -> Day {
-    Day::new(
-        2,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(2, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 fn part1(input: &str) -> String {
@@ -63,9 +57,5 @@ fn simulate(array: &mut [usize]) {
 }
 
 fn parse_input(input: &str) -> Vec<usize> {
-    input
-        .trim()
-        .split(',')
-        .map(|x| x.parse::<usize>().unwrap())
-        .collect()
+    input.trim().split(',').map(|x| x.parse::<usize>().unwrap()).collect()
 }

@@ -2,13 +2,7 @@ use crate::shared::structures::Day;
 use std::collections::{HashMap, HashSet};
 
 pub fn day_06() -> Day {
-    Day::new(
-        6,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(6, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 const NUM_BANKS: usize = 16;
@@ -92,10 +86,5 @@ fn part2(input: &str) -> String {
 }
 
 fn parse_input(input: &str) -> [u16; NUM_BANKS] {
-    input
-        .split_whitespace()
-        .map(|num| num.parse::<u16>().unwrap())
-        .collect::<Vec<_>>()
-        .try_into()
-        .unwrap()
+    input.split_whitespace().map(|num| num.parse::<u16>().unwrap()).collect::<Vec<_>>().try_into().unwrap()
 }

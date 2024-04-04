@@ -1,13 +1,7 @@
 use crate::shared::structures::Day;
 
 pub fn day_02() -> Day {
-    Day::new(
-        2,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(2, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 fn part1(input: &str) -> String {
@@ -23,14 +17,9 @@ fn part1(input: &str) -> String {
                 "Z" => 3,
                 _ => panic!(),
             };
-            if (game_values[0] == "A" && game_values[1] == "Y")
-                || (game_values[0] == "B" && game_values[1] == "Z")
-                || (game_values[0] == "C") && game_values[1] == "X"
-            {
+            if (game_values[0] == "A" && game_values[1] == "Y") || (game_values[0] == "B" && game_values[1] == "Z") || (game_values[0] == "C") && game_values[1] == "X" {
                 score += 6;
-            } else if (game_values[0] == "A" && game_values[1] == "X")
-                || (game_values[0] == "B" && game_values[1] == "Y")
-                || (game_values[0] == "C") && game_values[1] == "Z"
+            } else if (game_values[0] == "A" && game_values[1] == "X") || (game_values[0] == "B" && game_values[1] == "Y") || (game_values[0] == "C") && game_values[1] == "Z"
             {
                 score += 3;
             }

@@ -1,13 +1,7 @@
 use crate::shared::structures::Day;
 
 pub fn day_13() -> Day {
-    Day::new(
-        13,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(13, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 use std::collections::{HashMap, HashSet, VecDeque};
@@ -59,12 +53,7 @@ impl Maze {
     }
 
     fn check_position(&self, position: (usize, usize)) -> bool {
-        let mut value = position.0.pow(2)
-            + 3 * position.0
-            + 2 * position.0 * position.1
-            + position.1
-            + position.1.pow(2)
-            + self.favorite_number;
+        let mut value = position.0.pow(2) + 3 * position.0 + 2 * position.0 * position.1 + position.1 + position.1.pow(2) + self.favorite_number;
         let mut number_of_ones = 0;
 
         while value != 0 {

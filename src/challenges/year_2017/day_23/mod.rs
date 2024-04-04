@@ -1,13 +1,7 @@
 use crate::shared::structures::Day;
 
 pub fn day_23() -> Day {
-    Day::new(
-        23,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(23, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 use crate::shared::math::is_prime;
@@ -36,56 +30,17 @@ fn part2(input: &str) -> String {
 
     for (i, ins) in input.trim().lines().enumerate() {
         match i + 1 {
-            1 => {
-                x = ins
-                    .split_whitespace()
-                    .last()
-                    .unwrap()
-                    .parse::<i64>()
-                    .unwrap()
-            }
-            5 => {
-                y = ins
-                    .split_whitespace()
-                    .last()
-                    .unwrap()
-                    .parse::<i64>()
-                    .unwrap()
-            }
-            6 => {
-                z = -ins
-                    .split_whitespace()
-                    .last()
-                    .unwrap()
-                    .parse::<i64>()
-                    .unwrap()
-            }
-            8 => {
-                w = -ins
-                    .split_whitespace()
-                    .last()
-                    .unwrap()
-                    .parse::<i64>()
-                    .unwrap()
-            }
-            31 => {
-                step = -ins
-                    .split_whitespace()
-                    .last()
-                    .unwrap()
-                    .parse::<i64>()
-                    .unwrap()
-            }
+            1 => x = ins.split_whitespace().last().unwrap().parse::<i64>().unwrap(),
+            5 => y = ins.split_whitespace().last().unwrap().parse::<i64>().unwrap(),
+            6 => z = -ins.split_whitespace().last().unwrap().parse::<i64>().unwrap(),
+            8 => w = -ins.split_whitespace().last().unwrap().parse::<i64>().unwrap(),
+            31 => step = -ins.split_whitespace().last().unwrap().parse::<i64>().unwrap(),
             _ => {}
         }
     }
 
     let b = x * y + z;
-    ((b as u64)..=((b + w) as u64))
-        .step_by(step as usize)
-        .filter(|&i| !is_prime(i).0)
-        .count()
-        .to_string()
+    ((b as u64)..=((b + w) as u64)).step_by(step as usize).filter(|&i| !is_prime(i).0).count().to_string()
 }
 
 struct Cpu<'a> {
@@ -96,16 +51,9 @@ impl<'a> Cpu<'a> {
     fn new(instructions: &'a str) -> Self {
         let registers = [0; 8];
 
-        let instructions = instructions
-            .trim()
-            .lines()
-            .map(Instruction::new)
-            .collect::<Vec<_>>();
+        let instructions = instructions.trim().lines().map(Instruction::new).collect::<Vec<_>>();
 
-        Self {
-            registers,
-            instructions,
-        }
+        Self { registers, instructions }
     }
 
     fn get_reg(&self, r: char) -> i64 {

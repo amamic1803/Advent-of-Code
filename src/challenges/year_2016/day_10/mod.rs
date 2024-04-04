@@ -2,13 +2,7 @@ use crate::shared::structures::Day;
 use std::collections::VecDeque;
 
 pub fn day_10() -> Day {
-    Day::new(
-        10,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(10, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 fn part1(input: &str) -> String {
@@ -42,10 +36,7 @@ impl Processor {
         for line in input.trim().lines() {
             let line_contents = line.split_whitespace().collect::<Vec<_>>();
             match line_contents[0] {
-                "value" => values.push((
-                    line_contents[1].parse().unwrap(),
-                    line_contents[5].parse().unwrap(),
-                )),
+                "value" => values.push((line_contents[1].parse().unwrap(), line_contents[5].parse().unwrap())),
                 "bot" => {
                     let bot_id = line_contents[1].parse().unwrap();
                     let low_id = line_contents[6].parse().unwrap();
@@ -113,20 +104,8 @@ impl Processor {
             let step_count = current_bots.len();
             for _ in 0..step_count {
                 let working_bot = self.bots[current_bots.pop_front().unwrap() as usize];
-                let lower_value = working_bot
-                    .values
-                    .iter()
-                    .filter(|value| value.is_some())
-                    .min()
-                    .unwrap()
-                    .unwrap();
-                let higher_value = working_bot
-                    .values
-                    .iter()
-                    .filter(|value| value.is_some())
-                    .max()
-                    .unwrap()
-                    .unwrap();
+                let lower_value = working_bot.values.iter().filter(|value| value.is_some()).min().unwrap().unwrap();
+                let higher_value = working_bot.values.iter().filter(|value| value.is_some()).max().unwrap().unwrap();
 
                 if part == 1 && lower_value == 17 && higher_value == 61 {
                     return Some(working_bot.id as u64);

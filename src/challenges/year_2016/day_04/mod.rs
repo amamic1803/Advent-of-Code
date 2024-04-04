@@ -4,13 +4,7 @@ use std::cmp::Reverse;
 use std::collections::HashMap;
 
 pub fn day_04() -> Day {
-    Day::new(
-        4,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(4, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 fn part1(input: &str) -> String {
@@ -24,9 +18,7 @@ fn part2(input: &str) -> String {
         .iter()
         .find(|(name, id, _)| {
             let real_name = rotate_name(name, *id);
-            real_name.contains("north")
-                && real_name.contains("pole")
-                && real_name.contains("object")
+            real_name.contains("north") && real_name.contains("pole") && real_name.contains("object")
         })
         .unwrap()
         .1
@@ -47,13 +39,7 @@ fn filter_rooms(rooms: Vec<(&str, usize, [char; 5])>) -> Vec<(&str, usize, [char
         }
         let mut char_counts: Vec<(char, usize)> = char_counts.into_iter().collect();
         char_counts.sort_by_key(|(c, count)| (Reverse(*count), *c));
-        let new_checksum: [char; 5] = char_counts
-            .iter()
-            .map(|(c, _)| *c)
-            .take(5)
-            .collect::<Vec<char>>()
-            .try_into()
-            .unwrap();
+        let new_checksum: [char; 5] = char_counts.iter().map(|(c, _)| *c).take(5).collect::<Vec<char>>().try_into().unwrap();
         if new_checksum == checksum {
             filtered_rooms.push((name, id, checksum));
         }

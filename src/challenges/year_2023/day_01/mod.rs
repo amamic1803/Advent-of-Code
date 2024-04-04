@@ -1,18 +1,10 @@
 use crate::shared::structures::Day;
 
 pub fn day_01() -> Day {
-    Day::new(
-        1,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(1, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
-const SPELLED_DIGITS: [&str; 9] = [
-    "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
-];
+const SPELLED_DIGITS: [&str; 9] = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
 
 fn part1(input: &str) -> String {
     let mut sum = 0;
@@ -20,8 +12,7 @@ fn part1(input: &str) -> String {
     for line in lines {
         let mut digits_iterator = line.chars().filter_map(|c| c.to_digit(10));
         let mut digits_iterator_back = digits_iterator.clone();
-        sum += digits_iterator.next().unwrap() as usize * 10
-            + digits_iterator_back.next_back().unwrap() as usize;
+        sum += digits_iterator.next().unwrap() as usize * 10 + digits_iterator_back.next_back().unwrap() as usize;
     }
     sum.to_string()
 }
@@ -31,11 +22,7 @@ fn part2(input: &str) -> String {
     let lines = parse_input(input);
 
     for line in lines {
-        let mut digits_iterator = line
-            .chars()
-            .enumerate()
-            .filter(|(_, c)| c.is_ascii_digit())
-            .map(|(pos, c)| (pos, c.to_digit(10).unwrap()));
+        let mut digits_iterator = line.chars().enumerate().filter(|(_, c)| c.is_ascii_digit()).map(|(pos, c)| (pos, c.to_digit(10).unwrap()));
 
         let (front_digit_pos, mut front_digit) = digits_iterator.next().unwrap();
         let (mut back_digit_pos, mut back_digit) = (front_digit_pos, front_digit);

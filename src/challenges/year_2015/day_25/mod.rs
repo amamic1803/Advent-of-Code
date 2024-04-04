@@ -1,13 +1,7 @@
 use crate::shared::structures::Day;
 
 pub fn day_25() -> Day {
-    Day::new(
-        25,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(25, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 fn part1(input: &str) -> String {
@@ -27,22 +21,12 @@ fn parse_input(input: &str) -> (usize, usize) {
     while element != "row" {
         element = line_iter.next().unwrap();
     }
-    let row = line_iter
-        .next()
-        .unwrap()
-        .trim_end_matches([',', '.'])
-        .parse::<usize>()
-        .unwrap();
+    let row = line_iter.next().unwrap().trim_end_matches([',', '.']).parse::<usize>().unwrap();
 
     while element != "column" {
         element = line_iter.next().unwrap();
     }
-    let col = line_iter
-        .next()
-        .unwrap()
-        .trim_end_matches([',', '.'])
-        .parse::<usize>()
-        .unwrap();
+    let col = line_iter.next().unwrap().trim_end_matches([',', '.']).parse::<usize>().unwrap();
 
     // (row, column)
     (row, col)

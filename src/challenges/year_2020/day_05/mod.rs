@@ -1,31 +1,15 @@
 use crate::shared::structures::Day;
 
 pub fn day_05() -> Day {
-    Day::new(
-        5,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(5, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 fn part1(input: &str) -> String {
-    input
-        .lines()
-        .map(BoardingPass::new)
-        .map(|b_pass| b_pass.seat_id())
-        .max()
-        .unwrap()
-        .to_string()
+    input.lines().map(BoardingPass::new).map(|b_pass| b_pass.seat_id()).max().unwrap().to_string()
 }
 
 fn part2(input: &str) -> String {
-    let mut taken_seats = input
-        .lines()
-        .map(BoardingPass::new)
-        .map(|b_pass| b_pass.seat_id())
-        .collect::<Vec<_>>();
+    let mut taken_seats = input.lines().map(BoardingPass::new).map(|b_pass| b_pass.seat_id()).collect::<Vec<_>>();
     taken_seats.sort();
 
     for i in 0..(taken_seats.len() - 1) {

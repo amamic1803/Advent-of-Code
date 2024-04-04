@@ -15,8 +15,5 @@ use day_08::day_08;
 use day_12::day_12;
 
 pub fn year_2018() -> Year {
-    Year::new(
-        2018,
-        vec![day_01(), day_02(), day_03(), day_05(), day_08(), day_12()],
-    )
+    Year::new(2018, vec![day_01(), day_02(), day_03(), day_05(), day_08(), day_12()])
 }

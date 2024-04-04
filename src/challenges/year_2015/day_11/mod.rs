@@ -1,13 +1,7 @@
 use crate::shared::structures::Day;
 
 pub fn day_11() -> Day {
-    Day::new(
-        11,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(11, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 fn part1(input: &str) -> String {

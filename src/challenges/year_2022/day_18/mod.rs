@@ -1,13 +1,7 @@
 use crate::shared::structures::Day;
 
 pub fn day_18() -> Day {
-    Day::new(
-        18,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(18, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 use std::collections::BTreeSet;
@@ -156,11 +150,7 @@ fn parse_input(input: &str) -> Vec<Vec<Vec<Position>>> {
     let mut cubes_coords = input
         .trim()
         .lines()
-        .map(|line| {
-            line.split(',')
-                .map(|coord| coord.parse::<usize>().unwrap())
-                .collect::<Vec<_>>()
-        })
+        .map(|line| line.split(',').map(|coord| coord.parse::<usize>().unwrap()).collect::<Vec<_>>())
         .collect::<Vec<Vec<usize>>>();
 
     // offset all cubes by 1 in each direction

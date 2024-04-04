@@ -1,13 +1,7 @@
 use crate::shared::structures::Day;
 
 pub fn day_01() -> Day {
-    Day::new(
-        1,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(1, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 fn part1(input: &str) -> String {
@@ -38,9 +32,5 @@ fn part2(input: &str) -> String {
 }
 
 fn parse_input(input: &str) -> Vec<u32> {
-    input
-        .trim()
-        .chars()
-        .map(|c| c.to_digit(10).unwrap())
-        .collect()
+    input.trim().chars().map(|c| c.to_digit(10).unwrap()).collect()
 }

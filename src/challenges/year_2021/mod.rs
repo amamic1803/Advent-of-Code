@@ -15,8 +15,5 @@ use day_05::day_05;
 use day_06::day_06;
 
 pub fn year_2021() -> Year {
-    Year::new(
-        2021,
-        vec![day_01(), day_02(), day_03(), day_04(), day_05(), day_06()],
-    )
+    Year::new(2021, vec![day_01(), day_02(), day_03(), day_04(), day_05(), day_06()])
 }

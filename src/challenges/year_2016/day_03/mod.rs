@@ -1,13 +1,7 @@
 use crate::shared::structures::Day;
 
 pub fn day_03() -> Day {
-    Day::new(
-        3,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(3, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 fn part1(input: &str) -> String {
@@ -39,10 +33,7 @@ fn parse_input(input: &str) -> Vec<Triangle> {
         .trim()
         .lines()
         .map(|line| {
-            let mut sides = line
-                .split_whitespace()
-                .map(|s| s.parse::<usize>().unwrap())
-                .collect::<Vec<usize>>();
+            let mut sides = line.split_whitespace().map(|s| s.parse::<usize>().unwrap()).collect::<Vec<usize>>();
             sides.sort();
             [sides[0], sides[1], sides[2]]
         })
@@ -54,11 +45,7 @@ fn parse_input_2(input: &str) -> Vec<Triangle> {
     let mut triangle_block: Vec<Vec<usize>> = vec![Vec::new(), Vec::new(), Vec::new()];
 
     for line in input.trim().lines() {
-        for (i, side) in line
-            .split_whitespace()
-            .map(|s| s.parse::<usize>().unwrap())
-            .enumerate()
-        {
+        for (i, side) in line.split_whitespace().map(|s| s.parse::<usize>().unwrap()).enumerate() {
             triangle_block[i].push(side);
         }
 

@@ -1,40 +1,24 @@
 use crate::shared::structures::Day;
 
 pub fn day_09() -> Day {
-    Day::new(
-        9,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(9, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 fn part1(input: &str) -> String {
     let data = parse_input(input);
-    data.into_iter()
-        .map(|row| predict_next(&row))
-        .sum::<i64>()
-        .to_string()
+    data.into_iter().map(|row| predict_next(&row)).sum::<i64>().to_string()
 }
 
 fn part2(input: &str) -> String {
     let data = parse_input(input);
-    data.into_iter()
-        .map(|row| predict_prev(&row))
-        .sum::<i64>()
-        .to_string()
+    data.into_iter().map(|row| predict_prev(&row)).sum::<i64>().to_string()
 }
 
 fn parse_input(input: &str) -> Vec<Vec<i64>> {
     input
         .trim()
         .lines()
-        .map(|line| {
-            line.split_whitespace()
-                .map(|num| num.parse::<i64>().unwrap())
-                .collect::<Vec<_>>()
-        })
+        .map(|line| line.split_whitespace().map(|num| num.parse::<i64>().unwrap()).collect::<Vec<_>>())
         .collect()
 }
 
@@ -70,9 +54,6 @@ fn predict_prev(data: &[i64]) -> i64 {
     }
 
     let mut result = 0;
-    first_values
-        .into_iter()
-        .rev()
-        .for_each(|val| result = val - result);
+    first_values.into_iter().rev().for_each(|val| result = val - result);
     result
 }

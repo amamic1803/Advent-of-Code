@@ -2,13 +2,7 @@ use crate::shared::structures::Day;
 use std::collections::VecDeque;
 
 pub fn day_12() -> Day {
-    Day::new(
-        12,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(12, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 fn part1(input: &str) -> String {
@@ -65,12 +59,11 @@ fn dijkstra_1(height_map: &[Vec<u32>], loc_start: [usize; 2], loc_end: [usize; 2
 
             next_location.retain(|x| {
                 let not_visited = !visit_map[x[0]][x[1]];
-                let possible_height =
-                    if height_map[x[0]][x[1]] > height_map[curr_loc[0]][curr_loc[1]] {
-                        height_map[x[0]][x[1]] - height_map[curr_loc[0]][curr_loc[1]] <= 1
-                    } else {
-                        true
-                    };
+                let possible_height = if height_map[x[0]][x[1]] > height_map[curr_loc[0]][curr_loc[1]] {
+                    height_map[x[0]][x[1]] - height_map[curr_loc[0]][curr_loc[1]] <= 1
+                } else {
+                    true
+                };
                 not_visited && possible_height
             });
 
@@ -128,12 +121,11 @@ fn dijkstra_2(height_map: &[Vec<u32>], loc_end: [usize; 2], lowest_level: u32) -
 
             next_location.retain(|x| {
                 let not_visited = !visit_map[x[0]][x[1]];
-                let possible_height =
-                    if height_map[x[0]][x[1]] < height_map[curr_loc[0]][curr_loc[1]] {
-                        height_map[curr_loc[0]][curr_loc[1]] - height_map[x[0]][x[1]] <= 1
-                    } else {
-                        true
-                    };
+                let possible_height = if height_map[x[0]][x[1]] < height_map[curr_loc[0]][curr_loc[1]] {
+                    height_map[curr_loc[0]][curr_loc[1]] - height_map[x[0]][x[1]] <= 1
+                } else {
+                    true
+                };
                 not_visited && possible_height
             });
 

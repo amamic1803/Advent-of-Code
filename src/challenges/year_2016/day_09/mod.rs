@@ -3,13 +3,7 @@ use once_cell::sync::Lazy;
 use regex::Regex;
 
 pub fn day_09() -> Day {
-    Day::new(
-        9,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(9, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 fn part1(input: &str) -> String {

@@ -1,13 +1,7 @@
 use crate::shared::structures::Day;
 
 pub fn day_14() -> Day {
-    Day::new(
-        14,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(14, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 use md5;
@@ -25,9 +19,7 @@ fn part2(input: &str) -> String {
 }
 
 const PASSWORDS_TO_FIND: u8 = 64;
-const HEX_DIGITS: [char; 16] = [
-    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f',
-];
+const HEX_DIGITS: [char; 16] = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'];
 const ADDITIONAL_HASHES: usize = 2016;
 static RE_3: Lazy<Vec<Regex>> = Lazy::new(|| {
     let mut re_3 = Vec::new();
@@ -57,12 +49,7 @@ fn calculate_passwords(input: &str, hash_fn: fn(&str, &mut String)) -> u64 {
     let mut last_password = 0;
 
     let mut i = 0;
-    while passwords_found.len() < PASSWORDS_TO_FIND as usize
-        || last_occurences_3
-            .iter()
-            .filter_map(|v| v.front())
-            .any(|&val| val < last_password)
-    {
+    while passwords_found.len() < PASSWORDS_TO_FIND as usize || last_occurences_3.iter().filter_map(|v| v.front()).any(|&val| val < last_password) {
         hash_in.truncate(hash_in_len);
         write!(&mut hash_in, "{i}").unwrap();
 

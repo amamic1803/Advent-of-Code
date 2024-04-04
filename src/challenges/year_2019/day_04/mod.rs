@@ -3,13 +3,7 @@ use itertools::Itertools;
 use std::collections::HashSet;
 
 pub fn day_04() -> Day {
-    Day::new(
-        4,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(4, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 fn part1(input: &str) -> String {
@@ -81,13 +75,7 @@ fn parse_input(input: &str) -> ([u8; 6], [u8; 6]) {
     input
         .trim()
         .split('-')
-        .map(|s| {
-            s.chars()
-                .map(|c| c.to_digit(10).unwrap() as u8)
-                .collect::<Vec<u8>>()
-                .try_into()
-                .unwrap()
-        })
+        .map(|s| s.chars().map(|c| c.to_digit(10).unwrap() as u8).collect::<Vec<u8>>().try_into().unwrap())
         .collect_tuple()
         .unwrap()
 }

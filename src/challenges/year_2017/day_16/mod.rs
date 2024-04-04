@@ -1,13 +1,7 @@
 use crate::shared::structures::Day;
 
 pub fn day_16() -> Day {
-    Day::new(
-        16,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(16, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 fn part1(input: &str) -> String {
@@ -43,9 +37,7 @@ fn part2(input: &str) -> String {
     programs.into_iter().collect()
 }
 
-const INITIAL_PROGRAMS: [char; 16] = [
-    'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p',
-];
+const INITIAL_PROGRAMS: [char; 16] = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p'];
 const DANCE_ROUNDS: usize = 1_000_000_000;
 
 enum Instruction {
@@ -83,9 +75,7 @@ fn dance(programs: &mut [char], instructions: &[Instruction]) {
     for ins in instructions {
         match ins {
             Instruction::Spin(n) => programs.rotate_right(*n),
-            Instruction::Exchange(i, j) => {
-                (programs[*i], programs[*j]) = (programs[*j], programs[*i])
-            }
+            Instruction::Exchange(i, j) => (programs[*i], programs[*j]) = (programs[*j], programs[*i]),
             Instruction::Partner(a, b) => {
                 let a = programs.iter().position(|&c| c == *a).unwrap();
                 let b = programs.iter().position(|&c| c == *b).unwrap();

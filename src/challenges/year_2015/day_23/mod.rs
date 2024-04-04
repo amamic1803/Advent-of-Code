@@ -2,13 +2,7 @@ use crate::shared::structures::Day;
 use std::collections::HashMap;
 
 pub fn day_23() -> Day {
-    Day::new(
-        23,
-        include_str!("text.txt"),
-        include_str!("input.txt"),
-        part1,
-        part2,
-    )
+    Day::new(23, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 fn part1(input: &str) -> String {
@@ -52,14 +46,8 @@ fn parse_input(input: &str) -> Vec<Instruction> {
             "tpl" => instructions.push(Instruction::Tpl(*reg_map.get(line[1]).unwrap())),
             "inc" => instructions.push(Instruction::Inc(*reg_map.get(line[1]).unwrap())),
             "jmp" => instructions.push(Instruction::Jmp(line[1].parse::<isize>().unwrap())),
-            "jie" => instructions.push(Instruction::Jie(
-                *reg_map.get(line[1].trim_end_matches(',')).unwrap(),
-                line[2].parse::<isize>().unwrap(),
-            )),
-            "jio" => instructions.push(Instruction::Jio(
-                *reg_map.get(line[1].trim_end_matches(',')).unwrap(),
-                line[2].parse::<isize>().unwrap(),
-            )),
+            "jie" => instructions.push(Instruction::Jie(*reg_map.get(line[1].trim_end_matches(',')).unwrap(), line[2].parse::<isize>().unwrap())),
+            "jio" => instructions.push(Instruction::Jio(*reg_map.get(line[1].trim_end_matches(',')).unwrap(), line[2].parse::<isize>().unwrap())),
             _ => panic!("Invalid instruction"),
         }
     }
