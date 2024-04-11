@@ -1,5 +1,37 @@
 //! Math functions.
 
+/// Find the solution to a system of congruences using the Chinese Remainder Theorem.ž
+/// For a system of congruences:
+/// x ≡ a1 (mod m1)
+/// x ≡ a2 (mod m2)
+/// ...
+/// x ≡ an (mod mn)
+/// Where m1, m2, ..., mn are pairwise coprime, the solution x is unique modulo M, where M = m1 * m2 * ... * mn.
+/// # Arguments
+/// * `congruences` - The congruences as a slice of tuples. Each tuple contains the (remainder, modulus). The slice should be sorted by modulus in descending order for the best performance.
+/// # Returns
+/// * `u64` - The solution to the system of congruences.
+/// # Panics
+/// Panics if there are no congruences.
+pub fn chinese_remainder_theorem(congruences: &[(u64, u64)]) -> u64 {
+    match congruences.len() {
+        0 => panic!("There must be at least 1 congruence."),
+        1 => congruences[0].0,
+        _ => {
+            let (mut solution, mut modulus) = congruences[0];
+
+            for congruence in congruences.iter().skip(1) {
+                while solution % congruence.1 != congruence.0 {
+                    solution += modulus;
+                }
+                modulus *= congruence.1;
+            }
+
+            solution
+        }
+    }
+}
+
 /// Finds the greatest common divisor of two numbers.
 /// Uses the Euclidean algorithm.
 /// # Arguments
