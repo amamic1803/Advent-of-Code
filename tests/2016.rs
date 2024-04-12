@@ -160,3 +160,13 @@ fn year2016_day20_part1() {
 fn year2016_day20_part2() {
     run_test(2016, 20, 2, "101");
 }
+
+#[test]
+fn year2016_day21_part1() {
+    run_test(2016, 21, 1, "bgfacdeh");
+}
+
+#[test]
+fn year2016_day21_part2() {
+    run_test(2016, 21, 2, "bdgheacf");
+}
