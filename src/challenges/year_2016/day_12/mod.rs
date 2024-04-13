@@ -47,11 +47,7 @@ impl Cpu {
         while ins_index < self.instructions.len() {
             match &self.instructions[ins_index] {
                 Instruction::Cpy(op1, op2) => {
-                    let op1_val = match op1 {
-                        Operand::Register(reg) => self.registers[*reg],
-                        Operand::Value(value) => *value,
-                    };
-
+                    let op1_val = self.get_operand_value(op1);
                     match op2 {
                         Operand::Register(reg) => self.registers[*reg] = op1_val,
                         _ => panic!("Invalid operand for cpy instruction"),
@@ -76,15 +72,9 @@ impl Cpu {
                     ins_index += 1;
                 }
                 Instruction::Jnz(op1, op2) => {
-                    let offset = match op2 {
-                        Operand::Value(value) => *value,
-                        _ => panic!("Invalid operand2 for jnz instruction"),
-                    };
+                    let offset = self.get_operand_value(op2);
 
-                    let op1_val = match op1 {
-                        Operand::Register(reg) => self.registers[*reg],
-                        Operand::Value(value) => *value,
-                    };
+                    let op1_val = self.get_operand_value(op1);
 
                     if op1_val > 0 {
                         ins_index = (ins_index as i64 + offset) as usize;
@@ -93,6 +83,13 @@ impl Cpu {
                     }
                 }
             }
+        }
+    }
+
+    fn get_operand_value(&self, operand: &Operand) -> i64 {
+        match operand {
+            Operand::Register(reg) => self.registers[*reg],
+            Operand::Value(value) => *value,
         }
     }
 }
