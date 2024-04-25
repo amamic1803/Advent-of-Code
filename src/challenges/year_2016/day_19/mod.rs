@@ -47,19 +47,17 @@ fn part2(input: &str) -> String {
     }
     circle.push(0);
 
-    let mut current_elf = 0;
     let mut circle_len = elves;
+    let mut opposite_elf = elves / 2;
+    let mut opposite_elf_prev = opposite_elf - 1;
     while circle_len > 1 {
-        println!("{}", circle_len);
-        let mut curr_elf = current_elf;
-        let mut next_elf = circle[current_elf];
-        for _ in 0..((circle_len >> 1) - 1) {
-            (curr_elf, next_elf) = (next_elf, circle[next_elf]);
+        opposite_elf = circle[opposite_elf];
+        circle[opposite_elf_prev] = opposite_elf;
+        if circle_len % 2 != 0 {
+            (opposite_elf, opposite_elf_prev) = (circle[opposite_elf], opposite_elf);
         }
-        circle[curr_elf] = circle[next_elf];
         circle_len -= 1;
-        current_elf = circle[current_elf];
     }
 
-    (current_elf + 1).to_string()
+    (opposite_elf + 1).to_string()
 }
