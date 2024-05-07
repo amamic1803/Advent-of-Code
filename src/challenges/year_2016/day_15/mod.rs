@@ -1,4 +1,4 @@
-use crate::shared::math::chinese_remainder_theorem;
+use crate::shared::chinese_remainder_theorem;
 use crate::shared::structures::Day;
 use std::cmp::Reverse;
 

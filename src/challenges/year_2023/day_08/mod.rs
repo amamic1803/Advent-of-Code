@@ -4,7 +4,7 @@ pub fn day_08() -> Day {
     Day::new(8, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
-use crate::shared::math::lcm_multiple;
+use crate::shared::lcm_multiple;
 
 fn part1(input: &str) -> String {
     let tree = Tree::new(input);

@@ -42,6 +42,16 @@ fn year2018_day05_part2() {
 }
 
 #[test]
+fn year2018_day06_part1() {
+    run_test(2018, 6, 1, "5532");
+}
+
+#[test]
+fn year2018_day06_part2() {
+    run_test(2018, 6, 2, "36216");
+}
+
+#[test]
 fn year2018_day08_part1() {
     run_test(2018, 8, 1, "40701");
 }
