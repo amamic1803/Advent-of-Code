@@ -67,7 +67,7 @@ impl Graph {
 
                 if current_node.limit < min_cost {
                     min_cost = current_node.limit;
-                    min_path = current_node.path.clone();
+                    min_path.clone_from(&current_node.path);
                 }
             } else {
                 for i in 0..self.vertices {
@@ -112,7 +112,7 @@ impl Graph {
 
                 if current_node.limit > max_cost {
                     max_cost = current_node.limit;
-                    max_path = current_node.path.clone();
+                    max_path.clone_from(&current_node.path);
                 }
             } else {
                 for i in 0..self.vertices {

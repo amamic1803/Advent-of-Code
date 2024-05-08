@@ -128,7 +128,7 @@ impl Platform {
 
         let cycle_index = ((CYCLES - cycle_start as u32) % cycle_length as u32) as usize;
 
-        self.rocks = seen_states_vector[cycle_start + cycle_index].clone();
+        self.rocks.clone_from(&seen_states_vector[cycle_start + cycle_index]);
     }
 
     fn load(&self) -> u64 {
