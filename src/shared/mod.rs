@@ -3,7 +3,7 @@
 pub mod graph;
 pub mod structures;
 
-/// Find the solution to a system of congruences using the Chinese Remainder Theorem.ž
+/// Find the solution to a system of congruences using the Chinese Remainder Theorem.
 /// For a system of congruences:
 /// x ≡ a1 (mod m1)
 /// x ≡ a2 (mod m2)
