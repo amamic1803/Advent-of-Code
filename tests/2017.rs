@@ -62,6 +62,16 @@ fn year2017_day06_part2() {
 }
 
 #[test]
+fn year2017_day07_part1() {
+    run_test(2017, 7, 1, "uownj");
+}
+
+#[test]
+fn year2017_day07_part2() {
+    run_test(2017, 7, 2, "596");
+}
+
+#[test]
 fn year2017_day08_part1() {
     run_test(2017, 8, 1, "4163");
 }
