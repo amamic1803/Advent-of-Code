@@ -122,6 +122,16 @@ fn year2017_day12_part2() {
 }
 
 #[test]
+fn year2017_day13_part1() {
+    run_test(2017, 13, 1, "1960");
+}
+
+#[test]
+fn year2017_day13_part2() {
+    run_test(2017, 13, 2, "3903378");
+}
+
+#[test]
 fn year2017_day14_part1() {
     run_test(2017, 14, 1, "8148");
 }
