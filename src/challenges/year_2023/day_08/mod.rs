@@ -82,10 +82,10 @@ impl<'a> Tree<'a> {
     }
 
     fn simulate_2(&self) -> u64 {
-        // input is specifically designed for this method to work
-        // (there is no general solution for this problem)
-        // for each starting node that ends with 'A', there is a unique ending node that ends with 'Z' that forms a unique cycle
-        // and each cycle starts immediately after starting node, therefore the length of the cycle is the length of the path to the ending node
+        // let's make some assumptions about input (which turn out to be true):
+        // - for each starting node that ends with 'A', there is a unique ending node that ends with 'Z' that forms a unique cycle
+        // - each cycle starts immediately after starting node, therefore the length of the cycle is the length of the path to the ending node
+
         // obviously if we calculate the length of each cycle and find the least common multiple of all of them, we will get the answer
 
         let mut cycle_lens = Vec::new();
