@@ -1,4 +1,4 @@
-use crate::shared::graph::Graph;
+use crate::shared::graph::{Graph, Vertex};
 use crate::shared::structures::Day;
 use std::collections::HashMap;
 
@@ -7,19 +7,19 @@ pub fn day_13() -> Day {
 }
 
 fn part1(input: &str) -> String {
-    parse_input(input).circle_max(0).0.to_string()
+    parse_input(input).hamiltonian_cycle_max().0.to_string()
 }
 
 fn part2(input: &str) -> String {
-    parse_input(input).path_max().0.to_string()
+    parse_input(input).hamiltonian_path_max().0.to_string()
 }
 
 fn parse_input(input: &str) -> Graph {
-    let mut names: Vec<&str> = Vec::new();
-    let mut weights: HashMap<(&str, &str), isize> = HashMap::new();
+    let mut names = Vec::new();
+    
     let mut weights_vec = Vec::new();
     for line in input.trim().lines() {
-        let words: Vec<&str> = line.split_whitespace().collect();
+        let words = line.split_whitespace().collect::<Vec<_>>();
         let name1 = words[0];
         let name2 = words[10].trim_end_matches('.');
         let value = words[3].parse::<isize>().unwrap() * if words[2] == "gain" { 1 } else { -1 };
@@ -33,7 +33,8 @@ fn parse_input(input: &str) -> Graph {
 
         weights_vec.push((name1, name2, value));
     }
-
+    
+    let mut weights = HashMap::new();
     for (name1, name2, value) in weights_vec {
         if weights.contains_key(&(name1, name2)) {
             *weights.get_mut(&(name1, name2)).unwrap() += value;
@@ -44,12 +45,14 @@ fn parse_input(input: &str) -> Graph {
         }
     }
 
-    let mut graph = Graph::new(names.len());
+    let mut graph = Graph::with_capacity(names.len());
+    for i in 0..names.len() {
+        graph.add_vertex(Vertex::new(i));
+    }
     for (key, val) in weights {
         let index1 = names.iter().position(|&x| x == key.0).unwrap();
         let index2 = names.iter().position(|&x| x == key.1).unwrap();
-        graph.set_edge(index1, index2, val);
-        graph.set_edge(index2, index1, val);
+        graph.set_edge_undirected(Vertex::new(index1), Vertex::new(index2), val);
     }
 
     graph

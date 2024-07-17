@@ -1,4 +1,4 @@
-use crate::shared::graph::Graph;
+use crate::shared::graph::{Graph, Vertex};
 use crate::shared::structures::Day;
 use std::collections::HashMap;
 
@@ -7,19 +7,17 @@ pub fn day_09() -> Day {
 }
 
 fn part1(input: &str) -> String {
-    parse_input(input).path_min().0.to_string()
+    parse_input(input).hamiltonian_path_min().0.to_string()
 }
 
 fn part2(input: &str) -> String {
-    parse_input(input).path_max().0.to_string()
+    parse_input(input).hamiltonian_path_max().0.to_string()
 }
 
-type Edge<'a> = (&'a str, &'a str, usize);
-
 fn parse_input(input: &str) -> Graph {
-    let mut cities: HashMap<&str, usize> = HashMap::new();
-    let mut city_index: usize = 0;
-    let mut edges: Vec<Edge> = Vec::new();
+    let mut cities = HashMap::new();
+    let mut city_index = 0;
+    let mut edges = Vec::new();
 
     for line in input.trim().lines() {
         let line: Vec<&str> = line.split_whitespace().collect();
@@ -37,11 +35,13 @@ fn parse_input(input: &str) -> Graph {
         }
     }
 
-    let mut graph = Graph::new(city_index);
+    let mut graph = Graph::with_capacity(city_index);
+    for i in 0..city_index {
+        graph.add_vertex(Vertex::new(i));
+    }
 
     for edge in edges {
-        graph.set_edge(cities[edge.0], cities[edge.1], isize::try_from(edge.2).unwrap());
-        graph.set_edge(cities[edge.1], cities[edge.0], isize::try_from(edge.2).unwrap());
+        graph.set_edge_undirected(Vertex::new(cities[edge.0]), Vertex::new(cities[edge.1]), edge.2 as isize);
     }
 
     graph

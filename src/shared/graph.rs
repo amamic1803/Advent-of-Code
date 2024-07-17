@@ -6,185 +6,468 @@
 //! - Shortest Hamiltonian path
 //! - Longest Hamiltonian path
 
-use std::cmp::{Ordering, Reverse};
-use std::collections::BinaryHeap;
-
-#[derive(Clone)]
-pub struct Graph {
-    vertices: usize,
-    edges: Vec<Vec<Option<isize>>>,
-}
-
-impl Graph {
-    /// Instantiate new graph with given number of vertices.
-    /// Vertices are indexed from 0 to `vertices - 1`.
-    /// All edges are initialized with weight 0.
-    pub fn new(vertices: usize) -> Self {
-        assert!(vertices > 0);
-        let mut edges = vec![vec![Some(0); vertices]; vertices];
-        #[allow(clippy::needless_range_loop)]
-        for i in 0..vertices {
-            edges[i][i] = None;
-        }
-
-        Self { vertices, edges }
-    }
-
-    /// Set edge weight.
-    pub fn set_edge(&mut self, from: usize, to: usize, weight: isize) {
-        assert_ne!(from, to);
-        self.edges[from][to] = Some(weight);
-    }
-
-    /// Get edge weight.
-    pub fn get_edge(&self, from: usize, to: usize) -> isize {
-        assert_ne!(from, to);
-        self.edges[from][to].unwrap()
-    }
-
-    /// Find shortest Hamiltonian circle.
-    pub fn circle_min(&self, start_point: usize) -> (isize, Vec<usize>) {
-        assert!(start_point < self.vertices);
-
-        let mut min_cost = isize::MAX;
-        let mut min_path = Vec::with_capacity(self.vertices + 1);
-        let mut queue: BinaryHeap<Reverse<Node>> = BinaryHeap::new();
-        let rows_minis: Vec<isize> = self.edges.iter().map(|row| row.iter().flatten().copied().min().unwrap()).collect();
-        let limit: isize = rows_minis.iter().sum();
-
-        queue.push(Reverse(Node::new(limit, {
-            let mut vec = Vec::with_capacity(self.vertices + 1);
-            vec.push(start_point);
-            vec
-        })));
-
-        while !queue.is_empty() && queue.peek().unwrap().0.limit < min_cost {
-            let mut current_node = queue.pop().unwrap().0;
-            if current_node.path.len() == self.vertices {
-                current_node.limit -= rows_minis[current_node.path[current_node.path.len() - 1]];
-                current_node.limit += self.edges[current_node.path[current_node.path.len() - 1]][start_point].unwrap();
-                current_node.path.push(start_point);
-
-                if current_node.limit < min_cost {
-                    min_cost = current_node.limit;
-                    min_path.clone_from(&current_node.path);
-                }
-            } else {
-                for i in 0..self.vertices {
-                    if !current_node.path.contains(&i) {
-                        let mut new_node = current_node.clone();
-                        new_node.limit -= rows_minis[new_node.path[new_node.path.len() - 1]];
-                        new_node.limit += self.edges[new_node.path[new_node.path.len() - 1]][i].unwrap();
-                        if new_node.limit < min_cost {
-                            new_node.path.push(i);
-                            queue.push(Reverse(new_node));
-                        }
-                    }
-                }
-            }
-        }
-
-        (min_cost, min_path)
-    }
-
-    /// Find longest Hamiltonian circle.
-    pub fn circle_max(&self, start_point: usize) -> (isize, Vec<usize>) {
-        assert!(start_point < self.vertices);
-
-        let mut max_cost = isize::MIN;
-        let mut max_path = Vec::with_capacity(self.vertices + 1);
-        let mut queue: BinaryHeap<Node> = BinaryHeap::new();
-        let rows_maxes: Vec<isize> = self.edges.iter().map(|row| row.iter().flatten().copied().max().unwrap()).collect();
-        let limit: isize = rows_maxes.iter().sum();
-
-        queue.push(Node::new(limit, {
-            let mut vec = Vec::with_capacity(self.vertices + 1);
-            vec.push(start_point);
-            vec
-        }));
-
-        while !queue.is_empty() && queue.peek().unwrap().limit > max_cost {
-            let mut current_node = queue.pop().unwrap();
-            if current_node.path.len() == self.vertices {
-                current_node.limit -= rows_maxes[current_node.path[current_node.path.len() - 1]];
-                current_node.limit += self.edges[current_node.path[current_node.path.len() - 1]][start_point].unwrap();
-                current_node.path.push(start_point);
-
-                if current_node.limit > max_cost {
-                    max_cost = current_node.limit;
-                    max_path.clone_from(&current_node.path);
-                }
-            } else {
-                for i in 0..self.vertices {
-                    if !current_node.path.contains(&i) {
-                        let mut new_node = current_node.clone();
-                        new_node.limit -= rows_maxes[new_node.path[new_node.path.len() - 1]];
-                        new_node.limit += self.edges[new_node.path[new_node.path.len() - 1]][i].unwrap();
-                        if new_node.limit > max_cost {
-                            new_node.path.push(i);
-                            queue.push(new_node);
-                        }
-                    }
-                }
-            }
-        }
-
-        (max_cost, max_path)
-    }
-
-    /// Find shortest Hamiltonian path.
-    pub fn path_min(&self) -> (isize, Vec<usize>) {
-        let mut new_graph = self.clone();
-        new_graph.vertices += 1;
-        for row in &mut new_graph.edges {
-            row.push(Some(0));
-        }
-        new_graph.edges.push(vec![Some(0); new_graph.vertices + 1]);
-
-        let (min_cost, mut min_path) = new_graph.circle_min(new_graph.vertices - 1);
-        min_path.pop();
-        min_path.remove(0);
-
-        (min_cost, min_path)
-    }
-
-    /// Find longest Hamiltonian path.
-    pub fn path_max(&self) -> (isize, Vec<usize>) {
-        let mut new_graph = self.clone();
-        new_graph.vertices += 1;
-        for row in &mut new_graph.edges {
-            row.push(Some(0));
-        }
-        new_graph.edges.push(vec![Some(0); new_graph.vertices + 1]);
-
-        let (max_cost, mut max_path) = new_graph.circle_max(new_graph.vertices - 1);
-        max_path.pop();
-        max_path.remove(0);
-
-        (max_cost, max_path)
-    }
-}
+use std::cmp::Ordering;
+use std::collections::{BinaryHeap, HashMap};
 
 #[derive(Clone, Eq, PartialEq)]
-struct Node {
-    limit: isize,
-    path: Vec<usize>,
+pub struct Graph {
+    adj_list: HashMap<Vertex, Vec<(Vertex, isize)>>,
 }
+impl Graph {
+    pub fn new() -> Self {
+        Self { adj_list: HashMap::new() }
+    }
+    
+    pub fn with_capacity(capacity: usize) -> Self {
+        Self { adj_list: HashMap::with_capacity(capacity) }
+    }
 
-impl Node {
-    fn new(limit: isize, path: Vec<usize>) -> Self {
-        Self { limit, path }
+    pub fn set_edge(&mut self, vertex1: Vertex, vertex2: Vertex, value: isize) {
+        if !self.adj_list.contains_key(&vertex2) {
+            panic!("vertex2 not present in the graph.");
+        }
+
+        match self.adj_list.get_mut(&vertex1) {
+            Some(edges) => match edges.iter().position(|(id, _)| id == &vertex2) {
+                Some(pos) => edges[pos].1 = value,
+                None => edges.push((vertex2, value)),
+            },
+            None => panic!("vertex1 not present in the graph."),
+        }
+    }
+
+    pub fn set_edge_undirected(&mut self, vertex1: Vertex, vertex2: Vertex, value: isize) {
+        self.set_edge(vertex1, vertex2, value);
+        self.set_edge(vertex2, vertex1, value);
+    }
+
+    pub fn get_edge(&self, vertex1: Vertex, vertex2: Vertex) -> isize {
+        if !self.adj_list.contains_key(&vertex2) {
+            panic!("vertex2 not present in the graph.");
+        }
+
+        match self.adj_list.get(&vertex1) {
+            Some(edges) => match edges.iter().position(|(id, _)| id == &vertex2) {
+                Some(pos) => edges[pos].1,
+                None => panic!("Edge not present in the graph."),
+            },
+            None => panic!("vertex1 not present in the graph."),
+        }
+    }
+
+    pub fn new_vertex(&mut self) -> Vertex {
+        // find empty id
+        let mut i = 0;
+        while self.adj_list.contains_key(&Vertex { id: i }) {
+            i += 1;
+        }
+
+        // create and add vertex
+        let vertex = Vertex::new(i);
+        self.add_vertex(vertex);
+
+        // return vertex
+        vertex
+    }
+
+    pub fn add_vertex(&mut self, vertex: Vertex) {
+        if self.adj_list.contains_key(&vertex) {
+            panic!("Vertex is already present in the graph.");
+        } else {
+            self.adj_list.insert(vertex, Vec::new());
+        }
+    }
+    
+    pub fn remove_vertex(&mut self, vertex: Vertex) -> bool {
+        match self.adj_list.remove(&vertex) {
+            Some(_) => {
+                for edges in self.adj_list.values_mut() {
+                    edges.retain(|(id, _)| id != &vertex);
+                }
+                true
+            }
+            None => false,
+        }
+    }
+    
+    pub fn vertices<'a>(&'a self) -> impl Iterator<Item=Vertex> + 'a {
+        self.adj_list.keys().copied()
+    }
+
+    pub fn hamiltonian_cycle_min(&self) -> (isize, Vec<Vertex>) {
+        if self.adj_list.len() < 2 {
+            panic!("The graph must contain at least 2 vertices.");
+        }
+
+        // define node structure used in the algorithm
+        #[derive(Clone, Eq, PartialEq)]
+        struct Node {
+            min_cost: isize,    // minimum cost for whole cycle following this node
+            path: Vec<Vertex>,  // path from starting node to this one
+        }
+        impl PartialOrd for Node {
+            fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+                Some(self.min_cost.cmp(&other.min_cost).reverse())  // reverse comparison because BinaryHeap is max, but we need minimum min_path first
+            }
+        }
+        impl Ord for Node {
+            fn cmp(&self, other: &Self) -> Ordering {
+                self.partial_cmp(other).unwrap()
+            }
+        }
+
+        // initialize cycle and minimum cost
+        let mut min_cycle = Vec::new();
+        let mut min_cost = isize::MAX;
+
+        // find minimum edge weight from every vertex
+        let min_edges =
+            self.adj_list
+                .iter()
+                .map(|(key, value)|
+                    (*key, value.iter().map(|edge| edge.1).min().expect("Invalid graph! (vertex with no edges)"))
+                )
+                .collect::<HashMap<_, _>>();
+
+        // priority queue
+        // nodes with smaller min_cost are popped first
+        let mut queue = BinaryHeap::new();
+
+        // take random vertex as starting point
+        // it doesn't matter which vertex is chosen as starting point
+        // because the cycle can be rotated to start from any vertex
+        let start_node = Node {
+            min_cost: min_edges.values().sum(),
+            path: vec![*self.adj_list.keys().next().unwrap()],
+        };
+
+        // add starting node to the queue
+        queue.push(start_node);
+
+        // process nodes until all are processed
+        // or the min_cost for popped node is greater than absolute min_cost
+        // (all other nodes also have bigger min_cost since this is priority queue)
+        while let Some(mut node) = queue.pop() {
+            if node.min_cost > min_cost {
+                break;
+            }
+
+            if node.path.len() == self.adj_list.len() {
+                // if node contains path with the number of vertices equal to total number of vertices,
+                // process the final edge (last vertex -> first vertex), and update min_cost and min_cycle if necessary
+
+                let first_vertex = node.path.first().unwrap();
+                let last_vertex = node.path.last().unwrap();
+                node.min_cost -= min_edges[last_vertex];
+                node.min_cost += self.adj_list[last_vertex]
+                    .iter()
+                    .find(|(id, _)| id == first_vertex)
+                    .unwrap()
+                    .1;
+
+                if node.min_cost < min_cost {
+                    min_cost = node.min_cost;
+                    min_cycle = node.path;
+                }
+            } else {
+                // if node contains path with fewer vertices than total,
+                // consider all possible moves to next vertex along edge
+                // (if that vertex isn't already visited, in the nodes path)
+                // for each possible move, clone node, update min_cost and path, add to queue
+                let last_vertex = node.path.last().unwrap();
+                for (other, weight) in &self.adj_list[last_vertex] {
+                    if !node.path.contains(other) {
+                        let mut new_node = node.clone();
+                        new_node.min_cost -= min_edges[last_vertex];
+                        new_node.min_cost += weight;
+                        if new_node.min_cost < min_cost {
+                            new_node.path.push(*other);
+                            queue.push(new_node)
+                        }
+                    }
+                }
+            }
+        }
+
+        // if min_cost is still at its initial value, no cycle was found
+        // else return the minimum cost and the cycle
+        if min_cost == isize::MAX {
+            panic!("No cycle found!");
+        } else {
+            (min_cost, min_cycle)
+        }
+    }
+
+    pub fn hamiltonian_cycle_max(&self) -> (isize, Vec<Vertex>) {
+        if self.adj_list.len() < 2 {
+            panic!("The graph must contain at least 2 vertices.");
+        }
+
+        // define node structure used in the algorithm
+        #[derive(Clone, Eq, PartialEq)]
+        struct Node {
+            max_cost: isize,    // maximum cost for whole cycle following this node
+            path: Vec<Vertex>,  // path from starting node to this one
+        }
+        impl PartialOrd for Node {
+            fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+                Some(self.max_cost.cmp(&other.max_cost).reverse())
+            }
+        }
+        impl Ord for Node {
+            fn cmp(&self, other: &Self) -> Ordering {
+                self.partial_cmp(other).unwrap()
+            }
+        }
+
+        // initialize cycle and maximum cost
+        let mut max_cycle = Vec::new();
+        let mut max_cost = isize::MIN;
+
+        // find maximum edge weight from every vertex
+        let max_edges =
+            self.adj_list
+                .iter()
+                .map(|(key, value)|
+                (*key, value.iter().map(|edge| edge.1).max().expect("Invalid graph! (vertex with no edges)"))
+                )
+                .collect::<HashMap<_, _>>();
+
+        // priority queue
+        // nodes with bigger max_cost are popped first
+        let mut queue = BinaryHeap::new();
+
+        // take random vertex as starting point
+        // it doesn't matter which vertex is chosen as starting point
+        // because the cycle can be rotated to start from any vertex
+        let start_node = Node {
+            max_cost: max_edges.values().sum(),
+            path: vec![*self.adj_list.keys().next().unwrap()],
+        };
+
+        // add starting node to the queue
+        queue.push(start_node);
+
+        // process nodes until all are processed
+        // or the max_cost for popped node is less than absolute max_cost
+        // (all other nodes also have smaller max_cost since this is priority queue)
+        while let Some(mut node) = queue.pop() {
+            if node.max_cost < max_cost {
+                break;
+            }
+
+            if node.path.len() == self.adj_list.len() {
+                // if node contains path with the number of vertices equal to total number of vertices,
+                // process the final edge (last vertex -> first vertex), and update max_cost and max_cycle if necessary
+
+                let first_vertex = node.path.first().unwrap();
+                let last_vertex = node.path.last().unwrap();
+                node.max_cost -= max_edges[last_vertex];
+                node.max_cost += self.adj_list[last_vertex]
+                    .iter()
+                    .find(|(id, _)| id == first_vertex)
+                    .unwrap()
+                    .1;
+
+                if node.max_cost > max_cost {
+                    max_cost = node.max_cost;
+                    max_cycle = node.path;
+                }
+            } else {
+                // if node contains path with fewer vertices than total,
+                // consider all possible moves to next vertex along edge
+                // (if that vertex isn't already visited, in the nodes path)
+                // for each possible move, clone node, update max_cost and path, add to queue
+                let last_vertex = node.path.last().unwrap();
+                for (other, weight) in &self.adj_list[last_vertex] {
+                    if !node.path.contains(other) {
+                        let mut new_node = node.clone();
+                        new_node.max_cost -= max_edges[last_vertex];
+                        new_node.max_cost += weight;
+                        if new_node.max_cost > max_cost {
+                            new_node.path.push(*other);
+                            queue.push(new_node)
+                        }
+                    }
+                }
+            }
+        }
+
+        // if max_cost is still at its initial value, no cycle was found
+        // else return the maximum cost and the cycle
+        if max_cost == isize::MIN {
+            panic!("No cycle found!");
+        } else {
+            (max_cost, max_cycle)
+        }
+    }
+
+    pub fn hamiltonian_path_min(&mut self) -> (isize, Vec<Vertex>) {
+        if self.adj_list.len() < 2 {
+            panic!("The graph must contain at least 2 vertices.");
+        }
+
+        // existing vertices
+        let vertices = self.vertices().collect::<Vec<_>>();
+
+        // add new vertex
+        let added_vertex = self.new_vertex();
+
+        // set all edges to/from the added vertex to 0
+        for vertex in &vertices {
+            self.adj_list.get_mut(vertex).unwrap().push((added_vertex, 0));
+        }
+        self.adj_list.get_mut(&added_vertex).unwrap().extend(vertices.iter().map(|vertex| (*vertex, 0)));
+
+        // find minimum hamiltonian cycle
+        let (min_cost, mut min_path) = self.hamiltonian_cycle_min();
+
+        // since added_vertex edges are 0, min_cost is correct
+        // min_path is actually min_cycle that needs to be transformed into min_path
+        // added_vertex must be removed from it, and adjacent vertices must be first and last vertices in the path
+
+        // find current position of the added_vertex
+        let added_vertex_pos = min_path.iter().position(|vertex| vertex == &added_vertex).unwrap();
+
+        // rotate min_path so that the added_vertex is at index 0
+        min_path.rotate_left(added_vertex_pos);
+
+        // remove added_vertex
+        min_path.remove(0);
+
+        // return min_cost and min_path
+        (min_cost, min_path)
+    }
+
+    pub fn hamiltonian_path_max(&mut self) -> (isize, Vec<Vertex>) {
+        if self.adj_list.len() < 2 {
+            panic!("The graph must contain at least 2 vertices.");
+        }
+
+        // existing vertices
+        let vertices = self.vertices().collect::<Vec<_>>();
+
+        // add new vertex
+        let added_vertex = self.new_vertex();
+
+        // set all edges to/from the added vertex to 0
+        for vertex in &vertices {
+            self.adj_list.get_mut(vertex).unwrap().push((added_vertex, 0));
+        }
+        self.adj_list.get_mut(&added_vertex).unwrap().extend(vertices.iter().map(|vertex| (*vertex, 0)));
+
+        // find maximum hamiltonian cycle
+        let (max_cost, mut max_path) = self.hamiltonian_cycle_max();
+
+        // since added_vertex edges are 0, max_cost is correct
+        // max_path is actually max_cycle that needs to be transformed into max_path
+        // added_vertex must be removed from it, and adjacent vertices must be first and last vertices in the path
+
+        // find current position of the added_vertex
+        let added_vertex_pos = max_path.iter().position(|vertex| vertex == &added_vertex).unwrap();
+
+        // rotate max_path so that the added_vertex is at index 0
+        max_path.rotate_left(added_vertex_pos);
+
+        // remove added_vertex
+        max_path.remove(0);
+
+        // return min_cost and min_path
+        (max_cost, max_path)
+    }
+
+    pub fn hamiltonian_path_fixed_ends_min(&mut self, end1: Vertex, end2: Vertex) -> (isize, Vec<Vertex>) {
+        if self.adj_list.len() < 2 {
+            panic!("The graph must contain at least 2 vertices.");
+        }
+        if !self.adj_list.contains_key(&end1) {
+            panic!("end1 not present in the graph.");
+        }
+        if !self.adj_list.contains_key(&end2) {
+            panic!("end2 not present in the graph.");
+        }
+
+        // add new vertex
+        let added_vertex = self.new_vertex();
+
+        // set between start and added_vertex, added_vertex and end, to 0
+        self.adj_list.get_mut(&added_vertex).unwrap().push((end1, 0));
+        self.adj_list.get_mut(&end1).unwrap().push((added_vertex, 0));
+        self.adj_list.get_mut(&added_vertex).unwrap().push((end2, 0));
+        self.adj_list.get_mut(&end2).unwrap().push((added_vertex, 0));
+
+        // find minimum hamiltonian cycle
+        let (min_cost, mut min_path) = self.hamiltonian_cycle_min();
+
+        // since added_vertex edges are 0, min_cost is correct
+        // min_path is actually min_cycle that needs to be transformed into min_path
+        // added_vertex must be removed from it, and adjacent vertices
+        // (guaranteed to be end1, end2) must be first and last vertices in the path
+
+        // find current position of the added_vertex
+        let added_vertex_pos = min_path.iter().position(|vertex| vertex == &added_vertex).unwrap();
+
+        // rotate min_path so that the added_vertex is at index 0
+        min_path.rotate_left(added_vertex_pos);
+
+        // remove added_vertex
+        min_path.remove(0);
+
+        // return min_cost and min_path
+        (min_cost, min_path)
+    }
+
+    pub fn hamiltonian_path_fixed_ends_max(&mut self, end1: Vertex, end2: Vertex) -> (isize, Vec<Vertex>) {
+        if self.adj_list.len() < 2 {
+            panic!("The graph must contain at least 2 vertices.");
+        }
+        if !self.adj_list.contains_key(&end1) {
+            panic!("end1 not present in the graph.");
+        }
+        if !self.adj_list.contains_key(&end2) {
+            panic!("end2 not present in the graph.");
+        }
+
+        // add new vertex
+        let added_vertex = self.new_vertex();
+
+        // set between start and added_vertex, added_vertex and end, to 0
+        self.adj_list.get_mut(&added_vertex).unwrap().push((end1, 0));
+        self.adj_list.get_mut(&end1).unwrap().push((added_vertex, 0));
+        self.adj_list.get_mut(&added_vertex).unwrap().push((end2, 0));
+        self.adj_list.get_mut(&end2).unwrap().push((added_vertex, 0));
+
+        // find maximum hamiltonian cycle
+        let (max_cost, mut max_path) = self.hamiltonian_cycle_max();
+
+        // since added_vertex edges are 0, max_cost is correct
+        // max_path is actually max_cycle that needs to be transformed into max_path
+        // added_vertex must be removed from it, and adjacent vertices
+        // (guaranteed to be end1, end2) must be first and last vertices in the path
+
+        // find current position of the added_vertex
+        let added_vertex_pos = max_path.iter().position(|vertex| vertex == &added_vertex).unwrap();
+
+        // rotate max_path so that the added_vertex is at index 0
+        max_path.rotate_left(added_vertex_pos);
+
+        // remove added_vertex
+        max_path.remove(0);
+
+        // return max_cost and max_path
+        (max_cost, max_path)
     }
 }
 
-impl PartialOrd for Node {
-    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
-        Some(self.limit.cmp(&other.limit))
-    }
+#[derive(Clone, Copy, Eq, PartialEq, Hash)]
+pub struct Vertex {
+    id: usize,
 }
-
-impl Ord for Node {
-    fn cmp(&self, other: &Self) -> Ordering {
-        self.limit.cmp(&other.limit)
+impl Vertex {
+    pub fn new(id: usize) -> Self {
+        Self { id }
+    }
+    pub fn id(&self) -> usize {
+        self.id
     }
 }
