@@ -9,7 +9,7 @@
 use std::cmp::Ordering;
 use std::collections::{BinaryHeap, HashMap};
 
-#[derive(Clone, Eq, PartialEq)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub struct Graph {
     adj_list: HashMap<Vertex, Vec<(Vertex, isize)>>,
 }
@@ -90,7 +90,7 @@ impl Graph {
         }
     }
     
-    pub fn vertices<'a>(&'a self) -> impl Iterator<Item=Vertex> + 'a {
+    pub fn vertices(&self) -> impl Iterator<Item=Vertex> + '_ {
         self.adj_list.keys().copied()
     }
 
@@ -107,12 +107,12 @@ impl Graph {
         }
         impl PartialOrd for Node {
             fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
-                Some(self.min_cost.cmp(&other.min_cost).reverse())  // reverse comparison because BinaryHeap is max, but we need minimum min_path first
+                Some(self.cmp(other))
             }
         }
         impl Ord for Node {
             fn cmp(&self, other: &Self) -> Ordering {
-                self.partial_cmp(other).unwrap()
+                self.min_cost.cmp(&other.min_cost).reverse()  // reverse comparison because BinaryHeap is max, but we need minimum min_path first
             }
         }
 
@@ -154,16 +154,15 @@ impl Graph {
 
             if node.path.len() == self.adj_list.len() {
                 // if node contains path with the number of vertices equal to total number of vertices,
-                // process the final edge (last vertex -> first vertex), and update min_cost and min_cycle if necessary
+                // process the final edge (last vertex -> first vertex), if there is one, and update min_cost and min_cycle if necessary
 
                 let first_vertex = node.path.first().unwrap();
                 let last_vertex = node.path.last().unwrap();
                 node.min_cost -= min_edges[last_vertex];
-                node.min_cost += self.adj_list[last_vertex]
-                    .iter()
-                    .find(|(id, _)| id == first_vertex)
-                    .unwrap()
-                    .1;
+                match self.adj_list[last_vertex].iter().find(|(id, _)| id == first_vertex) {
+                    None => continue,
+                    Some(edge) => node.min_cost += edge.1,
+                }
 
                 if node.min_cost < min_cost {
                     min_cost = node.min_cost;
@@ -211,12 +210,12 @@ impl Graph {
         }
         impl PartialOrd for Node {
             fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
-                Some(self.max_cost.cmp(&other.max_cost).reverse())
+                Some(self.cmp(other))
             }
         }
         impl Ord for Node {
             fn cmp(&self, other: &Self) -> Ordering {
-                self.partial_cmp(other).unwrap()
+                self.max_cost.cmp(&other.max_cost)
             }
         }
 
@@ -258,16 +257,15 @@ impl Graph {
 
             if node.path.len() == self.adj_list.len() {
                 // if node contains path with the number of vertices equal to total number of vertices,
-                // process the final edge (last vertex -> first vertex), and update max_cost and max_cycle if necessary
+                // process the final edge (last vertex -> first vertex), if there is one, and update max_cost and max_cycle if necessary
 
                 let first_vertex = node.path.first().unwrap();
                 let last_vertex = node.path.last().unwrap();
                 node.max_cost -= max_edges[last_vertex];
-                node.max_cost += self.adj_list[last_vertex]
-                    .iter()
-                    .find(|(id, _)| id == first_vertex)
-                    .unwrap()
-                    .1;
+                match self.adj_list[last_vertex].iter().find(|(id, _)| id == first_vertex) {
+                    None => continue,
+                    Some(edge) => node.max_cost += edge.1,
+                }
 
                 if node.max_cost > max_cost {
                     max_cost = node.max_cost;
@@ -334,6 +332,9 @@ impl Graph {
 
         // remove added_vertex
         min_path.remove(0);
+        
+        // remove added_vertex from graph
+        self.remove_vertex(added_vertex);
 
         // return min_cost and min_path
         (min_cost, min_path)
@@ -371,6 +372,9 @@ impl Graph {
 
         // remove added_vertex
         max_path.remove(0);
+        
+        // remove added_vertex from graph
+        self.remove_vertex(added_vertex);
 
         // return min_cost and min_path
         (max_cost, max_path)
@@ -390,7 +394,7 @@ impl Graph {
         // add new vertex
         let added_vertex = self.new_vertex();
 
-        // set between start and added_vertex, added_vertex and end, to 0
+        // set edges between start and added_vertex, added_vertex and end, to 0
         self.adj_list.get_mut(&added_vertex).unwrap().push((end1, 0));
         self.adj_list.get_mut(&end1).unwrap().push((added_vertex, 0));
         self.adj_list.get_mut(&added_vertex).unwrap().push((end2, 0));
@@ -412,7 +416,10 @@ impl Graph {
 
         // remove added_vertex
         min_path.remove(0);
-
+        
+        // remove added_vertex from graph
+        self.remove_vertex(added_vertex);
+        
         // return min_cost and min_path
         (min_cost, min_path)
     }
@@ -431,7 +438,7 @@ impl Graph {
         // add new vertex
         let added_vertex = self.new_vertex();
 
-        // set between start and added_vertex, added_vertex and end, to 0
+        // set edges between start and added_vertex, added_vertex and end, to 0
         self.adj_list.get_mut(&added_vertex).unwrap().push((end1, 0));
         self.adj_list.get_mut(&end1).unwrap().push((added_vertex, 0));
         self.adj_list.get_mut(&added_vertex).unwrap().push((end2, 0));
@@ -453,13 +460,21 @@ impl Graph {
 
         // remove added_vertex
         max_path.remove(0);
+        
+        // remove added_vertex from graph
+        self.remove_vertex(added_vertex);
 
         // return max_cost and max_path
         (max_cost, max_path)
     }
 }
+impl Default for Graph {
+    fn default() -> Self {
+        Self::new()
+    }
+}
 
-#[derive(Clone, Copy, Eq, PartialEq, Hash)]
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Hash, Ord, PartialOrd)]
 pub struct Vertex {
     id: usize,
 }
