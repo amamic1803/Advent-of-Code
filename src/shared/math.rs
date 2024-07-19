@@ -3,6 +3,9 @@
 use std::borrow::Borrow;
 use num_traits::{ConstZero, PrimInt, Unsigned};
 
+/// A character representation of hexadecimal digits.
+pub const HEX_DIGITS: [char; 16] = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'];
+
 /// Find the solution to a system of congruences using the Chinese Remainder Theorem.
 /// For a system of congruences:
 /// x ≡ a1 (mod m1)

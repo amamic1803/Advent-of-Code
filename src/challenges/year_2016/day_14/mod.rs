@@ -1,4 +1,5 @@
 use crate::shared::structures::Day;
+use crate::shared::math::HEX_DIGITS;
 
 pub fn day_14() -> Day {
     Day::new(14, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
@@ -19,7 +20,6 @@ fn part2(input: &str) -> String {
 }
 
 const PASSWORDS_TO_FIND: u8 = 64;
-const HEX_DIGITS: [char; 16] = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'];
 const ADDITIONAL_HASHES: usize = 2016;
 static RE_3: Lazy<Vec<Regex>> = Lazy::new(|| {
     let mut re_3 = Vec::new();

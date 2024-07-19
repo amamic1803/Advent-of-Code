@@ -8,6 +8,7 @@
 
 use std::cmp::Ordering;
 use std::collections::{BinaryHeap, HashMap};
+use std::collections::hash_map::Entry;
 
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub struct Graph {
@@ -71,10 +72,10 @@ impl Graph {
     }
 
     pub fn add_vertex(&mut self, vertex: Vertex) {
-        if self.adj_list.contains_key(&vertex) {
-            panic!("Vertex is already present in the graph.");
+        if let Entry::Vacant(vacant_entry) = self.adj_list.entry(vertex) {
+            vacant_entry.insert(Vec::new());
         } else {
-            self.adj_list.insert(vertex, Vec::new());
+            panic!("Vertex is already present in the graph.");
         }
     }
     
