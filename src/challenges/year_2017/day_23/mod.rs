@@ -4,7 +4,7 @@ pub fn day_23() -> Day {
     Day::new(23, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
-use crate::shared::is_prime;
+use crate::shared::math::is_prime;
 
 fn part1(input: &str) -> String {
     let mut cpu = Cpu::new(input);
