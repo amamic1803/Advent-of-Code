@@ -1,7 +1,9 @@
+use std::cmp::Ordering;
 use crate::shared::structures::Day;
 use std::collections::{HashMap, VecDeque};
 use std::hash::Hash;
 use regex::Regex;
+use smallvec::SmallVec;
 
 pub fn day_11() -> Day {
     Day::new(11, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
@@ -9,15 +11,21 @@ pub fn day_11() -> Day {
 
 fn part1(input: &str) -> String {
     // get initial building state
-    let area = parse_input(input);
+    let mut area = parse_input(input);
+    area.floors.iter_mut().for_each(|floor| floor.sort());
 
     // setup wanted building state
     let mut wanted_state = Area::new();
     wanted_state.elevator = 3;
-    area.floors.iter().for_each(|floor| wanted_state.floors[3].extend(floor));
+    area.floors.iter().for_each(|floor| wanted_state.floors[3].extend(floor.iter().copied()));
+    wanted_state.floors.iter_mut().for_each(|floor| floor.sort());
 
     // search for optimal solution
-    bfs_search(area, wanted_state).to_string()
+    if area != wanted_state {
+        bfs_search(area, wanted_state).to_string()
+    } else {
+        0.to_string()
+    }
 }
 
 fn part2(input: &str) -> String {
@@ -27,30 +35,36 @@ fn part2(input: &str) -> String {
     area.floors[0].push(Element { id: u8::MAX, is_generator: true });
     area.floors[0].push(Element { id: u8::MAX - 1, is_generator: false });
     area.floors[0].push(Element { id: u8::MAX - 1, is_generator: true });
+    area.floors.iter_mut().for_each(|floor| floor.sort());
 
     // setup wanted building state
     let mut wanted_state = Area::new();
     wanted_state.elevator = 3;
-    area.floors.iter().for_each(|floor| wanted_state.floors[3].extend(floor));
+    area.floors.iter().for_each(|floor| wanted_state.floors[3].extend(floor.iter().copied()));
+    wanted_state.floors.iter_mut().for_each(|floor| floor.sort());
 
     // search for optimal solution
-    bfs_search(area, wanted_state).to_string()
+    if area != wanted_state {
+        bfs_search(area, wanted_state).to_string()
+    } else {
+        0.to_string()
+    }
 }
 
-#[derive(Clone)]
+#[derive(Clone, Eq, PartialEq, Hash)]
 struct Area {
     elevator: u8,
-    floors: [Vec<Element>; 4],
+    floors: [SmallVec<[Element; 14]>; 4],
 }
 impl Area {
     fn new() -> Self {
         Area {
             elevator: 0,
             floors: [
-                Vec::with_capacity(20),
-                Vec::with_capacity(20),
-                Vec::with_capacity(20),
-                Vec::with_capacity(20),
+                SmallVec::with_capacity(14),
+                SmallVec::with_capacity(14),
+                SmallVec::with_capacity(14),
+                SmallVec::with_capacity(14),
             ],
         }
     }
@@ -76,64 +90,26 @@ impl Area {
         true
     }
 }
-impl PartialEq for Area {
-    fn eq(&self, other: &Self) -> bool {
-        if self.elevator != other.elevator {
-            return false;
-        }
-        for (floor, other_floor) in self.floors.iter().zip(other.floors.iter()) {
-            if floor.len() != other_floor.len() {
-                return false;
-            }
-
-            let mut comparison_table = [0i8; (u8::MAX as usize + 1) * 2];
-            
-            floor.iter().for_each(|element| {
-                let mut index = element.id as usize;
-                if element.is_generator {
-                    index += u8::MAX as usize;
-                }
-                comparison_table[index] += 1;
-            });
-
-            other_floor.iter().for_each(|element| {
-                let mut index = element.id as usize;
-                if element.is_generator {
-                    index += u8::MAX as usize;
-                }
-                comparison_table[index] -= 1;
-            });
-            
-            if comparison_table.iter().any(|&count| count != 0) {
-                return false;
-            }
-        }
-        true
-    }
-}
-impl Eq for Area {}
-impl Hash for Area {
-    fn hash<H: std::hash::Hasher>(&self, state: &mut H) {
-        self.elevator.hash(state);
-        for floor in &self.floors {
-            let mut floor_table = [0i8; (u8::MAX as usize + 1) * 2];
-            floor.iter().for_each(|element| {
-                let mut index = element.id as usize;
-                if element.is_generator {
-                    index += u8::MAX as usize;
-                }
-                floor_table[index] += 1;
-            });
-            floor_table.hash(state);
-        }
-    }
-}
 
 /// Element representing microchip or generator
 #[derive(Copy, Clone, Eq, PartialEq, Hash)]
 struct Element {
     id: u8,              // id of the type of element
     is_generator: bool,  // true if element is a generator, false if it is a microchip
+}
+impl PartialOrd for Element {
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+        Some(self.cmp(other))
+    }
+}
+impl Ord for Element {
+    fn cmp(&self, other: &Self) -> Ordering {
+        let mut cmp_result = self.id.cmp(&other.id);
+        if let Ordering::Equal = cmp_result {
+            cmp_result = self.is_generator.cmp(&other.is_generator);
+        }
+        cmp_result
+    }
 }
 
 /// Generate initial building state from input
@@ -179,16 +155,12 @@ fn bfs_search(initial_state: Area, wanted_state: Area) -> i32 {
 
     let mut up_down_moves = Vec::with_capacity(2);
     while let Some(state) = queue.pop_front() {
-        if state == wanted_state {
-            return *state_step_map.get(&state).unwrap();
-        }
-
         up_down_moves.clear();
-        if state.elevator < 3 {
-            up_down_moves.push(1);
-        }
         if state.elevator > 0 {
             up_down_moves.push(-1);
+        }
+        if state.elevator < 3 {
+            up_down_moves.push(1);
         }
 
         for &k in &up_down_moves {
@@ -198,14 +170,18 @@ fn bfs_search(initial_state: Area, wanted_state: Area) -> i32 {
                 let removed = next_state.floors[next_state.elevator as usize].remove(i);
                 next_state.elevator = next_state.elevator.wrapping_add_signed(k);
                 next_state.floors[next_state.elevator as usize].push(removed);
-                if next_state == wanted_state {
-                    return state_step_map.get(&state).unwrap() + 1;
-                }
+                next_state.floors[next_state.elevator as usize].sort();
+                
                 if !state_step_map.contains_key(&next_state) && next_state.is_valid() {
                     state_step_map.insert(next_state.clone(), state_step_map.get(&state).unwrap() + 1);
-                    queue.push_back(next_state);
+                    if next_state == wanted_state {
+                        return *state_step_map.get(&next_state).unwrap();
+                    } else {
+                        queue.push_back(next_state);
+                    }
                 }
 
+                // moving 2 elements
                 for j in (i + 1)..state.floors[state.elevator as usize].len() {
                     let mut next_state = state.clone();
                     let removed1 = next_state.floors[next_state.elevator as usize].remove(j);
@@ -213,12 +189,15 @@ fn bfs_search(initial_state: Area, wanted_state: Area) -> i32 {
                     next_state.elevator = next_state.elevator.wrapping_add_signed(k);
                     next_state.floors[next_state.elevator as usize].push(removed1);
                     next_state.floors[next_state.elevator as usize].push(removed2);
-                    if next_state == wanted_state {
-                        return state_step_map.get(&state).unwrap() + 1;
-                    }
+                    next_state.floors[next_state.elevator as usize].sort();
+                    
                     if !state_step_map.contains_key(&next_state) && next_state.is_valid() {
                         state_step_map.insert(next_state.clone(), state_step_map.get(&state).unwrap() + 1);
-                        queue.push_back(next_state);
+                        if next_state == wanted_state {
+                            return *state_step_map.get(&next_state).unwrap();
+                        } else {
+                            queue.push_back(next_state);
+                        }
                     }
                 }
             }
