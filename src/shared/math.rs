@@ -1,7 +1,7 @@
 //! Mathematical functions
 
-use std::borrow::Borrow;
 use num_traits::{ConstZero, PrimInt, Unsigned};
+use std::borrow::Borrow;
 
 /// A character representation of hexadecimal digits.
 pub const HEX_DIGITS: [char; 16] = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'];
@@ -27,7 +27,7 @@ where
 {
     let mut congruences = congruences.into_iter();
     let (mut solution, mut modulus) = congruences.next().expect("There must be at least 1 congruence.").borrow();
-    
+
     for congruence in congruences {
         let (remainder, modulo) = congruence.borrow();
         while solution % modulo != *remainder {
@@ -35,7 +35,7 @@ where
         }
         modulus *= modulo;
     }
-    
+
     solution
 }
 

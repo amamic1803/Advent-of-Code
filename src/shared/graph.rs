@@ -9,8 +9,8 @@
 //! - Longest Hamiltonian path with fixed ends
 
 use std::cmp::Ordering;
-use std::collections::{BinaryHeap, HashMap};
 use std::collections::hash_map::Entry;
+use std::collections::{BinaryHeap, HashMap};
 
 /// A struct representing a graph.
 #[derive(Clone, Debug, Eq, PartialEq)]
@@ -22,10 +22,12 @@ impl Graph {
     pub fn new() -> Self {
         Self { adj_list: HashMap::new() }
     }
-    
+
     /// Constructs a new `Graph` with a specified capacity for the number of vertices.
     pub fn with_capacity(capacity: usize) -> Self {
-        Self { adj_list: HashMap::with_capacity(capacity) }
+        Self {
+            adj_list: HashMap::with_capacity(capacity),
+        }
     }
 
     /// Sets the edge between two vertices.
@@ -88,7 +90,7 @@ impl Graph {
             panic!("Vertex is already present in the graph.");
         }
     }
-    
+
     /// Removes a vertex from the graph.
     pub fn remove_vertex(&mut self, vertex: Vertex) -> bool {
         match self.adj_list.remove(&vertex) {
@@ -101,9 +103,9 @@ impl Graph {
             None => false,
         }
     }
- 
+
     /// Gets the iterator over the vertices in the graph.
-    pub fn vertices(&self) -> impl Iterator<Item=Vertex> + '_ {
+    pub fn vertices(&self) -> impl Iterator<Item = Vertex> + '_ {
         self.adj_list.keys().copied()
     }
 
@@ -119,8 +121,8 @@ impl Graph {
         // define node structure used in the algorithm
         #[derive(Clone, Eq, PartialEq)]
         struct Node {
-            min_cost: isize,    // minimum cost for whole cycle following this node
-            path: Vec<Vertex>,  // path from starting node to this one
+            min_cost: isize,   // minimum cost for whole cycle following this node
+            path: Vec<Vertex>, // path from starting node to this one
         }
         impl PartialOrd for Node {
             fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
@@ -129,7 +131,7 @@ impl Graph {
         }
         impl Ord for Node {
             fn cmp(&self, other: &Self) -> Ordering {
-                self.min_cost.cmp(&other.min_cost).reverse()  // reverse comparison because BinaryHeap is max, but we need minimum min_path first
+                self.min_cost.cmp(&other.min_cost).reverse() // reverse comparison because BinaryHeap is max, but we need minimum min_path first
             }
         }
 
@@ -138,13 +140,11 @@ impl Graph {
         let mut min_cost = isize::MAX;
 
         // find minimum edge weight from every vertex
-        let min_edges =
-            self.adj_list
-                .iter()
-                .map(|(key, value)|
-                    (*key, value.iter().map(|edge| edge.1).min().expect("Invalid graph! (vertex with no edges)"))
-                )
-                .collect::<HashMap<_, _>>();
+        let min_edges = self
+            .adj_list
+            .iter()
+            .map(|(key, value)| (*key, value.iter().map(|edge| edge.1).min().expect("Invalid graph! (vertex with no edges)")))
+            .collect::<HashMap<_, _>>();
 
         // priority queue
         // nodes with smaller min_cost are popped first
@@ -226,8 +226,8 @@ impl Graph {
         // define node structure used in the algorithm
         #[derive(Clone, Eq, PartialEq)]
         struct Node {
-            max_cost: isize,    // maximum cost for whole cycle following this node
-            path: Vec<Vertex>,  // path from starting node to this one
+            max_cost: isize,   // maximum cost for whole cycle following this node
+            path: Vec<Vertex>, // path from starting node to this one
         }
         impl PartialOrd for Node {
             fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
@@ -245,13 +245,11 @@ impl Graph {
         let mut max_cost = isize::MIN;
 
         // find maximum edge weight from every vertex
-        let max_edges =
-            self.adj_list
-                .iter()
-                .map(|(key, value)|
-                (*key, value.iter().map(|edge| edge.1).max().expect("Invalid graph! (vertex with no edges)"))
-                )
-                .collect::<HashMap<_, _>>();
+        let max_edges = self
+            .adj_list
+            .iter()
+            .map(|(key, value)| (*key, value.iter().map(|edge| edge.1).max().expect("Invalid graph! (vertex with no edges)")))
+            .collect::<HashMap<_, _>>();
 
         // priority queue
         // nodes with bigger max_cost are popped first
@@ -356,7 +354,7 @@ impl Graph {
 
         // remove added_vertex
         min_path.remove(0);
-        
+
         // remove added_vertex from graph
         self.remove_vertex(added_vertex);
 
@@ -399,7 +397,7 @@ impl Graph {
 
         // remove added_vertex
         max_path.remove(0);
-        
+
         // remove added_vertex from graph
         self.remove_vertex(added_vertex);
 
@@ -447,10 +445,10 @@ impl Graph {
 
         // remove added_vertex
         min_path.remove(0);
-        
+
         // remove added_vertex from graph
         self.remove_vertex(added_vertex);
-        
+
         // return min_cost and min_path
         (min_cost, min_path)
     }
@@ -495,7 +493,7 @@ impl Graph {
 
         // remove added_vertex
         max_path.remove(0);
-        
+
         // remove added_vertex from graph
         self.remove_vertex(added_vertex);
 

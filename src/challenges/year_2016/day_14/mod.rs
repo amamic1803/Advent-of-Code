@@ -1,5 +1,5 @@
-use crate::shared::structures::Day;
 use crate::shared::math::HEX_DIGITS;
+use crate::shared::structures::Day;
 
 pub fn day_14() -> Day {
     Day::new(14, include_str!("text.txt"), include_str!("input.txt"), part1, part2)

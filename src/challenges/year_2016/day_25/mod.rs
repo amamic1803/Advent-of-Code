@@ -10,19 +10,24 @@ fn part1(input: &str) -> String {
     // and output its binary digits starting from the least significant bit
     // so to get alternating 0s and 1s,
     // the number must be in the form 1010...1010
-    
-    // since the value is positive integer, it needs 
+
+    // since the value is positive integer, it needs
     // we need to find the first number of the form 1010...1010
     // greater than the constant and subtract the constant from it to get the solution
-    
-    let constant = input.lines().skip(1).take(2).map(|line| line.split_whitespace().nth(1).unwrap().parse::<usize>().unwrap()).product::<usize>();
+
+    let constant = input
+        .lines()
+        .skip(1)
+        .take(2)
+        .map(|line| line.split_whitespace().nth(1).unwrap().parse::<usize>().unwrap())
+        .product::<usize>();
 
     let mut number = 0;
     while number < constant {
         number <<= 2;
         number |= 0b10;
     }
-    
+
     (number - constant).to_string()
 }
 

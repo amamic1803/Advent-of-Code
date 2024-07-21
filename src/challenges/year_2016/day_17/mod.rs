@@ -35,10 +35,7 @@ impl Room {
                     shortest_path_hash.clear();
                     shortest_path_hash.push_str(path_hash);
                 } else {
-                    let mut hex_iter = md5::compute(&path_hash)
-                        .into_iter()
-                        .flat_map(|byte| [byte / 16, byte % 16])
-                        .map(|num| num >= 11);  // b,c,d,e,f == 11,12,13,14,15 => open doors
+                    let mut hex_iter = md5::compute(&path_hash).into_iter().flat_map(|byte| [byte / 16, byte % 16]).map(|num| num >= 11); // b,c,d,e,f == 11,12,13,14,15 => open doors
 
                     // up
                     if hex_iter.next().unwrap() && location.0 > 0 {
@@ -70,7 +67,7 @@ impl Room {
                 }
             }
         }
-        
+
         recursive_search(0, (0, 0), &mut path_hash, &mut shortest_path_length, &mut shortest_path_hash);
 
         if shortest_path_length == usize::MAX {
@@ -95,10 +92,7 @@ impl Room {
                     longest_path_hash.push_str(path_hash);
                 }
             } else {
-                let mut hex_iter = md5::compute(&path_hash)
-                    .into_iter()
-                    .flat_map(|byte| [byte / 16, byte % 16])
-                    .map(|num| num >= 11);  // b,c,d,e,f == 11,12,13,14,15 => open doors
+                let mut hex_iter = md5::compute(&path_hash).into_iter().flat_map(|byte| [byte / 16, byte % 16]).map(|num| num >= 11); // b,c,d,e,f == 11,12,13,14,15 => open doors
 
                 // up
                 if hex_iter.next().unwrap() && location.0 > 0 {

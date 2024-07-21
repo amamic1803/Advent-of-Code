@@ -1,6 +1,6 @@
-use std::collections::VecDeque;
-use crate::shared::structures::Day;
 use crate::shared::graph::{Graph, Vertex};
+use crate::shared::structures::Day;
+use std::collections::VecDeque;
 
 pub fn day_24() -> Day {
     Day::new(24, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
@@ -11,7 +11,7 @@ fn part1(input: &str) -> String {
     // finding minimal hamiltonian path with one edge fixed
     // or find the minimum among minimal hamiltonian paths between 2 fixed edges
     // while the second edge is fixed once as each vertex other than start
-    
+
     let (numbers_locs, mut graph) = parse_input(input);
 
     (0..numbers_locs.len())
@@ -25,7 +25,7 @@ fn part1(input: &str) -> String {
 fn part2(input: &str) -> String {
     // this is simpler problem than part1
     // just find a hamiltonian cycle
-    
+
     let (_, graph) = parse_input(input);
     graph.hamiltonian_cycle_min().0.to_string()
 }
@@ -71,18 +71,18 @@ fn parse_input(input: &str) -> (Vec<(usize, usize)>, Graph) {
 fn find_shortest_path(grid: &[Vec<bool>], start: (usize, usize), end: (usize, usize)) -> usize {
     let mut visited = grid.to_vec();
     let mut distances = vec![vec![0; grid[0].len()]; grid.len()];
-    
+
     let mut queue = VecDeque::new();
     queue.push_back(start);
-    
+
     while let Some(tile) = queue.pop_front() {
         if visited[tile.0][tile.1] {
             continue;
         }
         visited[tile.0][tile.1] = true;
-        
+
         let next_distance = distances[tile.0][tile.1] + 1;
-        
+
         if tile.0 > 0 && !visited[tile.0 - 1][tile.1] {
             distances[tile.0 - 1][tile.1] = next_distance;
             queue.push_back((tile.0 - 1, tile.1));
@@ -112,6 +112,6 @@ fn find_shortest_path(grid: &[Vec<bool>], start: (usize, usize), end: (usize, us
             }
         }
     }
-    
+
     distances[end.0][end.1]
 }

@@ -1,7 +1,7 @@
 use crate::shared::structures::Day;
-use std::collections::{HashMap, HashSet, VecDeque};
 use regex::Regex;
 use smallvec::SmallVec;
+use std::collections::{HashMap, HashSet, VecDeque};
 
 pub fn day_11() -> Day {
     Day::new(11, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
@@ -50,7 +50,7 @@ fn part2(input: &str) -> String {
 #[derive(Clone, Eq, PartialEq, Hash)]
 struct State {
     elevator: u8,
-    elements: SmallVec<[[u8; 2]; 10]>,  // vector of elements, with [microchip, generator] (0..3 -> floor)
+    elements: SmallVec<[[u8; 2]; 10]>, // vector of elements, with [microchip, generator] (0..3 -> floor)
 }
 impl State {
     fn new() -> Self {
@@ -70,24 +70,19 @@ impl State {
             if floor_line.contains("nothing relevant") {
                 continue;
             }
-            re.split(floor_line
-                    .trim_end_matches('.')
-                    .split_once(" contains ")
-                    .unwrap()
-                    .1)
-                .for_each(|element| {
-                    let mut element = element.trim().trim_start_matches("a ");
-                    let is_generator = if element.ends_with("generator") {
-                        element = element.trim_end_matches(" generator");
-                        true
-                    } else {
-                        element = element.trim_end_matches("-compatible microchip");
-                        false
-                    };
-                    let len = element_id.len() as u8;
-                    let id = *element_id.entry(element).or_insert(len);
-                    floors[i].push((id, is_generator));
-                });
+            re.split(floor_line.trim_end_matches('.').split_once(" contains ").unwrap().1).for_each(|element| {
+                let mut element = element.trim().trim_start_matches("a ");
+                let is_generator = if element.ends_with("generator") {
+                    element = element.trim_end_matches(" generator");
+                    true
+                } else {
+                    element = element.trim_end_matches("-compatible microchip");
+                    false
+                };
+                let len = element_id.len() as u8;
+                let id = *element_id.entry(element).or_insert(len);
+                floors[i].push((id, is_generator));
+            });
         }
 
         let mut elements = Vec::with_capacity(element_id.len());

@@ -1,5 +1,5 @@
-use std::collections::VecDeque;
 use crate::shared::structures::Day;
+use std::collections::VecDeque;
 
 pub fn day_22() -> Day {
     Day::new(22, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
@@ -81,28 +81,36 @@ impl Grid {
                     let next_tile = [tile[0] - 1, tile[1]];
                     visited[next_tile[0]][next_tile[1]] = true;
                     distances[next_tile[0]][next_tile[1]] = Some(steps + 1);
-                    if next_tile == end { break; }
+                    if next_tile == end {
+                        break;
+                    }
                     queue.push_back((next_tile, steps + 1));
                 }
                 if tile[0] < grid.len() - 1 && !visited[tile[0] + 1][tile[1]] {
                     let next_tile = [tile[0] + 1, tile[1]];
                     visited[next_tile[0]][next_tile[1]] = true;
                     distances[next_tile[0]][next_tile[1]] = Some(steps + 1);
-                    if next_tile == end { break; }
+                    if next_tile == end {
+                        break;
+                    }
                     queue.push_back((next_tile, steps + 1));
                 }
                 if tile[1] > 0 && !visited[tile[0]][tile[1] - 1] {
                     let next_tile = [tile[0], tile[1] - 1];
                     visited[next_tile[0]][next_tile[1]] = true;
                     distances[next_tile[0]][next_tile[1]] = Some(steps + 1);
-                    if next_tile == end { break; }
+                    if next_tile == end {
+                        break;
+                    }
                     queue.push_back((next_tile, steps + 1));
                 }
                 if tile[1] < grid[0].len() - 1 && !visited[tile[0]][tile[1] + 1] {
                     let next_tile = [tile[0], tile[1] + 1];
                     visited[next_tile[0]][next_tile[1]] = true;
                     distances[next_tile[0]][next_tile[1]] = Some(steps + 1);
-                    if next_tile == end { break; }
+                    if next_tile == end {
+                        break;
+                    }
                     queue.push_back((next_tile, steps + 1));
                 }
             }
@@ -219,12 +227,6 @@ impl Node {
         let used = parts.next().unwrap().trim_end_matches('T').parse().unwrap();
         let avail = parts.next().unwrap().trim_end_matches('T').parse().unwrap();
 
-        Self {
-            x,
-            y,
-            size,
-            used,
-            avail,
-        }
+        Self { x, y, size, used, avail }
     }
 }

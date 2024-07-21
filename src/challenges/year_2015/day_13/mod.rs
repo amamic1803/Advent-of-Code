@@ -16,7 +16,7 @@ fn part2(input: &str) -> String {
 
 fn parse_input(input: &str) -> Graph {
     let mut names = Vec::new();
-    
+
     let mut weights_vec = Vec::new();
     for line in input.trim().lines() {
         let words = line.split_whitespace().collect::<Vec<_>>();
@@ -33,7 +33,7 @@ fn parse_input(input: &str) -> Graph {
 
         weights_vec.push((name1, name2, value));
     }
-    
+
     let mut weights = HashMap::new();
     for (name1, name2, value) in weights_vec {
         if weights.contains_key(&(name1, name2)) {
