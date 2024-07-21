@@ -5,24 +5,30 @@
 //! - Longest Hamiltonian circle
 //! - Shortest Hamiltonian path
 //! - Longest Hamiltonian path
+//! - Shortest Hamiltonian path with fixed ends
+//! - Longest Hamiltonian path with fixed ends
 
 use std::cmp::Ordering;
 use std::collections::{BinaryHeap, HashMap};
 use std::collections::hash_map::Entry;
 
+/// A struct representing a graph.
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub struct Graph {
     adj_list: HashMap<Vertex, Vec<(Vertex, isize)>>,
 }
 impl Graph {
+    /// Constructs a new `Graph`.
     pub fn new() -> Self {
         Self { adj_list: HashMap::new() }
     }
     
+    /// Constructs a new `Graph` with a specified capacity for the number of vertices.
     pub fn with_capacity(capacity: usize) -> Self {
         Self { adj_list: HashMap::with_capacity(capacity) }
     }
 
+    /// Sets the edge between two vertices.
     pub fn set_edge(&mut self, vertex1: Vertex, vertex2: Vertex, value: isize) {
         if !self.adj_list.contains_key(&vertex2) {
             panic!("vertex2 not present in the graph.");
@@ -37,11 +43,13 @@ impl Graph {
         }
     }
 
+    /// Sets the edge between two vertices in both directions.
     pub fn set_edge_undirected(&mut self, vertex1: Vertex, vertex2: Vertex, value: isize) {
         self.set_edge(vertex1, vertex2, value);
         self.set_edge(vertex2, vertex1, value);
     }
 
+    /// Gets the edge between two vertices.
     pub fn get_edge(&self, vertex1: Vertex, vertex2: Vertex) -> isize {
         if !self.adj_list.contains_key(&vertex2) {
             panic!("vertex2 not present in the graph.");
@@ -56,6 +64,7 @@ impl Graph {
         }
     }
 
+    /// Constructs a new vertex and adds it to the graph.
     pub fn new_vertex(&mut self) -> Vertex {
         // find empty id
         let mut i = 0;
@@ -71,6 +80,7 @@ impl Graph {
         vertex
     }
 
+    /// Adds a vertex to the graph.
     pub fn add_vertex(&mut self, vertex: Vertex) {
         if let Entry::Vacant(vacant_entry) = self.adj_list.entry(vertex) {
             vacant_entry.insert(Vec::new());
@@ -79,6 +89,7 @@ impl Graph {
         }
     }
     
+    /// Removes a vertex from the graph.
     pub fn remove_vertex(&mut self, vertex: Vertex) -> bool {
         match self.adj_list.remove(&vertex) {
             Some(_) => {
@@ -90,11 +101,16 @@ impl Graph {
             None => false,
         }
     }
-    
+ 
+    /// Gets the iterator over the vertices in the graph.
     pub fn vertices(&self) -> impl Iterator<Item=Vertex> + '_ {
         self.adj_list.keys().copied()
     }
 
+    /// Finds the shortest Hamiltonian cycle in the graph.
+    /// Returns a tuple containing the minimum cost and the vertices in the cycle.
+    /// Since this is a cycle, vertices can be rotated to start from any vertex.
+    /// The direction of the cycle is from lower indices to higher indices.
     pub fn hamiltonian_cycle_min(&self) -> (isize, Vec<Vertex>) {
         if self.adj_list.len() < 2 {
             panic!("The graph must contain at least 2 vertices.");
@@ -198,6 +214,10 @@ impl Graph {
         }
     }
 
+    /// Finds the longest Hamiltonian cycle in the graph.
+    /// Returns a tuple containing the maximum cost and the vertices in the cycle.
+    /// Since this is a cycle, vertices can be rotated to start from any vertex.
+    /// The direction of the cycle is from lower indices to higher indices.
     pub fn hamiltonian_cycle_max(&self) -> (isize, Vec<Vertex>) {
         if self.adj_list.len() < 2 {
             panic!("The graph must contain at least 2 vertices.");
@@ -301,6 +321,9 @@ impl Graph {
         }
     }
 
+    /// Finds the shortest Hamiltonian path in the graph.
+    /// Returns a tuple containing the minimum cost and the vertices in the path.
+    /// The direction of the path is from lower indices to higher indices.
     pub fn hamiltonian_path_min(&mut self) -> (isize, Vec<Vertex>) {
         if self.adj_list.len() < 2 {
             panic!("The graph must contain at least 2 vertices.");
@@ -341,6 +364,9 @@ impl Graph {
         (min_cost, min_path)
     }
 
+    /// Finds the longest Hamiltonian path in the graph.
+    /// Returns a tuple containing the maximum cost and the vertices in the path.
+    /// The direction of the path is from lower indices to higher indices.
     pub fn hamiltonian_path_max(&mut self) -> (isize, Vec<Vertex>) {
         if self.adj_list.len() < 2 {
             panic!("The graph must contain at least 2 vertices.");
@@ -381,6 +407,10 @@ impl Graph {
         (max_cost, max_path)
     }
 
+    /// Finds the shortest Hamiltonian path in the graph with fixed ends.
+    /// Note that the ends are fixed, but not the direction of the path.
+    /// Returns a tuple containing the minimum cost and the vertices in the path.
+    /// The direction of the path is from lower indices to higher indices.
     pub fn hamiltonian_path_fixed_ends_min(&mut self, end1: Vertex, end2: Vertex) -> (isize, Vec<Vertex>) {
         if self.adj_list.len() < 2 {
             panic!("The graph must contain at least 2 vertices.");
@@ -425,6 +455,10 @@ impl Graph {
         (min_cost, min_path)
     }
 
+    /// Finds the longest Hamiltonian path in the graph with fixed ends.
+    /// Note that the ends are fixed, but not the direction of the path.
+    /// Returns a tuple containing the maximum cost and the vertices in the path.
+    /// The direction of the path is from lower indices to higher indices.
     pub fn hamiltonian_path_fixed_ends_max(&mut self, end1: Vertex, end2: Vertex) -> (isize, Vec<Vertex>) {
         if self.adj_list.len() < 2 {
             panic!("The graph must contain at least 2 vertices.");
@@ -475,6 +509,7 @@ impl Default for Graph {
     }
 }
 
+/// A struct representing a vertex in a graph.
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Hash, Ord, PartialOrd)]
 pub struct Vertex {
     id: usize,
