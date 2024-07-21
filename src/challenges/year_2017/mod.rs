@@ -20,6 +20,7 @@ pub mod day_17;
 pub mod day_18;
 pub mod day_20;
 pub mod day_21;
+pub mod day_22;
 pub mod day_23;
 
 use day_01::day_01;
@@ -42,6 +43,7 @@ use day_17::day_17;
 use day_18::day_18;
 use day_20::day_20;
 use day_21::day_21;
+use day_22::day_22;
 use day_23::day_23;
 
 pub fn year_2017() -> Year {
@@ -68,6 +70,7 @@ pub fn year_2017() -> Year {
             day_18(),
             day_20(),
             day_21(),
+            day_22(),
             day_23(),
         ],
     )
