@@ -240,3 +240,13 @@ fn year2017_day24_part1() {
 fn year2017_day24_part2() {
     run_test(2017, 24, 2, "1673");
 }
+
+#[test]
+fn year2017_day25_part1() {
+    run_test(2017, 25, 1, "3578");
+}
+
+#[test]
+fn year2017_day25_part2() {
+    run_test(2017, 25, 2, "Advent of Code 2017 solved!");
+}
