@@ -182,6 +182,16 @@ fn year2017_day18_part2() {
 }
 
 #[test]
+fn year2017_day19_part1() {
+    run_test(2017, 19, 1, "GSXDIPWTU");
+}
+
+#[test]
+fn year2017_day19_part2() {
+    run_test(2017, 19, 2, "16100");
+}
+
+#[test]
 fn year2017_day20_part1() {
     run_test(2017, 20, 1, "300");
 }
