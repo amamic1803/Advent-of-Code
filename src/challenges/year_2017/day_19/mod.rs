@@ -69,10 +69,34 @@ impl Grid {
                 direction = next_direction;
             }
             match direction {
-                0 => position[0] -= 1,
-                1 => position[1] += 1,
-                2 => position[0] += 1,
-                3 => position[1] -= 1,
+                0 => {
+                    if position[0] > 0 {
+                        position[0] -= 1
+                    } else {
+                        break;
+                    }
+                }
+                1 => {
+                    if position[1] < self.tubes[position[0]].len() - 1 {
+                        position[1] += 1
+                    } else {
+                        break;
+                    }
+                }
+                2 => {
+                    if position[0] < self.tubes.len() - 1 {
+                        position[0] += 1
+                    } else {
+                        break;
+                    }
+                }
+                3 => {
+                    if position[1] > 0 {
+                        position[1] -= 1
+                    } else {
+                        break;
+                    }
+                }
                 _ => unreachable!(),
             }
         }
