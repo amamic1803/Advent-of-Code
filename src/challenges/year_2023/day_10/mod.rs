@@ -4,8 +4,8 @@ pub fn day_10() -> Day {
     Day::new(10, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
-use once_cell::sync::Lazy;
 use std::collections::{BTreeSet, HashMap, HashSet};
+use std::sync::LazyLock;
 
 fn part1(input: &str) -> String {
     let field = parse_input(input);
@@ -187,7 +187,7 @@ fn determine_s(field: &[Vec<char>]) -> ((usize, usize), char) {
     (s_coord, s_type)
 }
 
-static PIPE_EXPANSIONS: Lazy<HashMap<char, [[char; 3]; 3]>> = Lazy::new(|| {
+static PIPE_EXPANSIONS: LazyLock<HashMap<char, [[char; 3]; 3]>> = LazyLock::new(|| {
     let mut map = HashMap::new();
 
     map.insert('|', [['.', '#', '.'], ['.', '#', '.'], ['.', '#', '.']]);

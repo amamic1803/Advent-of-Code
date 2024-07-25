@@ -1,6 +1,6 @@
 use crate::shared::structures::Day;
-use once_cell::sync::Lazy;
 use regex::Regex;
+use std::sync::LazyLock;
 
 pub fn day_09() -> Day {
     Day::new(9, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
@@ -57,7 +57,7 @@ fn decompress(mut current_string: &str) -> u64 {
     // seems to work for the input, I guess the input is intentionally constructed like this
 
     let mut file_len: u64 = 0;
-    static RE: Lazy<Regex> = Lazy::new(|| Regex::new(r"\((\d+)x(\d+)\)").unwrap());
+    static RE: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"\((\d+)x(\d+)\)").unwrap());
 
     while !current_string.is_empty() {
         let re_match = match RE.find(current_string) {

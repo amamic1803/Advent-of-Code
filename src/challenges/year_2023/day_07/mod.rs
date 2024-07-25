@@ -5,11 +5,11 @@ pub fn day_07() -> Day {
 }
 
 use itertools::Itertools;
-use once_cell::sync::Lazy;
 use std::cmp::Ordering;
 use std::collections::HashMap;
+use std::sync::LazyLock;
 
-static CARD_ORDER_1: Lazy<HashMap<char, u64>> = Lazy::new(|| {
+static CARD_ORDER_1: LazyLock<HashMap<char, u64>> = LazyLock::new(|| {
     let mut map = HashMap::new();
 
     map.insert('2', 0);
@@ -28,7 +28,7 @@ static CARD_ORDER_1: Lazy<HashMap<char, u64>> = Lazy::new(|| {
 
     map
 });
-static CARD_ORDER_2: Lazy<HashMap<char, u64>> = Lazy::new(|| {
+static CARD_ORDER_2: LazyLock<HashMap<char, u64>> = LazyLock::new(|| {
     let mut map = HashMap::new();
 
     map.insert('J', 0);

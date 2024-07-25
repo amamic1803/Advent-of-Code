@@ -6,10 +6,10 @@ pub fn day_14() -> Day {
 }
 
 use md5;
-use once_cell::sync::Lazy;
 use regex::Regex;
 use std::collections::VecDeque;
 use std::fmt::Write;
+use std::sync::LazyLock;
 
 fn part1(input: &str) -> String {
     calculate_passwords(input, calc_hash_1).to_string()
@@ -21,22 +21,23 @@ fn part2(input: &str) -> String {
 
 const PASSWORDS_TO_FIND: u8 = 64;
 const ADDITIONAL_HASHES: usize = 2016;
-static RE_3: Lazy<Vec<Regex>> = Lazy::new(|| {
-    let mut re_3 = Vec::new();
-    for hex_digit in HEX_DIGITS {
-        re_3.push(Regex::new(&format!("{hex_digit}{{3}}")).unwrap());
-    }
-    re_3
-});
-static RE_5: Lazy<Vec<Regex>> = Lazy::new(|| {
-    let mut re_5 = Vec::new();
-    for hex_digit in HEX_DIGITS {
-        re_5.push(Regex::new(&format!("{hex_digit}{{5}}")).unwrap());
-    }
-    re_5
-});
 
 fn calculate_passwords(input: &str, hash_fn: fn(&str, &mut String)) -> u64 {
+    static RE_3: LazyLock<Vec<Regex>> = LazyLock::new(|| {
+        let mut re_3 = Vec::new();
+        for hex_digit in HEX_DIGITS {
+            re_3.push(Regex::new(&format!("{hex_digit}{{3}}")).unwrap());
+        }
+        re_3
+    });
+    static RE_5: LazyLock<Vec<Regex>> = LazyLock::new(|| {
+        let mut re_5 = Vec::new();
+        for hex_digit in HEX_DIGITS {
+            re_5.push(Regex::new(&format!("{hex_digit}{{5}}")).unwrap());
+        }
+        re_5
+    });
+
     let mut last_occurences_3: Vec<VecDeque<u64>> = Vec::with_capacity(16);
     for _ in 0..16 {
         last_occurences_3.push(VecDeque::new());
