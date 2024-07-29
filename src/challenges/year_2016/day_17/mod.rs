@@ -35,6 +35,7 @@ impl Room {
                     shortest_path_hash.clear();
                     shortest_path_hash.push_str(path_hash);
                 } else {
+                    #[allow(clippy::needless_borrows_for_generic_args)]
                     let mut hex_iter = md5::compute(&path_hash).into_iter().flat_map(|byte| [byte / 16, byte % 16]).map(|num| num >= 11); // b,c,d,e,f == 11,12,13,14,15 => open doors
 
                     // up
@@ -92,6 +93,7 @@ impl Room {
                     longest_path_hash.push_str(path_hash);
                 }
             } else {
+                #[allow(clippy::needless_borrows_for_generic_args)]
                 let mut hex_iter = md5::compute(&path_hash).into_iter().flat_map(|byte| [byte / 16, byte % 16]).map(|num| num >= 11); // b,c,d,e,f == 11,12,13,14,15 => open doors
 
                 // up
