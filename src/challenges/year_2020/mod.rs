@@ -8,6 +8,7 @@ pub mod day_05;
 pub mod day_06;
 pub mod day_08;
 pub mod day_09;
+pub mod day_17;
 
 use day_01::day_01;
 use day_02::day_02;
@@ -17,7 +18,8 @@ use day_05::day_05;
 use day_06::day_06;
 use day_08::day_08;
 use day_09::day_09;
+use day_17::day_17;
 
 pub fn year_2020() -> Year {
-    Year::new(2020, vec![day_01(), day_02(), day_03(), day_04(), day_05(), day_06(), day_08(), day_09()])
+    Year::new(2020, vec![day_01(), day_02(), day_03(), day_04(), day_05(), day_06(), day_08(), day_09(), day_17()])
 }
