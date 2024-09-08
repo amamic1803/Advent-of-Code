@@ -78,7 +78,7 @@ fn part2(input: &str) -> String {
     // So the final equation for the number of steps is:
     // the length of the molecule - the number of ( or ) - 2 * the number of , - 1
 
-    (molecule_str.chars().count() - molecule_str.matches(|x| (x == '(') || (x == ')')).count() - 2 * molecule_str.matches(',').count() - 1).to_string()
+    (molecule_str.chars().count() - molecule_str.matches(['(', ')']).count() - 2 * molecule_str.matches(',').count() - 1).to_string()
 }
 
 fn parse_input(input: &str) -> (Vec<(&str, &str)>, &str) {
