@@ -2,6 +2,7 @@
 
 use std::error::Error;
 use std::fmt::{self, Display, Formatter};
+use std::time::{Duration, Instant};
 
 /// An enum representing the errors that can occur when using these structures.
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -129,7 +130,7 @@ impl Challenges {
     /// # Errors
     /// * `ChallengeError::UnavailableYear` - The year is unavailable.
     /// * `ChallengeError::UnavailableDay` - The day is unavailable.
-    pub fn run(&self, year_num: usize, day_num: usize, part_num: usize, input: &str) -> Result<String, ChallengeError> {
+    pub fn run(&self, year_num: usize, day_num: usize, part_num: usize, input: &str) -> Result<(String, Duration), ChallengeError> {
         match self.years.iter().position(|year| year.year_num == year_num) {
             Some(index) => Ok(self.years[index].run(day_num, part_num, input)?),
             None => Err(ChallengeError::UnavailableYear),
@@ -210,7 +211,7 @@ impl Year {
     /// A `Result` containing a string with the answer to the challenge or the `ChallengeError`.
     /// # Errors
     /// * `ChallengeError::UnavailableDay` - The day is unavailable.
-    pub fn run(&self, day_num: usize, part_num: usize, input: &str) -> Result<String, ChallengeError> {
+    pub fn run(&self, day_num: usize, part_num: usize, input: &str) -> Result<(String, Duration), ChallengeError> {
         match self.days.iter().position(|day| day.day_num == day_num) {
             Some(index) => Ok(self.days[index].run(part_num, input)),
             None => Err(ChallengeError::UnavailableDay),
@@ -290,12 +291,15 @@ impl Day {
     /// * `input` - The input to the challenge.
     /// # Returns
     /// A string with the answer to the challenge.
-    pub fn run(&self, part_num: usize, input: &str) -> String {
+    pub fn run(&self, part_num: usize, input: &str) -> (String, Duration) {
         let input = if input.is_empty() { &self.default_input } else { input };
-        match part_num {
+        let instant = Instant::now();
+        let result = match part_num {
             1 => (self.part1)(input),
             2 => (self.part2)(input),
             _ => String::new(),
-        }
+        };
+        let elapsed = instant.elapsed();
+        (result, elapsed)
     }
 }
