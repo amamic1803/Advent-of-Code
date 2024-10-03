@@ -12,11 +12,11 @@ lto = true
 opt-level = 3
 
 [dependencies]
-clap = { version = "4.5.16", features = ["cargo"] }
+clap = { version = "4.5.19", features = ["cargo"] }
 itertools = "0.13.0"
 md5 = "0.7.0"
 ndlife = "0.1.0"
 num-traits = "0.2.19"
-regex = "1.10.6"
-serde_json = "1.0.127"
+regex = "1.11.0"
+serde_json = "1.0.128"
 smallvec = "1.13.2"
