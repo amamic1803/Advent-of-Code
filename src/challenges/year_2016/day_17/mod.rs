@@ -1,4 +1,5 @@
 use crate::shared::structures::Day;
+use md5::{Digest, Md5};
 
 pub fn day_17() -> Day {
     Day::new(17, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
@@ -35,8 +36,9 @@ impl Room {
                     shortest_path_hash.clear();
                     shortest_path_hash.push_str(path_hash);
                 } else {
-                    #[allow(clippy::needless_borrows_for_generic_args)]
-                    let mut hex_iter = md5::compute(&path_hash).into_iter().flat_map(|byte| [byte / 16, byte % 16]).map(|num| num >= 11); // b,c,d,e,f == 11,12,13,14,15 => open doors
+                    let mut hasher = Md5::new();
+                    hasher.update(&path_hash);
+                    let mut hex_iter = hasher.finalize().into_iter().flat_map(|byte| [byte / 16, byte % 16]).map(|num| num >= 11); // b,c,d,e,f == 11,12,13,14,15 => open doors
 
                     // up
                     if hex_iter.next().unwrap() && location.0 > 0 {
@@ -93,8 +95,9 @@ impl Room {
                     longest_path_hash.push_str(path_hash);
                 }
             } else {
-                #[allow(clippy::needless_borrows_for_generic_args)]
-                let mut hex_iter = md5::compute(&path_hash).into_iter().flat_map(|byte| [byte / 16, byte % 16]).map(|num| num >= 11); // b,c,d,e,f == 11,12,13,14,15 => open doors
+                let mut hasher = Md5::new();
+                hasher.update(&path_hash);
+                let mut hex_iter = hasher.finalize().into_iter().flat_map(|byte| [byte / 16, byte % 16]).map(|num| num >= 11); // b,c,d,e,f == 11,12,13,14,15 => open doors
 
                 // up
                 if hex_iter.next().unwrap() && location.0 > 0 {

@@ -1,30 +1,43 @@
 use crate::shared::structures::Day;
-use md5::compute;
+use md5::{Digest, Md5};
+use std::fmt::Write;
 
 pub fn day_04() -> Day {
     Day::new(4, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
 fn part1(input: &str) -> String {
-    find_with_zeros(input, 5)
+    let mut input = input.trim().to_string();
+    let input_len = input.len();
+    let mut hasher = Md5::new();
+
+    for i in 0.. {
+        input.truncate(input_len);
+        write!(&mut input, "{}", i).unwrap();
+        hasher.update(&input);
+        let hash = hasher.finalize_reset();
+        if hash[0] == 0 && hash[1] == 0 && hash[2] >> 4 == 0 {
+            return i.to_string();
+        }
+    }
+
+    unreachable!()
 }
 
 fn part2(input: &str) -> String {
-    find_with_zeros(input, 6)
-}
+    let mut input = input.trim().to_string();
+    let input_len = input.len();
+    let mut hasher = Md5::new();
 
-fn find_with_zeros(input: &str, zeros: usize) -> String {
-    let input = input.trim();
-    let mut num: usize = 1;
-    let mut hash_str: String = String::new();
-    let match_template: String = (0..zeros).map(|_| "0").collect();
-
-    loop {
-        hash_str.clear();
-        hash_str.push_str(&format!("{:x}", compute(format!("{}{}", input, num))));
-        if hash_str.starts_with(&match_template) {
-            return format!("{}", num);
+    for i in 0.. {
+        input.truncate(input_len);
+        write!(&mut input, "{}", i).unwrap();
+        hasher.update(&input);
+        let hash = hasher.finalize_reset();
+        if hash.starts_with(&[0, 0, 0]) {
+            return i.to_string();
         }
-        num += 1;
     }
+
+    unreachable!()
 }

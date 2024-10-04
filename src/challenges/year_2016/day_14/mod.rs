@@ -5,7 +5,7 @@ pub fn day_14() -> Day {
     Day::new(14, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
 }
 
-use md5;
+use md5::{Digest, Md5};
 use regex::Regex;
 use std::collections::VecDeque;
 use std::fmt::Write;
@@ -104,16 +104,22 @@ fn calculate_passwords(input: &str, hash_fn: fn(&str, &mut String)) -> u64 {
 }
 
 fn calc_hash_1(hash_in: &str, hash_out: &mut String) {
+    let mut hasher = Md5::new();
+    hasher.update(hash_in);
+
     hash_out.clear();
-    write!(hash_out, "{:x}", md5::compute(hash_in)).unwrap();
+    write!(hash_out, "{:x}", hasher.finalize()).unwrap();
 }
 
 fn calc_hash_2(hash_in: &str, hash_out: &mut String) {
+    let mut hasher = Md5::new();
     let mut temp_hash = String::with_capacity(32);
-    write!(temp_hash, "{:x}", md5::compute(hash_in)).unwrap();
+    hasher.update(hash_in);
+    write!(temp_hash, "{:x}", hasher.finalize_reset()).unwrap();
 
     for _ in 0..ADDITIONAL_HASHES {
-        let hash = md5::compute(&temp_hash);
+        hasher.update(&temp_hash);
+        let hash = hasher.finalize_reset();
         temp_hash.clear();
         write!(temp_hash, "{:x}", hash).unwrap();
     }

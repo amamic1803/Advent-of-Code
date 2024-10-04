@@ -1,5 +1,6 @@
+use crate::shared::math::HEX_DIGITS;
 use crate::shared::structures::Day;
-use md5;
+use md5::{Digest, Md5};
 use std::fmt::Write;
 
 pub fn day_05() -> Day {
@@ -7,27 +8,28 @@ pub fn day_05() -> Day {
 }
 
 fn part1(input: &str) -> String {
-    let mut password = String::new();
-    let mut i = 0;
+    let mut password = String::with_capacity(8);
 
     let mut input_str = String::from(input.trim());
     let input_len = input_str.len();
+    let mut hasher = Md5::new();
 
-    loop {
+    for i in 0.. {
         input_str.truncate(input_len);
         write!(&mut input_str, "{}", i).unwrap();
 
-        let hash = md5::compute(&input_str);
+        hasher.update(&input_str);
+        let hash = hasher.finalize_reset();
 
-        if hash[0] == 0 && hash[1] == 0 && hash[2] & 0xf0 == 0 {
-            let _ = write!(&mut password, "{:x}", hash[2] & 0xf);
+        if hash[0] == 0 && hash[1] == 0 && (hash[2] >> 4 == 0) {
+            write!(&mut password, "{:x}", hash[2] & 0x0f).unwrap();
             if password.len() == 8 {
-                break password;
+                break;
             }
         }
-
-        i += 1;
     }
+
+    password
 }
 
 fn part2(input: &str) -> String {
@@ -36,28 +38,26 @@ fn part2(input: &str) -> String {
 
     let mut input_str = String::from(input.trim());
     let input_len = input_str.len();
-
-    let mut hash = String::new();
+    let mut hasher = Md5::new();
 
     while password.iter().any(|&c| c == '_') {
         loop {
             input_str.truncate(input_len);
             write!(&mut input_str, "{}", i).unwrap();
 
-            hash.clear();
-            write!(&mut hash, "{:x}", md5::compute(&input_str)).unwrap();
+            hasher.update(&input_str);
+            let hash = hasher.finalize_reset();
 
-            i += 1;
-
-            if hash.starts_with("00000") {
-                match hash.chars().nth(5).unwrap().to_digit(10) {
-                    Some(i) if i < 8 && password[i as usize] == '_' => {
-                        password[i as usize] = hash.chars().nth(6).unwrap();
-                        break;
-                    }
-                    _ => {}
+            if hash[0] == 0 && hash[1] == 0 && (hash[2] >> 4 == 0) {
+                let position = hash[2] & 0x0f;
+                let character = HEX_DIGITS[(hash[3] >> 4) as usize];
+                if position < 8 && password[position as usize] == '_' {
+                    password[position as usize] = character;
+                    break;
                 }
             }
+
+            i += 1;
         }
     }
 
