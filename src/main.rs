@@ -4,7 +4,6 @@ use std::path::PathBuf;
 use clap::{command, value_parser, Arg, ArgAction};
 
 use advent_of_code::get_challenges;
-use advent_of_code::shared::ansi::{WHITE, BOLD, RESET};
 
 fn main() {
     let argv = command!()
@@ -35,7 +34,7 @@ fn main() {
                 .long("list")
                 .action(ArgAction::SetTrue)
                 .help("List all Advent of Code challenges")
-                .conflicts_with_all(["solve", "text", "show_input"])
+                .conflicts_with_all(["solve", "text", "show_input", "benchmark"])
                 .required(false),
         )
         .arg(
@@ -44,10 +43,24 @@ fn main() {
                 .long("solve")
                 .action(ArgAction::SetTrue)
                 .help("Solve the Advent of Code challenge (default)")
-                .conflicts_with_all(["text", "show_input", "list"])
+                .conflicts_with_all(["text", "show_input", "list", "benchmark"])
                 .required(false)
-                .default_value_ifs([("text", "true", Some("false")), ("show_input", "true", Some("false")), ("list", "true", Some("false"))])
+                .default_value_ifs([
+                    ("text", "true", Some("false")),
+                    ("show_input", "true", Some("false")),
+                    ("list", "true", Some("false")),
+                    ("benchmark", "true", Some("false")),
+                ])
                 .default_value("true"),
+        )
+        .arg(
+            Arg::new("benchmark")
+                .short('b')
+                .long("benchmark")
+                .action(ArgAction::SetTrue)
+                .help("Benchmark the Advent of Code challenge")
+                .conflicts_with_all(["text", "show_input", "list", "solve"])
+                .required(false),
         )
         .arg(
             Arg::new("text")
@@ -55,7 +68,7 @@ fn main() {
                 .long("text")
                 .action(ArgAction::SetTrue)
                 .help("Show the text of the Advent of Code challenge")
-                .conflicts_with_all(["solve", "show_input", "list"])
+                .conflicts_with_all(["solve", "show_input", "list", "benchmark"])
                 .required(false),
         )
         .arg(
@@ -64,7 +77,7 @@ fn main() {
                 .long("show_input")
                 .action(ArgAction::SetTrue)
                 .help("Show the input of the Advent of Code challenge")
-                .conflicts_with_all(["text", "solve", "list"])
+                .conflicts_with_all(["text", "solve", "list", "benchmark"])
                 .required(false),
         )
         .arg(
@@ -83,6 +96,7 @@ fn main() {
     let part_num = argv.get_one::<u32>("part");
     let list_flag: bool = argv.get_flag("list");
     let solve_flag: bool = argv.get_flag("solve");
+    let benchmark_flag: bool = argv.get_flag("benchmark");
     let text_flag: bool = argv.get_flag("text");
     let show_input_flag: bool = argv.get_flag("show_input");
     let input = argv.get_one::<PathBuf>("input");
@@ -118,12 +132,22 @@ fn main() {
 
         if solve_flag {
             match challenges_list.run(year_num, day_num, part_num, &input) {
-                Ok((result, elapsed)) => {
-                    println!("{BOLD}{WHITE}Result:{RESET} {}", result);
-                    println!("{BOLD}{WHITE}Elapsed:{RESET} {} ms", elapsed.as_millis());
+                Ok(result) => {
+                    println!("{result}");
                 }
                 Err(err) => {
                     eprintln!("Error running challenge: {}", err);
+                    std::process::exit(1);
+                }
+            }
+        } else if benchmark_flag {
+            match challenges_list.benchmark(year_num, day_num, part_num, &input) {
+                Ok((result, elapsed)) => {
+                    println!("Result: {}", result);
+                    println!("Time elapsed: {} ms", elapsed.as_millis());
+                }
+                Err(err) => {
+                    eprintln!("Error benchmarking challenge: {}", err);
                     std::process::exit(1);
                 }
             }

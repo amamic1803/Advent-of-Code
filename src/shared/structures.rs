@@ -11,12 +11,15 @@ pub enum ChallengeError {
     UnavailableYear,
     /// The requested day is unavailable.
     UnavailableDay,
+    /// The requested part is unavailable.
+    UnavailablePart,
 }
 impl Display for ChallengeError {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
         match self {
             Self::UnavailableYear => write!(f, "The requested year is unavailable."),
             Self::UnavailableDay => write!(f, "The requested day is unavailable."),
+            Self::UnavailablePart => write!(f, "The requested part is unavailable."),
         }
     }
 }
@@ -130,9 +133,26 @@ impl Challenges {
     /// # Errors
     /// * `ChallengeError::UnavailableYear` - The year is unavailable.
     /// * `ChallengeError::UnavailableDay` - The day is unavailable.
-    pub fn run(&self, year_num: usize, day_num: usize, part_num: usize, input: &str) -> Result<(String, Duration), ChallengeError> {
+    /// * `ChallengeError::UnavailablePart` - The part is unavailable.
+    pub fn run(&self, year_num: usize, day_num: usize, part_num: usize, input: &str) -> Result<String, ChallengeError> {
+        self.benchmark(year_num, day_num, part_num, input).map(|(result, _)| result)
+    }
+
+    /// Benchmarks a challenge.
+    /// # Arguments
+    /// * `year_num` - The year of the challenge.
+    /// * `day_num` - The day of the challenge.
+    /// * `part_num` - The part of the challenge.
+    /// * `input` - The input to the challenge.
+    /// # Returns
+    /// A `Result` containing a tuple with the answer to the challenge and the elapsed time or the `ChallengeError`.
+    /// # Errors
+    /// * `ChallengeError::UnavailableYear` - The year is unavailable.
+    /// * `ChallengeError::UnavailableDay` - The day is unavailable.
+    /// * `ChallengeError::UnavailablePart` - The part is unavailable.
+    pub fn benchmark(&self, year_num: usize, day_num: usize, part_num: usize, input: &str) -> Result<(String, Duration), ChallengeError> {
         match self.years.iter().position(|year| year.year_num == year_num) {
-            Some(index) => Ok(self.years[index].run(day_num, part_num, input)?),
+            Some(index) => Ok(self.years[index].benchmark(day_num, part_num, input)?),
             None => Err(ChallengeError::UnavailableYear),
         }
     }
@@ -211,9 +231,24 @@ impl Year {
     /// A `Result` containing a string with the answer to the challenge or the `ChallengeError`.
     /// # Errors
     /// * `ChallengeError::UnavailableDay` - The day is unavailable.
-    pub fn run(&self, day_num: usize, part_num: usize, input: &str) -> Result<(String, Duration), ChallengeError> {
+    /// * `ChallengeError::UnavailablePart` - The part is unavailable.
+    pub fn run(&self, day_num: usize, part_num: usize, input: &str) -> Result<String, ChallengeError> {
+        self.benchmark(day_num, part_num, input).map(|(result, _)| result)
+    }
+
+    /// Benchmarks a challenge.
+    /// # Arguments
+    /// * `day_num` - The day of the challenge.
+    /// * `part_num` - The part of the challenge.
+    /// * `input` - The input to the challenge.
+    /// # Returns
+    /// A `Result` containing a tuple with the answer to the challenge and the elapsed time or the `ChallengeError`.
+    /// # Errors
+    /// * `ChallengeError::UnavailableDay` - The day is unavailable.
+    /// * `ChallengeError::UnavailablePart` - The part is unavailable.
+    pub fn benchmark(&self, day_num: usize, part_num: usize, input: &str) -> Result<(String, Duration), ChallengeError> {
         match self.days.iter().position(|day| day.day_num == day_num) {
-            Some(index) => Ok(self.days[index].run(part_num, input)),
+            Some(index) => Ok(self.days[index].benchmark(part_num, input)?),
             None => Err(ChallengeError::UnavailableDay),
         }
     }
@@ -285,21 +320,36 @@ impl Day {
     }
 
     /// Runs a challenge.
-    /// `part_num` should be 1 or 2. If it is not, the function will return an empty string.
+    /// `part_num` should be 1 or 2.
     /// # Arguments
     /// * `part_num` - The part of the challenge.
     /// * `input` - The input to the challenge.
     /// # Returns
-    /// A string with the answer to the challenge.
-    pub fn run(&self, part_num: usize, input: &str) -> (String, Duration) {
+    /// A result containing the answer to the challenge.
+    /// # Errors
+    /// * `ChallengeError::UnavailablePart` - The part is unavailable.
+    pub fn run(&self, part_num: usize, input: &str) -> Result<String, ChallengeError> {
+        self.benchmark(part_num, input).map(|(result, _)| result)
+    }
+
+    /// Benchmarks a challenge.
+    /// `part_num` should be 1 or 2.
+    /// # Arguments
+    /// * `part_num` - The part of the challenge.
+    /// * `input` - The input to the challenge.
+    /// # Returns
+    /// A result containing a tuple with the answer to the challenge and the elapsed time.
+    /// # Errors
+    /// * `ChallengeError::UnavailablePart` - The part is unavailable.
+    pub fn benchmark(&self, part_num: usize, input: &str) -> Result<(String, Duration), ChallengeError> {
         let input = if input.is_empty() { &self.default_input } else { input };
         let instant = Instant::now();
         let result = match part_num {
             1 => (self.part1)(input),
             2 => (self.part2)(input),
-            _ => String::new(),
+            _ => return Err(ChallengeError::UnavailablePart),
         };
         let elapsed = instant.elapsed();
-        (result, elapsed)
+        Ok((result, elapsed))
     }
 }
