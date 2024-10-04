@@ -4,6 +4,7 @@ use std::path::PathBuf;
 use clap::{command, value_parser, Arg, ArgAction};
 
 use advent_of_code::get_challenges;
+use advent_of_code::shared::ansi::{WHITE, BOLD, RESET};
 
 fn main() {
     let argv = command!()
@@ -117,7 +118,10 @@ fn main() {
 
         if solve_flag {
             match challenges_list.run(year_num, day_num, part_num, &input) {
-                Ok(result) => println!("{}", result),
+                Ok((result, elapsed)) => {
+                    println!("{BOLD}{WHITE}Result:{RESET} {}", result);
+                    println!("{BOLD}{WHITE}Elapsed:{RESET} {} ms", elapsed.as_millis());
+                }
                 Err(err) => {
                     eprintln!("Error running challenge: {}", err);
                     std::process::exit(1);

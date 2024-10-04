@@ -13,23 +13,21 @@ fn part1(input: &str) -> String {
     let mut input_str = String::from(input.trim());
     let input_len = input_str.len();
 
-    let mut hash = String::new();
+    loop {
+        input_str.truncate(input_len);
+        write!(&mut input_str, "{}", i).unwrap();
 
-    while password.chars().count() < 8 {
-        while !hash.starts_with("00000") {
-            input_str.truncate(input_len);
-            write!(&mut input_str, "{}", i).unwrap();
+        let hash = md5::compute(&input_str);
 
-            hash.clear();
-            write!(&mut hash, "{:x}", md5::compute(&input_str)).unwrap();
-
-            i += 1;
+        if hash[0] == 0 && hash[1] == 0 && hash[2] & 0xf0 == 0 {
+            let _ = write!(&mut password, "{:x}", hash[2] & 0xf);
+            if password.len() == 8 {
+                break password;
+            }
         }
-        password.push(hash.chars().nth(5).unwrap());
-        hash.clear();
-    }
 
-    password
+        i += 1;
+    }
 }
 
 fn part2(input: &str) -> String {
