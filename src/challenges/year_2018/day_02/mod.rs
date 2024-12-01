@@ -43,7 +43,7 @@ fn part2(input: &str) -> String {
     }
 
     if different_chars(ids[0], ids[1]) == 1 {
-        return ids[0].chars().zip(ids[1].chars()).filter(|(char1, char2)| char1 == char2).map(|(char1, _)| char1).collect();
+        ids[0].chars().zip(ids[1].chars()).filter(|(char1, char2)| char1 == char2).map(|(char1, _)| char1).collect()
     } else {
         panic!("No solution found");
     }

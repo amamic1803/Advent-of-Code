@@ -26,7 +26,7 @@ struct Passport<'a> {
     pid: Option<&'a str>,
     cid: Option<&'a str>,
 }
-impl<'a> Passport<'a> {
+impl Passport<'_> {
     fn new() -> Self {
         Self {
             byr: None,
