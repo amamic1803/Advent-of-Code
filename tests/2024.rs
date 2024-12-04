@@ -30,3 +30,13 @@ fn year2024_day03_part1() {
 fn year2024_day03_part2() {
     run_test(2024, 3, 2, "107069718");
 }
+
+#[test]
+fn year2024_day04_part1() {
+    run_test(2024, 4, 1, "2642");
+}
+
+#[test]
+fn year2024_day04_part2() {
+    run_test(2024, 4, 2, "1974");
+}
