@@ -1,4 +1,5 @@
 use crate::shared::structures::Day;
+use std::iter;
 
 pub fn day_09() -> Day {
     Day::new(9, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
@@ -18,7 +19,7 @@ fn compress1(disc: &str) -> impl Iterator<Item = u32> {
         disc.pop();
     }
     let mut i = 0;
-    std::iter::from_fn(move || loop {
+    iter::from_fn(move || loop {
         if i >= disc.len() {
             return None;
         }
@@ -45,22 +46,12 @@ fn compress1(disc: &str) -> impl Iterator<Item = u32> {
 }
 
 fn compress2(disc: &str) -> impl Iterator<Item = u32> {
-    let mut disc = disc.trim().chars().map(|c| c.to_digit(10).unwrap() as u8).collect::<Vec<_>>();
-    let mut files = Vec::with_capacity(10_000);
-    let mut empty = Vec::with_capacity(10_000);
-    for (i, &b) in disc.iter().enumerate() {
-        if i % 2 == 0 {
-            files.push(b);
-        } else {
-            empty.push(b);
-        }
+    let mut compacted_disc = Vec::with_capacity(20000 * 9);
+    for (i, c) in disc.trim().chars().enumerate() {
+        let amount = c.to_digit(10).unwrap() as u8;
+        let data = if i % 2 == 0 { Some(i) } else { None };
+        compacted_disc.extend(iter::repeat(data).take(amount as usize));
     }
-    if disc.len() % 2 == 0 {
-        disc.pop();
-    }
-    //let mut out_ord = Vec::new();
-    let mut i = 0;
 
-    todo!("Implement the rest of the function");
-    1..10
+    compacted_disc.into_iter().map(|data| data.unwrap_or(0) as u32)
 }
