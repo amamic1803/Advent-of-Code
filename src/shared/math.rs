@@ -26,7 +26,7 @@ where
     U: IntoIterator<Item = T>,
 {
     let mut congruences = congruences.into_iter();
-    let (mut solution, mut modulus) = congruences.next().expect("There must be at least 1 congruence.").borrow();
+    let &(mut solution, mut modulus) = congruences.next().expect("There must be at least 1 congruence.").borrow();
 
     for congruence in congruences {
         let (remainder, modulo) = congruence.borrow();

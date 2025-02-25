@@ -111,8 +111,8 @@ impl<'a> Structure<'a> {
                     *appearances.entry(weight).or_insert(0) += 1;
                 }
                 assert_eq!(appearances.len(), 2, "There should be only 2 different weights");
-                let (&&unbalanced_weight, _) = appearances.iter().find(|(_, &count)| count == 1).unwrap();
-                let (&&balanced_weight, _) = appearances.iter().find(|(_, &count)| count != 1).unwrap();
+                let (&&unbalanced_weight, _) = appearances.iter().find(|&(_, &count)| count == 1).unwrap();
+                let (&&balanced_weight, _) = appearances.iter().find(|&(_, &count)| count != 1).unwrap();
                 let unbalanced_index = weights.iter().position(|&w| w == unbalanced_weight).unwrap();
                 let offset = balanced_weight as i32 - unbalanced_weight as i32;
 
