@@ -1,4 +1,5 @@
 use crate::shared::structures::Day;
+use std::cmp::Ordering;
 use std::iter;
 
 pub fn day_09() -> Day {
@@ -13,7 +14,7 @@ fn part2(input: &str) -> String {
     compress2(input).enumerate().map(|(i, block)| i as u64 * block.unwrap_or(0) as u64).sum::<u64>().to_string()
 }
 
-fn compress1(disc: &str) -> impl Iterator<Item = u32> {
+fn compress1(disc: &str) -> impl Iterator<Item = u32> + use<> {
     let mut disc = disc.trim().chars().map(|c| c.to_digit(10).unwrap() as u8).collect::<Vec<_>>();
     if disc.len() % 2 == 0 {
         disc.pop();
@@ -60,8 +61,10 @@ fn compress2(disc: &str) -> impl Iterator<Item = Option<u32>> + use<> {
         if i % 2 == 0 {
             // file
             // (disc_position_index, file_order_index, file_size)
-            files.push((position, file_index, item));
-            file_index += 1;
+            if item != 0 {
+                files.push((position, file_index, item));
+                file_index += 1;
+            }
         } else {
             // free space
             // (disc_position_index, free_space_size)
@@ -70,46 +73,62 @@ fn compress2(disc: &str) -> impl Iterator<Item = Option<u32>> + use<> {
         position += item as u32;
     }
 
+    // positions of the first free block of [index] size
+    let mut fb_search_start = [u32::MAX; 9];
+    for i in 0..9 {
+        for (j, free_block) in free_space.iter().enumerate() {
+            if free_block.1 == i + 1 {
+                fb_search_start[i as usize] = j as u32;
+            }
+        }
+    }
+
     for file in files.iter_mut().rev() {
         for free_block in free_space.iter_mut() {
-            if file.2 <= free_block.1 {
+            if free_block.0 > file.0 {
+                // no free block to the left fits the file
+                // this must be checked first,
+                // before comparing sizes (of a file and free space)
+                break;
+            } else if file.2 <= free_block.1 {
                 // file fits in a free block
                 file.0 = free_block.0;
                 free_block.0 += file.2 as u32;
                 free_block.1 -= file.2;
                 break;
-            } else if free_block.0 > file.0 {
-                // no free block to the left fits the file
-                break;
             }
         }
     }
-
     files.sort_by_key(|file| file.0);
+
     let mut i = 0; // disc position
     let mut j = 0; // index of the file based on the new order
     // temp variable to count the number of times the file id is repeated
     // (file size)
     let mut k = 0;
-    iter::from_fn(move || {
-        loop {
-            // if there are no more files, end the iterator
-            if j >= files.len() {
-                return None;
-            }
+    iter::from_fn(move || loop {
+        // if there are no more files, end the iterator
+        if j >= files.len() {
+            return None;
+        }
 
-            // if a disc position is lower than the next file we are looking at, return None (means '.')
-            if i < files[j].0 {
+        match i.cmp(&files[j].0) {
+            Ordering::Less => {
+                // if a disc position is lower than the next file we are looking at,
+                // return None (means '.')
                 i += 1;
                 return Some(None);
-            } else if i == files[j].0 {
+            },
+            Ordering::Equal => {
                 // if a disc position is equal to the position of the next file,
                 // it means it has just been reached, and counter k needs to be set up
                 k = files[j].2;
                 i += 1;
                 continue;
-            } else {
-                // here we use k to determine when the EOF is reached
+            },
+            Ordering::Greater => {
+                // here we use k to emit file index the required number of times
+                // (k, or file size)
                 if k > 0 {
                     k -= 1;
                     return Some(Some(files[j].1));
@@ -118,7 +137,7 @@ fn compress2(disc: &str) -> impl Iterator<Item = Option<u32>> + use<> {
                     j += 1;
                     continue;
                 }
-            }
+            },
         }
     })
 }

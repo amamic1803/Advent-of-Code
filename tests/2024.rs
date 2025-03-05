@@ -62,6 +62,16 @@ fn year2024_day07_part2() {
 }
 
 #[test]
+fn year2024_day09_part1() {
+    run_test(2024, 9, 1, "6448989155953");
+}
+
+#[test]
+fn year2024_day09_part2() {
+    run_test(2024, 9, 2, "6476642796832");
+}
+
+#[test]
 fn year2024_day14_part1() {
     run_test(2024, 14, 1, "225648864");
 }
