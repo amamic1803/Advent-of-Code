@@ -58,13 +58,14 @@ fn compress2(disc: &str) -> impl Iterator<Item = Option<u32>> + use<> {
     let mut position = 0;
     let mut file_index = 0;
     for (i, item) in disc.into_iter().enumerate() {
+        if item == 0 {
+            continue;
+        }
         if i % 2 == 0 {
             // file
             // (disc_position_index, file_order_index, file_size)
-            if item != 0 {
-                files.push((position, file_index, item));
-                file_index += 1;
-            }
+            files.push((position, file_index, item));
+            file_index += 1;
         } else {
             // free space
             // (disc_position_index, free_space_size)
@@ -73,29 +74,37 @@ fn compress2(disc: &str) -> impl Iterator<Item = Option<u32>> + use<> {
         position += item as u32;
     }
 
-    // positions of the first free block of [index] size
-    let mut fb_search_start = [u32::MAX; 9];
-    for i in 0..9 {
-        for (j, free_block) in free_space.iter().enumerate() {
-            if free_block.1 == i + 1 {
-                fb_search_start[i as usize] = j as u32;
+    // positions of the next free block of at least [index] + 1 size
+    let mut fb_next = [0; 9];
+    fn fb_next_update_index(index: usize, fb_next: &mut [usize; 9], free_space: &[(u32, u8)]) {
+        let start = fb_next[index];
+        fb_next[index] = usize::MAX;
+        for (i, free_block) in free_space[start..].iter().enumerate() {
+            if free_block.1 as usize > index {
+                fb_next[index] = start + i;
+                break;
             }
         }
     }
+    for i in 0..9 {
+        fb_next_update_index(i, &mut fb_next, &free_space);
+    }
 
     for file in files.iter_mut().rev() {
-        for free_block in free_space.iter_mut() {
-            if free_block.0 > file.0 {
-                // no free block to the left fits the file
-                // this must be checked first,
-                // before comparing sizes (of a file and free space)
-                break;
-            } else if file.2 <= free_block.1 {
-                // file fits in a free block
-                file.0 = free_block.0;
-                free_block.0 += file.2 as u32;
-                free_block.1 -= file.2;
-                break;
+        // if the first position of the free block
+        // that can fit the file is lower than the current position,
+        // move the file to that position and update free_space and fb_next
+        let i = fb_next[file.2 as usize - 1];
+        if i == usize::MAX {
+            continue;
+        }
+        if free_space[i].0 < file.0 {
+            file.0 = free_space[i].0;
+            free_space[i].0 += file.2 as u32;
+            free_space[i].1 -= file.2;
+            // update fb_next
+            for i in (free_space[i].1 as usize)..9 {
+                fb_next_update_index(i, &mut fb_next, &free_space);
             }
         }
     }
