@@ -123,6 +123,16 @@ fn year2022_day12_part2() {
 }
 
 #[test]
+fn year2022_day14_part1() {
+    run_test(2022, 14, 1, "892");
+}
+
+#[test]
+fn year2022_day14_part2() {
+    run_test(2022, 14, 2, "27155");
+}
+
+#[test]
 fn year2022_day18_part1() {
     run_test(2022, 18, 1, "3448");
 }
