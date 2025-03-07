@@ -156,7 +156,7 @@ impl Particle {
                 // linear equation
                 if let Some(collision_times) = collision_times.get_mut(i).unwrap() {
                     collision_times[0] = -c / b; // singular solution
-                                                 // other value is already -1.0 and will be ignored
+                    // other value is already -1.0 and will be ignored
                 }
             } else if c == 0.0 {
                 // no acceleration, no velocity, no position difference, collision at any time

@@ -30,8 +30,8 @@ fn part2(input: &str) -> String {
 type Instruction = (u8, (usize, usize), (usize, usize));
 
 fn execute_instruction(grid: &mut [Vec<bool>], ins: Instruction) {
-    for i in ins.1 .0..=ins.2 .0 {
-        for j in ins.1 .1..=ins.2 .1 {
+    for i in ins.1.0..=ins.2.0 {
+        for j in ins.1.1..=ins.2.1 {
             match ins.0 {
                 0 => grid[i][j] = false,
                 1 => grid[i][j] = true,
@@ -43,8 +43,8 @@ fn execute_instruction(grid: &mut [Vec<bool>], ins: Instruction) {
 }
 
 fn execute_instruction2(grid: &mut [Vec<isize>], ins: Instruction) {
-    for i in ins.1 .0..=ins.2 .0 {
-        for j in ins.1 .1..=ins.2 .1 {
+    for i in ins.1.0..=ins.2.0 {
+        for j in ins.1.1..=ins.2.1 {
             match ins.0 {
                 0 => {
                     if grid[i][j] > 0 {

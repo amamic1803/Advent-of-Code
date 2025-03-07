@@ -1,5 +1,5 @@
 use crate::shared::structures::Day;
-use std::cmp::{min, Ordering, Reverse};
+use std::cmp::{Ordering, Reverse, min};
 use std::collections::HashMap;
 
 pub fn day_17() -> Day {

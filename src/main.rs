@@ -1,7 +1,7 @@
 use std::fs::read_to_string;
 use std::path::PathBuf;
 
-use clap::{command, value_parser, Arg, ArgAction};
+use clap::{Arg, ArgAction, command, value_parser};
 
 use advent_of_code::get_challenges;
 

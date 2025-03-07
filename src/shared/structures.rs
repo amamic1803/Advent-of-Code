@@ -312,11 +312,7 @@ impl Day {
     /// # Returns
     /// A string with the input to the challenge.
     pub fn show_input(&self, input: &str) -> String {
-        if input.is_empty() {
-            self.default_input.clone()
-        } else {
-            input.to_string()
-        }
+        if input.is_empty() { self.default_input.clone() } else { input.to_string() }
     }
 
     /// Runs a challenge.

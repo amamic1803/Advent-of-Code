@@ -115,38 +115,40 @@ fn compress2(disc: &str) -> impl Iterator<Item = Option<u32>> + use<> {
     // temp variable to count the number of times the file id is repeated
     // (file size)
     let mut k = 0;
-    iter::from_fn(move || loop {
-        // if there are no more files, end the iterator
-        if j >= files.len() {
-            return None;
-        }
+    iter::from_fn(move || {
+        loop {
+            // if there are no more files, end the iterator
+            if j >= files.len() {
+                return None;
+            }
 
-        match i.cmp(&files[j].0) {
-            Ordering::Less => {
-                // if a disc position is lower than the next file we are looking at,
-                // return None (means '.')
-                i += 1;
-                return Some(None);
-            },
-            Ordering::Equal => {
-                // if a disc position is equal to the position of the next file,
-                // it means it has just been reached, and counter k needs to be set up
-                k = files[j].2;
-                i += 1;
-                continue;
-            },
-            Ordering::Greater => {
-                // here we use k to emit file index the required number of times
-                // (k, or file size)
-                if k > 0 {
-                    k -= 1;
-                    return Some(Some(files[j].1));
-                } else {
-                    i = files[j].0 + files[j].2 as u32;
-                    j += 1;
+            match i.cmp(&files[j].0) {
+                Ordering::Less => {
+                    // if a disc position is lower than the next file we are looking at,
+                    // return None (means '.')
+                    i += 1;
+                    return Some(None);
+                }
+                Ordering::Equal => {
+                    // if a disc position is equal to the position of the next file,
+                    // it means it has just been reached, and counter k needs to be set up
+                    k = files[j].2;
+                    i += 1;
                     continue;
                 }
-            },
+                Ordering::Greater => {
+                    // here we use k to emit file index the required number of times
+                    // (k, or file size)
+                    if k > 0 {
+                        k -= 1;
+                        return Some(Some(files[j].1));
+                    } else {
+                        i = files[j].0 + files[j].2 as u32;
+                        j += 1;
+                        continue;
+                    }
+                }
+            }
         }
     })
 }

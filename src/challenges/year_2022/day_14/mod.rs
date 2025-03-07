@@ -1,7 +1,7 @@
 use crate::shared::structures::Day;
-use std::cmp::{min, max};
-use std::fmt::Write;
 use regex::Regex;
+use std::cmp::{max, min};
+use std::fmt::Write;
 
 pub fn day_14() -> Day {
     Day::new(14, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
@@ -17,11 +17,7 @@ fn part1(input: &str) -> String {
 fn part2(input: &str) -> String {
     let mut input = input.trim().to_owned();
     let re = Regex::new(r",(\d+)").unwrap();
-    let max_y = re
-        .captures_iter(&input)
-        .map(|cap| cap.get(1).unwrap().as_str().parse::<i32>().unwrap())
-        .max()
-        .unwrap();
+    let max_y = re.captures_iter(&input).map(|cap| cap.get(1).unwrap().as_str().parse::<i32>().unwrap()).max().unwrap();
     let platform_y = max_y + 2;
     writeln!(&mut input, "\n{},{} -> {},{}", SAND_DROP_X - platform_y, platform_y, SAND_DROP_X + platform_y, platform_y).unwrap();
     Cave::new(&input).simulate_sand().to_string()
@@ -44,16 +40,22 @@ impl Cave {
                 let (x, y) = point.trim().split_once(',').unwrap();
                 let x = x.parse::<i32>().unwrap();
                 let y = y.parse::<i32>().unwrap();
-                if x < min_x { min_x = x; }
-                if x > max_x { max_x = x; }
-                if y > max_y { max_y = y; }
+                if x < min_x {
+                    min_x = x;
+                }
+                if x > max_x {
+                    max_x = x;
+                }
+                if y > max_y {
+                    max_y = y;
+                }
                 structure.push((x, y));
             }
             structures.push(structure);
         }
         min_x -= 1;
         max_x += 1;
-        max_y += 1;  // Add one to max_y so the last row is empty for the detection of the abyss
+        max_y += 1; // Add one to max_y so the last row is empty for the detection of the abyss
         let mut grid = vec![vec!['.'; (max_x - min_x + 1) as usize]; (max_y + 1) as usize];
         for structure in structures {
             for i in 0..(structure.len() - 1) {
@@ -71,10 +73,7 @@ impl Cave {
             }
         }
 
-        Self {
-            grid,
-            x_offset: min_x,
-        }
+        Self { grid, x_offset: min_x }
     }
 
     /// Drop a new grain of sand
