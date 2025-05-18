@@ -1,5 +1,5 @@
 use crate::shared::graph::{Graph, Vertex};
-use crate::shared::structures::Day;
+use crate::structures::Day;
 use std::collections::HashMap;
 
 pub fn day_13() -> Day {

@@ -1,4 +1,4 @@
-use crate::shared::structures::Day;
+use crate::structures::Day;
 use std::collections::HashMap;
 
 pub fn day_10() -> Day {

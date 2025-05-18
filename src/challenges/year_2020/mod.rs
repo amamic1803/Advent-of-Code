@@ -1,4 +1,4 @@
-use crate::shared::structures::Year;
+use crate::structures::Year;
 
 pub mod day_01;
 pub mod day_02;

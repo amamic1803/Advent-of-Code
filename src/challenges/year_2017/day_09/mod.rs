@@ -1,4 +1,4 @@
-use crate::shared::structures::Day;
+use crate::structures::Day;
 
 pub fn day_09() -> Day {
     Day::new(9, include_str!("text.txt"), include_str!("input.txt"), part1, part2)

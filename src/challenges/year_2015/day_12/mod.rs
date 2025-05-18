@@ -1,4 +1,4 @@
-use crate::shared::structures::Day;
+use crate::structures::Day;
 use serde_json::{Value, from_str};
 
 pub fn day_12() -> Day {

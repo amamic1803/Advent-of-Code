@@ -1,4 +1,4 @@
-use crate::shared::structures::Day;
+use crate::structures::Day;
 use std::iter::zip;
 
 pub fn day_06() -> Day {

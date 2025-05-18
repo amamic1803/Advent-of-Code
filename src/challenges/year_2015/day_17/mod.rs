@@ -1,4 +1,4 @@
-use crate::shared::structures::Day;
+use crate::structures::Day;
 use std::cmp::{Ordering, Reverse, min};
 use std::collections::HashMap;
 

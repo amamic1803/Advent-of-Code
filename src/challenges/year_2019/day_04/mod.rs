@@ -1,4 +1,4 @@
-use crate::shared::structures::Day;
+use crate::structures::Day;
 use itertools::Itertools;
 use std::collections::HashSet;
 

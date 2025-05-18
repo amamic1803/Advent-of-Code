@@ -1,4 +1,4 @@
-use crate::shared::structures::Day;
+use crate::structures::Day;
 use regex::Regex;
 use std::cmp::Reverse;
 use std::collections::HashMap;

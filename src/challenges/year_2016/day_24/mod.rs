@@ -1,5 +1,5 @@
 use crate::shared::graph::{Graph, Vertex};
-use crate::shared::structures::Day;
+use crate::structures::Day;
 use std::collections::VecDeque;
 
 pub fn day_24() -> Day {

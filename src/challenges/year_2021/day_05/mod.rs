@@ -1,4 +1,4 @@
-use crate::shared::structures::Day;
+use crate::structures::Day;
 use std::cmp::{max, min};
 use std::iter::zip;
 

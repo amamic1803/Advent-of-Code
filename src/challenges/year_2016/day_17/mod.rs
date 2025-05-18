@@ -1,4 +1,4 @@
-use crate::shared::structures::Day;
+use crate::structures::Day;
 use md5::{Digest, Md5};
 
 pub fn day_17() -> Day {

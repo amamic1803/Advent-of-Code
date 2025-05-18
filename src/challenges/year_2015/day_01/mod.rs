@@ -1,33 +1,49 @@
-use crate::shared::structures::Day;
+use crate::Day;
 
-pub fn day_01() -> Day {
-    Day::new(1, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
+struct Day01<'a> {
+    text: &'a str,
+    default_input: &'a str,
 }
-
-fn part1(input: &str) -> String {
-    let mut floor: isize = 0;
-    for c in input.trim().chars() {
-        match c {
-            '(' => floor += 1,
-            ')' => floor -= 1,
-            _ => (),
+impl<'a> Day01<'a> {
+    fn new() -> Self {
+        Self {
+            text: include_str!("text.txt"),
+            default_input: include_str!("input.txt"),
         }
     }
-    floor.to_string()
 }
-
-fn part2(input: &str) -> String {
-    let mut floor: isize = 0;
-    for (i, c) in input.trim().chars().enumerate() {
-        match c {
-            '(' => floor += 1,
-            ')' => floor -= 1,
-            _ => (),
-        }
-        if floor == -1 {
-            return format!("{}", i + 1);
-        }
+impl<'a> Default for Day01<'a> {
+    fn default() -> Self {
+        Self::new()
     }
-
-    "Not found!".to_string()
+}
+impl<'a> Day for Day01<'a> {
+    fn id(&self) -> usize { 1 }
+    fn text(&self) -> &str { self.text }
+    fn default_input(&self) -> &str { self.default_input }
+    fn part1(&self, input: &str) -> Option<String> {
+        let mut floor: isize = 0;
+        for c in input.trim().chars() {
+            match c {
+                '(' => floor += 1,
+                ')' => floor -= 1,
+                _ => (),
+            }
+        }
+        Some(floor.to_string())
+    }
+    fn part2(&self, input: &str) -> Option<String> {
+        let mut floor: isize = 0;
+        for (i, c) in input.trim().chars().enumerate() {
+            match c {
+                '(' => floor += 1,
+                ')' => floor -= 1,
+                _ => (),
+            }
+            if floor == -1 {
+                return Some((i + 1).to_string());
+            }
+        }
+        Some("Not found!".to_string())
+    }
 }

@@ -1,4 +1,4 @@
-use crate::shared::structures::Day;
+use crate::structures::Day;
 use std::collections::VecDeque;
 
 pub fn day_12() -> Day {

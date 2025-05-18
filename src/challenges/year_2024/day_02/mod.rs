@@ -1,4 +1,4 @@
-use crate::shared::structures::Day;
+use crate::structures::Day;
 use std::ops::RangeInclusive;
 
 pub fn day_02() -> Day {

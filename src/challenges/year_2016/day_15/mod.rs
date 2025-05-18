@@ -1,5 +1,5 @@
 use crate::shared::math::chinese_remainder_theorem;
-use crate::shared::structures::Day;
+use crate::structures::Day;
 use std::cmp::Reverse;
 
 pub fn day_15() -> Day {
