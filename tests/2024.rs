@@ -3,100 +3,100 @@ use runner::run_test;
 
 #[test]
 fn year2024_day01_part1() {
-    run_test(2024, 1, 1, "1879048");
+    run_test(2024, 1, 1);
 }
 
 #[test]
 fn year2024_day01_part2() {
-    run_test(2024, 1, 2, "21024792");
+    run_test(2024, 1, 2);
 }
 
 #[test]
 fn year2024_day02_part1() {
-    run_test(2024, 2, 1, "282");
+    run_test(2024, 2, 1);
 }
 
 #[test]
 fn year2024_day02_part2() {
-    run_test(2024, 2, 2, "349");
+    run_test(2024, 2, 2);
 }
 
 #[test]
 fn year2024_day03_part1() {
-    run_test(2024, 3, 1, "189600467");
+    run_test(2024, 3, 1);
 }
 
 #[test]
 fn year2024_day03_part2() {
-    run_test(2024, 3, 2, "107069718");
+    run_test(2024, 3, 2);
 }
 
 #[test]
 fn year2024_day04_part1() {
-    run_test(2024, 4, 1, "2642");
+    run_test(2024, 4, 1);
 }
 
 #[test]
 fn year2024_day04_part2() {
-    run_test(2024, 4, 2, "1974");
+    run_test(2024, 4, 2);
 }
 
 #[test]
 fn year2024_day05_part1() {
-    run_test(2024, 5, 1, "5991");
+    run_test(2024, 5, 1);
 }
 
 #[test]
 fn year2024_day05_part2() {
-    run_test(2024, 5, 2, "5479");
+    run_test(2024, 5, 2);
 }
 
 #[test]
 fn year2024_day06_part1() {
-    run_test(2024, 6, 1, "5131");
+    run_test(2024, 6, 1);
 }
 
 #[test]
 fn year2024_day06_part2() {
-    run_test(2024, 6, 2, "1784");
+    run_test(2024, 6, 2);
 }
 
 #[test]
 fn year2024_day07_part1() {
-    run_test(2024, 7, 1, "4998764814652");
+    run_test(2024, 7, 1);
 }
 
 #[test]
 fn year2024_day07_part2() {
-    run_test(2024, 7, 2, "37598910447546");
+    run_test(2024, 7, 2);
 }
 
 #[test]
 fn year2024_day09_part1() {
-    run_test(2024, 9, 1, "6448989155953");
+    run_test(2024, 9, 1);
 }
 
 #[test]
 fn year2024_day09_part2() {
-    run_test(2024, 9, 2, "6476642796832");
+    run_test(2024, 9, 2);
 }
 
 #[test]
 fn year2024_day14_part1() {
-    run_test(2024, 14, 1, "225648864");
+    run_test(2024, 14, 1);
 }
 
 #[test]
 fn year2024_day14_part2() {
-    run_test(2024, 14, 2, "7847");
+    run_test(2024, 14, 2);
 }
 
 #[test]
 fn year2024_day18_part1() {
-    run_test(2024, 18, 1, "286");
+    run_test(2024, 18, 1);
 }
 
 #[test]
 fn year2024_day18_part2() {
-    run_test(2024, 18, 2, "20,64");
+    run_test(2024, 18, 2);
 }

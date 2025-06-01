@@ -3,80 +3,80 @@ use runner::run_test;
 
 #[test]
 fn year2021_day01_part1() {
-    run_test(2021, 1, 1, "1791");
+    run_test(2021, 1, 1);
 }
 
 #[test]
 fn year2021_day01_part2() {
-    run_test(2021, 1, 2, "1822");
+    run_test(2021, 1, 2);
 }
 
 #[test]
 fn year2021_day02_part1() {
-    run_test(2021, 2, 1, "1459206");
+    run_test(2021, 2, 1);
 }
 
 #[test]
 fn year2021_day02_part2() {
-    run_test(2021, 2, 2, "1320534480");
+    run_test(2021, 2, 2);
 }
 
 #[test]
 fn year2021_day03_part1() {
-    run_test(2021, 3, 1, "2595824");
+    run_test(2021, 3, 1);
 }
 
 #[test]
 fn year2021_day03_part2() {
-    run_test(2021, 3, 2, "2135254");
+    run_test(2021, 3, 2);
 }
 
 #[test]
 fn year2021_day04_part1() {
-    run_test(2021, 4, 1, "46920");
+    run_test(2021, 4, 1);
 }
 
 #[test]
 fn year2021_day04_part2() {
-    run_test(2021, 4, 2, "12635");
+    run_test(2021, 4, 2);
 }
 
 #[test]
 fn year2021_day05_part1() {
-    run_test(2021, 5, 1, "6113");
+    run_test(2021, 5, 1);
 }
 
 #[test]
 fn year2021_day05_part2() {
-    run_test(2021, 5, 2, "20373");
+    run_test(2021, 5, 2);
 }
 
 #[test]
 fn year2021_day06_part1() {
-    run_test(2021, 6, 1, "365131");
+    run_test(2021, 6, 1);
 }
 
 #[test]
 fn year2021_day06_part2() {
-    run_test(2021, 6, 2, "1650309278600");
+    run_test(2021, 6, 2);
 }
 
 #[test]
 fn year2021_day09_part1() {
-    run_test(2021, 9, 1, "554");
+    run_test(2021, 9, 1);
 }
 
 #[test]
 fn year2021_day09_part2() {
-    run_test(2021, 9, 2, "1017792");
+    run_test(2021, 9, 2);
 }
 
 #[test]
 fn year2021_day10_part1() {
-    run_test(2021, 10, 1, "341823");
+    run_test(2021, 10, 1);
 }
 
 #[test]
 fn year2021_day10_part2() {
-    run_test(2021, 10, 2, "2801302861");
+    run_test(2021, 10, 2);
 }

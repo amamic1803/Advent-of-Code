@@ -3,250 +3,250 @@ use runner::run_test;
 
 #[test]
 fn year2015_day01_part1() {
-    run_test(2015, 1, 1, "232");
+    run_test(2015, 1, 1);
 }
 
 #[test]
 fn year2015_day01_part2() {
-    run_test(2015, 1, 2, "1783");
+    run_test(2015, 1, 2);
 }
 
 #[test]
 fn year2015_day02_part1() {
-    run_test(2015, 2, 1, "1588178");
+    run_test(2015, 2, 1);
 }
 
 #[test]
 fn year2015_day02_part2() {
-    run_test(2015, 2, 2, "3783758");
+    run_test(2015, 2, 2);
 }
 
 #[test]
 fn year2015_day03_part1() {
-    run_test(2015, 3, 1, "2081");
+    run_test(2015, 3, 1);
 }
 
 #[test]
 fn year2015_day03_part2() {
-    run_test(2015, 3, 2, "2341");
+    run_test(2015, 3, 2);
 }
 
 #[test]
 fn year2015_day04_part1() {
-    run_test(2015, 4, 1, "254575");
+    run_test(2015, 4, 1);
 }
 
 #[test]
 fn year2015_day04_part2() {
-    run_test(2015, 4, 2, "1038736");
+    run_test(2015, 4, 2);
 }
 
 #[test]
 fn year2015_day05_part1() {
-    run_test(2015, 5, 1, "255");
+    run_test(2015, 5, 1);
 }
 
 #[test]
 fn year2015_day05_part2() {
-    run_test(2015, 5, 2, "55");
+    run_test(2015, 5, 2);
 }
 
 #[test]
 fn year2015_day06_part1() {
-    run_test(2015, 6, 1, "377891");
+    run_test(2015, 6, 1);
 }
 
 #[test]
 fn year2015_day06_part2() {
-    run_test(2015, 6, 2, "14110788");
+    run_test(2015, 6, 2);
 }
 
 #[test]
 fn year2015_day07_part1() {
-    run_test(2015, 7, 1, "16076");
+    run_test(2015, 7, 1);
 }
 
 #[test]
 fn year2015_day07_part2() {
-    run_test(2015, 7, 2, "2797");
+    run_test(2015, 7, 2);
 }
 
 #[test]
 fn year2015_day08_part1() {
-    run_test(2015, 8, 1, "1350");
+    run_test(2015, 8, 1);
 }
 
 #[test]
 fn year2015_day08_part2() {
-    run_test(2015, 8, 2, "2085");
+    run_test(2015, 8, 2);
 }
 
 #[test]
 fn year2015_day09_part1() {
-    run_test(2015, 9, 1, "207");
+    run_test(2015, 9, 1);
 }
 
 #[test]
 fn year2015_day09_part2() {
-    run_test(2015, 9, 2, "804");
+    run_test(2015, 9, 2);
 }
 
 #[test]
 fn year2015_day10_part1() {
-    run_test(2015, 10, 1, "492982");
+    run_test(2015, 10, 1);
 }
 
 #[test]
 fn year2015_day10_part2() {
-    run_test(2015, 10, 2, "6989950");
+    run_test(2015, 10, 2);
 }
 
 #[test]
 fn year2015_day11_part1() {
-    run_test(2015, 11, 1, "cqjxxyzz");
+    run_test(2015, 11, 1);
 }
 
 #[test]
 fn year2015_day11_part2() {
-    run_test(2015, 11, 2, "cqkaabcc");
+    run_test(2015, 11, 2);
 }
 
 #[test]
 fn year2015_day12_part1() {
-    run_test(2015, 12, 1, "111754");
+    run_test(2015, 12, 1);
 }
 
 #[test]
 fn year2015_day12_part2() {
-    run_test(2015, 12, 2, "65402");
+    run_test(2015, 12, 2);
 }
 
 #[test]
 fn year2015_day13_part1() {
-    run_test(2015, 13, 1, "618");
+    run_test(2015, 13, 1);
 }
 
 #[test]
 fn year2015_day13_part2() {
-    run_test(2015, 13, 2, "601");
+    run_test(2015, 13, 2);
 }
 
 #[test]
 fn year2015_day14_part1() {
-    run_test(2015, 14, 1, "2655");
+    run_test(2015, 14, 1);
 }
 
 #[test]
 fn year2015_day14_part2() {
-    run_test(2015, 14, 2, "1059");
+    run_test(2015, 14, 2);
 }
 
 #[test]
 fn year2015_day15_part1() {
-    run_test(2015, 15, 1, "21367368");
+    run_test(2015, 15, 1);
 }
 
 #[test]
 fn year2015_day15_part2() {
-    run_test(2015, 15, 2, "1766400");
+    run_test(2015, 15, 2);
 }
 
 #[test]
 fn year2015_day16_part1() {
-    run_test(2015, 16, 1, "40");
+    run_test(2015, 16, 1);
 }
 
 #[test]
 fn year2015_day16_part2() {
-    run_test(2015, 16, 2, "241");
+    run_test(2015, 16, 2);
 }
 
 #[test]
 fn year2015_day17_part1() {
-    run_test(2015, 17, 1, "1638");
+    run_test(2015, 17, 1);
 }
 
 #[test]
 fn year2015_day17_part2() {
-    run_test(2015, 17, 2, "17");
+    run_test(2015, 17, 2);
 }
 
 #[test]
 fn year2015_day18_part1() {
-    run_test(2015, 18, 1, "1061");
+    run_test(2015, 18, 1);
 }
 
 #[test]
 fn year2015_day18_part2() {
-    run_test(2015, 18, 2, "1006");
+    run_test(2015, 18, 2);
 }
 
 #[test]
 fn year2015_day19_part1() {
-    run_test(2015, 19, 1, "576");
+    run_test(2015, 19, 1);
 }
 
 #[test]
 fn year2015_day19_part2() {
-    run_test(2015, 19, 2, "207");
+    run_test(2015, 19, 2);
 }
 
 #[test]
 fn year2015_day20_part1() {
-    run_test(2015, 20, 1, "665280");
+    run_test(2015, 20, 1);
 }
 
 #[test]
 fn year2015_day20_part2() {
-    run_test(2015, 20, 2, "705600");
+    run_test(2015, 20, 2);
 }
 
 #[test]
 fn year2015_day21_part1() {
-    run_test(2015, 21, 1, "121");
+    run_test(2015, 21, 1);
 }
 
 #[test]
 fn year2015_day21_part2() {
-    run_test(2015, 21, 2, "201");
+    run_test(2015, 21, 2);
 }
 
 #[test]
 fn year2015_day22_part1() {
-    run_test(2015, 22, 1, "1824");
+    run_test(2015, 22, 1);
 }
 
 #[test]
 fn year2015_day22_part2() {
-    run_test(2015, 22, 2, "1937");
+    run_test(2015, 22, 2);
 }
 
 #[test]
 fn year2015_day23_part1() {
-    run_test(2015, 23, 1, "170");
+    run_test(2015, 23, 1);
 }
 
 #[test]
 fn year2015_day23_part2() {
-    run_test(2015, 23, 2, "247");
+    run_test(2015, 23, 2);
 }
 
 #[test]
 fn year2015_day24_part1() {
-    run_test(2015, 24, 1, "11266889531");
+    run_test(2015, 24, 1);
 }
 
 #[test]
 fn year2015_day24_part2() {
-    run_test(2015, 24, 2, "77387711");
+    run_test(2015, 24, 2);
 }
 
 #[test]
 fn year2015_day25_part1() {
-    run_test(2015, 25, 1, "19980801");
+    run_test(2015, 25, 1);
 }
 
 #[test]
 fn year2015_day25_part2() {
-    run_test(2015, 25, 2, "Advent of Code 2015 solved!");
+    run_test(2015, 25, 2);
 }
