@@ -119,7 +119,6 @@ impl Year for Year2015 {
     fn id(&self) -> usize {
         2015
     }
-
     fn days<'a>(&'a self) -> Box<dyn Iterator<Item = &'a dyn Day> + 'a> {
         Box::new(self.days.iter().map(|day| day.as_ref()))
     }

@@ -20,7 +20,7 @@ impl Day for Day07 {
 
         match circuit.get_wire_value("a") {
             Some(a) => Ok(a.to_string()),
-            None => Err(Error::NoSolution),
+            None => Err(Error::NoSolutionFound),
         }
     }
     fn part2(&self, input: &str) -> Result<String, Error> {
@@ -37,7 +37,7 @@ impl Day for Day07 {
         circuit2.simulate();
         match circuit2.get_wire_value("a") {
             Some(a) => Ok(a.to_string()),
-            None => Err(Error::NoSolution),
+            None => Err(Error::NoSolutionFound),
         }
     }
 }

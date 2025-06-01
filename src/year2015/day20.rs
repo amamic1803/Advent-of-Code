@@ -27,7 +27,7 @@ impl Day for Day20 {
             }
         }
 
-        Err(Error::NoSolution)
+        Err(Error::NoSolutionFound)
     }
     fn part2(&self, input: &str) -> Result<String, Error> {
         let input = input.trim().parse::<usize>().unwrap();
@@ -46,6 +46,6 @@ impl Day for Day20 {
             }
         }
 
-        Err(Error::NoSolution)
+        Err(Error::NoSolutionFound)
     }
 }

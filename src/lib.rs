@@ -22,8 +22,8 @@ pub enum Error {
     UnavailableDay,
     /// The requested part is unavailable.
     UnavailablePart,
-    /// There is no solution for the challenge with the given input.
-    NoSolution,
+    /// There is no solution found for the challenge with the given input.
+    NoSolutionFound,
 }
 impl Display for Error {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
@@ -31,7 +31,7 @@ impl Display for Error {
             Self::UnavailableYear => write!(f, "The requested year is unavailable."),
             Self::UnavailableDay => write!(f, "The requested day is unavailable."),
             Self::UnavailablePart => write!(f, "The requested part is unavailable."),
-            Self::NoSolution => write!(f, "There is no solution for the challenge with the given input."),
+            Self::NoSolutionFound => write!(f, "There is no solution found for the challenge with the given input."),
         }
     }
 }

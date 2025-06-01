@@ -36,6 +36,6 @@ impl Day for Day01 {
                 return Ok((i + 1).to_string());
             }
         }
-        Ok("Not found!".to_string())
+        Err(Error::NoSolutionFound)
     }
 }

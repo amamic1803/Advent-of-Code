@@ -67,7 +67,7 @@ impl Day for Day16 {
             }
         }
 
-        Err(Error::NoSolution)
+        Err(Error::NoSolutionFound)
     }
     fn part2(&self, input: &str) -> Result<String, Error> {
         let sues = Self::parse_input(input);
@@ -102,6 +102,6 @@ impl Day for Day16 {
             }
         }
 
-        Err(Error::NoSolution)
+        Err(Error::NoSolutionFound)
     }
 }
