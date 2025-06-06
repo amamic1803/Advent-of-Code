@@ -1,20 +1,32 @@
-use crate::structures::Day;
+use crate::{Day, Error};
 
-pub fn day_21() -> Day {
-    Day::new(21, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
+pub struct Day21;
+impl Day21 {
+    pub fn new() -> Self {
+        Self
+    }
+
+    const PASSWORD: &'static str = "abcdefgh";
+    const SCRAMBLED_PASSWORD: &'static str = "fbgdceah";
 }
+impl Day for Day21 {
+    fn id(&self) -> usize {
+        21
+    }
 
-const PASSWORD: &str = "abcdefgh";
-const SCRAMBLED_PASSWORD: &str = "fbgdceah";
+    fn title(&self) -> &str {
+        "Scrambled Letters and Hash"
+    }
 
-fn part1(input: &str) -> String {
-    let computer = PasswordComputer::new(input);
-    computer.scramble(PASSWORD)
-}
+    fn part1(&self, input: &str) -> Result<String, Error> {
+        let computer = PasswordComputer::new(input);
+        Ok(computer.scramble(Self::PASSWORD))
+    }
 
-fn part2(input: &str) -> String {
-    let computer = PasswordComputer::new(input);
-    computer.unscramble(SCRAMBLED_PASSWORD)
+    fn part2(&self, input: &str) -> Result<String, Error> {
+        let computer = PasswordComputer::new(input);
+        Ok(computer.unscramble(Self::SCRAMBLED_PASSWORD))
+    }
 }
 
 enum Instruction {

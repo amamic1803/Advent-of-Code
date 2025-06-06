@@ -1,51 +1,138 @@
-use crate::structures::Day;
+use crate::{Day, Error};
 use regex::Regex;
 use smallvec::SmallVec;
 use std::collections::{HashMap, HashSet, VecDeque};
 
-pub fn day_11() -> Day {
-    Day::new(11, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
+pub struct Day11;
+impl Day11 {
+    pub fn new() -> Self {
+        Self
+    }
+
+    /// Search for the minimum number of steps to get from initial_state to wanted_state using BFS.
+    /// Returns `None` if no solution is found
+    /// (there is no way to get to wanted_state from initial_state).
+    fn bfs_search(initial_state: State, wanted_state: State) -> Option<i32> {
+        if initial_state == wanted_state {
+            return Some(0);
+        }
+
+        let mut seen_states = HashSet::new();
+        let mut queue = VecDeque::new();
+        seen_states.insert(initial_state.clone());
+        queue.push_back((initial_state, 0));
+
+        let mut up_down_moves = Vec::with_capacity(2);
+        while let Some((state, steps)) = queue.pop_front() {
+            up_down_moves.clear();
+            if state.elevator > 0 {
+                up_down_moves.push(-1);
+            }
+            if state.elevator < 3 {
+                up_down_moves.push(1);
+            }
+
+            for &k in &up_down_moves {
+                // moving 1 element
+                for i in 0..(state.elements.len() << 1) {
+                    if state.elements[i >> 1][i & 1] == state.elevator {
+                        let mut next_state = state.clone();
+                        next_state.elevator = next_state.elevator.wrapping_add_signed(k);
+                        next_state.elements[i >> 1][i & 1] = next_state.elements[i >> 1][i & 1].wrapping_add_signed(k);
+                        next_state.elements.sort();
+                        if next_state.is_valid() && !seen_states.contains(&next_state) {
+                            if next_state == wanted_state {
+                                return Some(steps + 1);
+                            } else {
+                                queue.push_back((next_state.clone(), steps + 1));
+                                seen_states.insert(next_state);
+                            }
+                        }
+                    }
+                }
+
+                for i in 0..(state.elements.len() << 1) {
+                    if state.elements[i >> 1][i & 1] == state.elevator {
+                        for j in (i + 1)..(state.elements.len() << 1) {
+                            if state.elements[j >> 1][j & 1] == state.elevator {
+                                let mut next_state = state.clone();
+                                next_state.elevator = next_state.elevator.wrapping_add_signed(k);
+                                next_state.elements[i >> 1][i & 1] = next_state.elements[i >> 1][i & 1].wrapping_add_signed(k);
+                                next_state.elements[j >> 1][j & 1] = next_state.elements[j >> 1][j & 1].wrapping_add_signed(k);
+                                next_state.elements.sort();
+                                if next_state.is_valid() && !seen_states.contains(&next_state) {
+                                    if next_state == wanted_state {
+                                        return Some(steps + 1);
+                                    } else {
+                                        queue.push_back((next_state.clone(), steps + 1));
+                                        seen_states.insert(next_state);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        None
+    }
+}
+impl Day for Day11 {
+    fn id(&self) -> usize {
+        11
+    }
+
+    fn title(&self) -> &str {
+        "Radioisotope Thermoelectric Generators"
+    }
+
+    fn part1(&self, input: &str) -> Result<String, Error> {
+        // get initial building state
+        let state = State::from_input(input);
+
+        // setup wanted building state
+        let mut wanted_state = State::new();
+        wanted_state.elevator = 3;
+        for _ in 0..state.elements.len() {
+            wanted_state.elements.push([3, 3]);
+        }
+
+        // search for an optimal solution
+        match Self::bfs_search(state, wanted_state) {
+            Some(steps) => Ok(steps.to_string()),
+            None => Err(Error::NoSolutionFound),
+        }
+    }
+
+    fn part2(&self, input: &str) -> Result<String, Error> {
+        // get initial building state
+        let mut state = State::from_input(input);
+        state.elements.push([0, 0]);
+        state.elements.push([0, 0]);
+        state.elements.sort();
+
+        // setup wanted building state
+        let mut wanted_state = State::new();
+        wanted_state.elevator = 3;
+        for _ in 0..state.elements.len() {
+            wanted_state.elements.push([3, 3]);
+        }
+
+        // search for an optimal solution
+        match Self::bfs_search(state, wanted_state) {
+            Some(steps) => Ok(steps.to_string()),
+            None => Err(Error::NoSolutionFound),
+        }
+    }
 }
 
-// the main idea for fast solution is to not differentiate between pairs of elements
+// the main idea for a fast solution is to not differentiate between pairs of elements
 // if element1-microchip is on floor 0, element1-generator on floor 3
 // and element2-microchip is on floor 1, element2-generator on floor 2
 // this state is the same as
 // if element1-microchip is on floor 1, element1-generator on floor 2
 // and element2-microchip is on floor 0, element2-generator on floor 3
-
-fn part1(input: &str) -> String {
-    // get initial building state
-    let state = State::from_input(input);
-
-    // setup wanted building state
-    let mut wanted_state = State::new();
-    wanted_state.elevator = 3;
-    for _ in 0..state.elements.len() {
-        wanted_state.elements.push([3, 3]);
-    }
-
-    // search for optimal solution
-    bfs_search(state, wanted_state).to_string()
-}
-
-fn part2(input: &str) -> String {
-    // get initial building state
-    let mut state = State::from_input(input);
-    state.elements.push([0, 0]);
-    state.elements.push([0, 0]);
-    state.elements.sort();
-
-    // setup wanted building state
-    let mut wanted_state = State::new();
-    wanted_state.elevator = 3;
-    for _ in 0..state.elements.len() {
-        wanted_state.elements.push([3, 3]);
-    }
-
-    // search for optimal solution
-    bfs_search(state, wanted_state).to_string()
-}
 
 #[derive(Clone, Eq, PartialEq, Hash)]
 struct State {
@@ -60,7 +147,7 @@ impl State {
         }
     }
 
-    /// Generate initial building state from input
+    /// Generate the initial building state from input
     fn from_input(input: &str) -> Self {
         let mut element_id = HashMap::new();
         let mut floors = vec![vec![]; 4];
@@ -116,72 +203,4 @@ impl State {
         }
         true
     }
-}
-
-/// Search for the minimum number of steps to get from initial_state to wanted_state using BFS.
-/// Panics if no solution is found (there is no way to get to wanted_state from initial_state).
-fn bfs_search(initial_state: State, wanted_state: State) -> i32 {
-    if initial_state == wanted_state {
-        return 0;
-    }
-
-    let mut seen_states = HashSet::new();
-    let mut queue = VecDeque::new();
-    seen_states.insert(initial_state.clone());
-    queue.push_back((initial_state, 0));
-
-    let mut up_down_moves = Vec::with_capacity(2);
-    while let Some((state, steps)) = queue.pop_front() {
-        up_down_moves.clear();
-        if state.elevator > 0 {
-            up_down_moves.push(-1);
-        }
-        if state.elevator < 3 {
-            up_down_moves.push(1);
-        }
-
-        for &k in &up_down_moves {
-            // moving 1 element
-            for i in 0..(state.elements.len() << 1) {
-                if state.elements[i >> 1][i & 1] == state.elevator {
-                    let mut next_state = state.clone();
-                    next_state.elevator = next_state.elevator.wrapping_add_signed(k);
-                    next_state.elements[i >> 1][i & 1] = next_state.elements[i >> 1][i & 1].wrapping_add_signed(k);
-                    next_state.elements.sort();
-                    if next_state.is_valid() && !seen_states.contains(&next_state) {
-                        if next_state == wanted_state {
-                            return steps + 1;
-                        } else {
-                            queue.push_back((next_state.clone(), steps + 1));
-                            seen_states.insert(next_state);
-                        }
-                    }
-                }
-            }
-
-            for i in 0..(state.elements.len() << 1) {
-                if state.elements[i >> 1][i & 1] == state.elevator {
-                    for j in (i + 1)..(state.elements.len() << 1) {
-                        if state.elements[j >> 1][j & 1] == state.elevator {
-                            let mut next_state = state.clone();
-                            next_state.elevator = next_state.elevator.wrapping_add_signed(k);
-                            next_state.elements[i >> 1][i & 1] = next_state.elements[i >> 1][i & 1].wrapping_add_signed(k);
-                            next_state.elements[j >> 1][j & 1] = next_state.elements[j >> 1][j & 1].wrapping_add_signed(k);
-                            next_state.elements.sort();
-                            if next_state.is_valid() && !seen_states.contains(&next_state) {
-                                if next_state == wanted_state {
-                                    return steps + 1;
-                                } else {
-                                    queue.push_back((next_state.clone(), steps + 1));
-                                    seen_states.insert(next_state);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    panic!("No solution found");
 }

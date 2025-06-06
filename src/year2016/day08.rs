@@ -1,55 +1,67 @@
-use crate::structures::Day;
+use crate::{Day, Error};
 use itertools::Itertools;
 
-pub fn day_08() -> Day {
-    Day::new(8, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
-}
+pub struct Day08;
+impl Day08 {
+    pub fn new() -> Self {
+        Self
+    }
 
-fn part1(input: &str) -> String {
-    let screen = simulate_screen(input);
-    screen.pixels_on().to_string()
-}
+    fn simulate_screen(input: &str) -> Screen {
+        let mut screen = Screen::new();
 
-fn part2(input: &str) -> String {
-    let screen = simulate_screen(input);
-    let mut output = String::new();
-    for row in screen.pixels {
-        for pixel in row {
-            if pixel {
-                output.push('#');
-            } else {
-                output.push('.');
+        for line in input.trim().lines() {
+            let line_contents = line.split_whitespace().collect::<Vec<&str>>();
+            match line_contents[0] {
+                "rect" => {
+                    let (x, y) = line_contents[1].split('x').map(|num| num.parse::<usize>().unwrap()).collect_tuple().unwrap();
+                    screen.rectangle(x, y);
+                }
+                "rotate" => {
+                    let n_th = line_contents[2].split('=').collect::<Vec<&str>>()[1].parse::<usize>().unwrap();
+                    let by = line_contents[4].parse::<usize>().unwrap();
+                    match line_contents[1] {
+                        "row" => screen.rotate_row(n_th, by),
+                        "column" => screen.rotate_col(n_th, by),
+                        _ => panic!("Invalid instruction"),
+                    }
+                }
+                _ => panic!("Invalid instruction"),
             }
         }
-        output.push('\n');
+
+        screen
     }
-    output
 }
+impl Day for Day08 {
+    fn id(&self) -> usize {
+        8
+    }
 
-fn simulate_screen(input: &str) -> Screen {
-    let mut screen = Screen::new();
+    fn title(&self) -> &str {
+        "Two-Factor Authentication"
+    }
 
-    for line in input.trim().lines() {
-        let line_contents = line.split_whitespace().collect::<Vec<&str>>();
-        match line_contents[0] {
-            "rect" => {
-                let (x, y) = line_contents[1].split('x').map(|num| num.parse::<usize>().unwrap()).collect_tuple().unwrap();
-                screen.rectangle(x, y);
-            }
-            "rotate" => {
-                let n_th = line_contents[2].split('=').collect::<Vec<&str>>()[1].parse::<usize>().unwrap();
-                let by = line_contents[4].parse::<usize>().unwrap();
-                match line_contents[1] {
-                    "row" => screen.rotate_row(n_th, by),
-                    "column" => screen.rotate_col(n_th, by),
-                    _ => panic!("Invalid instruction"),
+    fn part1(&self, input: &str) -> Result<String, Error> {
+        let screen = Self::simulate_screen(input);
+        Ok(screen.pixels_on().to_string())
+    }
+
+    fn part2(&self, input: &str) -> Result<String, Error> {
+        let screen = Self::simulate_screen(input);
+        let mut output = String::new();
+        for row in screen.pixels {
+            for pixel in row {
+                if pixel {
+                    output.push('#');
+                } else {
+                    output.push('.');
                 }
             }
-            _ => panic!("Invalid instruction"),
+            output.push('\n');
         }
+        Ok(output)
     }
-
-    screen
 }
 
 struct Screen {

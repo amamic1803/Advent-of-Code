@@ -1,22 +1,34 @@
-use crate::structures::Day;
+use crate::{Day, Error};
 
-pub fn day_12() -> Day {
-    Day::new(12, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
+pub struct Day12;
+impl Day12 {
+    pub fn new() -> Self {
+        Self
+    }
 }
+impl Day for Day12 {
+    fn id(&self) -> usize {
+        12
+    }
 
-fn part1(input: &str) -> String {
-    let mut cpu = Cpu::new(input);
-    cpu.execute();
+    fn title(&self) -> &str {
+        "Leonardo's Monorail"
+    }
 
-    cpu.registers[0].to_string()
-}
+    fn part1(&self, input: &str) -> Result<String, Error> {
+        let mut cpu = Cpu::new(input);
+        cpu.execute();
 
-fn part2(input: &str) -> String {
-    let mut cpu = Cpu::new(input);
-    cpu.registers[2] = 1; // c = 1
-    cpu.execute();
+        Ok(cpu.registers[0].to_string())
+    }
 
-    cpu.registers[0].to_string()
+    fn part2(&self, input: &str) -> Result<String, Error> {
+        let mut cpu = Cpu::new(input);
+        cpu.registers[2] = 1; // c = 1
+        cpu.execute();
+
+        Ok(cpu.registers[0].to_string())
+    }
 }
 
 struct Cpu {

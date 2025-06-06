@@ -1,36 +1,48 @@
-use crate::structures::Day;
+use crate::{Day, Error};
 
-pub fn day_23() -> Day {
-    Day::new(23, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
+pub struct Day23;
+impl Day23 {
+    pub fn new() -> Self {
+        Self
+    }
+
+    const INPUT1: i64 = 7;
+    const INPUT2: i64 = 12;
 }
+impl Day for Day23 {
+    fn id(&self) -> usize {
+        23
+    }
 
-const INPUT1: i64 = 7;
-const INPUT2: i64 = 12;
+    fn title(&self) -> &str {
+        "Safe Cracking"
+    }
 
-fn part1(input: &str) -> String {
-    Keypad::new(input).execute(INPUT1).to_string()
-}
+    fn part1(&self, input: &str) -> Result<String, Error> {
+        Ok(Keypad::new(input).execute(Self::INPUT1).to_string())
+    }
 
-fn part2(input: &str) -> String {
-    // after analysing the input, there is obviously one multiplication loop that runs many times
-    // I optimized it manually and then wrote a method to find it in the input
-    // after the loop is found, it is optimized to multiplication
-    // the loop looks like this:
-    // cpy b c
-    // inc a
-    // dec c
-    // jnz c -2
-    // dec d
-    // jnz d -5
-    // where
-    //      a is the destination register
-    //      b is the multiplier register
-    //      c is the addend register
-    //      d is the temporary register
-    // after the loop, the multiplier and temporary registers are cleared,
-    // addend register is unchanged, and destination register is set to the multiplier * (addend + destination)
-    // the search for loop is repeated each time tgl instruction actually changes something
-    Keypad::new(input).execute(INPUT2).to_string()
+    fn part2(&self, input: &str) -> Result<String, Error> {
+        // after analysing the input, there is obviously one multiplication loop that runs many times
+        // I optimized it manually and then wrote a method to find it in the input
+        // after the loop is found, it is optimized to multiplication
+        // the loop looks like this:
+        // cpy b c
+        // inc a
+        // dec c
+        // jnz c -2
+        // dec d
+        // jnz d -5
+        // where
+        //      a is the destination register
+        //      b is the multiplier register
+        //      c is the addend register
+        //      d is the temporary register
+        // after the loop, the multiplier and temporary registers are cleared,
+        // addend register is unchanged, and destination register is set to the multiplier * (addend + destination)
+        // the search for loop is repeated each time tgl instruction actually changes something
+        Ok(Keypad::new(input).execute(Self::INPUT2).to_string())
+    }
 }
 
 struct Keypad {

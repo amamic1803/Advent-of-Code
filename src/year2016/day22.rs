@@ -1,16 +1,28 @@
-use crate::structures::Day;
+use crate::{Day, Error};
 use std::collections::VecDeque;
 
-pub fn day_22() -> Day {
-    Day::new(22, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
+pub struct Day22;
+impl Day22 {
+    pub fn new() -> Self {
+        Self
+    }
 }
+impl Day for Day22 {
+    fn id(&self) -> usize {
+        22
+    }
 
-fn part1(input: &str) -> String {
-    Grid::new(input).viable_pairs().to_string()
-}
+    fn title(&self) -> &str {
+        "Grid Computing"
+    }
 
-fn part2(input: &str) -> String {
-    Grid::new(input).move_data_fewest_steps().to_string()
+    fn part1(&self, input: &str) -> Result<String, Error> {
+        Ok(Grid::new(input).viable_pairs().to_string())
+    }
+
+    fn part2(&self, input: &str) -> Result<String, Error> {
+        Ok(Grid::new(input).move_data_fewest_steps().to_string())
+    }
 }
 
 struct Grid {

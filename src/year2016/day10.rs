@@ -1,23 +1,35 @@
-use crate::structures::Day;
+use crate::{Day, Error};
 use std::collections::VecDeque;
 
-pub fn day_10() -> Day {
-    Day::new(10, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
-}
-
-fn part1(input: &str) -> String {
-    let mut processor = Processor::new(input);
-    match processor.simulate(1) {
-        Some(bot_id) => bot_id.to_string(),
-        None => String::from("No bot found"),
+pub struct Day10;
+impl Day10 {
+    pub fn new() -> Self {
+        Self
     }
 }
+impl Day for Day10 {
+    fn id(&self) -> usize {
+        10
+    }
 
-fn part2(input: &str) -> String {
-    let mut processor = Processor::new(input);
-    match processor.simulate(2) {
-        Some(product) => product.to_string(),
-        None => String::from("Output in 0, 1, or 2 not found"),
+    fn title(&self) -> &str {
+        "Balance Bots"
+    }
+
+    fn part1(&self, input: &str) -> Result<String, Error> {
+        let mut processor = Processor::new(input);
+        match processor.simulate(1) {
+            Some(bot_id) => Ok(bot_id.to_string()),
+            None => Err(Error::NoSolutionFound),
+        }
+    }
+
+    fn part2(&self, input: &str) -> Result<String, Error> {
+        let mut processor = Processor::new(input);
+        match processor.simulate(2) {
+            Some(product) => Ok(product.to_string()),
+            None => Err(Error::NoSolutionFound),
+        }
     }
 }
 

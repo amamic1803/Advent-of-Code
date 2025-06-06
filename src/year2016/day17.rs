@@ -1,16 +1,28 @@
-use crate::structures::Day;
+use crate::{Day, Error};
 use md5::{Digest, Md5};
 
-pub fn day_17() -> Day {
-    Day::new(17, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
+pub struct Day17;
+impl Day17 {
+    pub fn new() -> Self {
+        Self
+    }
 }
+impl Day for Day17 {
+    fn id(&self) -> usize {
+        17
+    }
 
-fn part1(input: &str) -> String {
-    Room::new(input).shortest_exit_path()
-}
+    fn title(&self) -> &str {
+        "Two Steps Forward"
+    }
 
-fn part2(input: &str) -> String {
-    Room::new(input).longest_exit_path().chars().count().to_string()
+    fn part1(&self, input: &str) -> Result<String, Error> {
+        Ok(Room::new(input).shortest_exit_path())
+    }
+
+    fn part2(&self, input: &str) -> Result<String, Error> {
+        Ok(Room::new(input).longest_exit_path().chars().count().to_string())
+    }
 }
 
 struct Room {
