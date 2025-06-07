@@ -3,6 +3,7 @@
 pub mod shared;
 pub mod year2015;
 pub mod year2016;
+pub mod year2017;
 
 use std::cmp::Ordering;
 use std::error::Error as StdError;
@@ -12,6 +13,7 @@ use std::time::{Duration, Instant};
 
 use year2015::Year2015;
 use year2016::Year2016;
+use year2017::Year2017;
 
 /// An enum representing the errors that can occur when using these structures.
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -50,7 +52,7 @@ impl AdventOfCodeInstance {
     /// A `Challenges` structure.
     pub fn new() -> Self {
         let mut new_obj = Self {
-            years: vec![Box::new(Year2015::new()), Box::new(Year2016::new())],
+            years: vec![Box::new(Year2015::new()), Box::new(Year2016::new()), Box::new(Year2017::new())],
         };
         new_obj.years.sort_by_key(|year| year.id());
         new_obj

@@ -1,21 +1,32 @@
-use crate::structures::Day;
-
-pub fn day_08() -> Day {
-    Day::new(8, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
-}
-
+use crate::{Day, Error};
 use std::collections::HashMap;
 
-fn part1(input: &str) -> String {
-    let mut cpu = Cpu::new(input);
-    cpu.execute();
-    cpu.largest_register_value().to_string()
+pub struct Day08;
+impl Day08 {
+    pub fn new() -> Self {
+        Self
+    }
 }
+impl Day for Day08 {
+    fn id(&self) -> usize {
+        8
+    }
 
-fn part2(input: &str) -> String {
-    let mut cpu = Cpu::new(input);
-    cpu.execute();
-    cpu.largest_register_value_ever().to_string()
+    fn title(&self) -> &str {
+        "I Heard You Like Registers"
+    }
+
+    fn part1(&self, input: &str) -> Result<String, Error> {
+        let mut cpu = Cpu::new(input);
+        cpu.execute();
+        Ok(cpu.largest_register_value().to_string())
+    }
+
+    fn part2(&self, input: &str) -> Result<String, Error> {
+        let mut cpu = Cpu::new(input);
+        cpu.execute();
+        Ok(cpu.largest_register_value_ever().to_string())
+    }
 }
 
 struct Cpu<'a> {

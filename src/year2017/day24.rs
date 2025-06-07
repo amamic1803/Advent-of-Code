@@ -1,16 +1,28 @@
-use crate::structures::Day;
+use crate::{Day, Error};
 use std::collections::HashMap;
 
-pub fn day_24() -> Day {
-    Day::new(24, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
+pub struct Day24;
+impl Day24 {
+    pub fn new() -> Self {
+        Self
+    }
 }
+impl Day for Day24 {
+    fn id(&self) -> usize {
+        24
+    }
 
-fn part1(input: &str) -> String {
-    Components::new(input).strongest_bridge().to_string()
-}
+    fn title(&self) -> &str {
+        "Electromagnetic Moat"
+    }
 
-fn part2(input: &str) -> String {
-    Components::new(input).strongest_longest_bridge().to_string()
+    fn part1(&self, input: &str) -> Result<String, Error> {
+        Ok(Components::new(input).strongest_bridge().to_string())
+    }
+
+    fn part2(&self, input: &str) -> Result<String, Error> {
+        Ok(Components::new(input).strongest_longest_bridge().to_string())
+    }
 }
 
 struct Components {

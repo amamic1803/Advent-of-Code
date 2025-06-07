@@ -1,24 +1,36 @@
-use crate::structures::Day;
+use crate::{Day, Error};
 use std::collections::{HashMap, HashSet};
 
-pub fn day_22() -> Day {
-    Day::new(22, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
-}
-
-fn part1(input: &str) -> String {
-    let mut virus = Virus::new(input);
-    for _ in 0..10_000 {
-        virus.burst();
+pub struct Day22;
+impl Day22 {
+    pub fn new() -> Self {
+        Self
     }
-    virus.infected_count.to_string()
 }
-
-fn part2(input: &str) -> String {
-    let mut virus_evolved = VirusEvolved::new(input);
-    for _ in 0..10_000_000 {
-        virus_evolved.burst();
+impl Day for Day22 {
+    fn id(&self) -> usize {
+        22
     }
-    virus_evolved.infected_count.to_string()
+
+    fn title(&self) -> &str {
+        "Sporifica Virus"
+    }
+
+    fn part1(&self, input: &str) -> Result<String, Error> {
+        let mut virus = Virus::new(input);
+        for _ in 0..10_000 {
+            virus.burst();
+        }
+        Ok(virus.infected_count.to_string())
+    }
+
+    fn part2(&self, input: &str) -> Result<String, Error> {
+        let mut virus_evolved = VirusEvolved::new(input);
+        for _ in 0..10_000_000 {
+            virus_evolved.burst();
+        }
+        Ok(virus_evolved.infected_count.to_string())
+    }
 }
 
 struct Virus {

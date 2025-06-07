@@ -1,20 +1,32 @@
-use crate::structures::Day;
+use crate::{Day, Error};
 use itertools::Itertools;
 
-pub fn day_19() -> Day {
-    Day::new(19, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
+pub struct Day19;
+impl Day19 {
+    pub fn new() -> Self {
+        Self
+    }
 }
+impl Day for Day19 {
+    fn id(&self) -> usize {
+        19
+    }
 
-fn part1(input: &str) -> String {
-    let mut grid = Grid::new(input);
-    grid.process();
-    grid.letters
-}
+    fn title(&self) -> &str {
+        "A Series of Tubes"
+    }
 
-fn part2(input: &str) -> String {
-    let mut grid = Grid::new(input);
-    grid.process();
-    grid.steps.to_string()
+    fn part1(&self, input: &str) -> Result<String, Error> {
+        let mut grid = Grid::new(input);
+        grid.process();
+        Ok(grid.letters)
+    }
+
+    fn part2(&self, input: &str) -> Result<String, Error> {
+        let mut grid = Grid::new(input);
+        grid.process();
+        Ok(grid.steps.to_string())
+    }
 }
 
 struct Grid {

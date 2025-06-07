@@ -1,16 +1,28 @@
-use crate::structures::Day;
+use crate::{Day, Error};
 use std::collections::HashMap;
 
-pub fn day_07() -> Day {
-    Day::new(7, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
+pub struct Day07;
+impl Day07 {
+    pub fn new() -> Self {
+        Self
+    }
 }
+impl Day for Day07 {
+    fn id(&self) -> usize {
+        7
+    }
 
-fn part1(input: &str) -> String {
-    Structure::new(input).root().name().to_string()
-}
+    fn title(&self) -> &str {
+        "Recursive Circus"
+    }
 
-fn part2(input: &str) -> String {
-    Structure::new(input).fixed_weight().to_string()
+    fn part1(&self, input: &str) -> Result<String, Error> {
+        Ok(Structure::new(input).root().name().to_string())
+    }
+
+    fn part2(&self, input: &str) -> Result<String, Error> {
+        Ok(Structure::new(input).fixed_weight().to_string())
+    }
 }
 
 struct Program<'a> {

@@ -1,28 +1,39 @@
-use crate::structures::Day;
+use crate::{Day, Error};
 use std::fmt::Write;
 
-pub fn day_10() -> Day {
-    Day::new(10, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
+pub struct Day10;
+impl Day10 {
+    pub fn new() -> Self {
+        Self
+    }
+}
+impl Day for Day10 {
+    fn id(&self) -> usize {
+        10
+    }
+
+    fn title(&self) -> &str {
+        "Knot Hash"
+    }
+
+    fn part1(&self, input: &str) -> Result<String, Error> {
+        let lengths = input.trim().split(',').map(|num| num.parse::<u8>().unwrap()).collect::<Vec<_>>();
+        let mut knot_hash = KnotHash::new();
+
+        knot_hash.round(&lengths);
+
+        Ok((knot_hash.list[0] as u16 * knot_hash.list[1] as u16).to_string())
+    }
+
+    fn part2(&self, input: &str) -> Result<String, Error> {
+        let mut knot_hash = KnotHash::new();
+        Ok(knot_hash.hash(input.trim()))
+    }
 }
 
 const LIST_SIZE: usize = 256;
 const ASCII_SUFFIX: [u8; 5] = [17, 31, 73, 47, 23];
 const ROUNDS: usize = 64;
-
-fn part1(input: &str) -> String {
-    let lengths = input.trim().split(',').map(|num| num.parse::<u8>().unwrap()).collect::<Vec<_>>();
-    let mut knot_hash = KnotHash::new();
-
-    knot_hash.round(&lengths);
-
-    (knot_hash.list[0] as u16 * knot_hash.list[1] as u16).to_string()
-}
-
-fn part2(input: &str) -> String {
-    let mut knot_hash = KnotHash::new();
-
-    knot_hash.hash(input.trim())
-}
 
 pub(crate) struct KnotHash {
     list: [u8; LIST_SIZE],

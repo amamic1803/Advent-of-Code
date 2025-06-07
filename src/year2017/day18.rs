@@ -1,19 +1,30 @@
-use crate::structures::Day;
-
-pub fn day_18() -> Day {
-    Day::new(18, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
-}
-
+use crate::{Day, Error};
 use std::collections::{HashMap, VecDeque};
 
-fn part1(input: &str) -> String {
-    let mut cpu = Cpu::new(input);
-    cpu.simulate().to_string()
+pub struct Day18;
+impl Day18 {
+    pub fn new() -> Self {
+        Self
+    }
 }
+impl Day for Day18 {
+    fn id(&self) -> usize {
+        18
+    }
 
-fn part2(input: &str) -> String {
-    let mut multi_cpu = MultiCpu::new(input);
-    multi_cpu.simulate().to_string()
+    fn title(&self) -> &str {
+        "Duet"
+    }
+
+    fn part1(&self, input: &str) -> Result<String, Error> {
+        let mut cpu = Cpu::new(input);
+        Ok(cpu.simulate().to_string())
+    }
+
+    fn part2(&self, input: &str) -> Result<String, Error> {
+        let mut multi_cpu = MultiCpu::new(input);
+        Ok(multi_cpu.simulate().to_string())
+    }
 }
 
 struct Cpu {

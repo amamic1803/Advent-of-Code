@@ -1,15 +1,27 @@
-use crate::structures::Day;
+use crate::{Day, Error};
 
-pub fn day_13() -> Day {
-    Day::new(13, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
+pub struct Day13;
+impl Day13 {
+    pub fn new() -> Self {
+        Self
+    }
 }
+impl Day for Day13 {
+    fn id(&self) -> usize {
+        13
+    }
 
-fn part1(input: &str) -> String {
-    Firewall::new(input).severity().to_string()
-}
+    fn title(&self) -> &str {
+        "Packet Scanners"
+    }
 
-fn part2(input: &str) -> String {
-    Firewall::new(input).safe_passage().to_string()
+    fn part1(&self, input: &str) -> Result<String, Error> {
+        Ok(Firewall::new(input).severity().to_string())
+    }
+
+    fn part2(&self, input: &str) -> Result<String, Error> {
+        Ok(Firewall::new(input).safe_passage().to_string())
+    }
 }
 
 struct Firewall {

@@ -1,87 +1,99 @@
-use crate::structures::Day;
+use crate::{Day, Error};
 
-pub fn day_20() -> Day {
-    Day::new(20, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
+pub struct Day20;
+impl Day20 {
+    pub fn new() -> Self {
+        Self
+    }
 }
-
-fn part1(input: &str) -> String {
-    // comparing particles by their (manhattan distance) acceleration, velocity, and position
-    // as t goes to infinity, the particle with the lowest acceleration will be the closest to the origin
-    // if there are multiple particles with the same acceleration, the one with the lowest velocity will be the closest
-    // if there are multiple particles with the same acceleration and velocity, the one with the lowest position will be the closest
-    // sort the particles by acceleration, velocity, and position, and return the index of the first particle
-
-    let mut particles = input.lines().map(Particle::new).enumerate().collect::<Vec<_>>();
-    particles.sort_by_key(|(_, particle)| {
-        (
-            particle.acceleration[0].abs() + particle.acceleration[1].abs() + particle.acceleration[2].abs(),
-            particle.velocity[0].abs() + particle.velocity[1].abs() + particle.velocity[2].abs(),
-            particle.position[0].abs() + particle.position[1].abs() + particle.position[2].abs(),
-        )
-    });
-    particles[0].0.to_string()
-}
-
-fn part2(input: &str) -> String {
-    let particles = input.lines().map(Particle::new).collect::<Vec<_>>();
-
-    // create collision table
-    // axes are particles, and cells are the time at which the particles collide
-    // None means ignore (destroyed particle), Some(None) means no collision, Some(Some(x)) means collision at time x
-    // note that the collision table is symmetric
-    let mut collision_table = vec![vec![Some(None); particles.len()]; particles.len()];
-
-    // populate table with collision times
-    for i in 0..particles.len() {
-        for j in (i + 1)..particles.len() {
-            if i != j {
-                collision_table[i][j] = Some(particles[i].collision(&particles[j]));
-                collision_table[j][i] = collision_table[i][j]; // symmetric
-            }
-        }
+impl Day for Day20 {
+    fn id(&self) -> usize {
+        20
     }
 
-    let mut collisions = Vec::new(); // temporary variable to store indices of particles that collide at the same time
-    loop {
-        // time of the next collision
-        let mut min_time = None;
+    fn title(&self) -> &str {
+        "Particle Swarm"
+    }
 
-        // find the minimum time in the collision table
-        for (i, row) in collision_table.iter().enumerate() {
-            for time in row.iter().skip(i + 1).flatten().flatten() {
-                if min_time.is_none() || time < min_time.unwrap() {
-                    min_time = Some(time);
+    fn part1(&self, input: &str) -> Result<String, Error> {
+        // comparing particles by their (manhattan distance) acceleration, velocity, and position
+        // as t goes to infinity, the particle with the lowest acceleration will be the closest to the origin
+        // if there are multiple particles with the same acceleration, the one with the lowest velocity will be the closest
+        // if there are multiple particles with the same acceleration and velocity, the one with the lowest position will be the closest
+        // sort the particles by acceleration, velocity, and position, and return the index of the first particle
+
+        let mut particles = input.lines().map(Particle::new).enumerate().collect::<Vec<_>>();
+        particles.sort_by_key(|(_, particle)| {
+            (
+                particle.acceleration[0].abs() + particle.acceleration[1].abs() + particle.acceleration[2].abs(),
+                particle.velocity[0].abs() + particle.velocity[1].abs() + particle.velocity[2].abs(),
+                particle.position[0].abs() + particle.position[1].abs() + particle.position[2].abs(),
+            )
+        });
+        Ok(particles[0].0.to_string())
+    }
+
+    fn part2(&self, input: &str) -> Result<String, Error> {
+        let particles = input.lines().map(Particle::new).collect::<Vec<_>>();
+
+        // create collision table
+        // axes are particles, and cells are the time at which the particles collide
+        // None means ignore (destroyed particle), Some(None) means no collision, Some(Some(x)) means collision at time x
+        // note that the collision table is symmetric
+        let mut collision_table = vec![vec![Some(None); particles.len()]; particles.len()];
+
+        // populate table with collision times
+        for i in 0..particles.len() {
+            for j in (i + 1)..particles.len() {
+                if i != j {
+                    collision_table[i][j] = Some(particles[i].collision(&particles[j]));
+                    collision_table[j][i] = collision_table[i][j]; // symmetric
                 }
             }
         }
 
-        // if there are no more collisions, break
-        if min_time.is_none() {
-            break;
-        }
+        let mut collisions = Vec::new(); // temporary variable to store indices of particles that collide at the same time
+        loop {
+            // time of the next collision
+            let mut min_time = None;
 
-        // store indices of particles that collide at the min_time
-        collisions.clear();
-        for (i, row) in collision_table.iter().enumerate() {
-            if row.iter().any(|x| match x {
-                Some(Some(x)) => x == min_time.unwrap(),
-                _ => false,
-            }) {
-                collisions.push(i);
+            // find the minimum time in the collision table
+            for (i, row) in collision_table.iter().enumerate() {
+                for time in row.iter().skip(i + 1).flatten().flatten() {
+                    if min_time.is_none() || time < min_time.unwrap() {
+                        min_time = Some(time);
+                    }
+                }
+            }
+
+            // if there are no more collisions, break
+            if min_time.is_none() {
+                break;
+            }
+
+            // store indices of particles that collide at the min_time
+            collisions.clear();
+            for (i, row) in collision_table.iter().enumerate() {
+                if row.iter().any(|x| match x {
+                    Some(Some(x)) => x == min_time.unwrap(),
+                    _ => false,
+                }) {
+                    collisions.push(i);
+                }
+            }
+
+            // fill rows and columns of the collision table with None for the particles that collide
+            for &i in &collisions {
+                collision_table[i].fill(None);
+                for row in &mut collision_table {
+                    row[i] = None;
+                }
             }
         }
 
-        // fill rows and columns of the collision table with None for the particles that collide
-        for &i in &collisions {
-            collision_table[i].fill(None);
-            for row in &mut collision_table {
-                row[i] = None;
-            }
-        }
+        // find surviving particles (rows with at least one Some)
+        Ok(collision_table.into_iter().filter(|particle| particle.iter().any(|x| x.is_some())).count().to_string())
     }
-
-    // find surviving particles (rows with at least one Some)
-    collision_table.into_iter().filter(|particle| particle.iter().any(|x| x.is_some())).count().to_string()
 }
 
 /// A particle with position, velocity, and acceleration

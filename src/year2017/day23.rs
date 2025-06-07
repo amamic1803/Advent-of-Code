@@ -1,46 +1,57 @@
-use crate::structures::Day;
-
-pub fn day_23() -> Day {
-    Day::new(23, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
-}
-
 use crate::shared::math::is_prime;
+use crate::{Day, Error};
 
-fn part1(input: &str) -> String {
-    let mut cpu = Cpu::new(input);
-    cpu.simulate().to_string()
+pub struct Day23;
+impl Day23 {
+    pub fn new() -> Self {
+        Self
+    }
 }
-
-fn part2(input: &str) -> String {
-    // after analyzing the instructions in the input, it is clear that the program
-    // is counting the number of composite numbers between b and c with some step.
-    // b is initialized to x * y + z
-    // c is initialized to b + w
-    // x is found in the 1st instruction
-    // y is found in the 5th instruction
-    // -z is found in the 6th instruction
-    // -w is found in the 8th instruction
-    // -step is found in the 31st instruction
-
-    let mut x = 0;
-    let mut y = 0;
-    let mut z = 0;
-    let mut w = 0;
-    let mut step = 0;
-
-    for (i, ins) in input.trim().lines().enumerate() {
-        match i + 1 {
-            1 => x = ins.split_whitespace().last().unwrap().parse::<i64>().unwrap(),
-            5 => y = ins.split_whitespace().last().unwrap().parse::<i64>().unwrap(),
-            6 => z = -ins.split_whitespace().last().unwrap().parse::<i64>().unwrap(),
-            8 => w = -ins.split_whitespace().last().unwrap().parse::<i64>().unwrap(),
-            31 => step = -ins.split_whitespace().last().unwrap().parse::<i64>().unwrap(),
-            _ => {}
-        }
+impl Day for Day23 {
+    fn id(&self) -> usize {
+        23
     }
 
-    let b = x * y + z;
-    ((b as u64)..=((b + w) as u64)).step_by(step as usize).filter(|&i| !is_prime(i).0).count().to_string()
+    fn title(&self) -> &str {
+        "Coprocessor Conflagration"
+    }
+
+    fn part1(&self, input: &str) -> Result<String, Error> {
+        let mut cpu = Cpu::new(input);
+        Ok(cpu.simulate().to_string())
+    }
+
+    fn part2(&self, input: &str) -> Result<String, Error> {
+        // after analyzing the instructions in the input, it is clear that the program
+        // is counting the number of composite numbers between b and c with some step.
+        // b is initialized to x * y + z
+        // c is initialized to b + w
+        // x is found in the 1st instruction
+        // y is found in the 5th instruction
+        // -z is found in the 6th instruction
+        // -w is found in the 8th instruction
+        // -step is found in the 31st instruction
+
+        let mut x = 0;
+        let mut y = 0;
+        let mut z = 0;
+        let mut w = 0;
+        let mut step = 0;
+
+        for (i, ins) in input.trim().lines().enumerate() {
+            match i + 1 {
+                1 => x = ins.split_whitespace().last().unwrap().parse::<i64>().unwrap(),
+                5 => y = ins.split_whitespace().last().unwrap().parse::<i64>().unwrap(),
+                6 => z = -ins.split_whitespace().last().unwrap().parse::<i64>().unwrap(),
+                8 => w = -ins.split_whitespace().last().unwrap().parse::<i64>().unwrap(),
+                31 => step = -ins.split_whitespace().last().unwrap().parse::<i64>().unwrap(),
+                _ => {}
+            }
+        }
+
+        let b = x * y + z;
+        Ok(((b as u64)..=((b + w) as u64)).step_by(step as usize).filter(|&i| !is_prime(i).0).count().to_string())
+    }
 }
 
 struct Cpu<'a> {

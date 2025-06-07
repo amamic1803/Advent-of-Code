@@ -1,36 +1,44 @@
-use crate::structures::Day;
+use crate::{Day, Error};
 
-pub fn day_01() -> Day {
-    Day::new(1, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
+pub struct Day01;
+impl Day01 {
+    pub fn new() -> Self {
+        Self
+    }
 }
-
-fn part1(input: &str) -> String {
-    let sequence = parse_input(input);
-    let mut sum: usize = 0;
-
-    for (i, num) in sequence.iter().enumerate() {
-        if num == sequence.get(i + 1).unwrap_or(&sequence[0]) {
-            sum += *num as usize;
-        }
+impl Day for Day01 {
+    fn id(&self) -> usize {
+        1
     }
 
-    sum.to_string()
-}
-
-fn part2(input: &str) -> String {
-    let sequence = parse_input(input);
-    let halfway = sequence.len() >> 1;
-    let mut sum: usize = 0;
-
-    for (i, num) in sequence.iter().enumerate() {
-        if *num == sequence[(i + halfway) % sequence.len()] {
-            sum += *num as usize;
-        }
+    fn title(&self) -> &str {
+        "Inverse Captcha"
     }
 
-    sum.to_string()
-}
+    fn part1(&self, input: &str) -> Result<String, Error> {
+        let sequence = input.trim().chars().map(|c| c.to_digit(10).unwrap()).collect::<Vec<_>>();
+        let mut sum: usize = 0;
 
-fn parse_input(input: &str) -> Vec<u32> {
-    input.trim().chars().map(|c| c.to_digit(10).unwrap()).collect()
+        for (i, num) in sequence.iter().enumerate() {
+            if num == sequence.get(i + 1).unwrap_or(&sequence[0]) {
+                sum += *num as usize;
+            }
+        }
+
+        Ok(sum.to_string())
+    }
+
+    fn part2(&self, input: &str) -> Result<String, Error> {
+        let sequence = input.trim().chars().map(|c| c.to_digit(10).unwrap()).collect::<Vec<_>>();
+        let halfway = sequence.len() >> 1;
+        let mut sum: usize = 0;
+
+        for (i, num) in sequence.iter().enumerate() {
+            if *num == sequence[(i + halfway) % sequence.len()] {
+                sum += *num as usize;
+            }
+        }
+
+        Ok(sum.to_string())
+    }
 }

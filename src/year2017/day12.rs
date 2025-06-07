@@ -1,34 +1,23 @@
-use crate::structures::Day;
+use crate::{Day, Error};
 
-pub fn day_12() -> Day {
-    Day::new(12, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
+pub struct Day12;
+impl Day12 {
+    pub fn new() -> Self {
+        Self
+    }
 }
-
-fn part1(input: &str) -> String {
-    let mut programs: Vec<Program> = input.lines().map(Program::new).collect();
-    let mut to_visit = vec![0];
-
-    while let Some(id) = to_visit.pop() {
-        programs[id].visited = true;
-        for &pipe in programs[id].pipes.iter() {
-            if !programs[pipe].visited {
-                to_visit.push(pipe);
-            }
-        }
+impl Day for Day12 {
+    fn id(&self) -> usize {
+        12
     }
 
-    programs.into_iter().filter(|p| p.visited).count().to_string()
-}
+    fn title(&self) -> &str {
+        "Digital Plumber"
+    }
 
-fn part2(input: &str) -> String {
-    let mut programs: Vec<Program> = input.lines().map(Program::new).collect();
-    let mut groups = 0;
-
-    let mut to_visit = Vec::new();
-
-    while let Some(start_id) = programs.iter().position(|p| !p.visited) {
-        groups += 1;
-        to_visit.push(start_id);
+    fn part1(&self, input: &str) -> Result<String, Error> {
+        let mut programs: Vec<Program> = input.lines().map(Program::new).collect();
+        let mut to_visit = vec![0];
 
         while let Some(id) = to_visit.pop() {
             programs[id].visited = true;
@@ -38,9 +27,32 @@ fn part2(input: &str) -> String {
                 }
             }
         }
+
+        Ok(programs.into_iter().filter(|p| p.visited).count().to_string())
     }
 
-    groups.to_string()
+    fn part2(&self, input: &str) -> Result<String, Error> {
+        let mut programs: Vec<Program> = input.lines().map(Program::new).collect();
+        let mut groups = 0;
+
+        let mut to_visit = Vec::new();
+
+        while let Some(start_id) = programs.iter().position(|p| !p.visited) {
+            groups += 1;
+            to_visit.push(start_id);
+
+            while let Some(id) = to_visit.pop() {
+                programs[id].visited = true;
+                for &pipe in programs[id].pipes.iter() {
+                    if !programs[pipe].visited {
+                        to_visit.push(pipe);
+                    }
+                }
+            }
+        }
+
+        Ok(groups.to_string())
+    }
 }
 
 struct Program {

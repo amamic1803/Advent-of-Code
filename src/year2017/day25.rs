@@ -1,54 +1,66 @@
-use crate::structures::Day;
+use crate::{Day, Error};
 use itertools::Itertools;
 use std::collections::HashSet;
 
-pub fn day_25() -> Day {
-    Day::new(25, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
+pub struct Day25;
+impl Day25 {
+    pub fn new() -> Self {
+        Self
+    }
 }
-
-fn part1(input: &str) -> String {
-    let mut input = input.trim().lines();
-    let start_state = input.next().unwrap().trim_start_matches("Begin in state ").trim_end_matches('.').chars().next().unwrap();
-    let steps = input
-        .next()
-        .unwrap()
-        .trim_start_matches("Perform a diagnostic checksum after ")
-        .trim_end_matches(" steps.")
-        .parse()
-        .unwrap();
-
-    let input = input.join("\n");
-    let states = State::parse_states(&input);
-
-    let mut storage = HashSet::new();
-    let mut cursor = 0;
-    let mut state = states.iter().position(|state| state.name == start_state).unwrap();
-
-    for _ in 0..steps {
-        if storage.contains(&cursor) {
-            // 1
-
-            if !states[state].write[1] {
-                storage.remove(&cursor);
-            }
-            cursor += states[state].move_direction[1];
-            state = states[state].next_state_index[1];
-        } else {
-            // 0
-
-            if states[state].write[0] {
-                storage.insert(cursor);
-            }
-            cursor += states[state].move_direction[0];
-            state = states[state].next_state_index[0];
-        }
+impl Day for Day25 {
+    fn id(&self) -> usize {
+        25
     }
 
-    storage.len().to_string()
-}
+    fn title(&self) -> &str {
+        "The Halting Problem"
+    }
 
-fn part2(_input: &str) -> String {
-    String::from("Advent of Code 2017 solved!")
+    fn part1(&self, input: &str) -> Result<String, Error> {
+        let mut input = input.trim().lines();
+        let start_state = input.next().unwrap().trim_start_matches("Begin in state ").trim_end_matches('.').chars().next().unwrap();
+        let steps = input
+            .next()
+            .unwrap()
+            .trim_start_matches("Perform a diagnostic checksum after ")
+            .trim_end_matches(" steps.")
+            .parse()
+            .unwrap();
+
+        let input = input.join("\n");
+        let states = State::parse_states(&input);
+
+        let mut storage = HashSet::new();
+        let mut cursor = 0;
+        let mut state = states.iter().position(|state| state.name == start_state).unwrap();
+
+        for _ in 0..steps {
+            if storage.contains(&cursor) {
+                // 1
+
+                if !states[state].write[1] {
+                    storage.remove(&cursor);
+                }
+                cursor += states[state].move_direction[1];
+                state = states[state].next_state_index[1];
+            } else {
+                // 0
+
+                if states[state].write[0] {
+                    storage.insert(cursor);
+                }
+                cursor += states[state].move_direction[0];
+                state = states[state].next_state_index[0];
+            }
+        }
+
+        Ok(storage.len().to_string())
+    }
+
+    fn part2(&self, _input: &str) -> Result<String, Error> {
+        Ok(String::from("Advent of Code 2017 solved!"))
+    }
 }
 
 struct State {

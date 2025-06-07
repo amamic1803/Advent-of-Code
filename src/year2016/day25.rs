@@ -22,7 +22,7 @@ impl Day for Day25 {
         // so to get alternating 0s and 1s,
         // the number must be in the form 1010...1010
 
-        // since the value is positive integer, it needs
+        // since the value is a positive integer,
         // we need to find the first number of the form 1010...1010
         // greater than the constant and subtract the constant from it to get the solution
 
