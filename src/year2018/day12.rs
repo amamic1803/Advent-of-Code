@@ -1,24 +1,35 @@
-use crate::structures::Day;
-
-pub fn day_12() -> Day {
-    Day::new(12, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
-}
-
+use crate::{Day, Error};
 use std::collections::HashMap;
 
-const GENERATIONS1: u64 = 20;
-const GENERATIONS2: u64 = 50_000_000_000;
+pub struct Day12;
+impl Day12 {
+    pub fn new() -> Self {
+        Self
+    }
 
-fn part1(input: &str) -> String {
-    let mut pots = Pots::new(input);
-    pots.simulate_generations(GENERATIONS1);
-    pots.sum().to_string()
+    const GENERATIONS1: u64 = 20;
+    const GENERATIONS2: u64 = 50_000_000_000;
 }
+impl Day for Day12 {
+    fn id(&self) -> usize {
+        12
+    }
 
-fn part2(input: &str) -> String {
-    let mut pots = Pots::new(input);
-    pots.simulate_generations(GENERATIONS2);
-    pots.sum().to_string()
+    fn title(&self) -> &str {
+        "Subterranean Sustainability"
+    }
+
+    fn part1(&self, input: &str) -> Result<String, Error> {
+        let mut pots = Pots::new(input);
+        pots.simulate_generations(Self::GENERATIONS1);
+        Ok(pots.sum().to_string())
+    }
+
+    fn part2(&self, input: &str) -> Result<String, Error> {
+        let mut pots = Pots::new(input);
+        pots.simulate_generations(Self::GENERATIONS2);
+        Ok(pots.sum().to_string())
+    }
 }
 
 struct Pots {

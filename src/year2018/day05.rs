@@ -1,60 +1,72 @@
-use crate::structures::Day;
+use crate::{Day, Error};
 
-pub fn day_05() -> Day {
-    Day::new(5, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
-}
-
-fn part1(input: &str) -> String {
-    let mut polymer = input.trim().chars().collect::<Vec<char>>();
-    react(&mut polymer);
-    polymer.len().to_string()
-}
-
-fn part2(input: &str) -> String {
-    let polymer = input.trim().chars().collect::<Vec<char>>();
-    let mut minimum = usize::MAX;
-
-    for letter in 'a'..='z' {
-        let mut removed_polymer = polymer.clone();
-        let removed_letters = [letter, letter.to_ascii_uppercase()];
-        removed_polymer.retain(|c| !removed_letters.contains(c));
-        react(&mut removed_polymer);
-        minimum = minimum.min(removed_polymer.len());
+pub struct Day05;
+impl Day05 {
+    pub fn new() -> Self {
+        Self
     }
 
-    minimum.to_string()
-}
+    /// Fully react polymer
+    fn react(polymer: &mut Vec<char>) {
+        loop {
+            let mut i = 0; // read ptr
+            let mut j = 0; // write ptr
 
-/// Fully react polymer
-fn react(polymer: &mut Vec<char>) {
-    loop {
-        let mut i = 0; // read ptr
-        let mut j = 0; // write ptr
+            let limit = polymer.len() - 1;
+            while i < limit {
+                if (polymer[i].is_ascii_lowercase() && polymer[i + 1] == polymer[i].to_ascii_uppercase())
+                    || (polymer[i].is_ascii_uppercase() && polymer[i + 1] == polymer[i].to_ascii_lowercase())
+                {
+                    i += 2;
+                } else {
+                    polymer[j] = polymer[i];
+                    i += 1;
+                    j += 1;
+                }
+            }
 
-        let limit = polymer.len() - 1;
-        while i < limit {
-            if (polymer[i].is_ascii_lowercase() && polymer[i + 1] == polymer[i].to_ascii_uppercase())
-                || (polymer[i].is_ascii_uppercase() && polymer[i + 1] == polymer[i].to_ascii_lowercase())
-            {
-                i += 2;
-            } else {
+            if i == limit {
                 polymer[j] = polymer[i];
                 i += 1;
                 j += 1;
             }
+
+            // remove excess
+            polymer.truncate(j);
+
+            if i == j {
+                break;
+            } // there was no change
+        }
+    }
+}
+impl Day for Day05 {
+    fn id(&self) -> usize {
+        5
+    }
+
+    fn title(&self) -> &str {
+        "Alchemical Reduction"
+    }
+
+    fn part1(&self, input: &str) -> Result<String, Error> {
+        let mut polymer = input.trim().chars().collect::<Vec<_>>();
+        Self::react(&mut polymer);
+        Ok(polymer.len().to_string())
+    }
+
+    fn part2(&self, input: &str) -> Result<String, Error> {
+        let polymer = input.trim().chars().collect::<Vec<_>>();
+        let mut minimum = usize::MAX;
+
+        for letter in 'a'..='z' {
+            let mut removed_polymer = polymer.clone();
+            let removed_letters = [letter, letter.to_ascii_uppercase()];
+            removed_polymer.retain(|c| !removed_letters.contains(c));
+            Self::react(&mut removed_polymer);
+            minimum = minimum.min(removed_polymer.len());
         }
 
-        if i == limit {
-            polymer[j] = polymer[i];
-            i += 1;
-            j += 1;
-        }
-
-        // remove excess
-        polymer.truncate(j);
-
-        if i == j {
-            break;
-        } // there was no change
+        Ok(minimum.to_string())
     }
 }

@@ -1,27 +1,39 @@
-use crate::structures::Day;
+use crate::{Day, Error};
 use std::cmp::{max, min};
 use std::collections::{HashMap, HashSet};
 
-pub fn day_03() -> Day {
-    Day::new(3, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
+pub struct Day03;
+impl Day03 {
+    pub fn new() -> Self {
+        Self
+    }
 }
+impl Day for Day03 {
+    fn id(&self) -> usize {
+        3
+    }
 
-fn part1(input: &str) -> String {
-    let (line1, line2) = input.trim().split_once('\n').unwrap();
-    let wire1 = Wire::new(line1);
-    let wire2 = Wire::new(line2);
-    let intersections = wire1.intersections(&wire2);
+    fn title(&self) -> &str {
+        "Crossed Wires"
+    }
 
-    intersections.iter().map(|(x, y)| x.abs() + y.abs()).min().unwrap().to_string()
-}
+    fn part1(&self, input: &str) -> Result<String, Error> {
+        let (line1, line2) = input.trim().split_once('\n').unwrap();
+        let wire1 = Wire::new(line1);
+        let wire2 = Wire::new(line2);
+        let intersections = wire1.intersections(&wire2);
 
-fn part2(input: &str) -> String {
-    let (line1, line2) = input.trim().split_once('\n').unwrap();
-    let wire1 = Wire::new(line1);
-    let wire2 = Wire::new(line2);
-    let intersection_steps = wire1.intersections_steps(&wire2);
+        Ok(intersections.iter().map(|(x, y)| x.abs() + y.abs()).min().unwrap().to_string())
+    }
 
-    intersection_steps.iter().map(|(steps_1, steps_2)| steps_1 + steps_2).min().unwrap().to_string()
+    fn part2(&self, input: &str) -> Result<String, Error> {
+        let (line1, line2) = input.trim().split_once('\n').unwrap();
+        let wire1 = Wire::new(line1);
+        let wire2 = Wire::new(line2);
+        let intersection_steps = wire1.intersections_steps(&wire2);
+
+        Ok(intersection_steps.iter().map(|(steps_1, steps_2)| steps_1 + steps_2).min().unwrap().to_string())
+    }
 }
 
 struct Wire {
