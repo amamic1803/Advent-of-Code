@@ -1,19 +1,63 @@
-use crate::structures::Day;
+use crate::{Day, Error};
 
-pub fn day_04() -> Day {
-    Day::new(4, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
+pub struct Day04;
+impl Day04 {
+    pub fn new() -> Self {
+        Self
+    }
+
+    fn parse_input(input: &str) -> Vec<Passport> {
+        let input_lines = input.trim().lines();
+        let mut passports = Vec::new();
+
+        let mut passport = Passport::new();
+        for line in input_lines {
+            if line.is_empty() {
+                passports.push(passport);
+                passport = Passport::new();
+            } else {
+                for element in line.split_whitespace() {
+                    let mut element = element.split(':');
+                    let key = element.next().unwrap();
+                    let value = element.next().unwrap();
+
+                    match key {
+                        "byr" => passport.byr = Some(value.parse().unwrap()),
+                        "iyr" => passport.iyr = Some(value.parse().unwrap()),
+                        "eyr" => passport.eyr = Some(value.parse().unwrap()),
+                        "hgt" => passport.hgt = Some(value),
+                        "hcl" => passport.hcl = Some(value),
+                        "ecl" => passport.ecl = Some(value),
+                        "pid" => passport.pid = Some(value),
+                        "cid" => passport.cid = Some(value),
+                        _ => panic!("Invalid key"),
+                    }
+                }
+            }
+        }
+        passports.push(passport);
+
+        passports
+    }
 }
+impl Day for Day04 {
+    fn id(&self) -> usize {
+        4
+    }
 
-fn part1(input: &str) -> String {
-    let passports = parse_input(input);
+    fn title(&self) -> &str {
+        "Passport Processing"
+    }
 
-    passports.iter().filter(|p| p.is_valid1()).count().to_string()
-}
+    fn part1(&self, input: &str) -> Result<String, Error> {
+        let passports = Self::parse_input(input);
+        Ok(passports.iter().filter(|p| p.is_valid1()).count().to_string())
+    }
 
-fn part2(input: &str) -> String {
-    let passports = parse_input(input);
-
-    passports.iter().filter(|p| p.is_valid2()).count().to_string()
+    fn part2(&self, input: &str) -> Result<String, Error> {
+        let passports = Self::parse_input(input);
+        Ok(passports.iter().filter(|p| p.is_valid2()).count().to_string())
+    }
 }
 
 struct Passport<'a> {
@@ -132,38 +176,4 @@ impl Passport<'_> {
 
         true
     }
-}
-
-fn parse_input(input: &str) -> Vec<Passport> {
-    let input_lines = input.trim().lines();
-    let mut passports = Vec::new();
-
-    let mut passport = Passport::new();
-    for line in input_lines {
-        if line.is_empty() {
-            passports.push(passport);
-            passport = Passport::new();
-        } else {
-            for element in line.split_whitespace() {
-                let mut element = element.split(':');
-                let key = element.next().unwrap();
-                let value = element.next().unwrap();
-
-                match key {
-                    "byr" => passport.byr = Some(value.parse().unwrap()),
-                    "iyr" => passport.iyr = Some(value.parse().unwrap()),
-                    "eyr" => passport.eyr = Some(value.parse().unwrap()),
-                    "hgt" => passport.hgt = Some(value),
-                    "hcl" => passport.hcl = Some(value),
-                    "ecl" => passport.ecl = Some(value),
-                    "pid" => passport.pid = Some(value),
-                    "cid" => passport.cid = Some(value),
-                    _ => panic!("Invalid key"),
-                }
-            }
-        }
-    }
-    passports.push(passport);
-
-    passports
 }

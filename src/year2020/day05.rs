@@ -1,24 +1,36 @@
-use crate::structures::Day;
+use crate::{Day, Error};
 
-pub fn day_05() -> Day {
-    Day::new(5, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
+pub struct Day05;
+impl Day05 {
+    pub fn new() -> Self {
+        Self
+    }
 }
-
-fn part1(input: &str) -> String {
-    input.lines().map(BoardingPass::new).map(|b_pass| b_pass.seat_id()).max().unwrap().to_string()
-}
-
-fn part2(input: &str) -> String {
-    let mut taken_seats = input.lines().map(BoardingPass::new).map(|b_pass| b_pass.seat_id()).collect::<Vec<_>>();
-    taken_seats.sort();
-
-    for i in 0..(taken_seats.len() - 1) {
-        if taken_seats[i + 1] - taken_seats[i] == 2 {
-            return (taken_seats[i] + 1).to_string();
-        }
+impl Day for Day05 {
+    fn id(&self) -> usize {
+        5
     }
 
-    panic!("No seat found!")
+    fn title(&self) -> &str {
+        "Binary Boarding"
+    }
+
+    fn part1(&self, input: &str) -> Result<String, Error> {
+        Ok(input.lines().map(BoardingPass::new).map(|b_pass| b_pass.seat_id()).max().unwrap().to_string())
+    }
+
+    fn part2(&self, input: &str) -> Result<String, Error> {
+        let mut taken_seats = input.lines().map(BoardingPass::new).map(|b_pass| b_pass.seat_id()).collect::<Vec<_>>();
+        taken_seats.sort();
+
+        for i in 0..(taken_seats.len() - 1) {
+            if taken_seats[i + 1] - taken_seats[i] == 2 {
+                return Ok((taken_seats[i] + 1).to_string());
+            }
+        }
+
+        Err(Error::NoSolutionFound)
+    }
 }
 
 struct BoardingPass {

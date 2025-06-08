@@ -6,6 +6,11 @@ pub mod year2016;
 pub mod year2017;
 pub mod year2018;
 pub mod year2019;
+pub mod year2020;
+pub mod year2021;
+pub mod year2022;
+pub mod year2023;
+pub mod year2024;
 
 use std::cmp::Ordering;
 use std::error::Error as StdError;
@@ -18,6 +23,11 @@ use year2016::Year2016;
 use year2017::Year2017;
 use year2018::Year2018;
 use year2019::Year2019;
+use year2020::Year2020;
+use year2021::Year2021;
+use year2022::Year2022;
+use year2023::Year2023;
+use year2024::Year2024;
 
 /// An enum representing the errors that can occur when using these structures.
 #[derive(Clone, Debug, Eq, PartialEq, Hash)]
@@ -62,6 +72,11 @@ impl AdventOfCodeInstance {
                 Box::new(Year2017::new()),
                 Box::new(Year2018::new()),
                 Box::new(Year2019::new()),
+                Box::new(Year2020::new()),
+                Box::new(Year2021::new()),
+                Box::new(Year2022::new()),
+                Box::new(Year2023::new()),
+                Box::new(Year2024::new()),
             ],
         };
         new_obj.years.sort_by_key(|year| year.id());
