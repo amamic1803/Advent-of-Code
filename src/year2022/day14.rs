@@ -1,27 +1,39 @@
-use crate::structures::Day;
+use crate::{Day, Error};
 use regex::Regex;
 use std::cmp::{max, min};
 use std::fmt::Write;
 
-pub fn day_14() -> Day {
-    Day::new(14, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
+pub struct Day14;
+impl Day14 {
+    pub fn new() -> Self {
+        Self
+    }
+}
+impl Day for Day14 {
+    fn id(&self) -> usize {
+        14
+    }
+
+    fn title(&self) -> &str {
+        "Regolith Reservoir"
+    }
+
+    fn part1(&self, input: &str) -> Result<String, Error> {
+        Ok(Cave::new(input).simulate_sand().to_string())
+    }
+
+    fn part2(&self, input: &str) -> Result<String, Error> {
+        let mut input = input.trim().to_owned();
+        let re = Regex::new(r",(\d+)").unwrap();
+        let max_y = re.captures_iter(&input).map(|cap| cap.get(1).unwrap().as_str().parse::<i32>().unwrap()).max().unwrap();
+        let platform_y = max_y + 2;
+        writeln!(&mut input, "\n{},{} -> {},{}", SAND_DROP_X - platform_y, platform_y, SAND_DROP_X + platform_y, platform_y).unwrap();
+        Ok(Cave::new(&input).simulate_sand().to_string())
+    }
 }
 
 /// X coordinate where the grains of sand are dropped
 const SAND_DROP_X: i32 = 500;
-
-fn part1(input: &str) -> String {
-    Cave::new(input).simulate_sand().to_string()
-}
-
-fn part2(input: &str) -> String {
-    let mut input = input.trim().to_owned();
-    let re = Regex::new(r",(\d+)").unwrap();
-    let max_y = re.captures_iter(&input).map(|cap| cap.get(1).unwrap().as_str().parse::<i32>().unwrap()).max().unwrap();
-    let platform_y = max_y + 2;
-    writeln!(&mut input, "\n{},{} -> {},{}", SAND_DROP_X - platform_y, platform_y, SAND_DROP_X + platform_y, platform_y).unwrap();
-    Cave::new(&input).simulate_sand().to_string()
-}
 
 struct Cave {
     grid: Vec<Vec<char>>,

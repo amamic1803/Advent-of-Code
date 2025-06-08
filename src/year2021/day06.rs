@@ -1,30 +1,38 @@
-use crate::structures::Day;
+use crate::{Day, Error};
 
-pub fn day_06() -> Day {
-    Day::new(6, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
-}
-
-const DAYS_1: u16 = 80;
-const DAYS_2: u16 = 256;
-
-fn part1(input: &str) -> String {
-    let mut lanternfish = Lanternfish::new(input);
-
-    for _ in 0..DAYS_1 {
-        lanternfish.simulate_day();
+pub struct Day06;
+impl Day06 {
+    pub fn new() -> Self {
+        Self
     }
 
-    lanternfish.fish_count().to_string()
+    const DAYS_1: u16 = 80;
+    const DAYS_2: u16 = 256;
 }
-
-fn part2(input: &str) -> String {
-    let mut lanternfish = Lanternfish::new(input);
-
-    for _ in 0..DAYS_2 {
-        lanternfish.simulate_day();
+impl Day for Day06 {
+    fn id(&self) -> usize {
+        6
     }
 
-    lanternfish.fish_count().to_string()
+    fn title(&self) -> &str {
+        "Lanternfish"
+    }
+
+    fn part1(&self, input: &str) -> Result<String, Error> {
+        let mut lanternfish = Lanternfish::new(input);
+        for _ in 0..Self::DAYS_1 {
+            lanternfish.simulate_day();
+        }
+        Ok(lanternfish.fish_count().to_string())
+    }
+
+    fn part2(&self, input: &str) -> Result<String, Error> {
+        let mut lanternfish = Lanternfish::new(input);
+        for _ in 0..Self::DAYS_2 {
+            lanternfish.simulate_day();
+        }
+        Ok(lanternfish.fish_count().to_string())
+    }
 }
 
 struct Lanternfish {

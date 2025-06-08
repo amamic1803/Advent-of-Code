@@ -1,23 +1,57 @@
-use crate::structures::Year;
+use crate::{Day, Year};
 
-pub mod day_01;
-pub mod day_02;
-pub mod day_03;
-pub mod day_04;
-pub mod day_05;
-pub mod day_06;
-pub mod day_09;
-pub mod day_10;
+pub mod day01;
+pub mod day02;
+pub mod day03;
+pub mod day04;
+pub mod day05;
+pub mod day06;
+pub mod day09;
+pub mod day10;
 
-use day_01::day_01;
-use day_02::day_02;
-use day_03::day_03;
-use day_04::day_04;
-use day_05::day_05;
-use day_06::day_06;
-use day_09::day_09;
-use day_10::day_10;
+#[doc(inline)]
+pub use day01::Day01;
+#[doc(inline)]
+pub use day02::Day02;
+#[doc(inline)]
+pub use day03::Day03;
+#[doc(inline)]
+pub use day04::Day04;
+#[doc(inline)]
+pub use day05::Day05;
+#[doc(inline)]
+pub use day06::Day06;
+#[doc(inline)]
+pub use day09::Day09;
+#[doc(inline)]
+pub use day10::Day10;
 
-pub fn year_2021() -> Year {
-    Year::new(2021, vec![day_01(), day_02(), day_03(), day_04(), day_05(), day_06(), day_09(), day_10()])
+pub struct Year2021 {
+    days: Vec<Box<dyn Day>>,
+}
+impl Year2021 {
+    pub fn new() -> Self {
+        let mut new_self = Self {
+            days: vec![
+                Box::new(Day01::new()),
+                Box::new(Day02::new()),
+                Box::new(Day03::new()),
+                Box::new(Day04::new()),
+                Box::new(Day05::new()),
+                Box::new(Day06::new()),
+                Box::new(Day09::new()),
+                Box::new(Day10::new()),
+            ],
+        };
+        new_self.days.sort_by_key(|day| day.id());
+        new_self
+    }
+}
+impl Year for Year2021 {
+    fn id(&self) -> usize {
+        2021
+    }
+    fn days<'a>(&'a self) -> Box<dyn Iterator<Item = &'a dyn Day> + 'a> {
+        Box::new(self.days.iter().map(|day| day.as_ref()))
+    }
 }

@@ -1,56 +1,93 @@
-use crate::structures::Day;
+use crate::{Day, Error};
 
-pub fn day_04() -> Day {
-    Day::new(4, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
-}
+pub struct Day04;
+impl Day04 {
+    pub fn new() -> Self {
+        Self
+    }
 
-fn part1(input: &str) -> String {
-    let (draws, mut boards) = parse_input(input);
+    fn parse_input(input: &str) -> (Vec<u64>, Vec<Board>) {
+        let mut draws = Vec::new();
+        let mut boards = Vec::new();
 
-    for draw in draws {
-        // Mark the number on the boards
-        for board in &mut boards {
-            board.mark_number(draw);
-        }
+        let mut lines = input.trim().lines();
+        lines.next().unwrap().split(',').for_each(|n| draws.push(n.parse::<u64>().unwrap()));
+        lines.next();
 
-        // Check if any board has a bingo
-        let mut bingo_board: Option<usize> = None;
-        'outer: for board in boards.iter().enumerate() {
-            if board.1.bingo() {
-                bingo_board = Some(board.0);
-                break 'outer;
+        let mut board = Board::new(Vec::new());
+        for line in lines {
+            if line.is_empty() {
+                boards.push(board);
+                board = Board::new(Vec::new());
+            } else {
+                let mut row = Vec::new();
+                for n in line.split_whitespace() {
+                    row.push((n.parse::<u64>().unwrap(), false));
+                }
+                board.values.push(row);
             }
         }
 
-        if let Some(board) = bingo_board {
-            return (draw * boards[board].sum_unmarked()).to_string();
-        }
+        (draws, boards)
     }
-
-    String::from("No bingo found!")
 }
-
-fn part2(input: &str) -> String {
-    let (draws, mut boards) = parse_input(input);
-
-    // Mark the numbers on the boards
-    for draw in draws {
-        for board in &mut boards {
-            board.mark_number(draw);
-        }
-
-        // if there are multiple boards, remove the ones with bingo
-        if boards.len() > 1 {
-            boards.retain(|board| !board.bingo());
-        }
-
-        // if there is a single board left and it has a bingo, return the result
-        if boards.len() == 1 && boards[0].bingo() {
-            return (draw * boards[0].sum_unmarked()).to_string();
-        }
+impl Day for Day04 {
+    fn id(&self) -> usize {
+        4
     }
 
-    String::from("No last board found!")
+    fn title(&self) -> &str {
+        "Giant Squid"
+    }
+
+    fn part1(&self, input: &str) -> Result<String, Error> {
+        let (draws, mut boards) = Self::parse_input(input);
+
+        for draw in draws {
+            // Mark the number on the boards
+            for board in &mut boards {
+                board.mark_number(draw);
+            }
+
+            // Check if any board has a bingo
+            let mut bingo_board: Option<usize> = None;
+            'outer: for board in boards.iter().enumerate() {
+                if board.1.bingo() {
+                    bingo_board = Some(board.0);
+                    break 'outer;
+                }
+            }
+
+            if let Some(board) = bingo_board {
+                return Ok((draw * boards[board].sum_unmarked()).to_string());
+            }
+        }
+
+        Err(Error::NoSolutionFound)
+    }
+
+    fn part2(&self, input: &str) -> Result<String, Error> {
+        let (draws, mut boards) = Self::parse_input(input);
+
+        // Mark the numbers on the boards
+        for draw in draws {
+            for board in &mut boards {
+                board.mark_number(draw);
+            }
+
+            // if there are multiple boards, remove the ones with bingo
+            if boards.len() > 1 {
+                boards.retain(|board| !board.bingo());
+            }
+
+            // if there is a single board left and it has a bingo, return the result
+            if boards.len() == 1 && boards[0].bingo() {
+                return Ok((draw * boards[0].sum_unmarked()).to_string());
+            }
+        }
+
+        Err(Error::NoSolutionFound)
+    }
 }
 
 // (number, is_marked)
@@ -100,29 +137,4 @@ impl Board {
         }
         sum
     }
-}
-
-fn parse_input(input: &str) -> (Vec<u64>, Vec<Board>) {
-    let mut draws = Vec::new();
-    let mut boards = Vec::new();
-
-    let mut lines = input.trim().lines();
-    lines.next().unwrap().split(',').for_each(|n| draws.push(n.parse::<u64>().unwrap()));
-    lines.next();
-
-    let mut board = Board::new(Vec::new());
-    for line in lines {
-        if line.is_empty() {
-            boards.push(board);
-            board = Board::new(Vec::new());
-        } else {
-            let mut row = Vec::new();
-            for n in line.split_whitespace() {
-                row.push((n.parse::<u64>().unwrap(), false));
-            }
-            board.values.push(row);
-        }
-    }
-
-    (draws, boards)
 }

@@ -1,31 +1,91 @@
-use crate::structures::Day;
+use crate::{Day, Error};
 
-pub fn day_07() -> Day {
-    Day::new(7, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
+pub struct Day07;
+impl Day07 {
+    pub fn new() -> Self {
+        Self
+    }
+
+    fn part1_recursion(folder: &Folder, total_size: &mut u64) {
+        let folder_size = folder.size();
+        if folder_size <= 100_000 {
+            *total_size += folder_size;
+        }
+        for subfolder in &folder.folders {
+            Self::part1_recursion(subfolder, total_size);
+        }
+    }
+
+    fn part2_recursion(folder: &Folder, needed_space: u64, min_del: &mut u64) {
+        let folder_size = folder.size();
+        if (folder_size >= needed_space) && (folder_size < *min_del) {
+            *min_del = folder_size;
+        }
+        for subfolder in &folder.folders {
+            Self::part2_recursion(subfolder, needed_space, min_del);
+        }
+    }
+
+    fn parse_input(input: &str) -> Folder {
+        let mut base_dir = Folder::new("/".to_string());
+
+        let mut current_location: Vec<String> = vec!["/".to_string()];
+
+        for line in input.trim().lines() {
+            let line_contents: Vec<&str> = line.trim().split(' ').collect();
+
+            if line_contents[0] == String::from('$') {
+                if line_contents[1] == "cd" {
+                    if line_contents[2] == ".." {
+                        if current_location.len() > 1 {
+                            current_location.pop();
+                        }
+                    } else if line_contents[2] == "/" {
+                        current_location = vec!["/".to_string()];
+                    } else {
+                        current_location.push(line_contents[2].to_string());
+                    }
+                }
+            } else if line_contents[0] == "dir" {
+                base_dir.new_entity(&current_location, line_contents[1].to_string(), None);
+            } else {
+                base_dir.new_entity(&current_location, line_contents[1].to_string(), Some(line_contents[0].parse::<u64>().unwrap()));
+            }
+        }
+
+        base_dir
+    }
+}
+impl Day for Day07 {
+    fn id(&self) -> usize {
+        7
+    }
+
+    fn title(&self) -> &str {
+        "No Space Left On Device"
+    }
+
+    fn part1(&self, input: &str) -> Result<String, Error> {
+        let base_dir = Self::parse_input(input);
+        let mut total_size = 0;
+        Self::part1_recursion(&base_dir, &mut total_size);
+        Ok(total_size.to_string())
+    }
+
+    fn part2(&self, input: &str) -> Result<String, Error> {
+        let base_dir = Self::parse_input(input);
+        let needed_space = 30_000_000 - (70_000_000 - base_dir.size());
+        let mut min_del = 70_000_001;
+        Self::part2_recursion(&base_dir, needed_space, &mut min_del);
+        Ok(min_del.to_string())
+    }
 }
 
-fn part1(input: &str) -> String {
-    let base_dir = parse_input(input);
-    let mut total_size = 0;
-    part1_recursion(&base_dir, &mut total_size);
-    total_size.to_string()
-}
-
-fn part2(input: &str) -> String {
-    let base_dir = parse_input(input);
-    let needed_space: u64 = 30_000_000 - (70_000_000 - base_dir.size());
-    let mut min_del: u64 = 70_000_001;
-    part2_recursion(&base_dir, needed_space, &mut min_del);
-    min_del.to_string()
-}
-
-#[derive(Debug)]
 struct File {
     name: String,
     size: u64,
 }
 
-#[derive(Debug)]
 struct Folder {
     name: String,
     files: Vec<File>,
@@ -72,54 +132,4 @@ impl Folder {
     fn size(&self) -> u64 {
         self.files.iter().map(|f| f.size).sum::<u64>() + self.folders.iter().map(|f| f.size()).sum::<u64>()
     }
-}
-
-fn part1_recursion(folder: &Folder, total_size: &mut u64) {
-    let folder_size = folder.size();
-    if folder_size <= 100_000 {
-        *total_size += folder_size;
-    }
-    for subfolder in &folder.folders {
-        part1_recursion(subfolder, total_size);
-    }
-}
-
-fn part2_recursion(folder: &Folder, needed_space: u64, min_del: &mut u64) {
-    let folder_size = folder.size();
-    if (folder_size >= needed_space) && (folder_size < *min_del) {
-        *min_del = folder_size;
-    }
-    for subfolder in &folder.folders {
-        part2_recursion(subfolder, needed_space, min_del);
-    }
-}
-
-fn parse_input(input: &str) -> Folder {
-    let mut base_dir = Folder::new("/".to_string());
-
-    let mut current_location: Vec<String> = vec!["/".to_string()];
-
-    for line in input.trim().lines() {
-        let line_contents: Vec<&str> = line.trim().split(' ').collect();
-
-        if line_contents[0] == String::from('$') {
-            if line_contents[1] == "cd" {
-                if line_contents[2] == ".." {
-                    if current_location.len() > 1 {
-                        current_location.pop();
-                    }
-                } else if line_contents[2] == "/" {
-                    current_location = vec!["/".to_string()];
-                } else {
-                    current_location.push(line_contents[2].to_string());
-                }
-            }
-        } else if line_contents[0] == "dir" {
-            base_dir.new_entity(&current_location, line_contents[1].to_string(), None);
-        } else {
-            base_dir.new_entity(&current_location, line_contents[1].to_string(), Some(line_contents[0].parse::<u64>().unwrap()));
-        }
-    }
-
-    base_dir
 }
