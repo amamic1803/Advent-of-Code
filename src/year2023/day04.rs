@@ -1,32 +1,60 @@
-use crate::structures::Day;
+use crate::{Day, Error};
 
-pub fn day_04() -> Day {
-    Day::new(4, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
-}
-
-fn part1(input: &str) -> String {
-    let cards = parse_input(input);
-    let mut point_sum = 0;
-    for card in cards {
-        point_sum += card.points();
+pub struct Day04;
+impl Day04 {
+    pub fn new() -> Self {
+        Self
     }
-    point_sum.to_string()
-}
 
-fn part2(input: &str) -> String {
-    let mut cards = parse_input(input);
+    fn parse_input(input: &str) -> Vec<Scratchcard> {
+        let mut cards = Vec::new();
 
-    for i in 0..cards.len() {
-        let next_card_count = cards[i].winning_num_count();
-        let new_copies = cards[i].copies;
+        for line in input.trim().lines() {
+            let (_, cards_part) = line.split_once(':').unwrap();
 
-        #[allow(clippy::needless_range_loop)]
-        for j in (i + 1)..=(i + next_card_count as usize) {
-            cards[j].copies += new_copies;
+            let (winning_cards_part, my_cards_part) = cards_part.split_once('|').unwrap();
+            let winning_numbers = winning_cards_part.split_whitespace().map(|n| n.parse::<u32>().unwrap()).collect::<Vec<u32>>();
+            let my_numbers = my_cards_part.split_whitespace().map(|n| n.parse::<u32>().unwrap()).collect::<Vec<u32>>();
+
+            cards.push(Scratchcard::new(winning_numbers, my_numbers));
         }
+
+        cards
+    }
+}
+impl Day for Day04 {
+    fn id(&self) -> usize {
+        4
     }
 
-    cards.iter().map(|c| c.copies).sum::<u32>().to_string()
+    fn title(&self) -> &str {
+        "Scratchcards"
+    }
+
+    fn part1(&self, input: &str) -> Result<String, Error> {
+        let cards = Self::parse_input(input);
+        let mut point_sum = 0;
+        for card in cards {
+            point_sum += card.points();
+        }
+        Ok(point_sum.to_string())
+    }
+
+    fn part2(&self, input: &str) -> Result<String, Error> {
+        let mut cards = Self::parse_input(input);
+
+        for i in 0..cards.len() {
+            let next_card_count = cards[i].winning_num_count();
+            let new_copies = cards[i].copies;
+
+            #[allow(clippy::needless_range_loop)]
+            for j in (i + 1)..=(i + next_card_count as usize) {
+                cards[j].copies += new_copies;
+            }
+        }
+
+        Ok(cards.iter().map(|c| c.copies).sum::<u32>().to_string())
+    }
 }
 
 struct Scratchcard {
@@ -55,24 +83,8 @@ impl Scratchcard {
 
     fn points(&self) -> u32 {
         // points = floor(2^(n-1)) where n is the number of same numbers
-        // can be simplified to 2^n / 2 (because this is integer division)
+        // can be simplified to 2^n / 2 (because this is an integer division)
         // which can be simplified to (1 << n) >> 1
         (1 << self.winning_num_count()) >> 1
     }
-}
-
-fn parse_input(input: &str) -> Vec<Scratchcard> {
-    let mut cards = Vec::new();
-
-    for line in input.trim().lines() {
-        let (_, cards_part) = line.split_once(':').unwrap();
-
-        let (winning_cards_part, my_cards_part) = cards_part.split_once('|').unwrap();
-        let winning_numbers = winning_cards_part.split_whitespace().map(|n| n.parse::<u32>().unwrap()).collect::<Vec<u32>>();
-        let my_numbers = my_cards_part.split_whitespace().map(|n| n.parse::<u32>().unwrap()).collect::<Vec<u32>>();
-
-        cards.push(Scratchcard::new(winning_numbers, my_numbers));
-    }
-
-    cards
 }

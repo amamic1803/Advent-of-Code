@@ -1,19 +1,30 @@
-use crate::structures::Day;
-
-pub fn day_08() -> Day {
-    Day::new(8, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
-}
-
 use crate::shared::math::lcm_multiple;
+use crate::{Day, Error};
 
-fn part1(input: &str) -> String {
-    let tree = Tree::new(input);
-    tree.simulate_1().to_string()
+pub struct Day08;
+impl Day08 {
+    pub fn new() -> Self {
+        Self
+    }
 }
+impl Day for Day08 {
+    fn id(&self) -> usize {
+        8
+    }
 
-fn part2(input: &str) -> String {
-    let tree = Tree::new(input);
-    tree.simulate_2().to_string()
+    fn title(&self) -> &str {
+        "Haunted Wasteland"
+    }
+
+    fn part1(&self, input: &str) -> Result<String, Error> {
+        let tree = Tree::new(input);
+        Ok(tree.simulate_1().to_string())
+    }
+
+    fn part2(&self, input: &str) -> Result<String, Error> {
+        let tree = Tree::new(input);
+        Ok(tree.simulate_2().to_string())
+    }
 }
 
 struct Node<'a> {

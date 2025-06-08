@@ -60,7 +60,7 @@ impl Day for Day25 {
         let position_in_seq = Self::seq_n(row, col);
         Ok(Self::calculate_code(position_in_seq).to_string())
     }
-    fn part2(&self, input: &str) -> Result<String, Error> {
+    fn part2(&self, _input: &str) -> Result<String, Error> {
         Ok(String::from("Advent of Code 2015 solved!"))
     }
 }

@@ -1,4 +1,5 @@
 use crate::{Day, Error};
+use advent_of_code_ocr::parse_string_to_letters;
 
 pub struct Day10;
 impl Day10 {
@@ -92,6 +93,6 @@ impl Day for Day10 {
             output = splitt.1.to_string();
         }
 
-        Ok(result.trim().to_string())
+        Ok(parse_string_to_letters(result.trim()))
     }
 }

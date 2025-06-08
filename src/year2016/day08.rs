@@ -1,4 +1,5 @@
 use crate::{Day, Error};
+use advent_of_code_ocr::parse_string_to_letters;
 use itertools::Itertools;
 
 pub struct Day08;
@@ -60,7 +61,7 @@ impl Day for Day08 {
             }
             output.push('\n');
         }
-        Ok(output)
+        Ok(parse_string_to_letters(&output))
     }
 }
 

@@ -1,13 +1,56 @@
-use crate::structures::Day;
-
-pub fn day_07() -> Day {
-    Day::new(7, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
-}
-
+use crate::{Day, Error};
 use itertools::Itertools;
 use std::cmp::Ordering;
 use std::collections::HashMap;
 use std::sync::LazyLock;
+
+pub struct Day07;
+impl Day07 {
+    pub fn new() -> Self {
+        Self
+    }
+}
+impl Day for Day07 {
+    fn id(&self) -> usize {
+        7
+    }
+
+    fn title(&self) -> &str {
+        "Camel Cards"
+    }
+
+    fn part1(&self, input: &str) -> Result<String, Error> {
+        let mut hands = input
+            .trim()
+            .lines()
+            .map(|hand| {
+                let mut hand = Hand::new(hand);
+                hand.calc_dec_val1();
+                hand
+            })
+            .collect_vec();
+
+        hands.sort();
+
+        Ok(hands.into_iter().enumerate().map(|(i, hand)| hand.bid * (i as u64 + 1)).sum::<u64>().to_string())
+    }
+
+    fn part2(&self, input: &str) -> Result<String, Error> {
+        let mut hands = input
+            .trim()
+            .lines()
+            .map(|hand| {
+                let mut hand = Hand::new(hand);
+                hand.calc_dec_val2();
+                hand
+            })
+            .collect_vec();
+
+        hands.sort();
+
+        Ok(hands.into_iter().enumerate().map(|(i, hand)| hand.bid * (i as u64 + 1)).sum::<u64>().to_string())
+    }
+}
 
 static CARD_ORDER_1: LazyLock<HashMap<char, u64>> = LazyLock::new(|| {
     let mut map = HashMap::new();
@@ -47,38 +90,6 @@ static CARD_ORDER_2: LazyLock<HashMap<char, u64>> = LazyLock::new(|| {
 
     map
 });
-
-fn part1(input: &str) -> String {
-    let mut hands = input
-        .trim()
-        .lines()
-        .map(|hand| {
-            let mut hand = Hand::new(hand);
-            hand.calc_dec_val1();
-            hand
-        })
-        .collect_vec();
-
-    hands.sort();
-
-    hands.into_iter().enumerate().map(|(i, hand)| hand.bid * (i as u64 + 1)).sum::<u64>().to_string()
-}
-
-fn part2(input: &str) -> String {
-    let mut hands = input
-        .trim()
-        .lines()
-        .map(|hand| {
-            let mut hand = Hand::new(hand);
-            hand.calc_dec_val2();
-            hand
-        })
-        .collect_vec();
-
-    hands.sort();
-
-    hands.into_iter().enumerate().map(|(i, hand)| hand.bid * (i as u64 + 1)).sum::<u64>().to_string()
-}
 
 struct Hand<'a> {
     cards: &'a str,

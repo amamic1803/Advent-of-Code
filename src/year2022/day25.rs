@@ -75,7 +75,7 @@ impl Day for Day25 {
         Ok(Self::dec_2_snafu(sum))
     }
 
-    fn part2(&self, input: &str) -> Result<String, Error> {
+    fn part2(&self, _input: &str) -> Result<String, Error> {
         Ok(String::from("Advent of Code 2022 solved!"))
     }
 }

@@ -3,7 +3,7 @@ use std::path::PathBuf;
 
 use clap::{Arg, ArgAction, command, value_parser};
 
-use advent_of_code::get_challenges;
+use aocode::{AdventOfCode, AdventOfCodeInstance};
 
 fn main() {
     let argv = command!()
@@ -101,10 +101,10 @@ fn main() {
     let show_input_flag: bool = argv.get_flag("show_input");
     let input = argv.get_one::<PathBuf>("input");
 
-    let challenges_list = get_challenges();
+    let advent_of_code = AdventOfCodeInstance::new();
 
     if list_flag {
-        println!("{}", challenges_list.list());
+        println!("{}", advent_of_code.pretty_list());
     } else {
         let year_num: usize = match year_num {
             Some(year_num) => *year_num as usize,
@@ -131,7 +131,7 @@ fn main() {
         };
 
         if solve_flag {
-            match challenges_list.run(year_num, day_num, part_num, &input) {
+            match advent_of_code.run(year_num, day_num, part_num, &input) {
                 Ok(result) => {
                     println!("{result}");
                 }
@@ -141,29 +141,13 @@ fn main() {
                 }
             }
         } else if benchmark_flag {
-            match challenges_list.benchmark(year_num, day_num, part_num, &input) {
+            match advent_of_code.benchmark(year_num, day_num, part_num, &input) {
                 Ok((result, elapsed)) => {
                     println!("Result: {}", result);
                     println!("Time elapsed: {} ms", elapsed.as_millis());
                 }
                 Err(err) => {
                     eprintln!("Error benchmarking challenge: {}", err);
-                    std::process::exit(1);
-                }
-            }
-        } else if text_flag {
-            match challenges_list.show_text(year_num, day_num) {
-                Ok(text) => println!("{}", text),
-                Err(err) => {
-                    eprintln!("Error showing challenge text: {}", err);
-                    std::process::exit(1);
-                }
-            }
-        } else if show_input_flag {
-            match challenges_list.show_input(year_num, day_num, &input) {
-                Ok(input) => println!("{}", input),
-                Err(err) => {
-                    eprintln!("Error showing challenge input: {}", err);
                     std::process::exit(1);
                 }
             }

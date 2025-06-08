@@ -14,7 +14,7 @@ pub mod year2024;
 
 use std::cmp::Ordering;
 use std::error::Error as StdError;
-use std::fmt::{self, Debug, Display, Formatter};
+use std::fmt::{self, Debug, Display, Formatter, Write};
 use std::hash::Hash;
 use std::time::{Duration, Instant};
 
@@ -83,50 +83,25 @@ impl AdventOfCodeInstance {
         new_obj
     }
 
-    /// Lists all available (solved) challenges.
+    /// Prepares a pretty string containing the list of all available challenges.
+    /// Organized by year and day.
     /// # Returns
     /// A string containing the list of all available challenges.
-    pub fn list(&self) -> String {
-        let mut year_str = String::new();
-        for year in &self.years {
-            year_str.push_str(&year.list());
-        }
-        year_str.pop();
+    pub fn pretty_list(&self) -> String {
+        let mut result_str = String::new();
 
-        let mut longest_line: usize = 0;
-        for line in year_str.trim().lines() {
-            let length = line.chars().count();
-            if length > longest_line {
-                longest_line = length;
+        result_str.push_str("Advent of Code:");
+
+        for year in self.years() {
+            write!(&mut result_str, "\n  Year {:04}:", year.id()).unwrap();
+            for day in year.days() {
+                write!(&mut result_str, "\n    --- Day {}: {} ---", day.id(), day.title()).unwrap();
             }
         }
 
-        if longest_line < 22 {
-            longest_line = 22;
-        } else if longest_line % 2 == 1 {
-            longest_line += 1;
-        }
+        result_str.push('\n');
 
-        let mut list_str = String::new();
-        for _ in 0..longest_line {
-            list_str.push('#');
-        }
-        list_str.push('\n');
-        for _ in 0..((longest_line - 16) / 2) {
-            list_str.push('#');
-        }
-        list_str.push_str(" Advent of Code ");
-        for _ in 0..((longest_line - 16) / 2) {
-            list_str.push('#');
-        }
-        list_str.push('\n');
-        for _ in 0..longest_line {
-            list_str.push('#');
-        }
-        list_str.push('\n');
-        list_str.push_str(&year_str);
-
-        list_str
+        result_str
     }
 }
 impl AdventOfCode for AdventOfCodeInstance {
@@ -313,6 +288,7 @@ pub trait Day: Send + Sync {
     /// * `Error::UnavailablePart` - The part is unavailable.
     /// * `Error::NoSolution` - There is no solution for the challenge with the given input.
     fn part1(&self, input: &str) -> Result<String, Error> {
+        let _ = input; // suppress unused variable warning
         Err(Error::UnavailablePart)
     }
 
@@ -325,6 +301,7 @@ pub trait Day: Send + Sync {
     /// * `Error::UnavailablePart` - The part is unavailable.
     /// * `Error::NoSolution` - There is no solution for the challenge with the given input.
     fn part2(&self, input: &str) -> Result<String, Error> {
+        let _ = input; // suppress unused variable warning
         Err(Error::UnavailablePart)
     }
 }

@@ -1,17 +1,28 @@
-use crate::structures::Day;
-
-pub fn day_05() -> Day {
-    Day::new(5, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
-}
-
+use crate::{Day, Error};
 use itertools::Itertools;
 
-fn part1(input: &str) -> String {
-    Garden::new(input).closest_location1().to_string()
+pub struct Day05;
+impl Day05 {
+    pub fn new() -> Self {
+        Self
+    }
 }
+impl Day for Day05 {
+    fn id(&self) -> usize {
+        5
+    }
 
-fn part2(input: &str) -> String {
-    Garden::new(input).closest_location2().to_string()
+    fn title(&self) -> &str {
+        "If You Give A Seed A Fertilizer"
+    }
+
+    fn part1(&self, input: &str) -> Result<String, Error> {
+        Ok(Garden::new(input).closest_location1().to_string())
+    }
+
+    fn part2(&self, input: &str) -> Result<String, Error> {
+        Ok(Garden::new(input).closest_location2().to_string())
+    }
 }
 
 struct Garden {

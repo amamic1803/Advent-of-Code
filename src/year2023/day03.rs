@@ -1,15 +1,27 @@
-use crate::structures::Day;
+use crate::{Day, Error};
 
-pub fn day_03() -> Day {
-    Day::new(3, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
+pub struct Day03;
+impl Day03 {
+    pub fn new() -> Self {
+        Self
+    }
 }
+impl Day for Day03 {
+    fn id(&self) -> usize {
+        3
+    }
 
-fn part1(input: &str) -> String {
-    Schematic::new(input).sum_part_numbers().to_string()
-}
+    fn title(&self) -> &str {
+        "Gear Ratios"
+    }
 
-fn part2(input: &str) -> String {
-    Schematic::new(input).sum_of_gear_ratios().to_string()
+    fn part1(&self, input: &str) -> Result<String, Error> {
+        Ok(Schematic::new(input).sum_part_numbers().to_string())
+    }
+
+    fn part2(&self, input: &str) -> Result<String, Error> {
+        Ok(Schematic::new(input).sum_of_gear_ratios().to_string())
+    }
 }
 
 struct Schematic {

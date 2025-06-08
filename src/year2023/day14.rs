@@ -1,26 +1,35 @@
-use crate::structures::Day;
-
-pub fn day_14() -> Day {
-    Day::new(14, include_str!("text.txt"), include_str!("input.txt"), part1, part2)
-}
-
+use crate::{Day, Error};
 use std::collections::HashSet;
 
+pub struct Day14;
+impl Day14 {
+    pub fn new() -> Self {
+        Self
+    }
+}
+impl Day for Day14 {
+    fn id(&self) -> usize {
+        14
+    }
+
+    fn title(&self) -> &str {
+        "Parabolic Reflector Dish"
+    }
+
+    fn part1(&self, input: &str) -> Result<String, Error> {
+        let mut platform = Platform::new(input);
+        platform.tilt_up();
+        Ok(platform.load().to_string())
+    }
+
+    fn part2(&self, input: &str) -> Result<String, Error> {
+        let mut platform = Platform::new(input);
+        platform.spin_cycle();
+        Ok(platform.load().to_string())
+    }
+}
+
 const CYCLES: u32 = 1_000_000_000;
-
-fn part1(input: &str) -> String {
-    let mut platform = Platform::new(input);
-    platform.tilt_up();
-
-    platform.load().to_string()
-}
-
-fn part2(input: &str) -> String {
-    let mut platform = Platform::new(input);
-    platform.spin_cycle();
-
-    platform.load().to_string()
-}
 
 #[derive(Copy, Clone, Hash, Eq, PartialEq)]
 enum RockType {
