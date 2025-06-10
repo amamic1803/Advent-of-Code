@@ -1,5 +1,68 @@
 //! A library crate for solving the Advent of Code challenges.
 
+use std::cmp::Ordering;
+use std::error::Error as StdError;
+use std::fmt::{self, Debug, Display, Formatter, Write};
+use std::hash::Hash;
+use std::time::{Duration, Instant};
+
+macro_rules! day {
+    ($struct_name:ident, $id:literal, $title:literal) => {
+        #[doc = $title]
+        pub struct $struct_name {
+            id: usize,
+            title: &'static str,
+        }
+        impl $struct_name {
+            pub fn new() -> Self {
+                Self {
+                    id: $id,
+                    title: $title,
+                }
+            }
+        }
+        impl Default for $struct_name {
+            fn default() -> Self {
+                Self::new()
+            }
+        }
+    };
+}
+
+macro_rules! year {
+    ($struct_name:ident, $id:literal, $($day:ident),* ) => {
+        pub struct $struct_name {
+            id: usize,
+            days: Vec<Box<dyn Day>>,
+        }
+        impl $struct_name {
+            pub fn new() -> Self {
+                let mut new_self = Self {
+                    id: $id,
+                    days: vec![
+                        $(Box::new($day::new())),*
+                    ],
+                };
+                new_self.days.sort_by_key(|day| day.id());
+                new_self
+            }
+        }
+        impl Default for $struct_name {
+            fn default() -> Self {
+                Self::new()
+            }
+        }
+        impl Year for $struct_name {
+            fn id(&self) -> usize {
+                self.id
+            }
+            fn days<'a>(&'a self) -> Box<dyn Iterator<Item = &'a dyn Day> + 'a> {
+                Box::new(self.days.iter().map(|day| day.as_ref()))
+            }
+        }
+    };
+}
+
 pub mod shared;
 pub mod year2015;
 pub mod year2016;
@@ -11,12 +74,6 @@ pub mod year2021;
 pub mod year2022;
 pub mod year2023;
 pub mod year2024;
-
-use std::cmp::Ordering;
-use std::error::Error as StdError;
-use std::fmt::{self, Debug, Display, Formatter, Write};
-use std::hash::Hash;
-use std::time::{Duration, Instant};
 
 use year2015::Year2015;
 use year2016::Year2016;

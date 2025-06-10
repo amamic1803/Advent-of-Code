@@ -1,17 +1,13 @@
 use crate::{Day, Error};
 
-pub struct Day01;
-impl Day01 {
-    pub fn new() -> Self {
-        Self
-    }
-}
+day!(Day01, 1, "Not Quite Lisp");
+
 impl Day for Day01 {
     fn id(&self) -> usize {
-        1
+        self.id
     }
     fn title(&self) -> &str {
-        "Not Quite Lisp"
+        self.title
     }
     fn part1(&self, input: &str) -> Result<String, Error> {
         let mut floor: isize = 0;
