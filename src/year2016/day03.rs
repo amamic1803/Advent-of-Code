@@ -32,7 +32,7 @@ impl Day03 {
 
     fn parse_input_2(input: &str) -> Vec<[usize; 3]> {
         let mut triangles = Vec::new();
-        let mut triangle_block = vec![Vec::new(), Vec::new(), Vec::new()];
+        let mut triangle_block = [Vec::new(), Vec::new(), Vec::new()];
 
         for line in input.trim().lines() {
             for (i, side) in line.split_whitespace().map(|s| s.parse::<usize>().unwrap()).enumerate() {

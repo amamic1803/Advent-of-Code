@@ -53,12 +53,12 @@ impl Day06 {
     }
 
     fn execute_instruction(grid: &mut [Vec<bool>], ins: Instruction) {
-        for i in ins.1.0..=ins.2.0 {
-            for j in ins.1.1..=ins.2.1 {
+        for row in grid.iter_mut().take(ins.2.0 + 1).skip(ins.1.0) {
+            for cell in row.iter_mut().take(ins.2.1 + 1).skip(ins.1.1) {
                 match ins.0 {
-                    0 => grid[i][j] = false,
-                    1 => grid[i][j] = true,
-                    2 => grid[i][j] = !grid[i][j],
+                    0 => *cell = false,
+                    1 => *cell = true,
+                    2 => *cell = !*cell,
                     _ => unreachable!("Invalid instruction"),
                 }
             }
@@ -66,16 +66,16 @@ impl Day06 {
     }
 
     fn execute_instruction2(grid: &mut [Vec<isize>], ins: Instruction) {
-        for i in ins.1.0..=ins.2.0 {
-            for j in ins.1.1..=ins.2.1 {
+        for row in grid.iter_mut().take(ins.2.0 + 1).skip(ins.1.0) {
+            for cell in row.iter_mut().take(ins.2.1 + 1).skip(ins.1.1) {
                 match ins.0 {
                     0 => {
-                        if grid[i][j] > 0 {
-                            grid[i][j] -= 1;
+                        if *cell > 0 {
+                            *cell -= 1;
                         }
                     }
-                    1 => grid[i][j] += 1,
-                    2 => grid[i][j] += 2,
+                    1 => *cell += 1,
+                    2 => *cell += 2,
                     _ => unreachable!("Invalid instruction"),
                 }
             }
@@ -85,9 +85,9 @@ impl Day06 {
     fn lights_on(grid: &[Vec<bool>]) -> usize {
         let mut result = 0;
 
-        for i in 0..grid.len() {
-            for j in 0..grid[i].len() {
-                if grid[i][j] {
+        for row in grid {
+            for cell in row {
+                if *cell {
                     result += 1;
                 }
             }
@@ -99,9 +99,9 @@ impl Day06 {
     fn brightness(grid: &[Vec<isize>]) -> usize {
         let mut result: usize = 0;
 
-        for i in 0..grid.len() {
-            for j in 0..grid[i].len() {
-                result += usize::try_from(grid[i][j]).unwrap();
+        for row in grid {
+            for cell in row {
+                result += usize::try_from(*cell).unwrap();
             }
         }
 

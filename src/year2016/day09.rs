@@ -39,7 +39,7 @@ impl Day09 {
                 .trim_start_matches('(')
                 .trim_end_matches(')')
                 .split('x')
-                .last()
+                .next_back()
                 .unwrap()
                 .parse::<usize>()
                 .unwrap();
@@ -89,7 +89,7 @@ impl Day for Day09 {
                 .trim_start_matches('(')
                 .trim_end_matches(')')
                 .split('x')
-                .last()
+                .next_back()
                 .unwrap()
                 .parse::<usize>()
                 .unwrap();
