@@ -1,18 +1,14 @@
 use crate::{Day, Error};
 use std::collections::HashMap;
 
-pub struct Day07;
-impl Day07 {
-    pub fn new() -> Self {
-        Self
-    }
-}
+day!(Day07, 7, "Some Assembly Required");
+
 impl Day for Day07 {
     fn id(&self) -> usize {
-        7
+        self.id
     }
     fn title(&self) -> &str {
-        "Some Assembly Required"
+        self.title
     }
     fn part1(&self, input: &str) -> Result<String, Error> {
         let mut circuit = Circuit::new(input);

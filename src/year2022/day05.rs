@@ -1,11 +1,8 @@
 use crate::{Day, Error};
 
-pub struct Day05;
-impl Day05 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day05, 5, "Supply Stacks");
 
+impl Day05 {
     fn count_piles(input: &str) -> usize {
         // loops until it finds the line with the pile numbers and reads the last number
 
@@ -21,11 +18,11 @@ impl Day05 {
 }
 impl Day for Day05 {
     fn id(&self) -> usize {
-        5
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Supply Stacks"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

@@ -1,11 +1,8 @@
 use crate::{Day, Error};
 
-pub struct Day25;
-impl Day25 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day25, 25, "Let It Snow");
 
+impl Day25 {
     fn parse_input(input: &str) -> (usize, usize) {
         let mut line_iter = input.trim().lines().next().unwrap().split_whitespace();
 
@@ -50,10 +47,10 @@ impl Day25 {
 }
 impl Day for Day25 {
     fn id(&self) -> usize {
-        25
+        self.id
     }
     fn title(&self) -> &str {
-        "Let It Snow"
+        self.title
     }
     fn part1(&self, input: &str) -> Result<String, Error> {
         let (row, col) = Self::parse_input(input);

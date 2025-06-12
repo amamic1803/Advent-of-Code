@@ -1,18 +1,14 @@
 use crate::{Day, Error};
 use itertools::Itertools;
 
-pub struct Day24;
-impl Day24 {
-    pub fn new() -> Self {
-        Self
-    }
-}
+day!(Day24, 24, "It Hangs in the Balance");
+
 impl Day for Day24 {
     fn id(&self) -> usize {
-        24
+        self.id
     }
     fn title(&self) -> &str {
-        "It Hangs in the Balance"
+        self.title
     }
     fn part1(&self, input: &str) -> Result<String, Error> {
         let weights = input.trim().lines().map(|line| line.parse::<usize>().unwrap()).collect::<Vec<_>>();

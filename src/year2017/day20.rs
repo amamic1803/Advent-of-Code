@@ -1,18 +1,14 @@
 use crate::{Day, Error};
 
-pub struct Day20;
-impl Day20 {
-    pub fn new() -> Self {
-        Self
-    }
-}
+day!(Day20, 20, "Particle Swarm");
+
 impl Day for Day20 {
     fn id(&self) -> usize {
-        20
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Particle Swarm"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

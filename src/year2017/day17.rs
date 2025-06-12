@@ -1,21 +1,18 @@
 use crate::{Day, Error};
 
-pub struct Day17;
-impl Day17 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day17, 17, "Spinlock");
 
+impl Day17 {
     const PART1_LIMIT: usize = 2017;
     const PART2_LIMIT: usize = 50_000_000;
 }
 impl Day for Day17 {
     fn id(&self) -> usize {
-        17
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Spinlock"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

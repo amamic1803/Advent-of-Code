@@ -1,11 +1,8 @@
 use crate::{Day, Error};
 
-pub struct Day11;
-impl Day11 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day11, 11, "Monkey in the Middle");
 
+impl Day11 {
     fn parse_monkeys(input: &str) -> Vec<Monkey> {
         let mut line_contents: Vec<&str> = Vec::new();
         let mut monkeys: Vec<Monkey> = Vec::new();
@@ -44,11 +41,11 @@ impl Day11 {
 }
 impl Day for Day11 {
     fn id(&self) -> usize {
-        11
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Monkey in the Middle"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

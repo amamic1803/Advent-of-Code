@@ -1,11 +1,8 @@
 use crate::{Day, Error};
 
-pub struct Day09;
-impl Day09 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day09, 9, "Mirage Maintenance");
 
+impl Day09 {
     fn parse_input(input: &str) -> Vec<Vec<i64>> {
         input
             .trim()
@@ -52,11 +49,11 @@ impl Day09 {
 }
 impl Day for Day09 {
     fn id(&self) -> usize {
-        9
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Mirage Maintenance"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

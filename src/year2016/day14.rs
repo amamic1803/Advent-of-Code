@@ -7,12 +7,9 @@ use std::collections::VecDeque;
 use std::fmt::Write;
 use std::sync::LazyLock;
 
-pub struct Day14;
-impl Day14 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day14, 14, "One-Time Pad");
 
+impl Day14 {
     const PASSWORDS_TO_FIND: u8 = 64;
     const ADDITIONAL_HASHES: usize = 2016;
 
@@ -99,11 +96,11 @@ impl Day14 {
 }
 impl Day for Day14 {
     fn id(&self) -> usize {
-        14
+        self.id
     }
 
     fn title(&self) -> &str {
-        "One-Time Pad"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

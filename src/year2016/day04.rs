@@ -3,12 +3,9 @@ use regex::Regex;
 use std::cmp::Reverse;
 use std::collections::HashMap;
 
-pub struct Day04;
-impl Day04 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day04, 4, "Security Through Obscurity");
 
+impl Day04 {
     fn filter_rooms(rooms: Vec<(&str, usize, [char; 5])>) -> Vec<(&str, usize, [char; 5])> {
         let mut filtered_rooms = Vec::new();
 
@@ -82,11 +79,11 @@ impl Day04 {
 }
 impl Day for Day04 {
     fn id(&self) -> usize {
-        4
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Security Through Obscurity"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

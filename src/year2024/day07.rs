@@ -1,11 +1,8 @@
 use crate::{Day, Error};
 
-pub struct Day07;
-impl Day07 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day07, 7, "Bridge Repair");
 
+impl Day07 {
     fn solve<T: Fn(u64, u64, &[u64]) -> bool>(input: &str, check: T) -> u64 {
         let mut calibration_result = 0;
 
@@ -54,11 +51,11 @@ impl Day07 {
 }
 impl Day for Day07 {
     fn id(&self) -> usize {
-        7
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Bridge Repair"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

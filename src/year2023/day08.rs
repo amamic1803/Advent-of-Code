@@ -1,19 +1,15 @@
 use crate::shared::math::lcm_multiple;
 use crate::{Day, Error};
 
-pub struct Day08;
-impl Day08 {
-    pub fn new() -> Self {
-        Self
-    }
-}
+day!(Day08, 8, "Haunted Wasteland");
+
 impl Day for Day08 {
     fn id(&self) -> usize {
-        8
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Haunted Wasteland"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

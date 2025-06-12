@@ -2,12 +2,9 @@ use crate::{Day, Error};
 use std::cmp::{max, min};
 use std::iter::zip;
 
-pub struct Day05;
-impl Day05 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day05, 5, "Hydrothermal Venture");
 
+impl Day05 {
     fn parse_input(input: &str) -> Vec<[[u32; 2]; 2]> {
         let mut lines = Vec::new();
 
@@ -90,11 +87,11 @@ impl Day05 {
 }
 impl Day for Day05 {
     fn id(&self) -> usize {
-        5
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Hydrothermal Venture"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

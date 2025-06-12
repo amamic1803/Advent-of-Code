@@ -1,19 +1,15 @@
 use crate::{Day, Error};
 use std::collections::VecDeque;
 
-pub struct Day22;
-impl Day22 {
-    pub fn new() -> Self {
-        Self
-    }
-}
+day!(Day22, 22, "Grid Computing");
+
 impl Day for Day22 {
     fn id(&self) -> usize {
-        22
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Grid Computing"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

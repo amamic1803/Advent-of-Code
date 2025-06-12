@@ -1,12 +1,9 @@
 use crate::{Day, Error};
 use std::collections::HashMap;
 
-pub struct Day06;
-impl Day06 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day06, 6, "Signals and Noise");
 
+impl Day06 {
     fn solve(input: &str, minimum: bool) -> String {
         let message_len = input.trim().lines().next().unwrap().trim().chars().count();
         let mut message: Vec<HashMap<char, usize>> = Vec::with_capacity(message_len);
@@ -36,11 +33,11 @@ impl Day06 {
 }
 impl Day for Day06 {
     fn id(&self) -> usize {
-        6
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Signals and Noise"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

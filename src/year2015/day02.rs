@@ -1,10 +1,8 @@
 use crate::{Day, Error};
 
-pub struct Day02;
+day!(Day02, 2, "I Was Told There Would Be No Math");
+
 impl Day02 {
-    pub fn new() -> Self {
-        Self
-    }
     fn ribbon_present(present: [usize; 3]) -> usize {
         let mut perimeters: [usize; 3] = [
             (present[0] << 1) + (present[1] << 1),
@@ -33,10 +31,10 @@ impl Day02 {
 }
 impl Day for Day02 {
     fn id(&self) -> usize {
-        2
+        self.id
     }
     fn title(&self) -> &str {
-        "I Was Told There Would Be No Math"
+        self.title
     }
     fn part1(&self, input: &str) -> Result<String, Error> {
         let mut total_paper = 0;

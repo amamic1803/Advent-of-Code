@@ -1,12 +1,9 @@
 use crate::{Day, Error};
 use std::collections::BTreeSet;
 
-pub struct Day18;
-impl Day18 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day18, 18, "Boiling Boulders");
 
+impl Day18 {
     fn parse_input(input: &str) -> Vec<Vec<Vec<Position>>> {
         let mut cubes_coords = input
             .trim()
@@ -47,11 +44,11 @@ impl Day18 {
 }
 impl Day for Day18 {
     fn id(&self) -> usize {
-        18
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Boiling Boulders"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

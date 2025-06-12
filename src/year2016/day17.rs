@@ -1,19 +1,15 @@
 use crate::{Day, Error};
 use md5::{Digest, Md5};
 
-pub struct Day17;
-impl Day17 {
-    pub fn new() -> Self {
-        Self
-    }
-}
+day!(Day17, 17, "Two Steps Forward");
+
 impl Day for Day17 {
     fn id(&self) -> usize {
-        17
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Two Steps Forward"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

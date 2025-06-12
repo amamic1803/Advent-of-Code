@@ -2,18 +2,14 @@ use crate::{Day, Error};
 use md5::{Digest, Md5};
 use std::fmt::Write;
 
-pub struct Day04;
-impl Day04 {
-    pub fn new() -> Self {
-        Self
-    }
-}
+day!(Day04, 4, "The Ideal Stocking Stuffer");
+
 impl Day for Day04 {
     fn id(&self) -> usize {
-        4
+        self.id
     }
     fn title(&self) -> &str {
-        "The Ideal Stocking Stuffer"
+        self.title
     }
     fn part1(&self, input: &str) -> Result<String, Error> {
         let mut input = input.trim().to_string();

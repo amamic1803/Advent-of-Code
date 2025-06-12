@@ -3,19 +3,15 @@ use crate::{Day, Error};
 use md5::{Digest, Md5};
 use std::fmt::Write;
 
-pub struct Day05;
-impl Day05 {
-    pub fn new() -> Self {
-        Self
-    }
-}
+day!(Day05, 5, "How About a Nice Game of Chess?");
+
 impl Day for Day05 {
     fn id(&self) -> usize {
-        5
+        self.id
     }
 
     fn title(&self) -> &str {
-        "How About a Nice Game of Chess?"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

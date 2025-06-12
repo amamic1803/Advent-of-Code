@@ -1,11 +1,8 @@
 use crate::{Day, Error};
 
-pub struct Day02;
-impl Day02 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day02, 2, "Bathroom Security");
 
+impl Day02 {
     const KEYPAD: [[char; 3]; 3] = [['1', '2', '3'], ['4', '5', '6'], ['7', '8', '9']];
 
     const KEYPAD2: [[char; 5]; 5] = [
@@ -18,11 +15,11 @@ impl Day02 {
 }
 impl Day for Day02 {
     fn id(&self) -> usize {
-        2
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Bathroom Security"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

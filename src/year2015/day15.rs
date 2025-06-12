@@ -1,11 +1,8 @@
 use crate::{Day, Error};
 
-pub struct Day15;
-impl Day15 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day15, 15, "Science for Hungry People");
 
+impl Day15 {
     fn parse_input(input: &str) -> Vec<[isize; 5]> {
         let mut ingredients = Vec::new();
 
@@ -28,10 +25,10 @@ impl Day15 {
 }
 impl Day for Day15 {
     fn id(&self) -> usize {
-        15
+        self.id
     }
     fn title(&self) -> &str {
-        "Science for Hungry People"
+        self.title
     }
     fn part1(&self, input: &str) -> Result<String, Error> {
         let ingredients = Self::parse_input(input);

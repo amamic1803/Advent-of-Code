@@ -1,12 +1,9 @@
 use crate::{Day, Error};
 use std::collections::HashMap;
 
-pub struct Day21;
-impl Day21 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day21, 21, "Fractal Art");
 
+impl Day21 {
     const INITIAL_GRID: [[bool; 3]; 3] = [[false, true, false], [false, false, true], [true, true, true]];
 
     fn parse_rules(input: &str) -> (Rules2x2, Rules3x3) {
@@ -193,11 +190,11 @@ impl Day21 {
 }
 impl Day for Day21 {
     fn id(&self) -> usize {
-        21
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Fractal Art"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

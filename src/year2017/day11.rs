@@ -1,11 +1,8 @@
 use crate::{Day, Error};
 
-pub struct Day11;
-impl Day11 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day11, 11, "Hex Ed");
 
+impl Day11 {
     fn process_direction(direction: &str, x: &mut i32, y_half: &mut i32) {
         match direction {
             "n" => *y_half += 2,
@@ -40,11 +37,11 @@ impl Day11 {
 }
 impl Day for Day11 {
     fn id(&self) -> usize {
-        11
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Hex Ed"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

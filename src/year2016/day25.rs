@@ -1,25 +1,21 @@
 use crate::{Day, Error};
 
-pub struct Day25;
-impl Day25 {
-    pub fn new() -> Self {
-        Self
-    }
-}
+day!(Day25, 25, "Clock Signal");
+
 impl Day for Day25 {
     fn id(&self) -> usize {
-        25
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Clock Signal"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {
-        // input code is meant to be analysed by hand
+        // input code is meant to be analyzed by hand
         // what code does is take a value, add some constant to it (found in the input),
         // and output its binary digits starting from the least significant bit
-        // so to get alternating 0s and 1s,
+        // so to get alternating 0 and 1,
         // the number must be in the form 1010...1010
 
         // since the value is a positive integer,

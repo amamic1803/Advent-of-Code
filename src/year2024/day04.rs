@@ -1,11 +1,8 @@
 use crate::{Day, Error};
 
-pub struct Day04;
-impl Day04 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day04, 4, "Ceres Search");
 
+impl Day04 {
     fn check_xmas<T>(check_fn: T) -> bool
     where
         T: Fn(usize) -> bool,
@@ -26,11 +23,11 @@ impl Day04 {
 }
 impl Day for Day04 {
     fn id(&self) -> usize {
-        4
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Ceres Search"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

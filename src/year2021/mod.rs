@@ -1,13 +1,13 @@
-use crate::{Day, Year};
+//! Solutions to the *Advent of Code 2021*
 
-pub mod day01;
-pub mod day02;
-pub mod day03;
-pub mod day04;
-pub mod day05;
-pub mod day06;
-pub mod day09;
-pub mod day10;
+mod day01;
+mod day02;
+mod day03;
+mod day04;
+mod day05;
+mod day06;
+mod day09;
+mod day10;
 
 #[doc(inline)]
 pub use day01::Day01;
@@ -26,32 +26,4 @@ pub use day09::Day09;
 #[doc(inline)]
 pub use day10::Day10;
 
-pub struct Year2021 {
-    days: Vec<Box<dyn Day>>,
-}
-impl Year2021 {
-    pub fn new() -> Self {
-        let mut new_self = Self {
-            days: vec![
-                Box::new(Day01::new()),
-                Box::new(Day02::new()),
-                Box::new(Day03::new()),
-                Box::new(Day04::new()),
-                Box::new(Day05::new()),
-                Box::new(Day06::new()),
-                Box::new(Day09::new()),
-                Box::new(Day10::new()),
-            ],
-        };
-        new_self.days.sort_by_key(|day| day.id());
-        new_self
-    }
-}
-impl Year for Year2021 {
-    fn id(&self) -> usize {
-        2021
-    }
-    fn days<'a>(&'a self) -> Box<dyn Iterator<Item = &'a dyn Day> + 'a> {
-        Box::new(self.days.iter().map(|day| day.as_ref()))
-    }
-}
+year!(Year2021, 2021, Day01, Day02, Day03, Day04, Day05, Day06, Day09, Day10);

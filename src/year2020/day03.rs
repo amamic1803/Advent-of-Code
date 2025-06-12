@@ -1,11 +1,8 @@
 use crate::{Day, Error};
 
-pub struct Day03;
-impl Day03 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day03, 3, "Toboggan Trajectory");
 
+impl Day03 {
     // right, down
     const SLOPE_PART1: [usize; 2] = [3, 1];
     const SLOPES_PART2: [[usize; 2]; 5] = [[1, 1], [3, 1], [5, 1], [7, 1], [1, 2]];
@@ -32,11 +29,11 @@ impl Day03 {
 }
 impl Day for Day03 {
     fn id(&self) -> usize {
-        3
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Toboggan Trajectory"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

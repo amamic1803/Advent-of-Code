@@ -2,14 +2,11 @@ use crate::{Day, Error};
 use std::cmp::Ordering;
 use std::collections::BinaryHeap;
 
-pub struct Day18;
-impl Day18 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day18, 18, "RAM Run");
 
+impl Day18 {
     fn dijkstra<const N: usize>(grid: &[[bool; N]], start: (usize, usize), target: (usize, usize)) -> Option<usize> {
-        #[derive(Debug, Eq, PartialEq)]
+        #[derive(Eq, PartialEq)]
         struct Node {
             coords: (usize, usize),
             weight: usize,
@@ -73,11 +70,11 @@ impl Day18 {
 }
 impl Day for Day18 {
     fn id(&self) -> usize {
-        18
+        self.id
     }
 
     fn title(&self) -> &str {
-        "RAM Run"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

@@ -1,11 +1,8 @@
 use crate::{Day, Error};
 
-pub struct Day03;
-impl Day03 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day03, 3, "Binary Diagnostic");
 
+impl Day03 {
     fn parse_input(input: &str) -> Vec<Vec<bool>> {
         // store each line as a vector of bools
         // true is a 1, false is a 0
@@ -27,11 +24,11 @@ impl Day03 {
 }
 impl Day for Day03 {
     fn id(&self) -> usize {
-        3
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Binary Diagnostic"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

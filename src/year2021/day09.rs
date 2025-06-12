@@ -1,12 +1,9 @@
 use crate::{Day, Error};
 use std::cmp::Reverse;
 
-pub struct Day09;
-impl Day09 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day09, 9, "Smoke Basin");
 
+impl Day09 {
     fn parse_input(input: &str) -> Vec<Vec<u8>> {
         let mut cave = Vec::new();
         input
@@ -17,11 +14,11 @@ impl Day09 {
 }
 impl Day for Day09 {
     fn id(&self) -> usize {
-        9
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Smoke Basin"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

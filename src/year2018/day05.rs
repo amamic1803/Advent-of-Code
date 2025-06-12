@@ -1,11 +1,8 @@
 use crate::{Day, Error};
 
-pub struct Day05;
-impl Day05 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day05, 5, "Alchemical Reduction");
 
+impl Day05 {
     /// Fully react polymer
     fn react(polymer: &mut Vec<char>) {
         loop {
@@ -42,11 +39,11 @@ impl Day05 {
 }
 impl Day for Day05 {
     fn id(&self) -> usize {
-        5
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Alchemical Reduction"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

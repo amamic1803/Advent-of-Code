@@ -1,21 +1,19 @@
 use crate::{Day, Error};
 
-pub struct Day05;
+day!(Day05, 5, "A Maze of Twisty Trampolines, All Alike");
+
 impl Day05 {
-    pub fn new() -> Self {
-        Self
-    }
     fn parse_input(input: &str) -> Vec<i32> {
         input.trim().lines().map(|line| line.trim().parse::<i32>().unwrap()).collect()
     }
 }
 impl Day for Day05 {
     fn id(&self) -> usize {
-        5
+        self.id
     }
 
     fn title(&self) -> &str {
-        "A Maze of Twisty Trampolines, All Alike"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

@@ -1,11 +1,8 @@
 use crate::{Day, Error};
 
-pub struct Day15;
-impl Day15 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day15, 15, "Lens Library");
 
+impl Day15 {
     fn calculate_hash(input: &str) -> u32 {
         let mut current_value = 0;
 
@@ -42,11 +39,11 @@ impl Day15 {
 }
 impl Day for Day15 {
     fn id(&self) -> usize {
-        15
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Lens Library"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

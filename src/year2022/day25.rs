@@ -1,11 +1,8 @@
 use crate::{Day, Error};
 
-pub struct Day25;
-impl Day25 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day25, 25, "Full of Hot Air");
 
+impl Day25 {
     fn snafu_2_dec(num: &str) -> i64 {
         let mut curr_place_val: i64 = 1;
         let mut resulting_dec: i64 = 0;
@@ -60,11 +57,11 @@ impl Day25 {
 }
 impl Day for Day25 {
     fn id(&self) -> usize {
-        25
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Full of Hot Air"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

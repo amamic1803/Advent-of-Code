@@ -1,20 +1,20 @@
-use crate::{Day, Year};
+//! Solutions to the *Advent of Code 2022*
 
-pub mod day01;
-pub mod day02;
-pub mod day03;
-pub mod day04;
-pub mod day05;
-pub mod day06;
-pub mod day07;
-pub mod day08;
-pub mod day09;
-pub mod day10;
-pub mod day11;
-pub mod day12;
-pub mod day14;
-pub mod day18;
-pub mod day25;
+mod day01;
+mod day02;
+mod day03;
+mod day04;
+mod day05;
+mod day06;
+mod day07;
+mod day08;
+mod day09;
+mod day10;
+mod day11;
+mod day12;
+mod day14;
+mod day18;
+mod day25;
 
 #[doc(inline)]
 pub use day01::Day01;
@@ -47,39 +47,20 @@ pub use day18::Day18;
 #[doc(inline)]
 pub use day25::Day25;
 
-pub struct Year2022 {
-    days: Vec<Box<dyn Day>>,
-}
-impl Year2022 {
-    pub fn new() -> Self {
-        let mut new_self = Self {
-            days: vec![
-                Box::new(Day01::new()),
-                Box::new(Day02::new()),
-                Box::new(Day03::new()),
-                Box::new(Day04::new()),
-                Box::new(Day05::new()),
-                Box::new(Day06::new()),
-                Box::new(Day07::new()),
-                Box::new(Day08::new()),
-                Box::new(Day09::new()),
-                Box::new(Day10::new()),
-                Box::new(Day11::new()),
-                Box::new(Day12::new()),
-                Box::new(Day14::new()),
-                Box::new(Day18::new()),
-                Box::new(Day25::new()),
-            ],
-        };
-        new_self.days.sort_by_key(|day| day.id());
-        new_self
-    }
-}
-impl Year for Year2022 {
-    fn id(&self) -> usize {
-        2022
-    }
-    fn days<'a>(&'a self) -> Box<dyn Iterator<Item = &'a dyn Day> + 'a> {
-        Box::new(self.days.iter().map(|day| day.as_ref()))
-    }
-}
+year!(Year2022, 2022, 
+    Day01,
+    Day02,
+    Day03,
+    Day04,
+    Day05,
+    Day06,
+    Day07,
+    Day08,
+    Day09,
+    Day10,
+    Day11,
+    Day12,
+    Day14,
+    Day18,
+    Day25
+);

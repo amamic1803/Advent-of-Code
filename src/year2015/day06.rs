@@ -1,13 +1,10 @@
 use crate::{Day, Error};
 
-pub struct Day06;
+day!(Day06, 6, "Probably a Fire Hazard");
+
 type Instruction = (u8, (usize, usize), (usize, usize));
 
 impl Day06 {
-    pub fn new() -> Self {
-        Self
-    }
-
     fn parse_input(input: &str) -> Vec<Instruction> {
         // (instruction, lower, upper)
         // on = 1, off = 0, toggle = 2
@@ -110,10 +107,10 @@ impl Day06 {
 }
 impl Day for Day06 {
     fn id(&self) -> usize {
-        6
+        self.id
     }
     fn title(&self) -> &str {
-        "Probably a Fire Hazard"
+        self.title
     }
     fn part1(&self, input: &str) -> Result<String, Error> {
         let instructions = Self::parse_input(input);

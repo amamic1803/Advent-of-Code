@@ -1,11 +1,8 @@
 use crate::{Day, Error};
 
-pub struct Day16;
-impl Day16 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day16, 16, "Dragon Checksum");
 
+impl Day16 {
     const LEN1: usize = 272;
     const LEN2: usize = 35651584;
 
@@ -64,11 +61,11 @@ impl Day16 {
 }
 impl Day for Day16 {
     fn id(&self) -> usize {
-        16
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Dragon Checksum"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

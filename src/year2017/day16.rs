@@ -1,11 +1,8 @@
 use crate::{Day, Error};
 
-pub struct Day16;
-impl Day16 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day16, 16, "Permutation Promenade");
 
+impl Day16 {
     const INITIAL_PROGRAMS: [char; 16] = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p'];
     const DANCE_ROUNDS: usize = 1_000_000_000;
 
@@ -50,11 +47,11 @@ impl Day16 {
 }
 impl Day for Day16 {
     fn id(&self) -> usize {
-        16
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Permutation Promenade"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

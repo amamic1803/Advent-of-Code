@@ -1,19 +1,15 @@
 use crate::{Day, Error};
 use std::fmt::Write;
 
-pub struct Day10;
-impl Day10 {
-    pub fn new() -> Self {
-        Self
-    }
-}
+day!(Day10, 10, "Knot Hash");
+
 impl Day for Day10 {
     fn id(&self) -> usize {
-        10
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Knot Hash"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

@@ -1,18 +1,13 @@
 use crate::{Day, Error};
 use std::collections::HashSet;
 
-pub struct Day03;
-impl Day03 {
-    pub fn new() -> Self {
-        Self
-    }
-}
+day!(Day03, 3, "Perfectly Spherical Houses in a Vacuum");
 impl Day for Day03 {
     fn id(&self) -> usize {
-        3
+        self.id
     }
     fn title(&self) -> &str {
-        "Perfectly Spherical Houses in a Vacuum"
+        self.title
     }
     fn part1(&self, input: &str) -> Result<String, Error> {
         let mut x: isize = 0;
@@ -34,11 +29,11 @@ impl Day for Day03 {
         Ok(visited.len().to_string())
     }
     fn part2(&self, input: &str) -> Result<String, Error> {
-        let mut x_santa: isize = 0;
-        let mut x_robo: isize = 0;
-        let mut y_santa: isize = 0;
-        let mut y_robo: isize = 0;
-        let mut turn: bool = true; // true == santa, false == robo
+        let mut x_santa = 0;
+        let mut x_robo = 0;
+        let mut y_santa = 0;
+        let mut y_robo = 0;
+        let mut turn = true; // true == santa, false == robo
         let mut visited: HashSet<(isize, isize)> = HashSet::new();
         visited.insert((x_santa, y_santa));
 

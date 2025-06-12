@@ -1,11 +1,8 @@
 use crate::{Day, Error};
 
-pub struct Day20;
-impl Day20 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day20, 20, "Firewall Rules");
 
+impl Day20 {
     fn find_allowed_ips(input: &str) -> Vec<(u32, u32)> {
         let mut allowed_ips = vec![(0, u32::MAX)];
 
@@ -45,11 +42,11 @@ impl Day20 {
 }
 impl Day for Day20 {
     fn id(&self) -> usize {
-        20
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Firewall Rules"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

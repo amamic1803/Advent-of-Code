@@ -1,12 +1,9 @@
 use crate::{Day, Error};
 use std::iter::zip;
 
-pub struct Day06;
-impl Day06 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day06, 6, "Wait For It");
 
+impl Day06 {
     const ACCELERATION: u64 = 1;
 
     fn parse_input(input: &str) -> Vec<(u64, u64)> {
@@ -59,11 +56,11 @@ impl Day06 {
 }
 impl Day for Day06 {
     fn id(&self) -> usize {
-        6
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Wait For It"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

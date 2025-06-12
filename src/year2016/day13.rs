@@ -1,19 +1,15 @@
 use crate::{Day, Error};
 use std::collections::{HashMap, HashSet, VecDeque};
 
-pub struct Day13;
-impl Day13 {
-    pub fn new() -> Self {
-        Self
-    }
-}
+day!(Day13, 13, "A Maze of Twisty Little Cubicles");
+
 impl Day for Day13 {
     fn id(&self) -> usize {
-        13
+        self.id
     }
 
     fn title(&self) -> &str {
-        "A Maze of Twisty Little Cubicles"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

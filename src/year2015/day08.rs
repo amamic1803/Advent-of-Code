@@ -1,11 +1,8 @@
 use crate::{Day, Error};
 
-pub struct Day08;
-impl Day08 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day08, 8, "Matchsticks");
 
+impl Day08 {
     fn encode_len(string: &str) -> (usize, usize) {
         let memory_len = string.chars().count();
         let mut literal_len = memory_len + 2;
@@ -42,10 +39,10 @@ impl Day08 {
 }
 impl Day for Day08 {
     fn id(&self) -> usize {
-        8
+        self.id
     }
     fn title(&self) -> &str {
-        "Matchsticks"
+        self.title
     }
     fn part1(&self, input: &str) -> Result<String, Error> {
         let mut result = 0;

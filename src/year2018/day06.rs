@@ -3,12 +3,9 @@ use crate::{Day, Error};
 use std::cmp::Ordering;
 use std::collections::{HashMap, HashSet};
 
-pub struct Day06;
-impl Day06 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day06, 6, "Chronal Coordinates");
 
+impl Day06 {
     const PART2_THRESHOLD: u64 = 10000;
 
     fn parse_input(input: &str) -> Vec<(usize, usize)> {
@@ -25,11 +22,11 @@ impl Day06 {
 }
 impl Day for Day06 {
     fn id(&self) -> usize {
-        6
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Chronal Coordinates"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

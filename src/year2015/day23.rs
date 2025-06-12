@@ -1,12 +1,9 @@
 use crate::{Day, Error};
 use std::collections::HashMap;
 
-pub struct Day23;
-impl Day23 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day23, 23, "Opening the Turing Lock");
 
+impl Day23 {
     fn parse_input(input: &str) -> Vec<Instruction> {
         let mut instructions = Vec::new();
 
@@ -57,10 +54,10 @@ impl Day23 {
 }
 impl Day for Day23 {
     fn id(&self) -> usize {
-        23
+        self.id
     }
     fn title(&self) -> &str {
-        "Opening the Turing Lock"
+        self.title
     }
     fn part1(&self, input: &str) -> Result<String, Error> {
         let instructions = Self::parse_input(input);

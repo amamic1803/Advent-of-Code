@@ -1,11 +1,8 @@
 use crate::{Day, Error};
 
-pub struct Day15;
-impl Day15 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day15, 15, "Dueling Generators");
 
+impl Day15 {
     const GEN_A_FACT: u64 = 16807;
     const GEN_B_FACT: u64 = 48271;
     const MOD: u64 = 2147483647;
@@ -33,11 +30,11 @@ impl Day15 {
 }
 impl Day for Day15 {
     fn id(&self) -> usize {
-        15
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Dueling Generators"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

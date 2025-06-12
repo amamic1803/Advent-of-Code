@@ -1,19 +1,15 @@
 use crate::shared::math::is_prime;
 use crate::{Day, Error};
 
-pub struct Day23;
-impl Day23 {
-    pub fn new() -> Self {
-        Self
-    }
-}
+day!(Day23, 23, "Coprocessor Conflagration");
+
 impl Day for Day23 {
     fn id(&self) -> usize {
-        23
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Coprocessor Conflagration"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

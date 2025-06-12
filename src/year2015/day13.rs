@@ -2,12 +2,9 @@ use crate::shared::graph::{Graph, Vertex};
 use crate::{Day, Error};
 use std::collections::HashMap;
 
-pub struct Day13;
-impl Day13 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day13, 13, "Knights of the Dinner Table");
 
+impl Day13 {
     fn parse_input(input: &str) -> Graph {
         let mut names = Vec::new();
 
@@ -54,10 +51,10 @@ impl Day13 {
 }
 impl Day for Day13 {
     fn id(&self) -> usize {
-        13
+        self.id
     }
     fn title(&self) -> &str {
-        "Knights of the Dinner Table"
+        self.title
     }
     fn part1(&self, input: &str) -> Result<String, Error> {
         Ok(Self::parse_input(input).hamiltonian_cycle_max().0.to_string())

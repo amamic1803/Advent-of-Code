@@ -2,19 +2,15 @@ use crate::{Day, Error};
 use itertools::Itertools;
 use std::collections::HashSet;
 
-pub struct Day25;
-impl Day25 {
-    pub fn new() -> Self {
-        Self
-    }
-}
+day!(Day25, 25, "The Halting Problem");
+
 impl Day for Day25 {
     fn id(&self) -> usize {
-        25
+        self.id
     }
 
     fn title(&self) -> &str {
-        "The Halting Problem"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

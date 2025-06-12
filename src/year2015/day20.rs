@@ -1,17 +1,13 @@
 use crate::{Day, Error};
 
-pub struct Day20;
-impl Day20 {
-    pub fn new() -> Self {
-        Self
-    }
-}
+day!(Day20, 20, "Infinite Elves and Infinite Houses");
+
 impl Day for Day20 {
     fn id(&self) -> usize {
-        20
+        self.id
     }
     fn title(&self) -> &str {
-        "Infinite Elves and Infinite Houses"
+        self.title
     }
     fn part1(&self, input: &str) -> Result<String, Error> {
         let input = input.trim().parse::<usize>().unwrap();

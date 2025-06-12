@@ -1,22 +1,19 @@
 use crate::{Day, Error};
 use std::collections::HashMap;
 
-pub struct Day10;
-impl Day10 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day10, 10, "Syntax Scoring");
 
+impl Day10 {
     const OPEN_BRACES: [char; 4] = ['(', '[', '{', '<'];
     const CLOSE_BRACES: [char; 4] = [')', ']', '}', '>'];
 }
 impl Day for Day10 {
     fn id(&self) -> usize {
-        10
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Syntax Scoring"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

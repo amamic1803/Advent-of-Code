@@ -1,11 +1,8 @@
 use crate::{Day, Error};
 
-pub struct Day03;
-impl Day03 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day03, 3, "Squares With Three Sides");
 
+impl Day03 {
     fn count_triangles(triangles: Vec<[usize; 3]>) -> usize {
         let mut possible_triangles: usize = 0;
 
@@ -57,11 +54,11 @@ impl Day03 {
 }
 impl Day for Day03 {
     fn id(&self) -> usize {
-        3
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Squares With Three Sides"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

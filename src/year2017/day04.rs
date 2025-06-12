@@ -1,18 +1,14 @@
 use crate::{Day, Error};
 
-pub struct Day04;
-impl Day04 {
-    pub fn new() -> Self {
-        Self
-    }
-}
+day!(Day04, 4, "High-Entropy Passphrases");
+
 impl Day for Day04 {
     fn id(&self) -> usize {
-        4
+        self.id
     }
 
     fn title(&self) -> &str {
-        "High-Entropy Passphrases"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

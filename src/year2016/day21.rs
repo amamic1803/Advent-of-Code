@@ -1,21 +1,18 @@
 use crate::{Day, Error};
 
-pub struct Day21;
-impl Day21 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day21, 21, "Scrambled Letters and Hash");
 
+impl Day21 {
     const PASSWORD: &'static str = "abcdefgh";
     const SCRAMBLED_PASSWORD: &'static str = "fbgdceah";
 }
 impl Day for Day21 {
     fn id(&self) -> usize {
-        21
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Scrambled Letters and Hash"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

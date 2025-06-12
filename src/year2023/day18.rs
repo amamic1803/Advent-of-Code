@@ -1,12 +1,9 @@
 use crate::{Day, Error};
 use itertools::Itertools;
 
-pub struct Day18;
-impl Day18 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day18, 18, "Lavaduct Lagoon");
 
+impl Day18 {
     fn calculate_volume(points: &[(i64, i64)]) -> i64 {
         let boundary_points = Self::boundary_points(points);
         boundary_points + Self::interior_points(points, boundary_points)
@@ -107,11 +104,11 @@ impl Day18 {
 }
 impl Day for Day18 {
     fn id(&self) -> usize {
-        18
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Lavaduct Lagoon"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

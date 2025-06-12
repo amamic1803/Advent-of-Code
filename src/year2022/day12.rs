@@ -1,12 +1,9 @@
 use crate::{Day, Error};
 use std::collections::VecDeque;
 
-pub struct Day12;
-impl Day12 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day12, 12, "Hill Climbing Algorithm");
 
+impl Day12 {
     fn dijkstra_1(height_map: &[Vec<u32>], loc_start: [usize; 2], loc_end: [usize; 2]) -> u32 {
         //! Returns the lowest number of steps required to reach the end location
         //! Or 0 if there is no path
@@ -164,11 +161,11 @@ impl Day12 {
 }
 impl Day for Day12 {
     fn id(&self) -> usize {
-        12
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Hill Climbing Algorithm"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

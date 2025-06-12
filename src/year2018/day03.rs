@@ -1,11 +1,8 @@
 use crate::{Day, Error};
 
-pub struct Day03;
-impl Day03 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day03, 3, "No Matter How You Slice It");
 
+impl Day03 {
     const FABRIC_SIZE: usize = 1000;
 
     fn fabric_with_claims(claims: impl Iterator<Item = [usize; 4]>) -> Vec<[u8; Self::FABRIC_SIZE]> {
@@ -40,11 +37,11 @@ impl Day03 {
 }
 impl Day for Day03 {
     fn id(&self) -> usize {
-        3
+        self.id
     }
 
     fn title(&self) -> &str {
-        "No Matter How You Slice It"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

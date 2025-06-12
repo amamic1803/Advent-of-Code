@@ -2,12 +2,9 @@ use crate::{Day, Error};
 use regex::Regex;
 use std::collections::HashSet;
 
-pub struct Day19;
-impl Day19 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day19, 19, "Medicine for Rudolph");
 
+impl Day19 {
     fn parse_input(input: &str) -> (Vec<(&str, &str)>, &str) {
         let mut substitutions = Vec::new();
         let mut full_string = "";
@@ -41,10 +38,10 @@ impl Day19 {
 }
 impl Day for Day19 {
     fn id(&self) -> usize {
-        19
+        self.id
     }
     fn title(&self) -> &str {
-        "Medicine for Rudolph"
+        self.title
     }
     fn part1(&self, input: &str) -> Result<String, Error> {
         let (substitutions, molecule_str) = Self::parse_input(input);

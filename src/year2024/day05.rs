@@ -1,12 +1,9 @@
 use crate::{Day, Error};
 use std::collections::HashSet;
 
-pub struct Day05;
-impl Day05 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day05, 5, "Print Queue");
 
+impl Day05 {
     fn parse_input(input: &str) -> (HashSet<(u16, u16)>, Vec<Vec<u16>>) {
         let mut rules_set = HashSet::new();
         let mut updates = Vec::new();
@@ -36,11 +33,11 @@ impl Day05 {
 }
 impl Day for Day05 {
     fn id(&self) -> usize {
-        5
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Print Queue"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

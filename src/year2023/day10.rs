@@ -2,12 +2,9 @@ use crate::{Day, Error};
 use std::collections::{BTreeSet, HashMap, HashSet};
 use std::sync::LazyLock;
 
-pub struct Day10;
-impl Day10 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day10, 10, "Pipe Maze");
 
+impl Day10 {
     fn parse_input(input: &str) -> Vec<Vec<char>> {
         input.trim().lines().map(|line| line.chars().collect::<Vec<char>>()).collect::<Vec<Vec<char>>>()
     }
@@ -203,11 +200,11 @@ impl Day10 {
 }
 impl Day for Day10 {
     fn id(&self) -> usize {
-        10
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Pipe Maze"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

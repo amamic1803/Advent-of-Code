@@ -1,19 +1,15 @@
 use crate::{Day, Error};
 use advent_of_code_ocr::parse_string_to_letters;
 
-pub struct Day10;
-impl Day10 {
-    pub fn new() -> Self {
-        Self
-    }
-}
+day!(Day10, 10, "Cathode-Ray Tube");
+
 impl Day for Day10 {
     fn id(&self) -> usize {
-        10
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Cathode-Ray Tube"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

@@ -1,12 +1,9 @@
 use crate::{Day, Error};
 use itertools::Itertools;
 
-pub struct Day21;
-impl Day21 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day21, 21, "RPG Simulator 20XX");
 
+impl Day21 {
     fn parse_input(input: &str) -> [usize; 3] {
         let mut boss = [0; 3];
 
@@ -71,10 +68,10 @@ impl Day21 {
 }
 impl Day for Day21 {
     fn id(&self) -> usize {
-        21
+        self.id
     }
     fn title(&self) -> &str {
-        "RPG Simulator 20XX"
+        self.title
     }
     fn part1(&self, input: &str) -> Result<String, Error> {
         let boss_stats = Self::parse_input(input);

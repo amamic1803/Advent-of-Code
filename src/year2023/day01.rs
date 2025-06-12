@@ -1,11 +1,8 @@
 use crate::{Day, Error};
 
-pub struct Day01;
-impl Day01 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day01, 1, "Trebuchet?!");
 
+impl Day01 {
     const SPELLED_DIGITS: [&'static str; 9] = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
 
     fn parse_input(input: &str) -> Vec<&str> {
@@ -14,11 +11,11 @@ impl Day01 {
 }
 impl Day for Day01 {
     fn id(&self) -> usize {
-        1
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Trebuchet?!"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

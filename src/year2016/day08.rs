@@ -2,12 +2,9 @@ use crate::{Day, Error};
 use advent_of_code_ocr::parse_string_to_letters;
 use itertools::Itertools;
 
-pub struct Day08;
-impl Day08 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day08, 8, "Two-Factor Authentication");
 
+impl Day08 {
     fn simulate_screen(input: &str) -> Screen {
         let mut screen = Screen::new();
 
@@ -36,11 +33,11 @@ impl Day08 {
 }
 impl Day for Day08 {
     fn id(&self) -> usize {
-        8
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Two-Factor Authentication"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

@@ -2,12 +2,9 @@ use crate::{Day, Error};
 use std::cmp::Ordering;
 use std::iter;
 
-pub struct Day09;
-impl Day09 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day09, 9, "Disk Fragmenter");
 
+impl Day09 {
     fn compress1(disc: &str) -> impl Iterator<Item = u32> + use<> {
         let mut disc = disc.trim().chars().map(|c| c.to_digit(10).unwrap() as u8).collect::<Vec<_>>();
         if disc.len() % 2 == 0 {
@@ -149,11 +146,11 @@ impl Day09 {
 }
 impl Day for Day09 {
     fn id(&self) -> usize {
-        9
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Disk Fragmenter"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

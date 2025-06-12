@@ -1,19 +1,15 @@
 use crate::{Day, Error};
 use std::collections::HashMap;
 
-pub struct Day02;
-impl Day02 {
-    pub fn new() -> Self {
-        Self
-    }
-}
+day!(Day02, 2, "Inventory Management System");
+
 impl Day for Day02 {
     fn id(&self) -> usize {
-        2
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Inventory Management System"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

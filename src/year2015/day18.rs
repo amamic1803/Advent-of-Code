@@ -1,11 +1,8 @@
 use crate::{Day, Error};
 
-pub struct Day18;
-impl Day18 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day18, 18, "Like a GIF For Your Yard");
 
+impl Day18 {
     fn parse_input(input: &str) -> Vec<Vec<[bool; 2]>> {
         let mut grid = Vec::with_capacity(100);
 
@@ -131,10 +128,10 @@ impl Day18 {
 }
 impl Day for Day18 {
     fn id(&self) -> usize {
-        18
+        self.id
     }
     fn title(&self) -> &str {
-        "Like a GIF For Your Yard"
+        self.title
     }
     fn part1(&self, input: &str) -> Result<String, Error> {
         let mut grid = Self::parse_input(input);

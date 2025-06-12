@@ -1,11 +1,8 @@
 use crate::{Day, Error};
 
-pub struct Day11;
-impl Day11 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day11, 11, "Corporate Policy");
 
+impl Day11 {
     fn next_password(old_pass: &str) -> String {
         let mut word: Vec<u32> = old_pass.chars().map(Self::char_to_u32).collect();
         Self::fix_word(&mut word);
@@ -97,10 +94,10 @@ impl Day11 {
 }
 impl Day for Day11 {
     fn id(&self) -> usize {
-        11
+        self.id
     }
     fn title(&self) -> &str {
-        "Corporate Policy"
+        self.title
     }
     fn part1(&self, input: &str) -> Result<String, Error> {
         Ok(Self::next_password(input.trim()))

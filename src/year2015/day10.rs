@@ -1,11 +1,8 @@
 use crate::{Day, Error};
 
-pub struct Day10;
-impl Day10 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day10, 10, "Elves Look, Elves Say");
 
+impl Day10 {
     fn execute_round(input: &mut String) {
         let mut result = String::new();
         let mut iterator = input.chars();
@@ -30,10 +27,10 @@ impl Day10 {
 }
 impl Day for Day10 {
     fn id(&self) -> usize {
-        10
+        self.id
     }
     fn title(&self) -> &str {
-        "Elves Look, Elves Say"
+        self.title
     }
     fn part1(&self, input: &str) -> Result<String, Error> {
         let mut input = input.trim().to_string();

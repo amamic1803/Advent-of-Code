@@ -2,12 +2,9 @@ use super::day10::KnotHash;
 use crate::{Day, Error};
 use std::collections::VecDeque;
 
-pub struct Day14;
-impl Day14 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day14, 14, "Disk Defragmentation");
 
+impl Day14 {
     const ROWS: usize = 128;
 
     fn generate_grid(input: &str) -> Vec<Vec<bool>> {
@@ -50,11 +47,11 @@ impl Day14 {
 }
 impl Day for Day14 {
     fn id(&self) -> usize {
-        14
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Disk Defragmentation"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

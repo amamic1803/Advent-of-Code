@@ -2,12 +2,9 @@ use crate::shared::graph::{Graph, Vertex};
 use crate::{Day, Error};
 use std::collections::HashMap;
 
-pub struct Day09;
-impl Day09 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day09, 9, "All in a Single Night");
 
+impl Day09 {
     fn parse_input(input: &str) -> Graph {
         let mut cities = HashMap::new();
         let mut city_index = 0;
@@ -43,10 +40,10 @@ impl Day09 {
 }
 impl Day for Day09 {
     fn id(&self) -> usize {
-        9
+        self.id
     }
     fn title(&self) -> &str {
-        "All in a Single Night"
+        self.title
     }
     fn part1(&self, input: &str) -> Result<String, Error> {
         Ok(Self::parse_input(input).hamiltonian_path_min().0.to_string())

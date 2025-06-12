@@ -1,18 +1,14 @@
 use crate::{Day, Error};
 use regex::Regex;
 
-pub struct Day07;
-impl Day07 {
-    pub fn new() -> Self {
-        Self
-    }
-}
+day!(Day07, 7, "Internet Protocol Version 7");
+
 impl Day for Day07 {
     fn id(&self) -> usize {
-        7
+        self.id
     }
     fn title(&self) -> &str {
-        "Internet Protocol Version 7"
+        self.title
     }
     fn part1(&self, input: &str) -> Result<String, Error> {
         let split_re = Regex::new(r"\[\w*]").unwrap();

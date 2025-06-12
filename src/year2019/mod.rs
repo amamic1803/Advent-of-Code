@@ -1,9 +1,9 @@
-use crate::{Day, Year};
+//! Solutions to the *Advent of Code 2019*
 
-pub mod day01;
-pub mod day02;
-pub mod day03;
-pub mod day04;
+mod day01;
+mod day02;
+mod day03;
+mod day04;
 
 #[doc(inline)]
 pub use day01::Day01;

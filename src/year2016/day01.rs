@@ -1,11 +1,8 @@
 use crate::{Day, Error};
 
-pub struct Day01;
-impl Day01 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day01, 1, "No Time for a Taxicab");
 
+impl Day01 {
     fn parse_input(input: &str) -> Vec<(u8, usize)> {
         let mut instructions: Vec<(u8, usize)> = Vec::new();
 
@@ -81,10 +78,10 @@ impl Day01 {
 }
 impl Day for Day01 {
     fn id(&self) -> usize {
-        1
+        self.id
     }
     fn title(&self) -> &str {
-        "No Time for a Taxicab"
+        self.title
     }
     fn part1(&self, input: &str) -> Result<String, Error> {
         let end_position = Self::calculate_position(Self::parse_input(input));

@@ -1,11 +1,8 @@
 use crate::{Day, Error};
 
-pub struct Day18;
-impl Day18 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day18, 18, "Like a Rogue");
 
+impl Day18 {
     const TRAP_PATTERNS: [[bool; 3]; 4] = [[true, true, false], [false, true, true], [true, false, false], [false, false, true]];
     const ROWS1: usize = 40;
     const ROWS2: usize = 400_000;
@@ -42,11 +39,11 @@ impl Day18 {
 }
 impl Day for Day18 {
     fn id(&self) -> usize {
-        18
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Like a Rogue"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

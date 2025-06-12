@@ -1,12 +1,9 @@
 use crate::{Day, Error};
 use std::collections::{HashMap, HashSet};
 
-pub struct Day06;
-impl Day06 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day06, 6, "Memory Reallocation");
 
+impl Day06 {
     const NUM_BANKS: usize = 16;
 
     fn parse_input(input: &str) -> [u16; Self::NUM_BANKS] {
@@ -15,11 +12,11 @@ impl Day06 {
 }
 impl Day for Day06 {
     fn id(&self) -> usize {
-        6
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Memory Reallocation"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

@@ -1,11 +1,8 @@
 use crate::{Day, Error};
 
-pub struct Day09;
-impl Day09 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day09, 9, "Encoding Error");
 
+impl Day09 {
     fn find_invalid_number_pos(data: &[u64]) -> usize {
         'outer: for i in 25..data.len() {
             let prev_25 = &data[i - 25..i];
@@ -23,11 +20,11 @@ impl Day09 {
 }
 impl Day for Day09 {
     fn id(&self) -> usize {
-        9
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Encoding Error"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

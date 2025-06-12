@@ -2,12 +2,9 @@ use crate::{Day, Error};
 use std::cmp::{Ordering, Reverse, min};
 use std::collections::HashMap;
 
-pub struct Day17;
-impl Day17 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day17, 17, "No Such Thing as Too Much");
 
+impl Day17 {
     fn count_combinations(i: usize, amount_left: usize, bottles: &[usize], memoization: &mut HashMap<(usize, usize), usize>) -> usize {
         match memoization.get(&(i, amount_left)) {
             Some(&value) => value,
@@ -65,10 +62,10 @@ impl Day17 {
 }
 impl Day for Day17 {
     fn id(&self) -> usize {
-        17
+        self.id
     }
     fn title(&self) -> &str {
-        "No Such Thing as Too Much"
+        self.title
     }
     fn part1(&self, input: &str) -> Result<String, Error> {
         let mut bottles: Vec<usize> = input.trim().lines().map(|num| num.parse::<usize>().unwrap()).collect();

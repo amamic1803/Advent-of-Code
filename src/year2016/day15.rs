@@ -2,12 +2,9 @@ use crate::shared::math::chinese_remainder_theorem;
 use crate::{Day, Error};
 use std::cmp::Reverse;
 
-pub struct Day15;
-impl Day15 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day15, 15, "Timing is Everything");
 
+impl Day15 {
     fn solve(discs: impl Iterator<Item = (usize, usize)>) -> u64 {
         let mut congruences = Vec::new();
         for (i, disc) in discs.enumerate() {
@@ -29,11 +26,11 @@ impl Day15 {
 }
 impl Day for Day15 {
     fn id(&self) -> usize {
-        15
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Timing is Everything"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

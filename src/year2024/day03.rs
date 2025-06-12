@@ -2,12 +2,9 @@ use crate::{Day, Error};
 use regex::Regex;
 use std::sync::LazyLock;
 
-pub struct Day03;
-impl Day03 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day03, 3, "Mull It Over");
 
+impl Day03 {
     fn execute_muls(hay: &str) -> u32 {
         static MUL_RE: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"mul\((?<n1>[0-9]{1,3}),(?<n2>[0-9]{1,3})\)").unwrap()); // mul(1,2)
 
@@ -22,11 +19,11 @@ impl Day03 {
 }
 impl Day for Day03 {
     fn id(&self) -> usize {
-        3
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Mull It Over"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

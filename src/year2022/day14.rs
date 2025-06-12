@@ -3,19 +3,15 @@ use regex::Regex;
 use std::cmp::{max, min};
 use std::fmt::Write;
 
-pub struct Day14;
-impl Day14 {
-    pub fn new() -> Self {
-        Self
-    }
-}
+day!(Day14, 14, "Regolith Reservoir");
+
 impl Day for Day14 {
     fn id(&self) -> usize {
-        14
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Regolith Reservoir"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

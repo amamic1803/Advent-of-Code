@@ -2,19 +2,15 @@ use crate::{Day, Error};
 use ndlife::Life;
 use std::collections::HashSet;
 
-pub struct Day17;
-impl Day17 {
-    pub fn new() -> Self {
-        Self
-    }
-}
+day!(Day17, 17, "Conway Cubes");
+
 impl Day for Day17 {
     fn id(&self) -> usize {
-        17
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Conway Cubes"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

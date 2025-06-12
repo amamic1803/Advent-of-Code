@@ -1,30 +1,30 @@
-use crate::{Day, Year};
+//! Solutions to the *Advent of Code 2016*
 
-pub mod day01;
-pub mod day02;
-pub mod day03;
-pub mod day04;
-pub mod day05;
-pub mod day06;
-pub mod day07;
-pub mod day08;
-pub mod day09;
-pub mod day10;
-pub mod day11;
-pub mod day12;
-pub mod day13;
-pub mod day14;
-pub mod day15;
-pub mod day16;
-pub mod day17;
-pub mod day18;
-pub mod day19;
-pub mod day20;
-pub mod day21;
-pub mod day22;
-pub mod day23;
-pub mod day24;
-pub mod day25;
+mod day01;
+mod day02;
+mod day03;
+mod day04;
+mod day05;
+mod day06;
+mod day07;
+mod day08;
+mod day09;
+mod day10;
+mod day11;
+mod day12;
+mod day13;
+mod day14;
+mod day15;
+mod day16;
+mod day17;
+mod day18;
+mod day19;
+mod day20;
+mod day21;
+mod day22;
+mod day23;
+mod day24;
+mod day25;
 
 #[doc(inline)]
 pub use day01::Day01;
@@ -77,49 +77,30 @@ pub use day24::Day24;
 #[doc(inline)]
 pub use day25::Day25;
 
-pub struct Year2016 {
-    days: Vec<Box<dyn Day>>,
-}
-impl Year2016 {
-    pub fn new() -> Self {
-        let mut new_self = Self {
-            days: vec![
-                Box::new(Day01::new()),
-                Box::new(Day02::new()),
-                Box::new(Day03::new()),
-                Box::new(Day04::new()),
-                Box::new(Day05::new()),
-                Box::new(Day06::new()),
-                Box::new(Day07::new()),
-                Box::new(Day08::new()),
-                Box::new(Day09::new()),
-                Box::new(Day10::new()),
-                Box::new(Day11::new()),
-                Box::new(Day12::new()),
-                Box::new(Day13::new()),
-                Box::new(Day14::new()),
-                Box::new(Day15::new()),
-                Box::new(Day16::new()),
-                Box::new(Day17::new()),
-                Box::new(Day18::new()),
-                Box::new(Day19::new()),
-                Box::new(Day20::new()),
-                Box::new(Day21::new()),
-                Box::new(Day22::new()),
-                Box::new(Day23::new()),
-                Box::new(Day24::new()),
-                Box::new(Day25::new()),
-            ],
-        };
-        new_self.days.sort_by_key(|day| day.id());
-        new_self
-    }
-}
-impl Year for Year2016 {
-    fn id(&self) -> usize {
-        2016
-    }
-    fn days<'a>(&'a self) -> Box<dyn Iterator<Item = &'a dyn Day> + 'a> {
-        Box::new(self.days.iter().map(|day| day.as_ref()))
-    }
-}
+year!(Year2016, 2016,
+    Day01,
+    Day02,
+    Day03,
+    Day04,
+    Day05,
+    Day06,
+    Day07,
+    Day08,
+    Day09,
+    Day10,
+    Day11,
+    Day12,
+    Day13,
+    Day14,
+    Day15,
+    Day16,
+    Day17,
+    Day18,
+    Day19,
+    Day20,
+    Day21,
+    Day22,
+    Day23,
+    Day24,
+    Day25
+);

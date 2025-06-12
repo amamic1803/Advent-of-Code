@@ -1,12 +1,9 @@
 use crate::{Day, Error};
 use std::collections::HashMap;
 
-pub struct Day16;
-impl Day16 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day16, 16, "Aunt Sue");
 
+impl Day16 {
     fn wanted_sue() -> HashMap<&'static str, usize> {
         let mut wanted_sue = HashMap::new();
 
@@ -45,10 +42,10 @@ impl Day16 {
 }
 impl Day for Day16 {
     fn id(&self) -> usize {
-        16
+        self.id
     }
     fn title(&self) -> &str {
-        "Aunt Sue"
+        self.title
     }
     fn part1(&self, input: &str) -> Result<String, Error> {
         let sues = Self::parse_input(input);

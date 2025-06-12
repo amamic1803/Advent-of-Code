@@ -2,11 +2,9 @@ use crate::{Day, Error};
 use regex::Regex;
 use std::sync::LazyLock;
 
-pub struct Day09;
+day!(Day09, 9, "Explosives in Cyberspace");
+
 impl Day09 {
-    pub fn new() -> Self {
-        Self
-    }
     fn decompress(mut current_string: &str) -> u64 {
         // assuming that no marker constructs a new marker while decompressing
         // seems to work for the input, I guess the input is intentionally constructed like this
@@ -55,11 +53,11 @@ impl Day09 {
 }
 impl Day for Day09 {
     fn id(&self) -> usize {
-        9
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Explosives in Cyberspace"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

@@ -1,12 +1,9 @@
 use crate::{Day, Error};
 use itertools::Itertools;
 
-pub struct Day02;
-impl Day02 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day02, 2, "1202 Program Alarm");
 
+impl Day02 {
     fn simulate(array: &mut [usize]) {
         for i in (0..(array.len() - 3)).step_by(4) {
             match array[i] {
@@ -34,11 +31,11 @@ impl Day02 {
 }
 impl Day for Day02 {
     fn id(&self) -> usize {
-        2
+        self.id
     }
 
     fn title(&self) -> &str {
-        "1202 Program Alarm"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

@@ -1,11 +1,8 @@
 use crate::{Day, Error};
 
-pub struct Day09;
-impl Day09 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day09, 9, "Stream Processing");
 
+impl Day09 {
     fn remove_cancelled_chars(input: &str) -> String {
         let mut stream = String::with_capacity(input.len());
 
@@ -23,11 +20,11 @@ impl Day09 {
 }
 impl Day for Day09 {
     fn id(&self) -> usize {
-        9
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Stream Processing"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

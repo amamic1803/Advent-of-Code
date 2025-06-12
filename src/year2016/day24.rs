@@ -2,12 +2,9 @@ use crate::shared::graph::{Graph, Vertex};
 use crate::{Day, Error};
 use std::collections::VecDeque;
 
-pub struct Day24;
-impl Day24 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day24, 24, "Air Duct Spelunking");
 
+impl Day24 {
     /// Parse input.
     /// Returns the vector of locations of each number (index)
     /// and the graph of distances between each number.
@@ -96,11 +93,11 @@ impl Day24 {
 }
 impl Day for Day24 {
     fn id(&self) -> usize {
-        24
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Air Duct Spelunking"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

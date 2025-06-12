@@ -1,23 +1,20 @@
 use crate::{Day, Error};
 use std::collections::HashSet;
 
-pub struct Day01;
-impl Day01 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day01, 1, "Chronal Calibration");
 
+impl Day01 {
     fn parse_input(input: &str) -> Vec<isize> {
         input.trim().lines().map(|line| line.parse::<isize>().unwrap()).collect()
     }
 }
 impl Day for Day01 {
     fn id(&self) -> usize {
-        1
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Chronal Calibration"
+        self.title    
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

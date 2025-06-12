@@ -2,12 +2,9 @@ use crate::{Day, Error};
 use itertools::Itertools;
 use std::collections::HashSet;
 
-pub struct Day04;
-impl Day04 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day04, 4, "Secure Container");
 
+impl Day04 {
     fn parse_input(input: &str) -> ([u8; 6], [u8; 6]) {
         input
             .trim()
@@ -45,11 +42,11 @@ impl Day04 {
 }
 impl Day for Day04 {
     fn id(&self) -> usize {
-        4
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Secure Container"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

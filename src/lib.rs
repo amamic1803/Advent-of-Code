@@ -2,13 +2,13 @@
 
 use std::cmp::Ordering;
 use std::error::Error as StdError;
-use std::fmt::{self, Debug, Display, Formatter, Write};
-use std::hash::Hash;
+use std::fmt::{self, Display, Formatter};
 use std::time::{Duration, Instant};
 
 macro_rules! day {
     ($struct_name:ident, $id:literal, $title:literal) => {
-        #[doc = $title]
+        #[doc = concat!("*", $title, "*")]
+        #[derive(Copy, Clone)]
         pub struct $struct_name {
             id: usize,
             title: &'static str,
@@ -31,9 +31,10 @@ macro_rules! day {
 
 macro_rules! year {
     ($struct_name:ident, $id:literal, $($day:ident),* ) => {
+        #[doc = concat!("***", "Advent of Code ", $id, "***")]
         pub struct $struct_name {
             id: usize,
-            days: Vec<Box<dyn Day>>,
+            days: Vec<Box<dyn crate::Day>>,
         }
         impl $struct_name {
             pub fn new() -> Self {
@@ -52,11 +53,11 @@ macro_rules! year {
                 Self::new()
             }
         }
-        impl Year for $struct_name {
+        impl crate::Year for $struct_name {
             fn id(&self) -> usize {
                 self.id
             }
-            fn days<'a>(&'a self) -> Box<dyn Iterator<Item = &'a dyn Day> + 'a> {
+            fn days<'a>(&'a self) -> Box<dyn Iterator<Item = &'a dyn crate::Day> + 'a> {
                 Box::new(self.days.iter().map(|day| day.as_ref()))
             }
         }
@@ -111,11 +112,11 @@ impl Display for Error {
 impl StdError for Error {}
 
 /// A structure representing the Advent of Code.
-pub struct AdventOfCodeInstance {
+pub struct AdventOfCode {
     /// A vector of years, each containing a vector of days.
     years: Vec<Box<dyn Year>>,
 }
-impl AdventOfCodeInstance {
+impl AdventOfCode {
     /// Creates a new `Challenges` structure.
     /// # Arguments
     /// * `years` - A vector of years, each containing a vector of days.
@@ -139,36 +140,34 @@ impl AdventOfCodeInstance {
         new_obj.years.sort_by_key(|year| year.id());
         new_obj
     }
-
-    /// Prepares a pretty string containing the list of all available challenges.
-    /// Organized by year and day.
-    /// # Returns
-    /// A string containing the list of all available challenges.
-    pub fn pretty_list(&self) -> String {
-        let mut result_str = String::new();
-
-        result_str.push_str("Advent of Code:");
+}
+impl Default for AdventOfCode {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+impl Display for AdventOfCode {
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+        write!(f, "Advent of Code:")?;
 
         for year in self.years() {
-            write!(&mut result_str, "\n  Year {:04}:", year.id()).unwrap();
+            write!(f, "\n  Year {:04}:", year.id())?;
             for day in year.days() {
-                write!(&mut result_str, "\n    --- Day {}: {} ---", day.id(), day.title()).unwrap();
+                write!(f, "\n    --- Day {}: {} ---", day.id(), day.title())?;
             }
         }
 
-        result_str.push('\n');
-
-        result_str
+        Ok(())
     }
 }
-impl AdventOfCode for AdventOfCodeInstance {
+impl AoC for AdventOfCode {
     fn years<'a>(&'a self) -> Box<dyn Iterator<Item = &'a dyn Year> + 'a> {
         Box::new(self.years.iter().map(|year| year.as_ref()))
     }
 }
 
 /// A trait representing the Advent of Code.
-pub trait AdventOfCode: Send + Sync {
+pub trait AoC: Send + Sync {
     /// Returns all available years in the Advent of Code.
     /// # Returns
     /// An iterator over the years, sorted by their year number in ascending order.

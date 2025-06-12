@@ -1,11 +1,8 @@
 use crate::{Day, Error};
 
-pub struct Day04;
-impl Day04 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day04, 4, "Camp Cleanup");
 
+impl Day04 {
     fn process_input(input: &str) -> (usize, usize) {
         let mut contain: usize = 0;
         let mut overlap: usize = 0;
@@ -30,11 +27,11 @@ impl Day04 {
 }
 impl Day for Day04 {
     fn id(&self) -> usize {
-        4
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Camp Cleanup"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

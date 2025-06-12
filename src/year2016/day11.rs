@@ -3,12 +3,9 @@ use regex::Regex;
 use smallvec::SmallVec;
 use std::collections::{HashMap, HashSet, VecDeque};
 
-pub struct Day11;
-impl Day11 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day11, 11, "Radioisotope Thermoelectric Generators");
 
+impl Day11 {
     /// Search for the minimum number of steps to get from initial_state to wanted_state using BFS.
     /// Returns `None` if no solution is found
     /// (there is no way to get to wanted_state from initial_state).
@@ -80,11 +77,11 @@ impl Day11 {
 }
 impl Day for Day11 {
     fn id(&self) -> usize {
-        11
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Radioisotope Thermoelectric Generators"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

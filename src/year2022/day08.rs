@@ -1,11 +1,8 @@
 use crate::{Day, Error};
 
-pub struct Day08;
-impl Day08 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day08, 8, "Treetop Tree House");
 
+impl Day08 {
     fn parse_forest(input: &str) -> Vec<Vec<u8>> {
         let mut forest = vec![];
         let mut row;
@@ -21,11 +18,11 @@ impl Day08 {
 }
 impl Day for Day08 {
     fn id(&self) -> usize {
-        8
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Treetop Tree House"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

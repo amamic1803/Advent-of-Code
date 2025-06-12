@@ -4,19 +4,15 @@ use std::cmp::Ordering;
 use std::collections::HashMap;
 use std::sync::LazyLock;
 
-pub struct Day07;
-impl Day07 {
-    pub fn new() -> Self {
-        Self
-    }
-}
+day!(Day07, 7, "Camel Cards");
+
 impl Day for Day07 {
     fn id(&self) -> usize {
-        7
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Camel Cards"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

@@ -1,11 +1,8 @@
 use crate::{Day, Error};
 
-pub struct Day05;
-impl Day05 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day05, 5, "Doesn't He Have Intern-Elves For This?");
 
+impl Day05 {
     fn count_nice_strings<F>(input: &str, nice_str: F) -> usize
     where
         F: Fn(&str) -> bool,
@@ -21,10 +18,10 @@ impl Day05 {
 }
 impl Day for Day05 {
     fn id(&self) -> usize {
-        5
+        self.id
     }
     fn title(&self) -> &str {
-        "Doesn't He Have Intern-Elves For This?"
+        self.title
     }
     fn part1(&self, input: &str) -> Result<String, Error> {
         Ok(Self::count_nice_strings(input, |string: &str| {

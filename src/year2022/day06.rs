@@ -1,11 +1,8 @@
 use crate::{Day, Error};
 
-pub struct Day06;
-impl Day06 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day06, 6, "Tuning Trouble");
 
+impl Day06 {
     fn start_of_packet(inp: &str) -> bool {
         for x in inp.chars() {
             let mut counted = 0;
@@ -23,11 +20,11 @@ impl Day06 {
 }
 impl Day for Day06 {
     fn id(&self) -> usize {
-        6
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Tuning Trouble"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

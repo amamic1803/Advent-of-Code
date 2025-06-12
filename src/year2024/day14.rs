@@ -2,19 +2,15 @@ use crate::{Day, Error};
 use std::cmp::Ordering;
 use std::sync::LazyLock;
 
-pub struct Day14;
-impl Day14 {
-    pub fn new() -> Self {
-        Self
-    }
-}
+day!(Day14, 14, "Restroom Redoubt");
+
 impl Day for Day14 {
     fn id(&self) -> usize {
-        14
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Restroom Redoubt"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

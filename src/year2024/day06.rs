@@ -1,12 +1,9 @@
 use crate::{Day, Error};
 use std::collections::HashSet;
 
-pub struct Day06;
-impl Day06 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day06, 6, "Guard Gallivant");
 
+impl Day06 {
     fn parse_input(input: &str) -> (Location, Vec<Vec<char>>) {
         let mut grid = Vec::new();
         let mut location = Location {
@@ -105,11 +102,11 @@ impl Day06 {
 }
 impl Day for Day06 {
     fn id(&self) -> usize {
-        6
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Guard Gallivant"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

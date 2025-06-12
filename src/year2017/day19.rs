@@ -1,19 +1,15 @@
 use crate::{Day, Error};
 use itertools::Itertools;
 
-pub struct Day19;
-impl Day19 {
-    pub fn new() -> Self {
-        Self
-    }
-}
+day!(Day19, 19, "A Series of Tubes");
+
 impl Day for Day19 {
     fn id(&self) -> usize {
-        19
+        self.id
     }
 
     fn title(&self) -> &str {
-        "A Series of Tubes"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

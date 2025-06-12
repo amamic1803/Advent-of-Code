@@ -1,11 +1,8 @@
 use crate::{Day, Error};
 
-pub struct Day22;
-impl Day22 {
-    pub fn new() -> Self {
-        Self
-    }
+day!(Day22, 22, "Wizard Simulator 20XX");
 
+impl Day22 {
     fn least_mana_to_win(mut boss_stats: [usize; 2], mut my_stats: [usize; 2], turn: bool, mut active_spells: [Option<((&str, usize), usize)>; 3]) -> (bool, usize) {
         // (true if I win, mana spent)
 
@@ -414,10 +411,10 @@ impl Day22 {
 }
 impl Day for Day22 {
     fn id(&self) -> usize {
-        22
+        self.id
     }
     fn title(&self) -> &str {
-        "Wizard Simulator 20XX"
+        self.title
     }
     fn part1(&self, input: &str) -> Result<String, Error> {
         let boss_stats = Self::parse_input(input); // health, damage

@@ -1,18 +1,14 @@
 use crate::{Day, Error};
 
-pub struct Day01;
-impl Day01 {
-    pub fn new() -> Self {
-        Self
-    }
-}
+day!(Day01, 1, "Inverse Captcha");
+
 impl Day for Day01 {
     fn id(&self) -> usize {
-        1
+        self.id
     }
 
     fn title(&self) -> &str {
-        "Inverse Captcha"
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {
