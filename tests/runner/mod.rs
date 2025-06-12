@@ -1,4 +1,4 @@
-use aocode::{AdventOfCode, AdventOfCodeInstance};
+use aocode::{AoC, AdventOfCode};
 use std::fs;
 
 /// A function that runs a test for a given year, day, part and expected output.
@@ -14,7 +14,7 @@ pub fn run_test(year: usize, day: usize, part: usize) {
         .replace("\r\n", "\n");
 
     // test library
-    let output_lib = AdventOfCodeInstance::new().run(year, day, part, &input).unwrap();
+    let output_lib = AdventOfCode::new().run(year, day, part, &input).unwrap();
 
     assert_eq!(output_lib.trim(), output.trim());
 }
