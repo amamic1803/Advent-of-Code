@@ -166,6 +166,7 @@ impl AoC for AdventOfCode {
     }
 }
 
+
 /// A trait representing the Advent of Code.
 pub trait AoC: Send + Sync {
     /// Returns all available years in the Advent of Code.

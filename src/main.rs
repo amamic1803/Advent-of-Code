@@ -1,93 +1,48 @@
-use std::fs::read_to_string;
-use std::path::PathBuf;
-
+use std::io::{stdin, Read};
+use std::process::ExitCode;
 use clap::{Arg, ArgAction, command, value_parser};
+use aocode::{AdventOfCode, AoC};
 
-use aocode::{AdventOfCode, AdventOfCodeInstance};
-
-fn main() {
+fn main() -> ExitCode {
     let argv = command!()
         .arg(
             Arg::new("year")
                 .value_name("YEAR")
                 .help("The year of the Advent of Code challenge")
                 .required_unless_present("list")
-                .value_parser(value_parser!(u32).range(2015..)),
+                .value_parser(value_parser!(u32).range(2015..))
         )
         .arg(
             Arg::new("day")
                 .value_name("DAY")
                 .help("The day of the Advent of Code challenge")
                 .required_unless_present("list")
-                .value_parser(value_parser!(u32).range(1..=25)),
+                .value_parser(value_parser!(u32).range(1..=25))
         )
         .arg(
             Arg::new("part")
                 .value_name("PART")
                 .help("The part of the Advent of Code challenge")
                 .required_unless_present("list")
-                .value_parser(value_parser!(u32).range(1..=2)),
+                .value_parser(value_parser!(u32).range(1..=2))
         )
         .arg(
             Arg::new("list")
                 .short('l')
                 .long("list")
                 .action(ArgAction::SetTrue)
-                .help("List all Advent of Code challenges")
-                .conflicts_with_all(["solve", "text", "show_input", "benchmark"])
-                .required(false),
-        )
-        .arg(
-            Arg::new("solve")
-                .short('s')
-                .long("solve")
-                .action(ArgAction::SetTrue)
-                .help("Solve the Advent of Code challenge (default)")
-                .conflicts_with_all(["text", "show_input", "list", "benchmark"])
+                .help("List all available Advent of Code challenges")
+                .conflicts_with("benchmark")
                 .required(false)
-                .default_value_ifs([
-                    ("text", "true", Some("false")),
-                    ("show_input", "true", Some("false")),
-                    ("list", "true", Some("false")),
-                    ("benchmark", "true", Some("false")),
-                ])
-                .default_value("true"),
         )
         .arg(
             Arg::new("benchmark")
                 .short('b')
                 .long("benchmark")
                 .action(ArgAction::SetTrue)
-                .help("Benchmark the Advent of Code challenge")
-                .conflicts_with_all(["text", "show_input", "list", "solve"])
-                .required(false),
-        )
-        .arg(
-            Arg::new("text")
-                .short('t')
-                .long("text")
-                .action(ArgAction::SetTrue)
-                .help("Show the text of the Advent of Code challenge")
-                .conflicts_with_all(["solve", "show_input", "list", "benchmark"])
-                .required(false),
-        )
-        .arg(
-            Arg::new("show_input")
-                .short('p')
-                .long("show_input")
-                .action(ArgAction::SetTrue)
-                .help("Show the input of the Advent of Code challenge")
-                .conflicts_with_all(["text", "solve", "list", "benchmark"])
-                .required(false),
-        )
-        .arg(
-            Arg::new("input")
-                .short('i')
-                .long("input")
-                .help("Set the custom input to the Advent of Code challenge")
-                .value_parser(value_parser!(PathBuf))
-                .conflicts_with_all(["text", "list"])
-                .required(false),
+                .help("Measure the time taken to solve the challenge")
+                .conflicts_with("list")
+                .required(false)
         )
         .get_matches();
 
@@ -95,64 +50,43 @@ fn main() {
     let day_num = argv.get_one::<u32>("day");
     let part_num = argv.get_one::<u32>("part");
     let list_flag: bool = argv.get_flag("list");
-    let solve_flag: bool = argv.get_flag("solve");
     let benchmark_flag: bool = argv.get_flag("benchmark");
-    let text_flag: bool = argv.get_flag("text");
-    let show_input_flag: bool = argv.get_flag("show_input");
-    let input = argv.get_one::<PathBuf>("input");
 
-    let advent_of_code = AdventOfCodeInstance::new();
+    let advent_of_code = AdventOfCode::new();
 
     if list_flag {
-        println!("{}", advent_of_code.pretty_list());
+        println!("{}", advent_of_code);
     } else {
-        let year_num: usize = match year_num {
-            Some(year_num) => *year_num as usize,
-            None => unreachable!("Year number is not set, but list_flag is not set either"),
-        };
-        let day_num: usize = match day_num {
-            Some(day_num) => *day_num as usize,
-            None => unreachable!("Day number is not set, but list_flag is not set either"),
-        };
-        let part_num: usize = match part_num {
-            Some(part_num) => *part_num as usize,
-            None => unreachable!("Part number is not set, but list_flag is not set either"),
-        };
+        // unwrap the year, day, and part numbers
+        // clap will make sure that they are present here
+        let year_num = *year_num.unwrap() as usize;
+        let day_num = *day_num.unwrap() as usize;
+        let part_num = *part_num.unwrap() as usize;
 
-        let input: String = match input {
-            Some(input) => match read_to_string(input) {
-                Ok(input_str) => input_str,
-                Err(err) => {
-                    eprintln!("Error reading input file: {}", err);
-                    std::process::exit(1);
-                }
-            },
-            None => String::from(""),
-        };
-
-        if solve_flag {
+        let mut input = String::new();
+        if let Err(err) = stdin().read_to_string(&mut input) {
+            eprintln!("Error reading the input: {}", err);
+            return ExitCode::FAILURE;
+        }
+        
+        if !benchmark_flag {
             match advent_of_code.run(year_num, day_num, part_num, &input) {
-                Ok(result) => {
-                    println!("{result}");
-                }
+                Ok(result) => println!("{}", result),
                 Err(err) => {
-                    eprintln!("Error running challenge: {}", err);
-                    std::process::exit(1);
-                }
-            }
-        } else if benchmark_flag {
-            match advent_of_code.benchmark(year_num, day_num, part_num, &input) {
-                Ok((result, elapsed)) => {
-                    println!("Result: {}", result);
-                    println!("Time elapsed: {} ms", elapsed.as_millis());
-                }
-                Err(err) => {
-                    eprintln!("Error benchmarking challenge: {}", err);
-                    std::process::exit(1);
-                }
+                    eprintln!("Error running the challenge: {}", err);
+                    return ExitCode::FAILURE;
+                },
             }
         } else {
-            unreachable!("All flags are false, but at least one should be true");
+            match advent_of_code.benchmark(year_num, day_num, part_num, &input) {
+                Ok((result, duration)) => println!("{}    --- {} s", result, duration.as_secs_f64()),
+                Err(err) => {
+                    eprintln!("Error running the challenge: {}", err);
+                    return ExitCode::FAILURE;
+                },
+            }
         }
     }
+
+    ExitCode::SUCCESS
 }
