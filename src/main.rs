@@ -1,7 +1,7 @@
-use std::io::{stdin, Read};
-use std::process::ExitCode;
-use clap::{Arg, ArgAction, command, value_parser};
 use aocode::{AdventOfCode, AoC};
+use clap::{Arg, ArgAction, command, value_parser};
+use std::io::{Read, stdin};
+use std::process::ExitCode;
 
 fn main() -> ExitCode {
     let argv = command!()
@@ -10,21 +10,21 @@ fn main() -> ExitCode {
                 .value_name("YEAR")
                 .help("The year of the Advent of Code challenge")
                 .required_unless_present("list")
-                .value_parser(value_parser!(u32).range(2015..))
+                .value_parser(value_parser!(u32).range(2015..)),
         )
         .arg(
             Arg::new("day")
                 .value_name("DAY")
                 .help("The day of the Advent of Code challenge")
                 .required_unless_present("list")
-                .value_parser(value_parser!(u32).range(1..=25))
+                .value_parser(value_parser!(u32).range(1..=25)),
         )
         .arg(
             Arg::new("part")
                 .value_name("PART")
                 .help("The part of the Advent of Code challenge")
                 .required_unless_present("list")
-                .value_parser(value_parser!(u32).range(1..=2))
+                .value_parser(value_parser!(u32).range(1..=2)),
         )
         .arg(
             Arg::new("list")
@@ -33,7 +33,7 @@ fn main() -> ExitCode {
                 .action(ArgAction::SetTrue)
                 .help("List all available Advent of Code challenges")
                 .conflicts_with("benchmark")
-                .required(false)
+                .required(false),
         )
         .arg(
             Arg::new("benchmark")
@@ -42,7 +42,7 @@ fn main() -> ExitCode {
                 .action(ArgAction::SetTrue)
                 .help("Measure the time taken to solve the challenge")
                 .conflicts_with("list")
-                .required(false)
+                .required(false),
         )
         .get_matches();
 
@@ -68,14 +68,14 @@ fn main() -> ExitCode {
             eprintln!("Error reading the input: {}", err);
             return ExitCode::FAILURE;
         }
-        
+
         if !benchmark_flag {
             match advent_of_code.run(year_num, day_num, part_num, &input) {
                 Ok(result) => println!("{}", result),
                 Err(err) => {
                     eprintln!("Error running the challenge: {}", err);
                     return ExitCode::FAILURE;
-                },
+                }
             }
         } else {
             match advent_of_code.benchmark(year_num, day_num, part_num, &input) {
@@ -83,7 +83,7 @@ fn main() -> ExitCode {
                 Err(err) => {
                     eprintln!("Error running the challenge: {}", err);
                     return ExitCode::FAILURE;
-                },
+                }
             }
         }
     }
