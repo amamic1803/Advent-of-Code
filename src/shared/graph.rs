@@ -20,7 +20,9 @@ pub struct Graph {
 impl Graph {
     /// Constructs a new `Graph`.
     pub fn new() -> Self {
-        Self { adj_list: HashMap::new() }
+        Self {
+            adj_list: HashMap::new(),
+        }
     }
 
     /// Constructs a new `Graph` with a specified capacity for the number of vertices.
@@ -143,7 +145,16 @@ impl Graph {
         let min_edges = self
             .adj_list
             .iter()
-            .map(|(key, value)| (*key, value.iter().map(|edge| edge.1).min().expect("Invalid graph! (vertex with no edges)")))
+            .map(|(key, value)| {
+                (
+                    *key,
+                    value
+                        .iter()
+                        .map(|edge| edge.1)
+                        .min()
+                        .expect("Invalid graph! (vertex with no edges)"),
+                )
+            })
             .collect::<HashMap<_, _>>();
 
         // priority queue
@@ -176,7 +187,10 @@ impl Graph {
                 let first_vertex = node.path.first().unwrap();
                 let last_vertex = node.path.last().unwrap();
                 node.min_cost -= min_edges[last_vertex];
-                match self.adj_list[last_vertex].iter().find(|(id, _)| id == first_vertex) {
+                match self.adj_list[last_vertex]
+                    .iter()
+                    .find(|(id, _)| id == first_vertex)
+                {
                     None => continue,
                     Some(edge) => node.min_cost += edge.1,
                 }
@@ -248,7 +262,16 @@ impl Graph {
         let max_edges = self
             .adj_list
             .iter()
-            .map(|(key, value)| (*key, value.iter().map(|edge| edge.1).max().expect("Invalid graph! (vertex with no edges)")))
+            .map(|(key, value)| {
+                (
+                    *key,
+                    value
+                        .iter()
+                        .map(|edge| edge.1)
+                        .max()
+                        .expect("Invalid graph! (vertex with no edges)"),
+                )
+            })
             .collect::<HashMap<_, _>>();
 
         // priority queue
@@ -281,7 +304,10 @@ impl Graph {
                 let first_vertex = node.path.first().unwrap();
                 let last_vertex = node.path.last().unwrap();
                 node.max_cost -= max_edges[last_vertex];
-                match self.adj_list[last_vertex].iter().find(|(id, _)| id == first_vertex) {
+                match self.adj_list[last_vertex]
+                    .iter()
+                    .find(|(id, _)| id == first_vertex)
+                {
                     None => continue,
                     Some(edge) => node.max_cost += edge.1,
                 }
@@ -335,9 +361,15 @@ impl Graph {
 
         // set all edges to/from the added vertex to 0
         for vertex in &vertices {
-            self.adj_list.get_mut(vertex).unwrap().push((added_vertex, 0));
+            self.adj_list
+                .get_mut(vertex)
+                .unwrap()
+                .push((added_vertex, 0));
         }
-        self.adj_list.get_mut(&added_vertex).unwrap().extend(vertices.iter().map(|vertex| (*vertex, 0)));
+        self.adj_list
+            .get_mut(&added_vertex)
+            .unwrap()
+            .extend(vertices.iter().map(|vertex| (*vertex, 0)));
 
         // find minimum hamiltonian cycle
         let (min_cost, mut min_path) = self.hamiltonian_cycle_min();
@@ -347,7 +379,10 @@ impl Graph {
         // added_vertex must be removed from it, and adjacent vertices must be first and last vertices in the path
 
         // find current position of the added_vertex
-        let added_vertex_pos = min_path.iter().position(|vertex| vertex == &added_vertex).unwrap();
+        let added_vertex_pos = min_path
+            .iter()
+            .position(|vertex| vertex == &added_vertex)
+            .unwrap();
 
         // rotate min_path so that the added_vertex is at index 0
         min_path.rotate_left(added_vertex_pos);
@@ -378,9 +413,15 @@ impl Graph {
 
         // set all edges to/from the added vertex to 0
         for vertex in &vertices {
-            self.adj_list.get_mut(vertex).unwrap().push((added_vertex, 0));
+            self.adj_list
+                .get_mut(vertex)
+                .unwrap()
+                .push((added_vertex, 0));
         }
-        self.adj_list.get_mut(&added_vertex).unwrap().extend(vertices.iter().map(|vertex| (*vertex, 0)));
+        self.adj_list
+            .get_mut(&added_vertex)
+            .unwrap()
+            .extend(vertices.iter().map(|vertex| (*vertex, 0)));
 
         // find maximum hamiltonian cycle
         let (max_cost, mut max_path) = self.hamiltonian_cycle_max();
@@ -390,7 +431,10 @@ impl Graph {
         // added_vertex must be removed from it, and adjacent vertices must be first and last vertices in the path
 
         // find current position of the added_vertex
-        let added_vertex_pos = max_path.iter().position(|vertex| vertex == &added_vertex).unwrap();
+        let added_vertex_pos = max_path
+            .iter()
+            .position(|vertex| vertex == &added_vertex)
+            .unwrap();
 
         // rotate max_path so that the added_vertex is at index 0
         max_path.rotate_left(added_vertex_pos);
@@ -409,7 +453,11 @@ impl Graph {
     /// Note that the ends are fixed, but not the direction of the path.
     /// Returns a tuple containing the minimum cost and the vertices in the path.
     /// The direction of the path is from lower indices to higher indices.
-    pub fn hamiltonian_path_fixed_ends_min(&mut self, end1: Vertex, end2: Vertex) -> (isize, Vec<Vertex>) {
+    pub fn hamiltonian_path_fixed_ends_min(
+        &mut self,
+        end1: Vertex,
+        end2: Vertex,
+    ) -> (isize, Vec<Vertex>) {
         if self.adj_list.len() < 2 {
             panic!("The graph must contain at least 2 vertices.");
         }
@@ -424,10 +472,22 @@ impl Graph {
         let added_vertex = self.new_vertex();
 
         // set edges between start and added_vertex, added_vertex and end, to 0
-        self.adj_list.get_mut(&added_vertex).unwrap().push((end1, 0));
-        self.adj_list.get_mut(&end1).unwrap().push((added_vertex, 0));
-        self.adj_list.get_mut(&added_vertex).unwrap().push((end2, 0));
-        self.adj_list.get_mut(&end2).unwrap().push((added_vertex, 0));
+        self.adj_list
+            .get_mut(&added_vertex)
+            .unwrap()
+            .push((end1, 0));
+        self.adj_list
+            .get_mut(&end1)
+            .unwrap()
+            .push((added_vertex, 0));
+        self.adj_list
+            .get_mut(&added_vertex)
+            .unwrap()
+            .push((end2, 0));
+        self.adj_list
+            .get_mut(&end2)
+            .unwrap()
+            .push((added_vertex, 0));
 
         // find minimum hamiltonian cycle
         let (min_cost, mut min_path) = self.hamiltonian_cycle_min();
@@ -438,7 +498,10 @@ impl Graph {
         // (guaranteed to be end1, end2) must be first and last vertices in the path
 
         // find current position of the added_vertex
-        let added_vertex_pos = min_path.iter().position(|vertex| vertex == &added_vertex).unwrap();
+        let added_vertex_pos = min_path
+            .iter()
+            .position(|vertex| vertex == &added_vertex)
+            .unwrap();
 
         // rotate min_path so that the added_vertex is at index 0
         min_path.rotate_left(added_vertex_pos);
@@ -457,7 +520,11 @@ impl Graph {
     /// Note that the ends are fixed, but not the direction of the path.
     /// Returns a tuple containing the maximum cost and the vertices in the path.
     /// The direction of the path is from lower indices to higher indices.
-    pub fn hamiltonian_path_fixed_ends_max(&mut self, end1: Vertex, end2: Vertex) -> (isize, Vec<Vertex>) {
+    pub fn hamiltonian_path_fixed_ends_max(
+        &mut self,
+        end1: Vertex,
+        end2: Vertex,
+    ) -> (isize, Vec<Vertex>) {
         if self.adj_list.len() < 2 {
             panic!("The graph must contain at least 2 vertices.");
         }
@@ -472,10 +539,22 @@ impl Graph {
         let added_vertex = self.new_vertex();
 
         // set edges between start and added_vertex, added_vertex and end, to 0
-        self.adj_list.get_mut(&added_vertex).unwrap().push((end1, 0));
-        self.adj_list.get_mut(&end1).unwrap().push((added_vertex, 0));
-        self.adj_list.get_mut(&added_vertex).unwrap().push((end2, 0));
-        self.adj_list.get_mut(&end2).unwrap().push((added_vertex, 0));
+        self.adj_list
+            .get_mut(&added_vertex)
+            .unwrap()
+            .push((end1, 0));
+        self.adj_list
+            .get_mut(&end1)
+            .unwrap()
+            .push((added_vertex, 0));
+        self.adj_list
+            .get_mut(&added_vertex)
+            .unwrap()
+            .push((end2, 0));
+        self.adj_list
+            .get_mut(&end2)
+            .unwrap()
+            .push((added_vertex, 0));
 
         // find maximum hamiltonian cycle
         let (max_cost, mut max_path) = self.hamiltonian_cycle_max();
@@ -486,7 +565,10 @@ impl Graph {
         // (guaranteed to be end1, end2) must be first and last vertices in the path
 
         // find current position of the added_vertex
-        let added_vertex_pos = max_path.iter().position(|vertex| vertex == &added_vertex).unwrap();
+        let added_vertex_pos = max_path
+            .iter()
+            .position(|vertex| vertex == &added_vertex)
+            .unwrap();
 
         // rotate max_path so that the added_vertex is at index 0
         max_path.rotate_left(added_vertex_pos);

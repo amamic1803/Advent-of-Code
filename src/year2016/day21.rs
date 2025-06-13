@@ -40,8 +40,13 @@ impl Instruction {
         let words: Vec<&str> = s.split_whitespace().collect();
         match words[0] {
             "swap" => match words[1] {
-                "position" => Instruction::SwapPosition(words[2].parse().unwrap(), words[5].parse().unwrap()),
-                "letter" => Instruction::SwapLetter(words[2].chars().next().unwrap(), words[5].chars().next().unwrap()),
+                "position" => {
+                    Instruction::SwapPosition(words[2].parse().unwrap(), words[5].parse().unwrap())
+                }
+                "letter" => Instruction::SwapLetter(
+                    words[2].chars().next().unwrap(),
+                    words[5].chars().next().unwrap(),
+                ),
                 _ => panic!("Invalid swap instruction"),
             },
             "rotate" => match words[1] {
@@ -131,7 +136,11 @@ impl PasswordComputer {
                             correct_parent_rotations.push(parent_rotation);
                         }
                     }
-                    assert_eq!(correct_parent_rotations.len(), 1, "Multiple parent rotations found, cannot unscramble!");
+                    assert_eq!(
+                        correct_parent_rotations.len(),
+                        1,
+                        "Multiple parent rotations found, cannot unscramble!"
+                    );
                     password = correct_parent_rotations.into_iter().next().unwrap();
                 }
                 Instruction::Reverse(x, y) => password[x..=y].reverse(),

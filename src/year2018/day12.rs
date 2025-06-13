@@ -39,7 +39,13 @@ impl Pots {
     fn new(input: &str) -> Self {
         let mut lines = input.lines();
 
-        let mut initial_state: Vec<bool> = lines.next().unwrap().trim_start_matches("initial state: ").chars().map(|c| c == '#').collect();
+        let mut initial_state: Vec<bool> = lines
+            .next()
+            .unwrap()
+            .trim_start_matches("initial state: ")
+            .chars()
+            .map(|c| c == '#')
+            .collect();
         let mut first_pot = 0;
         while !initial_state[0] {
             initial_state.remove(0);

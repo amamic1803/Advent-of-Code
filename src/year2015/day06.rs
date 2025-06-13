@@ -21,8 +21,14 @@ impl Day06 {
                     let mut split2 = line_vec[4].split(',');
                     result.push((
                         1,
-                        (split.next().unwrap().parse().unwrap(), split.next().unwrap().parse().unwrap()),
-                        (split2.next().unwrap().parse().unwrap(), split2.next().unwrap().parse().unwrap()),
+                        (
+                            split.next().unwrap().parse().unwrap(),
+                            split.next().unwrap().parse().unwrap(),
+                        ),
+                        (
+                            split2.next().unwrap().parse().unwrap(),
+                            split2.next().unwrap().parse().unwrap(),
+                        ),
                     ));
                 }
                 "off" => {
@@ -30,8 +36,14 @@ impl Day06 {
                     let mut split2 = line_vec[4].split(',');
                     result.push((
                         0,
-                        (split.next().unwrap().parse().unwrap(), split.next().unwrap().parse().unwrap()),
-                        (split2.next().unwrap().parse().unwrap(), split2.next().unwrap().parse().unwrap()),
+                        (
+                            split.next().unwrap().parse().unwrap(),
+                            split.next().unwrap().parse().unwrap(),
+                        ),
+                        (
+                            split2.next().unwrap().parse().unwrap(),
+                            split2.next().unwrap().parse().unwrap(),
+                        ),
                     ));
                 }
                 _ => {
@@ -39,8 +51,14 @@ impl Day06 {
                     let mut split2 = line_vec[3].split(',');
                     result.push((
                         2,
-                        (split.next().unwrap().parse().unwrap(), split.next().unwrap().parse().unwrap()),
-                        (split2.next().unwrap().parse().unwrap(), split2.next().unwrap().parse().unwrap()),
+                        (
+                            split.next().unwrap().parse().unwrap(),
+                            split.next().unwrap().parse().unwrap(),
+                        ),
+                        (
+                            split2.next().unwrap().parse().unwrap(),
+                            split2.next().unwrap().parse().unwrap(),
+                        ),
                     ));
                 }
             }

@@ -48,12 +48,20 @@ impl Day for Day04 {
 
     fn part1(&self, input: &str) -> Result<String, Error> {
         let passports = Self::parse_input(input);
-        Ok(passports.iter().filter(|p| p.is_valid1()).count().to_string())
+        Ok(passports
+            .iter()
+            .filter(|p| p.is_valid1())
+            .count()
+            .to_string())
     }
 
     fn part2(&self, input: &str) -> Result<String, Error> {
         let passports = Self::parse_input(input);
-        Ok(passports.iter().filter(|p| p.is_valid2()).count().to_string())
+        Ok(passports
+            .iter()
+            .filter(|p| p.is_valid2())
+            .count()
+            .to_string())
     }
 }
 
@@ -82,7 +90,13 @@ impl Passport<'_> {
     }
 
     fn is_valid1(&self) -> bool {
-        self.byr.is_some() && self.iyr.is_some() && self.eyr.is_some() && self.hgt.is_some() && self.hcl.is_some() && self.ecl.is_some() && self.pid.is_some()
+        self.byr.is_some()
+            && self.iyr.is_some()
+            && self.eyr.is_some()
+            && self.hgt.is_some()
+            && self.hcl.is_some()
+            && self.ecl.is_some()
+            && self.pid.is_some()
     }
 
     fn is_valid2(&self) -> bool {

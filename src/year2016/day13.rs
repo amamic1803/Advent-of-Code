@@ -58,7 +58,12 @@ impl Maze {
     }
 
     fn check_position(&self, position: (usize, usize)) -> bool {
-        let mut value = position.0.pow(2) + 3 * position.0 + 2 * position.0 * position.1 + position.1 + position.1.pow(2) + self.favorite_number;
+        let mut value = position.0.pow(2)
+            + 3 * position.0
+            + 2 * position.0 * position.1
+            + position.1
+            + position.1.pow(2)
+            + self.favorite_number;
         let mut number_of_ones = 0;
 
         while value != 0 {

@@ -48,7 +48,10 @@ impl Day for Day11 {
         let mut x = 0i32;
         let mut y_half = 0i32;
 
-        input.trim().split(',').for_each(|direction| Self::process_direction(direction, &mut x, &mut y_half));
+        input
+            .trim()
+            .split(',')
+            .for_each(|direction| Self::process_direction(direction, &mut x, &mut y_half));
 
         Ok(Self::distance(x, y_half).to_string())
     }

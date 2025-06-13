@@ -8,8 +8,16 @@ impl Day06 {
 
     fn parse_input(input: &str) -> Vec<(u64, u64)> {
         let mut input = input.trim().lines();
-        let time_line = input.next().unwrap().trim_start_matches("Time:").split_whitespace();
-        let distance_line = input.next().unwrap().trim_start_matches("Distance:").split_whitespace();
+        let time_line = input
+            .next()
+            .unwrap()
+            .trim_start_matches("Time:")
+            .split_whitespace();
+        let distance_line = input
+            .next()
+            .unwrap()
+            .trim_start_matches("Distance:")
+            .split_whitespace();
 
         let mut input_cases = Vec::new();
         for (time, distance) in zip(time_line, distance_line) {
@@ -35,9 +43,13 @@ impl Day06 {
         // if the roots are itself integers, they shouldn't be counted
         // (because the distance is equal to the maximum distance)
 
-        let mut root_high = (-((Self::ACCELERATION * time) as f64) - (((Self::ACCELERATION * time).pow(2) - 4 * Self::ACCELERATION * distance) as f64).sqrt())
+        let mut root_high = (-((Self::ACCELERATION * time) as f64)
+            - (((Self::ACCELERATION * time).pow(2) - 4 * Self::ACCELERATION * distance) as f64)
+                .sqrt())
             / (-2.0 * Self::ACCELERATION as f64);
-        let mut root_low = (-((Self::ACCELERATION * time) as f64) + (((Self::ACCELERATION * time).pow(2) - 4 * Self::ACCELERATION * distance) as f64).sqrt())
+        let mut root_low = (-((Self::ACCELERATION * time) as f64)
+            + (((Self::ACCELERATION * time).pow(2) - 4 * Self::ACCELERATION * distance) as f64)
+                .sqrt())
             / (-2.0 * Self::ACCELERATION as f64);
 
         if (root_low - root_low.round()).abs() <= 10e-8 {
@@ -74,8 +86,18 @@ impl Day for Day06 {
 
     fn part2(&self, input: &str) -> Result<String, Error> {
         let races = Self::parse_input(input);
-        let time = races.iter().map(|(time, _)| time.to_string()).collect::<String>().parse().unwrap();
-        let distance = races.iter().map(|(_, distance)| distance.to_string()).collect::<String>().parse().unwrap();
+        let time = races
+            .iter()
+            .map(|(time, _)| time.to_string())
+            .collect::<String>()
+            .parse()
+            .unwrap();
+        let distance = races
+            .iter()
+            .map(|(_, distance)| distance.to_string())
+            .collect::<String>()
+            .parse()
+            .unwrap();
         Ok(Self::possible_victories(time, distance).to_string())
     }
 }

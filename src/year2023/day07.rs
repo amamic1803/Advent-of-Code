@@ -28,7 +28,12 @@ impl Day for Day07 {
 
         hands.sort();
 
-        Ok(hands.into_iter().enumerate().map(|(i, hand)| hand.bid * (i as u64 + 1)).sum::<u64>().to_string())
+        Ok(hands
+            .into_iter()
+            .enumerate()
+            .map(|(i, hand)| hand.bid * (i as u64 + 1))
+            .sum::<u64>()
+            .to_string())
     }
 
     fn part2(&self, input: &str) -> Result<String, Error> {
@@ -44,7 +49,12 @@ impl Day for Day07 {
 
         hands.sort();
 
-        Ok(hands.into_iter().enumerate().map(|(i, hand)| hand.bid * (i as u64 + 1)).sum::<u64>().to_string())
+        Ok(hands
+            .into_iter()
+            .enumerate()
+            .map(|(i, hand)| hand.bid * (i as u64 + 1))
+            .sum::<u64>()
+            .to_string())
     }
 }
 

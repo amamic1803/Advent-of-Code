@@ -6,7 +6,11 @@ day!(Day09, 9, "Disk Fragmenter");
 
 impl Day09 {
     fn compress1(disc: &str) -> impl Iterator<Item = u32> + use<> {
-        let mut disc = disc.trim().chars().map(|c| c.to_digit(10).unwrap() as u8).collect::<Vec<_>>();
+        let mut disc = disc
+            .trim()
+            .chars()
+            .map(|c| c.to_digit(10).unwrap() as u8)
+            .collect::<Vec<_>>();
         if disc.len() % 2 == 0 {
             disc.pop();
         }
@@ -40,7 +44,11 @@ impl Day09 {
     }
 
     fn compress2(disc: &str) -> impl Iterator<Item = Option<u32>> + use<> {
-        let mut disc = disc.trim().chars().map(|c| c.to_digit(10).unwrap() as u8).collect::<Vec<_>>();
+        let mut disc = disc
+            .trim()
+            .chars()
+            .map(|c| c.to_digit(10).unwrap() as u8)
+            .collect::<Vec<_>>();
         if disc.len() % 2 == 0 {
             disc.pop();
         }
@@ -154,7 +162,11 @@ impl Day for Day09 {
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {
-        Ok(Self::compress1(input).enumerate().map(|(i, block)| i as u64 * block as u64).sum::<u64>().to_string())
+        Ok(Self::compress1(input)
+            .enumerate()
+            .map(|(i, block)| i as u64 * block as u64)
+            .sum::<u64>()
+            .to_string())
     }
 
     fn part2(&self, input: &str) -> Result<String, Error> {

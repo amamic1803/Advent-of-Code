@@ -46,7 +46,10 @@ impl Cpu {
             })
             .collect();
 
-        Self { registers: [0; 4], instructions }
+        Self {
+            registers: [0; 4],
+            instructions,
+        }
     }
 
     fn execute(&mut self) {

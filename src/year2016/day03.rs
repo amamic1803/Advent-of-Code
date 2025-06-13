@@ -20,7 +20,10 @@ impl Day03 {
             .trim()
             .lines()
             .map(|line| {
-                let mut sides = line.split_whitespace().map(|s| s.parse::<usize>().unwrap()).collect::<Vec<usize>>();
+                let mut sides = line
+                    .split_whitespace()
+                    .map(|s| s.parse::<usize>().unwrap())
+                    .collect::<Vec<usize>>();
                 sides.sort();
                 [sides[0], sides[1], sides[2]]
             })
@@ -32,7 +35,11 @@ impl Day03 {
         let mut triangle_block = [Vec::new(), Vec::new(), Vec::new()];
 
         for line in input.trim().lines() {
-            for (i, side) in line.split_whitespace().map(|s| s.parse::<usize>().unwrap()).enumerate() {
+            for (i, side) in line
+                .split_whitespace()
+                .map(|s| s.parse::<usize>().unwrap())
+                .enumerate()
+            {
                 triangle_block[i].push(side);
             }
 

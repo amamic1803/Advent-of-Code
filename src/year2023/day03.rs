@@ -27,7 +27,11 @@ struct Schematic {
 }
 impl Schematic {
     fn new(input: &str) -> Self {
-        let scheme = input.trim().lines().map(|line| line.chars().collect()).collect();
+        let scheme = input
+            .trim()
+            .lines()
+            .map(|line| line.chars().collect())
+            .collect();
         Self {
             scheme,
             generated_part_numbers: false,
@@ -46,7 +50,12 @@ impl Schematic {
         if i < 0 || j < 0 {
             '.'
         } else {
-            *self.scheme.get(i as usize).unwrap_or(&vec![]).get(j as usize).unwrap_or(&'.')
+            *self
+                .scheme
+                .get(i as usize)
+                .unwrap_or(&vec![])
+                .get(j as usize)
+                .unwrap_or(&'.')
         }
     }
 
@@ -67,7 +76,11 @@ impl Schematic {
                     }
                 } else if in_number {
                     in_number = false;
-                    let number = row[start_index..j].iter().collect::<String>().parse::<u64>().unwrap();
+                    let number = row[start_index..j]
+                        .iter()
+                        .collect::<String>()
+                        .parse::<u64>()
+                        .unwrap();
 
                     if self.adjacent_symbols(i, start_index, j - 1) != 0 {
                         self.part_numbers.push((number, i, start_index, j - 1));
@@ -76,10 +89,15 @@ impl Schematic {
             }
 
             if in_number {
-                let number = row[start_index..].iter().collect::<String>().parse::<u64>().unwrap();
+                let number = row[start_index..]
+                    .iter()
+                    .collect::<String>()
+                    .parse::<u64>()
+                    .unwrap();
 
                 if self.adjacent_symbols(i, start_index, row.len() - 1) != 0 {
-                    self.part_numbers.push((number, i, start_index, row.len() - 1));
+                    self.part_numbers
+                        .push((number, i, start_index, row.len() - 1));
                 }
             }
         }
@@ -90,7 +108,10 @@ impl Schematic {
     fn sum_part_numbers(&mut self) -> u64 {
         self.generate_part_numbers();
 
-        self.part_numbers.iter().map(|(number, _, _, _)| number).sum::<u64>()
+        self.part_numbers
+            .iter()
+            .map(|(number, _, _, _)| number)
+            .sum::<u64>()
     }
 
     fn adjacent_symbols(&self, row: usize, start: usize, end: usize) -> u64 {

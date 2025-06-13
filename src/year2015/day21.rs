@@ -8,7 +8,12 @@ impl Day21 {
         let mut boss = [0; 3];
 
         for (i, line) in input.trim().lines().enumerate() {
-            boss[i] = line.split_whitespace().next_back().unwrap().parse::<usize>().unwrap();
+            boss[i] = line
+                .split_whitespace()
+                .next_back()
+                .unwrap()
+                .parse::<usize>()
+                .unwrap();
         }
 
         boss

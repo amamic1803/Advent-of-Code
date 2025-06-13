@@ -64,7 +64,11 @@ impl Day for Day02 {
                         }
                     }
                     'R' => {
-                        let new_pos = if position[1] < 4 { position[1] + 1 } else { position[1] };
+                        let new_pos = if position[1] < 4 {
+                            position[1] + 1
+                        } else {
+                            position[1]
+                        };
                         if Self::KEYPAD2[position[0]][new_pos] != ' ' {
                             position[1] = new_pos;
                         }
@@ -76,7 +80,11 @@ impl Day for Day02 {
                         }
                     }
                     'D' => {
-                        let new_pos = if position[0] < 4 { position[0] + 1 } else { position[0] };
+                        let new_pos = if position[0] < 4 {
+                            position[0] + 1
+                        } else {
+                            position[0]
+                        };
                         if Self::KEYPAD2[new_pos][position[1]] != ' ' {
                             position[0] = new_pos;
                         }

@@ -39,7 +39,10 @@ impl Virus {
     fn new(input: &str) -> Self {
         let mut infected = HashSet::new();
 
-        let center = (input.lines().next().unwrap().chars().count() as i32 / 2, input.lines().count() as i32 / 2);
+        let center = (
+            input.lines().next().unwrap().chars().count() as i32 / 2,
+            input.lines().count() as i32 / 2,
+        );
 
         for (y, line) in input.lines().enumerate() {
             for (x, c) in line.chars().enumerate() {
@@ -87,12 +90,18 @@ impl VirusEvolved {
     fn new(input: &str) -> Self {
         let mut affected_nodes = HashMap::new();
 
-        let center = (input.lines().next().unwrap().chars().count() as i32 / 2, input.lines().count() as i32 / 2);
+        let center = (
+            input.lines().next().unwrap().chars().count() as i32 / 2,
+            input.lines().count() as i32 / 2,
+        );
 
         for (y, line) in input.lines().enumerate() {
             for (x, c) in line.chars().enumerate() {
                 if c == '#' {
-                    affected_nodes.insert((x as i32 - center.0, y as i32 - center.1), NodeState::Infected);
+                    affected_nodes.insert(
+                        (x as i32 - center.0, y as i32 - center.1),
+                        NodeState::Infected,
+                    );
                 }
             }
         }
@@ -108,7 +117,8 @@ impl VirusEvolved {
     fn burst(&mut self) {
         match self.affected_nodes.get(&self.current_node) {
             Some(NodeState::Infected) => {
-                self.affected_nodes.insert(self.current_node, NodeState::Flagged);
+                self.affected_nodes
+                    .insert(self.current_node, NodeState::Flagged);
                 self.direction = (self.direction + 1) % 4;
             }
             Some(NodeState::Flagged) => {
@@ -116,11 +126,13 @@ impl VirusEvolved {
                 self.direction = (self.direction + 2) % 4;
             }
             Some(NodeState::Weakened) => {
-                self.affected_nodes.insert(self.current_node, NodeState::Infected);
+                self.affected_nodes
+                    .insert(self.current_node, NodeState::Infected);
                 self.infected_count += 1;
             }
             None => {
-                self.affected_nodes.insert(self.current_node, NodeState::Weakened);
+                self.affected_nodes
+                    .insert(self.current_node, NodeState::Weakened);
                 self.direction = (self.direction + 3) % 4;
             }
         }

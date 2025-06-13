@@ -6,7 +6,11 @@ day!(Day10, 10, "Pipe Maze");
 
 impl Day10 {
     fn parse_input(input: &str) -> Vec<Vec<char>> {
-        input.trim().lines().map(|line| line.chars().collect::<Vec<char>>()).collect::<Vec<Vec<char>>>()
+        input
+            .trim()
+            .lines()
+            .map(|line| line.chars().collect::<Vec<char>>())
+            .collect::<Vec<Vec<char>>>()
     }
 
     fn find_start(field: &[Vec<char>]) -> (usize, usize) {
@@ -31,7 +35,8 @@ impl Day10 {
                     found += 1;
                 }
 
-                if pipe.0 < field.len() - 1 && ['|', 'J', 'L'].contains(&field[pipe.0 + 1][pipe.1]) {
+                if pipe.0 < field.len() - 1 && ['|', 'J', 'L'].contains(&field[pipe.0 + 1][pipe.1])
+                {
                     result[found] = (pipe.0 + 1, pipe.1);
                     found += 1;
                 }
@@ -41,7 +46,9 @@ impl Day10 {
                     found += 1;
                 }
 
-                if pipe.1 < field[0].len() - 1 && ['-', '7', 'J'].contains(&field[pipe.0][pipe.1 + 1]) {
+                if pipe.1 < field[0].len() - 1
+                    && ['-', '7', 'J'].contains(&field[pipe.0][pipe.1 + 1])
+                {
                     result[found] = (pipe.0, pipe.1 + 1);
                 }
 
@@ -92,7 +99,8 @@ impl Day10 {
             up = true;
         }
 
-        if s_coord.0 < field.len() - 1 && ['|', 'J', 'L'].contains(&field[s_coord.0 + 1][s_coord.1]) {
+        if s_coord.0 < field.len() - 1 && ['|', 'J', 'L'].contains(&field[s_coord.0 + 1][s_coord.1])
+        {
             down = true;
         }
 
@@ -100,7 +108,9 @@ impl Day10 {
             left = true;
         }
 
-        if s_coord.1 < field[0].len() - 1 && ['-', '7', 'J'].contains(&field[s_coord.0][s_coord.1 + 1]) {
+        if s_coord.1 < field[0].len() - 1
+            && ['-', '7', 'J'].contains(&field[s_coord.0][s_coord.1 + 1])
+        {
             right = true;
         }
 
@@ -152,7 +162,9 @@ impl Day10 {
             }
 
             // down
-            if current_tile.0 < expanded_field.len() - 1 && expanded_field[current_tile.0 + 1][current_tile.1] == '.' {
+            if current_tile.0 < expanded_field.len() - 1
+                && expanded_field[current_tile.0 + 1][current_tile.1] == '.'
+            {
                 current_tiles.insert((current_tile.0 + 1, current_tile.1));
             }
 
@@ -162,7 +174,9 @@ impl Day10 {
             }
 
             // right
-            if current_tile.1 < expanded_field[0].len() - 1 && expanded_field[current_tile.0][current_tile.1 + 1] == '.' {
+            if current_tile.1 < expanded_field[0].len() - 1
+                && expanded_field[current_tile.0][current_tile.1 + 1] == '.'
+            {
                 current_tiles.insert((current_tile.0, current_tile.1 + 1));
             }
         }

@@ -24,7 +24,10 @@ impl Day02 {
         }
         last_value = tmp;
         for next_value in readings {
-            if (!ascending && next_value > last_value) || (ascending && next_value < last_value) || !Self::DIFFERENCE_BOUNDS.contains(&last_value.abs_diff(next_value)) {
+            if (!ascending && next_value > last_value)
+                || (ascending && next_value < last_value)
+                || !Self::DIFFERENCE_BOUNDS.contains(&last_value.abs_diff(next_value))
+            {
                 return false;
             }
             last_value = next_value;
@@ -44,7 +47,9 @@ impl Day for Day02 {
     fn part1(&self, input: &str) -> Result<String, Error> {
         Ok(input
             .lines()
-            .filter(|line| Self::is_safe(line.split_whitespace().map(|x| x.parse::<u32>().unwrap())))
+            .filter(|line| {
+                Self::is_safe(line.split_whitespace().map(|x| x.parse::<u32>().unwrap()))
+            })
             .count()
             .to_string())
     }
@@ -54,7 +59,9 @@ impl Day for Day02 {
         let mut line_elements = Vec::new();
         for line in input.lines() {
             line_elements.clear();
-            line.split_whitespace().map(|x| x.parse::<u32>().unwrap()).for_each(|n| line_elements.push(n));
+            line.split_whitespace()
+                .map(|x| x.parse::<u32>().unwrap())
+                .for_each(|n| line_elements.push(n));
 
             for i in 0..line_elements.len() {
                 let removed_element = line_elements.remove(i);

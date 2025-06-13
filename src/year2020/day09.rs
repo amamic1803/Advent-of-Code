@@ -28,13 +28,19 @@ impl Day for Day09 {
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {
-        let data = input.lines().map(|line| line.parse::<u64>().unwrap()).collect::<Vec<_>>();
+        let data = input
+            .lines()
+            .map(|line| line.parse::<u64>().unwrap())
+            .collect::<Vec<_>>();
         let i = Self::find_invalid_number_pos(&data);
         Ok(data[i].to_string())
     }
 
     fn part2(&self, input: &str) -> Result<String, Error> {
-        let data = input.lines().map(|line| line.parse::<u64>().unwrap()).collect::<Vec<_>>();
+        let data = input
+            .lines()
+            .map(|line| line.parse::<u64>().unwrap())
+            .collect::<Vec<_>>();
         let i = Self::find_invalid_number_pos(&data);
         let mut ptr1 = 0;
         let mut ptr2 = 0;

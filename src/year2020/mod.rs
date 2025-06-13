@@ -29,4 +29,6 @@ pub use day09::Day09;
 #[doc(inline)]
 pub use day17::Day17;
 
-year!(Year2020, 2020, Day01, Day02, Day03, Day04, Day05, Day06, Day08, Day09, Day17);
+year!(
+    Year2020, 2020, Day01, Day02, Day03, Day04, Day05, Day06, Day08, Day09, Day17
+);

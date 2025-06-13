@@ -26,7 +26,11 @@ impl Day02 {
     }
 
     fn parse_input(input: &str) -> Vec<usize> {
-        input.trim().split(',').map(|x| x.parse::<usize>().unwrap()).collect()
+        input
+            .trim()
+            .split(',')
+            .map(|x| x.parse::<usize>().unwrap())
+            .collect()
     }
 }
 impl Day for Day02 {

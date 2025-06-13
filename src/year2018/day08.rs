@@ -11,13 +11,19 @@ impl Day for Day08 {
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {
-        let license_file = input.split_whitespace().map(|x| x.parse::<u8>().unwrap()).collect::<Vec<u8>>();
+        let license_file = input
+            .split_whitespace()
+            .map(|x| x.parse::<u8>().unwrap())
+            .collect::<Vec<u8>>();
         let root = Node::build(&license_file, 0).0;
         Ok(root.sum_metadata().to_string())
     }
 
     fn part2(&self, input: &str) -> Result<String, Error> {
-        let license_file = input.split_whitespace().map(|x| x.parse::<u8>().unwrap()).collect::<Vec<u8>>();
+        let license_file = input
+            .split_whitespace()
+            .map(|x| x.parse::<u8>().unwrap())
+            .collect::<Vec<u8>>();
         let root = Node::build(&license_file, 0).0;
         Ok(root.node_value().to_string())
     }
@@ -58,7 +64,8 @@ impl Node {
     }
 
     fn sum_metadata(&self) -> u32 {
-        self.metadata.iter().map(|x| *x as u32).sum::<u32>() + self.children.iter().map(|x| x.sum_metadata()).sum::<u32>()
+        self.metadata.iter().map(|x| *x as u32).sum::<u32>()
+            + self.children.iter().map(|x| x.sum_metadata()).sum::<u32>()
     }
 
     fn node_value(&self) -> u32 {

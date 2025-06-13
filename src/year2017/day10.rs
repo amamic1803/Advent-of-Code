@@ -13,7 +13,11 @@ impl Day for Day10 {
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {
-        let lengths = input.trim().split(',').map(|num| num.parse::<u8>().unwrap()).collect::<Vec<_>>();
+        let lengths = input
+            .trim()
+            .split(',')
+            .map(|num| num.parse::<u8>().unwrap())
+            .collect::<Vec<_>>();
         let mut knot_hash = KnotHash::new();
 
         knot_hash.round(&lengths);
@@ -74,7 +78,11 @@ impl KnotHash {
 
     pub(crate) fn hash(&mut self, input: &str) -> String {
         // convert input to lengths
-        let lengths = input.chars().map(|c| c as u8).chain(ASCII_SUFFIX.iter().copied()).collect::<Vec<_>>();
+        let lengths = input
+            .chars()
+            .map(|c| c as u8)
+            .chain(ASCII_SUFFIX.iter().copied())
+            .collect::<Vec<_>>();
 
         // run rounds
         for _ in 0..ROUNDS {

@@ -19,7 +19,12 @@ impl Day for Day03 {
         let wire2 = Wire::new(line2);
         let intersections = wire1.intersections(&wire2);
 
-        Ok(intersections.iter().map(|(x, y)| x.abs() + y.abs()).min().unwrap().to_string())
+        Ok(intersections
+            .iter()
+            .map(|(x, y)| x.abs() + y.abs())
+            .min()
+            .unwrap()
+            .to_string())
     }
 
     fn part2(&self, input: &str) -> Result<String, Error> {
@@ -28,7 +33,12 @@ impl Day for Day03 {
         let wire2 = Wire::new(line2);
         let intersection_steps = wire1.intersections_steps(&wire2);
 
-        Ok(intersection_steps.iter().map(|(steps_1, steps_2)| steps_1 + steps_2).min().unwrap().to_string())
+        Ok(intersection_steps
+            .iter()
+            .map(|(steps_1, steps_2)| steps_1 + steps_2)
+            .min()
+            .unwrap()
+            .to_string())
     }
 }
 

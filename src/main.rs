@@ -79,7 +79,9 @@ fn main() -> ExitCode {
             }
         } else {
             match advent_of_code.benchmark(year_num, day_num, part_num, &input) {
-                Ok((result, duration)) => println!("{}    --- {} s", result, duration.as_secs_f64()),
+                Ok((result, duration)) => {
+                    println!("{}    --- {} s", result, duration.as_secs_f64())
+                }
                 Err(err) => {
                     eprintln!("Error running the challenge: {}", err);
                     return ExitCode::FAILURE;

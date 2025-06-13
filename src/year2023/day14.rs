@@ -128,19 +128,24 @@ impl Platform {
             }
         }
 
-        let cycle_start = seen_states_vector.iter().position(|state| state == &self.rocks).unwrap();
+        let cycle_start = seen_states_vector
+            .iter()
+            .position(|state| state == &self.rocks)
+            .unwrap();
         let cycle_length = seen_states_vector.len() - cycle_start;
 
         let cycle_index = ((CYCLES - cycle_start as u32) % cycle_length as u32) as usize;
 
-        self.rocks.clone_from(&seen_states_vector[cycle_start + cycle_index]);
+        self.rocks
+            .clone_from(&seen_states_vector[cycle_start + cycle_index]);
     }
 
     fn load(&self) -> u64 {
         let mut load = 0;
 
         for (i, row) in self.rocks.iter().enumerate() {
-            load += (row.iter().filter(|&&rock| rock == RockType::Round).count() * (row.len() - i)) as u64;
+            load += (row.iter().filter(|&&rock| rock == RockType::Round).count() * (row.len() - i))
+                as u64;
         }
 
         load

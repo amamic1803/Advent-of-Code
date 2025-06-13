@@ -33,7 +33,10 @@ struct Grid {
 impl Grid {
     fn new(input: &str) -> Self {
         Self {
-            tubes: input.lines().map(|line| line.chars().collect_vec()).collect_vec(),
+            tubes: input
+                .lines()
+                .map(|line| line.chars().collect_vec())
+                .collect_vec(),
             letters: String::new(),
             steps: 0,
         }
@@ -55,11 +58,15 @@ impl Grid {
                     connections[0] = true;
                 }
                 // right
-                if position[1] < self.tubes[position[0]].len() - 1 && self.tubes[position[0]][position[1] + 1] == '-' {
+                if position[1] < self.tubes[position[0]].len() - 1
+                    && self.tubes[position[0]][position[1] + 1] == '-'
+                {
                     connections[1] = true;
                 }
                 // down
-                if position[0] < self.tubes.len() - 1 && self.tubes[position[0] + 1][position[1]] == '|' {
+                if position[0] < self.tubes.len() - 1
+                    && self.tubes[position[0] + 1][position[1]] == '|'
+                {
                     connections[2] = true;
                 }
                 // left
@@ -70,7 +77,13 @@ impl Grid {
                 let next_direction = connections
                     .iter()
                     .enumerate()
-                    .filter_map(|(i, &b)| if b && i != (direction + 2) % 4 { Some(i) } else { None })
+                    .filter_map(|(i, &b)| {
+                        if b && i != (direction + 2) % 4 {
+                            Some(i)
+                        } else {
+                            None
+                        }
+                    })
                     .next()
                     .unwrap();
 

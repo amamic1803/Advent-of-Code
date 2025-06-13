@@ -24,7 +24,10 @@ impl Day for Day02 {
                     "Z" => 3,
                     _ => panic!(),
                 };
-                if (game_values[0] == "A" && game_values[1] == "Y") || (game_values[0] == "B" && game_values[1] == "Z") || (game_values[0] == "C") && game_values[1] == "X" {
+                if (game_values[0] == "A" && game_values[1] == "Y")
+                    || (game_values[0] == "B" && game_values[1] == "Z")
+                    || (game_values[0] == "C") && game_values[1] == "X"
+                {
                     score += 6;
                 } else if (game_values[0] == "A" && game_values[1] == "X")
                     || (game_values[0] == "B" && game_values[1] == "Y")

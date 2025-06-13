@@ -72,14 +72,19 @@ impl Console {
         }
     }
     fn execute(&mut self) -> i32 {
-        while self.ins_ptr < self.instructions.len() && self.instructions[self.ins_ptr].executions < 1 {
+        while self.ins_ptr < self.instructions.len()
+            && self.instructions[self.ins_ptr].executions < 1
+        {
             self.instructions[self.ins_ptr].executions += 1;
             match self.instructions[self.ins_ptr].instruction_type {
                 InstructionType::Acc => {
                     self.accumulator += self.instructions[self.ins_ptr].value;
                     self.ins_ptr += 1;
                 }
-                InstructionType::Jmp => self.ins_ptr = (self.ins_ptr as i32 + self.instructions[self.ins_ptr].value) as usize,
+                InstructionType::Jmp => {
+                    self.ins_ptr =
+                        (self.ins_ptr as i32 + self.instructions[self.ins_ptr].value) as usize
+                }
                 InstructionType::Nop => self.ins_ptr += 1,
             }
         }
@@ -88,8 +93,12 @@ impl Console {
     fn execute_fixed(&mut self) -> i32 {
         for i in 0..self.instructions.len() {
             match self.instructions[i].instruction_type {
-                InstructionType::Jmp => self.instructions[i].instruction_type = InstructionType::Nop,
-                InstructionType::Nop => self.instructions[i].instruction_type = InstructionType::Jmp,
+                InstructionType::Jmp => {
+                    self.instructions[i].instruction_type = InstructionType::Nop
+                }
+                InstructionType::Nop => {
+                    self.instructions[i].instruction_type = InstructionType::Jmp
+                }
                 _ => continue,
             }
             self.reset();
@@ -98,8 +107,12 @@ impl Console {
                 return result;
             }
             match self.instructions[i].instruction_type {
-                InstructionType::Jmp => self.instructions[i].instruction_type = InstructionType::Nop,
-                InstructionType::Nop => self.instructions[i].instruction_type = InstructionType::Jmp,
+                InstructionType::Jmp => {
+                    self.instructions[i].instruction_type = InstructionType::Nop
+                }
+                InstructionType::Nop => {
+                    self.instructions[i].instruction_type = InstructionType::Jmp
+                }
                 _ => (),
             }
         }

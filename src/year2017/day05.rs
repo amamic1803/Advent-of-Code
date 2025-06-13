@@ -4,7 +4,11 @@ day!(Day05, 5, "A Maze of Twisty Trampolines, All Alike");
 
 impl Day05 {
     fn parse_input(input: &str) -> Vec<i32> {
-        input.trim().lines().map(|line| line.trim().parse::<i32>().unwrap()).collect()
+        input
+            .trim()
+            .lines()
+            .map(|line| line.trim().parse::<i32>().unwrap())
+            .collect()
     }
 }
 impl Day for Day05 {

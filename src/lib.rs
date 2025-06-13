@@ -105,7 +105,10 @@ impl Display for Error {
             Self::UnavailableYear => write!(f, "The requested year is unavailable."),
             Self::UnavailableDay => write!(f, "The requested day is unavailable."),
             Self::UnavailablePart => write!(f, "The requested part is unavailable."),
-            Self::NoSolutionFound => write!(f, "There is no solution found for the challenge with the given input."),
+            Self::NoSolutionFound => write!(
+                f,
+                "There is no solution found for the challenge with the given input."
+            ),
         }
     }
 }
@@ -166,7 +169,6 @@ impl AoC for AdventOfCode {
     }
 }
 
-
 /// A trait representing the Advent of Code.
 pub trait AoC: Send + Sync {
     /// Returns all available years in the Advent of Code.
@@ -223,7 +225,13 @@ pub trait AoC: Send + Sync {
     /// * `Error::UnavailableDay` - The day is unavailable.
     /// * `Error::UnavailablePart` - The part is unavailable.
     /// * `Error::NoSolution` - There is no solution for the challenge with the given input.
-    fn benchmark(&self, year: usize, day: usize, part: usize, input: &str) -> Result<(String, Duration), Error> {
+    fn benchmark(
+        &self,
+        year: usize,
+        day: usize,
+        part: usize,
+        input: &str,
+    ) -> Result<(String, Duration), Error> {
         self.year(year)?.benchmark(day, part, input)
     }
 }

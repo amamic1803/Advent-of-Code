@@ -29,7 +29,8 @@ impl Day07 {
             let next_times = current * values[0];
             let next_values = &values[1..];
 
-            Self::check_equation(next_times, target, next_values) || Self::check_equation(next_plus, target, next_values)
+            Self::check_equation(next_times, target, next_values)
+                || Self::check_equation(next_plus, target, next_values)
         }
     }
     fn check_equation2(current: u64, target: u64, values: &[u64]) -> bool {

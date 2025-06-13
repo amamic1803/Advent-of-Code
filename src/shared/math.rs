@@ -4,7 +4,9 @@ use num_traits::{ConstZero, PrimInt, Unsigned};
 use std::borrow::Borrow;
 
 /// A character representation of hexadecimal digits.
-pub const HEX_DIGITS: [char; 16] = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'];
+pub const HEX_DIGITS: [char; 16] = [
+    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f',
+];
 
 /// Find the solution to a system of congruences using the Chinese Remainder Theorem.
 /// For a system of congruences:
@@ -26,7 +28,10 @@ where
     U: IntoIterator<Item = T>,
 {
     let mut congruences = congruences.into_iter();
-    let &(mut solution, mut modulus) = congruences.next().expect("There must be at least 1 congruence.").borrow();
+    let &(mut solution, mut modulus) = congruences
+        .next()
+        .expect("There must be at least 1 congruence.")
+        .borrow();
 
     for congruence in congruences {
         let (remainder, modulo) = congruence.borrow();
@@ -73,8 +78,14 @@ where
     I: IntoIterator<Item = U>,
 {
     let mut nums = nums.into_iter();
-    let n1 = *nums.next().expect("There must be at least 2 numbers.").borrow();
-    let n2 = *nums.next().expect("There must be at least 2 numbers.").borrow();
+    let n1 = *nums
+        .next()
+        .expect("There must be at least 2 numbers.")
+        .borrow();
+    let n2 = *nums
+        .next()
+        .expect("There must be at least 2 numbers.")
+        .borrow();
     let mut result = gcd(n1, n2);
     for n in nums {
         result = gcd(result, *n.borrow());
@@ -137,8 +148,14 @@ where
     I: IntoIterator<Item = U>,
 {
     let mut nums = nums.into_iter();
-    let n1 = *nums.next().expect("There must be at least 2 numbers.").borrow();
-    let n2 = *nums.next().expect("There must be at least 2 numbers.").borrow();
+    let n1 = *nums
+        .next()
+        .expect("There must be at least 2 numbers.")
+        .borrow();
+    let n2 = *nums
+        .next()
+        .expect("There must be at least 2 numbers.")
+        .borrow();
     let mut result = lcm(n1, n2);
     for n in nums {
         result = lcm(result, *n.borrow());

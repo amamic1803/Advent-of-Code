@@ -12,11 +12,21 @@ impl Day for Day05 {
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {
-        Ok(input.lines().map(BoardingPass::new).map(|b_pass| b_pass.seat_id()).max().unwrap().to_string())
+        Ok(input
+            .lines()
+            .map(BoardingPass::new)
+            .map(|b_pass| b_pass.seat_id())
+            .max()
+            .unwrap()
+            .to_string())
     }
 
     fn part2(&self, input: &str) -> Result<String, Error> {
-        let mut taken_seats = input.lines().map(BoardingPass::new).map(|b_pass| b_pass.seat_id()).collect::<Vec<_>>();
+        let mut taken_seats = input
+            .lines()
+            .map(BoardingPass::new)
+            .map(|b_pass| b_pass.seat_id())
+            .collect::<Vec<_>>();
         taken_seats.sort();
 
         for i in 0..(taken_seats.len() - 1) {

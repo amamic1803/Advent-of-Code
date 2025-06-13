@@ -46,7 +46,11 @@ impl Day07 {
             } else if line_contents[0] == "dir" {
                 base_dir.new_entity(&current_location, line_contents[1].to_string(), None);
             } else {
-                base_dir.new_entity(&current_location, line_contents[1].to_string(), Some(line_contents[0].parse::<u64>().unwrap()));
+                base_dir.new_entity(
+                    &current_location,
+                    line_contents[1].to_string(),
+                    Some(line_contents[0].parse::<u64>().unwrap()),
+                );
             }
         }
 
@@ -127,6 +131,7 @@ impl Folder {
     }
 
     fn size(&self) -> u64 {
-        self.files.iter().map(|f| f.size).sum::<u64>() + self.folders.iter().map(|f| f.size()).sum::<u64>()
+        self.files.iter().map(|f| f.size).sum::<u64>()
+            + self.folders.iter().map(|f| f.size()).sum::<u64>()
     }
 }

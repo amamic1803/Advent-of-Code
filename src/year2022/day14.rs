@@ -21,9 +21,21 @@ impl Day for Day14 {
     fn part2(&self, input: &str) -> Result<String, Error> {
         let mut input = input.trim().to_owned();
         let re = Regex::new(r",(\d+)").unwrap();
-        let max_y = re.captures_iter(&input).map(|cap| cap.get(1).unwrap().as_str().parse::<i32>().unwrap()).max().unwrap();
+        let max_y = re
+            .captures_iter(&input)
+            .map(|cap| cap.get(1).unwrap().as_str().parse::<i32>().unwrap())
+            .max()
+            .unwrap();
         let platform_y = max_y + 2;
-        writeln!(&mut input, "\n{},{} -> {},{}", SAND_DROP_X - platform_y, platform_y, SAND_DROP_X + platform_y, platform_y).unwrap();
+        writeln!(
+            &mut input,
+            "\n{},{} -> {},{}",
+            SAND_DROP_X - platform_y,
+            platform_y,
+            SAND_DROP_X + platform_y,
+            platform_y
+        )
+        .unwrap();
         Ok(Cave::new(&input).simulate_sand().to_string())
     }
 }
@@ -69,19 +81,26 @@ impl Cave {
             for i in 0..(structure.len() - 1) {
                 if structure[i].0 == structure[i + 1].0 {
                     // vertical line
-                    for y in min(structure[i].1, structure[i + 1].1)..=max(structure[i].1, structure[i + 1].1) {
+                    for y in min(structure[i].1, structure[i + 1].1)
+                        ..=max(structure[i].1, structure[i + 1].1)
+                    {
                         grid[y as usize][(structure[i].0 - min_x) as usize] = '#';
                     }
                 } else {
                     // horizontal line
-                    for x in min(structure[i].0, structure[i + 1].0)..=max(structure[i].0, structure[i + 1].0) {
+                    for x in min(structure[i].0, structure[i + 1].0)
+                        ..=max(structure[i].0, structure[i + 1].0)
+                    {
                         grid[structure[i].1 as usize][(x - min_x) as usize] = '#';
                     }
                 }
             }
         }
 
-        Self { grid, x_offset: min_x }
+        Self {
+            grid,
+            x_offset: min_x,
+        }
     }
 
     /// Drop a new grain of sand

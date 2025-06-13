@@ -3,7 +3,12 @@ use crate::{Day, Error};
 day!(Day18, 18, "Like a Rogue");
 
 impl Day18 {
-    const TRAP_PATTERNS: [[bool; 3]; 4] = [[true, true, false], [false, true, true], [true, false, false], [false, false, true]];
+    const TRAP_PATTERNS: [[bool; 3]; 4] = [
+        [true, true, false],
+        [false, true, true],
+        [true, false, false],
+        [false, false, true],
+    ];
     const ROWS1: usize = 40;
     const ROWS2: usize = 400_000;
 

@@ -5,7 +5,11 @@ day!(Day01, 1, "Chronal Calibration");
 
 impl Day01 {
     fn parse_input(input: &str) -> Vec<isize> {
-        input.trim().lines().map(|line| line.parse::<isize>().unwrap()).collect()
+        input
+            .trim()
+            .lines()
+            .map(|line| line.parse::<isize>().unwrap())
+            .collect()
     }
 }
 impl Day for Day01 {
@@ -14,7 +18,7 @@ impl Day for Day01 {
     }
 
     fn title(&self) -> &str {
-        self.title    
+        self.title
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {

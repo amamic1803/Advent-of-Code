@@ -10,8 +10,14 @@ impl Day04 {
             let (_, cards_part) = line.split_once(':').unwrap();
 
             let (winning_cards_part, my_cards_part) = cards_part.split_once('|').unwrap();
-            let winning_numbers = winning_cards_part.split_whitespace().map(|n| n.parse::<u32>().unwrap()).collect::<Vec<u32>>();
-            let my_numbers = my_cards_part.split_whitespace().map(|n| n.parse::<u32>().unwrap()).collect::<Vec<u32>>();
+            let winning_numbers = winning_cards_part
+                .split_whitespace()
+                .map(|n| n.parse::<u32>().unwrap())
+                .collect::<Vec<u32>>();
+            let my_numbers = my_cards_part
+                .split_whitespace()
+                .map(|n| n.parse::<u32>().unwrap())
+                .collect::<Vec<u32>>();
 
             cards.push(Scratchcard::new(winning_numbers, my_numbers));
         }

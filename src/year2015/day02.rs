@@ -13,7 +13,11 @@ impl Day02 {
         present[0] * present[1] * present[2] + perimeters[0]
     }
     fn wrap_present(present: [usize; 3]) -> usize {
-        let mut sides = [present[0] * present[1], present[1] * present[2], present[2] * present[0]];
+        let mut sides = [
+            present[0] * present[1],
+            present[1] * present[2],
+            present[2] * present[0],
+        ];
         sides.sort();
         3 * sides[0] + 2 * sides[1] + 2 * sides[2]
     }

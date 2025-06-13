@@ -26,7 +26,13 @@ impl Day for Day25 {
             .lines()
             .skip(1)
             .take(2)
-            .map(|line| line.split_whitespace().nth(1).unwrap().parse::<usize>().unwrap())
+            .map(|line| {
+                line.split_whitespace()
+                    .nth(1)
+                    .unwrap()
+                    .parse::<usize>()
+                    .unwrap()
+            })
             .product::<usize>();
 
         let mut number = 0;

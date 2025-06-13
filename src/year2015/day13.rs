@@ -13,7 +13,8 @@ impl Day13 {
             let words = line.split_whitespace().collect::<Vec<_>>();
             let name1 = words[0];
             let name2 = words[10].trim_end_matches('.');
-            let value = words[3].parse::<isize>().unwrap() * if words[2] == "gain" { 1 } else { -1 };
+            let value =
+                words[3].parse::<isize>().unwrap() * if words[2] == "gain" { 1 } else { -1 };
 
             if !names.contains(&name1) {
                 names.push(name1);
@@ -57,9 +58,15 @@ impl Day for Day13 {
         self.title
     }
     fn part1(&self, input: &str) -> Result<String, Error> {
-        Ok(Self::parse_input(input).hamiltonian_cycle_max().0.to_string())
+        Ok(Self::parse_input(input)
+            .hamiltonian_cycle_max()
+            .0
+            .to_string())
     }
     fn part2(&self, input: &str) -> Result<String, Error> {
-        Ok(Self::parse_input(input).hamiltonian_path_max().0.to_string())
+        Ok(Self::parse_input(input)
+            .hamiltonian_path_max()
+            .0
+            .to_string())
     }
 }

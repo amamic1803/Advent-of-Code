@@ -12,7 +12,11 @@ impl Day for Day01 {
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {
-        let sequence = input.trim().chars().map(|c| c.to_digit(10).unwrap()).collect::<Vec<_>>();
+        let sequence = input
+            .trim()
+            .chars()
+            .map(|c| c.to_digit(10).unwrap())
+            .collect::<Vec<_>>();
         let mut sum: usize = 0;
 
         for (i, num) in sequence.iter().enumerate() {
@@ -25,7 +29,11 @@ impl Day for Day01 {
     }
 
     fn part2(&self, input: &str) -> Result<String, Error> {
-        let sequence = input.trim().chars().map(|c| c.to_digit(10).unwrap()).collect::<Vec<_>>();
+        let sequence = input
+            .trim()
+            .chars()
+            .map(|c| c.to_digit(10).unwrap())
+            .collect::<Vec<_>>();
         let halfway = sequence.len() >> 1;
         let mut sum: usize = 0;
 

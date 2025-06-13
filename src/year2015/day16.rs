@@ -28,9 +28,27 @@ impl Day16 {
             let mut new_sue = HashMap::new();
             let parsed_line: Vec<&str> = line.split_whitespace().collect();
 
-            new_sue.insert(parsed_line[2].trim_end_matches(':'), parsed_line[3].trim_end_matches(',').parse::<usize>().unwrap());
-            new_sue.insert(parsed_line[4].trim_end_matches(':'), parsed_line[5].trim_end_matches(',').parse::<usize>().unwrap());
-            new_sue.insert(parsed_line[6].trim_end_matches(':'), parsed_line[7].trim_end_matches(',').parse::<usize>().unwrap());
+            new_sue.insert(
+                parsed_line[2].trim_end_matches(':'),
+                parsed_line[3]
+                    .trim_end_matches(',')
+                    .parse::<usize>()
+                    .unwrap(),
+            );
+            new_sue.insert(
+                parsed_line[4].trim_end_matches(':'),
+                parsed_line[5]
+                    .trim_end_matches(',')
+                    .parse::<usize>()
+                    .unwrap(),
+            );
+            new_sue.insert(
+                parsed_line[6].trim_end_matches(':'),
+                parsed_line[7]
+                    .trim_end_matches(',')
+                    .parse::<usize>()
+                    .unwrap(),
+            );
 
             sues.push(new_sue);
         }

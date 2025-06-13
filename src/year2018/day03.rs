@@ -5,7 +5,9 @@ day!(Day03, 3, "No Matter How You Slice It");
 impl Day03 {
     const FABRIC_SIZE: usize = 1000;
 
-    fn fabric_with_claims(claims: impl Iterator<Item = [usize; 4]>) -> Vec<[u8; Self::FABRIC_SIZE]> {
+    fn fabric_with_claims(
+        claims: impl Iterator<Item = [usize; 4]>,
+    ) -> Vec<[u8; Self::FABRIC_SIZE]> {
         let mut fabric = vec![[0_u8; Self::FABRIC_SIZE]; Self::FABRIC_SIZE];
 
         for claim in claims {
@@ -14,7 +16,9 @@ impl Day03 {
             let x_end = x_start + claim[2];
             let y_end = y_start + claim[3];
             for row in fabric[y_start..y_end].iter_mut() {
-                row[x_start..x_end].iter_mut().for_each(|cell| *cell = (*cell).saturating_add(1));
+                row[x_start..x_end]
+                    .iter_mut()
+                    .for_each(|cell| *cell = (*cell).saturating_add(1));
             }
         }
 
@@ -68,7 +72,10 @@ impl Day for Day03 {
             let x_end = x_start + claim[2];
             let y_end = y_start + claim[3];
 
-            if fabric[y_start..y_end].iter().all(|row| row[x_start..x_end].iter().all(|&cell| cell == 1)) {
+            if fabric[y_start..y_end]
+                .iter()
+                .all(|row| row[x_start..x_end].iter().all(|&cell| cell == 1))
+            {
                 return Ok((i + 1).to_string());
             }
         }

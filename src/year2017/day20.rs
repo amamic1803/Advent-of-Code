@@ -18,12 +18,22 @@ impl Day for Day20 {
         // if there are multiple particles with the same acceleration and velocity, the one with the lowest position will be the closest
         // sort the particles by acceleration, velocity, and position, and return the index of the first particle
 
-        let mut particles = input.lines().map(Particle::new).enumerate().collect::<Vec<_>>();
+        let mut particles = input
+            .lines()
+            .map(Particle::new)
+            .enumerate()
+            .collect::<Vec<_>>();
         particles.sort_by_key(|(_, particle)| {
             (
-                particle.acceleration[0].abs() + particle.acceleration[1].abs() + particle.acceleration[2].abs(),
-                particle.velocity[0].abs() + particle.velocity[1].abs() + particle.velocity[2].abs(),
-                particle.position[0].abs() + particle.position[1].abs() + particle.position[2].abs(),
+                particle.acceleration[0].abs()
+                    + particle.acceleration[1].abs()
+                    + particle.acceleration[2].abs(),
+                particle.velocity[0].abs()
+                    + particle.velocity[1].abs()
+                    + particle.velocity[2].abs(),
+                particle.position[0].abs()
+                    + particle.position[1].abs()
+                    + particle.position[2].abs(),
             )
         });
         Ok(particles[0].0.to_string())
@@ -88,7 +98,11 @@ impl Day for Day20 {
         }
 
         // find surviving particles (rows with at least one Some)
-        Ok(collision_table.into_iter().filter(|particle| particle.iter().any(|x| x.is_some())).count().to_string())
+        Ok(collision_table
+            .into_iter()
+            .filter(|particle| particle.iter().any(|x| x.is_some()))
+            .count()
+            .to_string())
     }
 }
 
@@ -125,9 +139,21 @@ impl Particle {
             .map(|x| x.parse::<i32>().unwrap());
 
         Self {
-            position: [position.next().unwrap(), position.next().unwrap(), position.next().unwrap()],
-            velocity: [velocity.next().unwrap(), velocity.next().unwrap(), velocity.next().unwrap()],
-            acceleration: [acceleration.next().unwrap(), acceleration.next().unwrap(), acceleration.next().unwrap()],
+            position: [
+                position.next().unwrap(),
+                position.next().unwrap(),
+                position.next().unwrap(),
+            ],
+            velocity: [
+                velocity.next().unwrap(),
+                velocity.next().unwrap(),
+                velocity.next().unwrap(),
+            ],
+            acceleration: [
+                acceleration.next().unwrap(),
+                acceleration.next().unwrap(),
+                acceleration.next().unwrap(),
+            ],
         }
     }
 

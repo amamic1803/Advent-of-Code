@@ -41,7 +41,12 @@ impl Day14 {
         let mut last_password = 0;
 
         let mut i = 0;
-        while passwords_found.len() < Self::PASSWORDS_TO_FIND as usize || last_occurences_3.iter().filter_map(|v| v.front()).any(|&val| val < last_password) {
+        while passwords_found.len() < Self::PASSWORDS_TO_FIND as usize
+            || last_occurences_3
+                .iter()
+                .filter_map(|v| v.front())
+                .any(|&val| val < last_password)
+        {
             hash_in.truncate(hash_in_len);
             write!(&mut hash_in, "{i}").unwrap();
 

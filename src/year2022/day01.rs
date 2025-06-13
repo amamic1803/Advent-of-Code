@@ -40,6 +40,9 @@ impl Day for Day01 {
 
     fn part2(&self, input: &str) -> Result<String, Error> {
         let elf_calories = Self::count_calories(input);
-        Ok(elf_calories[(elf_calories.len() - 3)..].iter().sum::<usize>().to_string())
+        Ok(elf_calories[(elf_calories.len() - 3)..]
+            .iter()
+            .sum::<usize>()
+            .to_string())
     }
 }

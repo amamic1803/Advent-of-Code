@@ -32,7 +32,11 @@ impl Day09 {
         }
 
         for edge in edges {
-            graph.set_edge_undirected(Vertex::new(cities[edge.0]), Vertex::new(cities[edge.1]), edge.2 as isize);
+            graph.set_edge_undirected(
+                Vertex::new(cities[edge.0]),
+                Vertex::new(cities[edge.1]),
+                edge.2 as isize,
+            );
         }
 
         graph
@@ -46,9 +50,15 @@ impl Day for Day09 {
         self.title
     }
     fn part1(&self, input: &str) -> Result<String, Error> {
-        Ok(Self::parse_input(input).hamiltonian_path_min().0.to_string())
+        Ok(Self::parse_input(input)
+            .hamiltonian_path_min()
+            .0
+            .to_string())
     }
     fn part2(&self, input: &str) -> Result<String, Error> {
-        Ok(Self::parse_input(input).hamiltonian_path_max().0.to_string())
+        Ok(Self::parse_input(input)
+            .hamiltonian_path_max()
+            .0
+            .to_string())
     }
 }

@@ -114,6 +114,10 @@ impl Day for Day19 {
         // So the final equation for the number of steps is:
         // the length of the molecule - the number of ( or ) - 2 * the number of , - 1
 
-        Ok((molecule_str.chars().count() - molecule_str.matches(['(', ')']).count() - 2 * molecule_str.matches(',').count() - 1).to_string())
+        Ok((molecule_str.chars().count()
+            - molecule_str.matches(['(', ')']).count()
+            - 2 * molecule_str.matches(',').count()
+            - 1)
+        .to_string())
     }
 }

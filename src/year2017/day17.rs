@@ -25,7 +25,12 @@ impl Day for Day17 {
             circular_buffer.insert(i, n);
         }
 
-        Ok(circular_buffer[circular_buffer.iter().position(|&elem| elem == Self::PART1_LIMIT).unwrap() + 1].to_string())
+        Ok(circular_buffer[circular_buffer
+            .iter()
+            .position(|&elem| elem == Self::PART1_LIMIT)
+            .unwrap()
+            + 1]
+        .to_string())
     }
 
     fn part2(&self, input: &str) -> Result<String, Error> {

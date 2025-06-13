@@ -11,7 +11,11 @@ impl Day for Day24 {
         self.title
     }
     fn part1(&self, input: &str) -> Result<String, Error> {
-        let weights = input.trim().lines().map(|line| line.parse::<usize>().unwrap()).collect::<Vec<_>>();
+        let weights = input
+            .trim()
+            .lines()
+            .map(|line| line.parse::<usize>().unwrap())
+            .collect::<Vec<_>>();
         let total_weight: usize = weights.iter().sum();
         let group_weight = total_weight / 3;
         let mut min_qe = usize::MAX;
@@ -35,7 +39,11 @@ impl Day for Day24 {
         Ok(min_qe.to_string())
     }
     fn part2(&self, input: &str) -> Result<String, Error> {
-        let weights = input.trim().lines().map(|line| line.parse::<usize>().unwrap()).collect::<Vec<_>>();
+        let weights = input
+            .trim()
+            .lines()
+            .map(|line| line.parse::<usize>().unwrap())
+            .collect::<Vec<_>>();
         let total_weight: usize = weights.iter().sum();
         let group_weight = total_weight / 4;
         let mut min_qe = usize::MAX;

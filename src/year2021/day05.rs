@@ -58,7 +58,8 @@ impl Day05 {
     fn draw_line(grid: &mut [Vec<u32>], line: &[[u32; 2]; 2]) {
         // horizontal line (y1 == y2)
         if line[0][1] == line[1][1] {
-            grid[line[0][1] as usize][min(line[0][0], line[1][0]) as usize..=max(line[0][0], line[1][0]) as usize]
+            grid[line[0][1] as usize]
+                [min(line[0][0], line[1][0]) as usize..=max(line[0][0], line[1][0]) as usize]
                 .iter_mut()
                 .for_each(|point| *point += 1);
         } else if line[0][0] == line[1][0] {

@@ -28,7 +28,11 @@ struct Program<'a> {
 }
 impl<'a> Program<'a> {
     fn new(name: &'a str, weight: u32, children: Option<Vec<Self>>) -> Self {
-        Self { name, weight, children }
+        Self {
+            name,
+            weight,
+            children,
+        }
     }
 
     fn add_child(&mut self, child: Self) {
@@ -54,7 +58,10 @@ impl<'a> Structure<'a> {
                 Some((name_weight, children)) => {
                     let (name, weight) = name_weight.split_once(" (").unwrap();
                     let weight = weight.trim_end_matches(')').parse().unwrap();
-                    programs_with_children.push((Program::new(name, weight, None), Some(children.split(", ").collect::<Vec<_>>())));
+                    programs_with_children.push((
+                        Program::new(name, weight, None),
+                        Some(children.split(", ").collect::<Vec<_>>()),
+                    ));
                 }
                 None => {
                     let (name, weight) = line.split_once(" (").unwrap();
@@ -72,11 +79,22 @@ impl<'a> Structure<'a> {
                     let this_program_name = this_program.name;
                     let parent_ind = programs_with_children
                         .iter()
-                        .position(|(_, c)| c.is_some() && c.as_ref().unwrap().contains(&this_program_name))
+                        .position(|(_, c)| {
+                            c.is_some() && c.as_ref().unwrap().contains(&this_program_name)
+                        })
                         .unwrap();
                     programs_with_children[parent_ind].0.add_child(this_program);
-                    programs_with_children[parent_ind].1.as_mut().unwrap().retain(|&c| c != this_program_name);
-                    if programs_with_children[parent_ind].1.as_ref().unwrap().is_empty() {
+                    programs_with_children[parent_ind]
+                        .1
+                        .as_mut()
+                        .unwrap()
+                        .retain(|&c| c != this_program_name);
+                    if programs_with_children[parent_ind]
+                        .1
+                        .as_ref()
+                        .unwrap()
+                        .is_empty()
+                    {
                         programs_with_children[parent_ind].1 = None;
                     }
                 } else {
@@ -118,13 +136,25 @@ impl<'a> Structure<'a> {
                 for weight in &weights {
                     *appearances.entry(weight).or_insert(0) += 1;
                 }
-                assert_eq!(appearances.len(), 2, "There should be only 2 different weights");
-                let (&&unbalanced_weight, _) = appearances.iter().find(|&(_, &count)| count == 1).unwrap();
-                let (&&balanced_weight, _) = appearances.iter().find(|&(_, &count)| count != 1).unwrap();
-                let unbalanced_index = weights.iter().position(|&w| w == unbalanced_weight).unwrap();
+                assert_eq!(
+                    appearances.len(),
+                    2,
+                    "There should be only 2 different weights"
+                );
+                let (&&unbalanced_weight, _) =
+                    appearances.iter().find(|&(_, &count)| count == 1).unwrap();
+                let (&&balanced_weight, _) =
+                    appearances.iter().find(|&(_, &count)| count != 1).unwrap();
+                let unbalanced_index = weights
+                    .iter()
+                    .position(|&w| w == unbalanced_weight)
+                    .unwrap();
                 let offset = balanced_weight as i32 - unbalanced_weight as i32;
 
-                (0, Some((children[unbalanced_index].weight as i32 + offset) as u32))
+                (
+                    0,
+                    Some((children[unbalanced_index].weight as i32 + offset) as u32),
+                )
             } else {
                 (program.weight + weights.iter().sum::<u32>(), None)
             }

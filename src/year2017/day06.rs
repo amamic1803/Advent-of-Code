@@ -7,7 +7,12 @@ impl Day06 {
     const NUM_BANKS: usize = 16;
 
     fn parse_input(input: &str) -> [u16; Self::NUM_BANKS] {
-        input.split_whitespace().map(|num| num.parse::<u16>().unwrap()).collect::<Vec<_>>().try_into().unwrap()
+        input
+            .split_whitespace()
+            .map(|num| num.parse::<u16>().unwrap())
+            .collect::<Vec<_>>()
+            .try_into()
+            .unwrap()
     }
 }
 impl Day for Day06 {

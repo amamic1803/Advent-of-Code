@@ -18,8 +18,14 @@ impl Day23 {
                 "tpl" => instructions.push(Instruction::Tpl(*reg_map.get(line[1]).unwrap())),
                 "inc" => instructions.push(Instruction::Inc(*reg_map.get(line[1]).unwrap())),
                 "jmp" => instructions.push(Instruction::Jmp(line[1].parse::<isize>().unwrap())),
-                "jie" => instructions.push(Instruction::Jie(*reg_map.get(line[1].trim_end_matches(',')).unwrap(), line[2].parse::<isize>().unwrap())),
-                "jio" => instructions.push(Instruction::Jio(*reg_map.get(line[1].trim_end_matches(',')).unwrap(), line[2].parse::<isize>().unwrap())),
+                "jie" => instructions.push(Instruction::Jie(
+                    *reg_map.get(line[1].trim_end_matches(',')).unwrap(),
+                    line[2].parse::<isize>().unwrap(),
+                )),
+                "jio" => instructions.push(Instruction::Jio(
+                    *reg_map.get(line[1].trim_end_matches(',')).unwrap(),
+                    line[2].parse::<isize>().unwrap(),
+                )),
                 _ => panic!("Invalid instruction"),
             }
         }

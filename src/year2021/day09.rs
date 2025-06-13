@@ -6,9 +6,13 @@ day!(Day09, 9, "Smoke Basin");
 impl Day09 {
     fn parse_input(input: &str) -> Vec<Vec<u8>> {
         let mut cave = Vec::new();
-        input
-            .lines()
-            .for_each(|line| cave.push(line.chars().map(|c| c.to_digit(10).unwrap() as u8).collect::<Vec<_>>()));
+        input.lines().for_each(|line| {
+            cave.push(
+                line.chars()
+                    .map(|c| c.to_digit(10).unwrap() as u8)
+                    .collect::<Vec<_>>(),
+            )
+        });
         cave
     }
 }
@@ -29,8 +33,16 @@ impl Day for Day09 {
             for (j, &cell) in row.iter().enumerate() {
                 let up = if i > 0 { cave[i - 1][j] } else { 10 };
                 let left = if j > 0 { cave[i][j - 1] } else { 10 };
-                let right = if j < row.len() - 1 { cave[i][j + 1] } else { 10 };
-                let down = if i < cave.len() - 1 { cave[i + 1][j] } else { 10 };
+                let right = if j < row.len() - 1 {
+                    cave[i][j + 1]
+                } else {
+                    10
+                };
+                let down = if i < cave.len() - 1 {
+                    cave[i + 1][j]
+                } else {
+                    10
+                };
 
                 if cell < up && cell < left && cell < right && cell < down {
                     risks_sum += cell as u32 + 1;
@@ -62,10 +74,14 @@ impl Day for Day09 {
                             if j > 0 && cave[i][j - 1] < 9 && !visited_tiles[i][j - 1] {
                                 stack.push((i, j - 1));
                             };
-                            if j < cave[0].len() - 1 && cave[i][j + 1] < 9 && !visited_tiles[i][j + 1] {
+                            if j < cave[0].len() - 1
+                                && cave[i][j + 1] < 9
+                                && !visited_tiles[i][j + 1]
+                            {
                                 stack.push((i, j + 1));
                             };
-                            if i < cave.len() - 1 && cave[i + 1][j] < 9 && !visited_tiles[i + 1][j] {
+                            if i < cave.len() - 1 && cave[i + 1][j] < 9 && !visited_tiles[i + 1][j]
+                            {
                                 stack.push((i + 1, j));
                             };
 

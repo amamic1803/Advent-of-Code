@@ -19,17 +19,23 @@ impl Day11 {
                     current_monkey.id = line_contents[1].trim_matches(':').parse().unwrap();
                 }
                 "Starting" => {
-                    current_monkey.items = line_contents[2..].iter().map(|t| t.trim_matches(',').parse().unwrap()).collect();
+                    current_monkey.items = line_contents[2..]
+                        .iter()
+                        .map(|t| t.trim_matches(',').parse().unwrap())
+                        .collect();
                 }
                 "Operation" => {
-                    current_monkey.operation_opts = [line_contents[3], line_contents[4], line_contents[5]];
+                    current_monkey.operation_opts =
+                        [line_contents[3], line_contents[4], line_contents[5]];
                 }
                 "Test" => current_monkey.throw[0] = line_contents[3].parse().unwrap(),
                 "If" => {
                     if line_contents[1].trim_matches(':') == "true" {
-                        current_monkey.throw[1] = line_contents[5].trim_matches(',').parse().unwrap();
+                        current_monkey.throw[1] =
+                            line_contents[5].trim_matches(',').parse().unwrap();
                     } else {
-                        current_monkey.throw[2] = line_contents[5].trim_matches(',').parse().unwrap();
+                        current_monkey.throw[2] =
+                            line_contents[5].trim_matches(',').parse().unwrap();
                     }
                 }
                 _ => panic!("unexpected line!"),
@@ -56,17 +62,27 @@ impl Day for Day11 {
                 monkeys[monkey_ind].inspected_items += monkeys[monkey_ind].items.len() as u128;
 
                 for item_ind in 0..monkeys[monkey_ind].items.len() {
-                    let new_data = monkeys[monkey_ind].throw(monkeys[monkey_ind].operation(monkeys[monkey_ind].items[item_ind]));
+                    let new_data = monkeys[monkey_ind]
+                        .throw(monkeys[monkey_ind].operation(monkeys[monkey_ind].items[item_ind]));
                     let new_item = new_data.0;
                     let new_location = new_data.1;
-                    monkeys.iter_mut().find(|m| m.id == new_location).unwrap().items.push(new_item);
+                    monkeys
+                        .iter_mut()
+                        .find(|m| m.id == new_location)
+                        .unwrap()
+                        .items
+                        .push(new_item);
                 }
 
                 monkeys[monkey_ind].items.clear();
             }
         }
 
-        let first_max = monkeys.iter().max_by_key(|m| m.inspected_items).unwrap().inspected_items;
+        let first_max = monkeys
+            .iter()
+            .max_by_key(|m| m.inspected_items)
+            .unwrap()
+            .inspected_items;
         let second_max = monkeys
             .iter()
             .filter(|m| m.inspected_items != first_max)
@@ -87,10 +103,16 @@ impl Day for Day11 {
                 monkeys[monkey_ind].inspected_items += monkeys[monkey_ind].items.len() as u128;
 
                 for item_ind in 0..monkeys[monkey_ind].items.len() {
-                    let new_data = monkeys[monkey_ind].throw2(monkeys[monkey_ind].operation(monkeys[monkey_ind].items[item_ind]));
+                    let new_data = monkeys[monkey_ind]
+                        .throw2(monkeys[monkey_ind].operation(monkeys[monkey_ind].items[item_ind]));
                     let new_item = new_data.0;
                     let new_location = new_data.1;
-                    monkeys.iter_mut().find(|m| m.id == new_location).unwrap().items.push(new_item);
+                    monkeys
+                        .iter_mut()
+                        .find(|m| m.id == new_location)
+                        .unwrap()
+                        .items
+                        .push(new_item);
                 }
 
                 monkeys[monkey_ind].items.clear();
@@ -101,7 +123,11 @@ impl Day for Day11 {
             }
         }
 
-        let first_max = monkeys.iter().max_by_key(|m| m.inspected_items).unwrap().inspected_items;
+        let first_max = monkeys
+            .iter()
+            .max_by_key(|m| m.inspected_items)
+            .unwrap()
+            .inspected_items;
         let second_max = monkeys
             .iter()
             .filter(|m| m.inspected_items != first_max)
@@ -134,20 +160,48 @@ impl<'a> Monkey<'a> {
 
     fn operation(&self, x: u128) -> u128 {
         if self.operation_opts[1] == "+" {
-            (if self.operation_opts[0] == "old" { x } else { self.operation_opts[0].parse().unwrap() })
-                + (if self.operation_opts[2] == "old" { x } else { self.operation_opts[2].parse().unwrap() })
+            (if self.operation_opts[0] == "old" {
+                x
+            } else {
+                self.operation_opts[0].parse().unwrap()
+            }) + (if self.operation_opts[2] == "old" {
+                x
+            } else {
+                self.operation_opts[2].parse().unwrap()
+            })
         } else {
-            (if self.operation_opts[0] == "old" { x } else { self.operation_opts[0].parse().unwrap() })
-                * (if self.operation_opts[2] == "old" { x } else { self.operation_opts[2].parse().unwrap() })
+            (if self.operation_opts[0] == "old" {
+                x
+            } else {
+                self.operation_opts[0].parse().unwrap()
+            }) * (if self.operation_opts[2] == "old" {
+                x
+            } else {
+                self.operation_opts[2].parse().unwrap()
+            })
         }
     }
 
     fn throw(&self, x: u128) -> (u128, u128) {
         let temp = x / 3;
-        (temp, if temp % self.throw[0] == 0 { self.throw[1] } else { self.throw[2] })
+        (
+            temp,
+            if temp % self.throw[0] == 0 {
+                self.throw[1]
+            } else {
+                self.throw[2]
+            },
+        )
     }
 
     fn throw2(&self, x: u128) -> (u128, u128) {
-        (x, if x % self.throw[0] == 0 { self.throw[1] } else { self.throw[2] })
+        (
+            x,
+            if x % self.throw[0] == 0 {
+                self.throw[1]
+            } else {
+                self.throw[2]
+            },
+        )
     }
 }

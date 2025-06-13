@@ -35,7 +35,8 @@ impl Day11 {
                     if state.elements[i >> 1][i & 1] == state.elevator {
                         let mut next_state = state.clone();
                         next_state.elevator = next_state.elevator.wrapping_add_signed(k);
-                        next_state.elements[i >> 1][i & 1] = next_state.elements[i >> 1][i & 1].wrapping_add_signed(k);
+                        next_state.elements[i >> 1][i & 1] =
+                            next_state.elements[i >> 1][i & 1].wrapping_add_signed(k);
                         next_state.elements.sort();
                         if next_state.is_valid() && !seen_states.contains(&next_state) {
                             if next_state == wanted_state {
@@ -54,8 +55,10 @@ impl Day11 {
                             if state.elements[j >> 1][j & 1] == state.elevator {
                                 let mut next_state = state.clone();
                                 next_state.elevator = next_state.elevator.wrapping_add_signed(k);
-                                next_state.elements[i >> 1][i & 1] = next_state.elements[i >> 1][i & 1].wrapping_add_signed(k);
-                                next_state.elements[j >> 1][j & 1] = next_state.elements[j >> 1][j & 1].wrapping_add_signed(k);
+                                next_state.elements[i >> 1][i & 1] =
+                                    next_state.elements[i >> 1][i & 1].wrapping_add_signed(k);
+                                next_state.elements[j >> 1][j & 1] =
+                                    next_state.elements[j >> 1][j & 1].wrapping_add_signed(k);
                                 next_state.elements.sort();
                                 if next_state.is_valid() && !seen_states.contains(&next_state) {
                                     if next_state == wanted_state {
@@ -154,7 +157,14 @@ impl State {
             if floor_line.contains("nothing relevant") {
                 continue;
             }
-            re.split(floor_line.trim_end_matches('.').split_once(" contains ").unwrap().1).for_each(|element| {
+            re.split(
+                floor_line
+                    .trim_end_matches('.')
+                    .split_once(" contains ")
+                    .unwrap()
+                    .1,
+            )
+            .for_each(|element| {
                 let mut element = element.trim().trim_start_matches("a ");
                 let is_generator = if element.ends_with("generator") {
                     element = element.trim_end_matches(" generator");

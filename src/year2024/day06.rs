@@ -116,7 +116,12 @@ impl Day for Day06 {
             location = new_location;
         }
 
-        Ok(grid.into_iter().flat_map(|row| row.into_iter()).filter(|&c| c == 'X').count().to_string())
+        Ok(grid
+            .into_iter()
+            .flat_map(|row| row.into_iter())
+            .filter(|&c| c == 'X')
+            .count()
+            .to_string())
     }
 
     fn part2(&self, input: &str) -> Result<String, Error> {

@@ -26,7 +26,8 @@ impl Day for Day17 {
             }
         }
 
-        let mut life = Life::new_with_alive_cells(birth_rules, survival_rules, alive_cells).unwrap();
+        let mut life =
+            Life::new_with_alive_cells(birth_rules, survival_rules, alive_cells).unwrap();
         for _ in 0..6 {
             life.next_generation();
         }
@@ -47,7 +48,8 @@ impl Day for Day17 {
             }
         }
 
-        let mut life = Life::new_with_alive_cells(birth_rules, survival_rules, alive_cells).unwrap();
+        let mut life =
+            Life::new_with_alive_cells(birth_rules, survival_rules, alive_cells).unwrap();
         for _ in 0..6 {
             life.next_generation();
         }

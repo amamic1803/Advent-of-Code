@@ -33,7 +33,10 @@ impl Day for Day10 {
                     stack.push(c);
                 } else if Self::CLOSE_BRACES.contains(&c) {
                     if let Some(last) = stack.pop() {
-                        if last != Self::OPEN_BRACES[Self::CLOSE_BRACES.iter().position(|&x| x == c).unwrap()] {
+                        if last
+                            != Self::OPEN_BRACES
+                                [Self::CLOSE_BRACES.iter().position(|&x| x == c).unwrap()]
+                        {
                             error_score += score_table.get(&c).unwrap();
                             break;
                         }
@@ -62,7 +65,10 @@ impl Day for Day10 {
                     stack.push(c);
                 } else if Self::CLOSE_BRACES.contains(&c) {
                     if let Some(last) = stack.pop() {
-                        if last != Self::OPEN_BRACES[Self::CLOSE_BRACES.iter().position(|&x| x == c).unwrap()] {
+                        if last
+                            != Self::OPEN_BRACES
+                                [Self::CLOSE_BRACES.iter().position(|&x| x == c).unwrap()]
+                        {
                             continue 'outer; // ignore incomplete lines
                         }
                     } else {
@@ -76,7 +82,9 @@ impl Day for Day10 {
             if !stack.is_empty() {
                 let mut completion_score = 0;
                 while let Some(last) = stack.pop() {
-                    completion_score = completion_score * 5 + Self::OPEN_BRACES.iter().position(|&x| x == last).unwrap() as u64 + 1;
+                    completion_score = completion_score * 5
+                        + Self::OPEN_BRACES.iter().position(|&x| x == last).unwrap() as u64
+                        + 1;
                 }
                 completion_scores.push(completion_score);
             }

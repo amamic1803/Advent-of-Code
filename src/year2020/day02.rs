@@ -44,7 +44,10 @@ impl Day for Day02 {
         let passwords = Self::parse_input(input);
         Ok(passwords
             .iter()
-            .filter(|(min, max, character, password)| (password.chars().nth(min - 1).unwrap() == *character) ^ (password.chars().nth(max - 1).unwrap() == *character))
+            .filter(|(min, max, character, password)| {
+                (password.chars().nth(min - 1).unwrap() == *character)
+                    ^ (password.chars().nth(max - 1).unwrap() == *character)
+            })
             .count()
             .to_string())
     }

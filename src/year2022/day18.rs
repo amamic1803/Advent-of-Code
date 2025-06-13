@@ -8,7 +8,11 @@ impl Day18 {
         let mut cubes_coords = input
             .trim()
             .lines()
-            .map(|line| line.split(',').map(|coord| coord.parse::<usize>().unwrap()).collect::<Vec<_>>())
+            .map(|line| {
+                line.split(',')
+                    .map(|coord| coord.parse::<usize>().unwrap())
+                    .collect::<Vec<_>>()
+            })
             .collect::<Vec<Vec<usize>>>();
 
         // offset all cubes by 1 in each direction

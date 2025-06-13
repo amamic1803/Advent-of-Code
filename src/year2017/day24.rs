@@ -17,7 +17,9 @@ impl Day for Day24 {
     }
 
     fn part2(&self, input: &str) -> Result<String, Error> {
-        Ok(Components::new(input).strongest_longest_bridge().to_string())
+        Ok(Components::new(input)
+            .strongest_longest_bridge()
+            .to_string())
     }
 }
 
@@ -44,7 +46,10 @@ impl Components {
             port_map.entry(component.1).or_insert(Vec::new()).push(i);
         }
 
-        Self { components, port_map }
+        Self {
+            components,
+            port_map,
+        }
     }
 
     fn strongest_bridge(&self) -> u16 {
@@ -79,8 +84,14 @@ impl Components {
         max_strength
     }
 
-    fn visit_bridges<T>(&self, current_port: u16, current_strength: u16, current_length: u8, apply: &mut T, components_used: &mut [bool])
-    where
+    fn visit_bridges<T>(
+        &self,
+        current_port: u16,
+        current_strength: u16,
+        current_length: u8,
+        apply: &mut T,
+        components_used: &mut [bool],
+    ) where
         T: FnMut(u16, u8),
     {
         apply(current_strength, current_length);
@@ -90,9 +101,21 @@ impl Components {
                 components_used[*next_component] = true;
                 let (port1, port2) = self.components[*next_component];
                 if port1 == current_port {
-                    self.visit_bridges(port2, current_strength + port1 + port2, current_length + 1, apply, components_used);
+                    self.visit_bridges(
+                        port2,
+                        current_strength + port1 + port2,
+                        current_length + 1,
+                        apply,
+                        components_used,
+                    );
                 } else {
-                    self.visit_bridges(port1, current_strength + port1 + port2, current_length + 1, apply, components_used);
+                    self.visit_bridges(
+                        port1,
+                        current_strength + port1 + port2,
+                        current_length + 1,
+                        apply,
+                        components_used,
+                    );
                 }
                 components_used[*next_component] = false;
             }

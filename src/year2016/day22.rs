@@ -34,7 +34,8 @@ impl Grid {
         let max_x = nodes_list.iter().map(|node| node.x).max().unwrap();
         let max_y = nodes_list.iter().map(|node| node.y).max().unwrap();
 
-        let mut nodes = vec![vec![Node::new("/dev/grid/node-x0-y0 0T 0T 0T"); max_x + 1]; max_y + 1];
+        let mut nodes =
+            vec![vec![Node::new("/dev/grid/node-x0-y0 0T 0T 0T"); max_x + 1]; max_y + 1];
 
         for node in nodes_list.drain(..) {
             nodes[node.y][node.x] = node;
@@ -47,7 +48,10 @@ impl Grid {
         let mut pairs = 0;
         for node in self.nodes.iter().flat_map(|row| row.iter()) {
             for node2 in self.nodes.iter().flat_map(|row| row.iter()) {
-                if (node.x != node2.x || node.y != node2.y) && node.used != 0 && node.used <= node2.avail {
+                if (node.x != node2.x || node.y != node2.y)
+                    && node.used != 0
+                    && node.used <= node2.avail
+                {
                     pairs += 1;
                 }
             }
@@ -61,7 +65,13 @@ impl Grid {
         let data_node = [0, grid[0].len() - 1];
         grid[data_node[0]][data_node[1]] = true;
 
-        let node_avg_size = self.nodes.iter().flat_map(|row| row.iter()).map(|node| node.size).sum::<u32>() / self.nodes.iter().flat_map(|row| row.iter()).count() as u32;
+        let node_avg_size = self
+            .nodes
+            .iter()
+            .flat_map(|row| row.iter())
+            .map(|node| node.size)
+            .sum::<u32>()
+            / self.nodes.iter().flat_map(|row| row.iter()).count() as u32;
         for row in self.nodes.iter() {
             for node in row.iter() {
                 if node.used == 0 {
@@ -72,7 +82,11 @@ impl Grid {
             }
         }
 
-        fn shortest_path(start: [usize; 2], end: [usize; 2], grid: &[Vec<bool>]) -> Vec<[usize; 2]> {
+        fn shortest_path(
+            start: [usize; 2],
+            end: [usize; 2],
+            grid: &[Vec<bool>],
+        ) -> Vec<[usize; 2]> {
             if start == end {
                 return Vec::new();
             }
@@ -133,13 +147,25 @@ impl Grid {
             let mut current_tile = end;
             while current_tile != start {
                 let current_distance = distances[current_tile[0]][current_tile[1]].unwrap();
-                if current_tile[0] > 0 && distances[current_tile[0] - 1][current_tile[1]].unwrap_or(i32::MIN) == current_distance - 1 {
+                if current_tile[0] > 0
+                    && distances[current_tile[0] - 1][current_tile[1]].unwrap_or(i32::MIN)
+                        == current_distance - 1
+                {
                     current_tile = [current_tile[0] - 1, current_tile[1]];
-                } else if current_tile[0] < grid.len() - 1 && distances[current_tile[0] + 1][current_tile[1]].unwrap_or(i32::MIN) == current_distance - 1 {
+                } else if current_tile[0] < grid.len() - 1
+                    && distances[current_tile[0] + 1][current_tile[1]].unwrap_or(i32::MIN)
+                        == current_distance - 1
+                {
                     current_tile = [current_tile[0] + 1, current_tile[1]];
-                } else if current_tile[1] > 0 && distances[current_tile[0]][current_tile[1] - 1].unwrap_or(i32::MIN) == current_distance - 1 {
+                } else if current_tile[1] > 0
+                    && distances[current_tile[0]][current_tile[1] - 1].unwrap_or(i32::MIN)
+                        == current_distance - 1
+                {
                     current_tile = [current_tile[0], current_tile[1] - 1];
-                } else if current_tile[1] < grid[0].len() - 1 && distances[current_tile[0]][current_tile[1] + 1].unwrap_or(i32::MIN) == current_distance - 1 {
+                } else if current_tile[1] < grid[0].len() - 1
+                    && distances[current_tile[0]][current_tile[1] + 1].unwrap_or(i32::MIN)
+                        == current_distance - 1
+                {
                     current_tile = [current_tile[0], current_tile[1] + 1];
                 }
                 path.push(current_tile);
@@ -228,13 +254,29 @@ impl Node {
         let path = parts.next().unwrap();
         let mut path_parts = path.split('-');
         let _ = path_parts.next().unwrap();
-        let x = path_parts.next().unwrap().trim_start_matches('x').parse().unwrap();
-        let y = path_parts.next().unwrap().trim_start_matches('y').parse().unwrap();
+        let x = path_parts
+            .next()
+            .unwrap()
+            .trim_start_matches('x')
+            .parse()
+            .unwrap();
+        let y = path_parts
+            .next()
+            .unwrap()
+            .trim_start_matches('y')
+            .parse()
+            .unwrap();
 
         let size = parts.next().unwrap().trim_end_matches('T').parse().unwrap();
         let used = parts.next().unwrap().trim_end_matches('T').parse().unwrap();
         let avail = parts.next().unwrap().trim_end_matches('T').parse().unwrap();
 
-        Self { x, y, size, used, avail }
+        Self {
+            x,
+            y,
+            size,
+            used,
+            avail,
+        }
     }
 }

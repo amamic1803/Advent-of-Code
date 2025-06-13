@@ -19,7 +19,13 @@ impl Day15 {
     fn parse_input(input: &str) -> impl Iterator<Item = (usize, usize)> {
         input.lines().map(|line| {
             let positions = line.split_whitespace().nth(3).unwrap().parse().unwrap();
-            let start = line.split_whitespace().nth(11).unwrap().trim_end_matches('.').parse().unwrap();
+            let start = line
+                .split_whitespace()
+                .nth(11)
+                .unwrap()
+                .trim_end_matches('.')
+                .parse()
+                .unwrap();
             (positions, start)
         })
     }

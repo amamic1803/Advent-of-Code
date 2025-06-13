@@ -5,7 +5,11 @@ use std::collections::BinaryHeap;
 day!(Day18, 18, "RAM Run");
 
 impl Day18 {
-    fn dijkstra<const N: usize>(grid: &[[bool; N]], start: (usize, usize), target: (usize, usize)) -> Option<usize> {
+    fn dijkstra<const N: usize>(
+        grid: &[[bool; N]],
+        start: (usize, usize),
+        target: (usize, usize),
+    ) -> Option<usize> {
         #[derive(Eq, PartialEq)]
         struct Node {
             coords: (usize, usize),
@@ -25,7 +29,10 @@ impl Day18 {
         let mut weights = vec![[usize::MAX; N]; grid.len()];
         weights[start.0][start.1] = 0;
         let mut min_heap = BinaryHeap::new();
-        min_heap.push(Node { coords: start, weight: 0 });
+        min_heap.push(Node {
+            coords: start,
+            weight: 0,
+        });
 
         while let Some(node) = min_heap.pop() {
             if node.coords == target {

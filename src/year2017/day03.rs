@@ -96,15 +96,25 @@ impl Day for Day03 {
                     0
                 };
                 // right down
-                sum += if table.get(new_coords[0] + 1).is_some() && table[new_coords[0] + 1].get(new_coords[1] + 1).is_some() {
+                sum += if table.get(new_coords[0] + 1).is_some()
+                    && table[new_coords[0] + 1].get(new_coords[1] + 1).is_some()
+                {
                     table[new_coords[0] + 1][new_coords[1] + 1]
                 } else {
                     0
                 };
                 // up
-                sum += if new_coords[0] > 0 { table[new_coords[0] - 1][new_coords[1]] } else { 0 };
+                sum += if new_coords[0] > 0 {
+                    table[new_coords[0] - 1][new_coords[1]]
+                } else {
+                    0
+                };
                 // left
-                sum += if new_coords[1] > 0 { table[new_coords[0]][new_coords[1] - 1] } else { 0 };
+                sum += if new_coords[1] > 0 {
+                    table[new_coords[0]][new_coords[1] - 1]
+                } else {
+                    0
+                };
                 // left down
                 sum += if new_coords[1] > 0 && table.get(new_coords[0] + 1).is_some() {
                     table[new_coords[0] + 1][new_coords[1] - 1]
@@ -118,7 +128,8 @@ impl Day for Day03 {
                     0
                 };
                 // up right
-                sum += if new_coords[0] > 0 && table[new_coords[0]].get(new_coords[1] + 1).is_some() {
+                sum += if new_coords[0] > 0 && table[new_coords[0]].get(new_coords[1] + 1).is_some()
+                {
                     table[new_coords[0] - 1][new_coords[1] + 1]
                 } else {
                     0

@@ -31,9 +31,16 @@ impl Cpu {
     fn new(instructions: &str) -> Self {
         let registers = HashMap::new();
 
-        let instructions = instructions.trim().lines().map(Instruction::new).collect::<Vec<_>>();
+        let instructions = instructions
+            .trim()
+            .lines()
+            .map(Instruction::new)
+            .collect::<Vec<_>>();
 
-        Self { registers, instructions }
+        Self {
+            registers,
+            instructions,
+        }
     }
 
     fn simulate(&mut self) -> i64 {
@@ -139,7 +146,11 @@ impl MultiCpu {
         let ins_ptrs = [0, 0];
         let queues = [VecDeque::new(), VecDeque::new()];
 
-        let instructions = instructions.trim().lines().map(Instruction::new).collect::<Vec<_>>();
+        let instructions = instructions
+            .trim()
+            .lines()
+            .map(Instruction::new)
+            .collect::<Vec<_>>();
 
         Self {
             registers,
@@ -157,7 +168,10 @@ impl MultiCpu {
         let mut prog_waiting = [false; 2];
 
         loop {
-            if prog_waiting[turn] && self.queues[turn].is_empty() && self.queues[1 - turn].is_empty() {
+            if prog_waiting[turn]
+                && self.queues[turn].is_empty()
+                && self.queues[1 - turn].is_empty()
+            {
                 break;
             }
 

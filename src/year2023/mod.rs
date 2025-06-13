@@ -44,19 +44,7 @@ pub use day15::Day15;
 #[doc(inline)]
 pub use day18::Day18;
 
-year!(Year2023, 2023,
-    Day01,
-    Day02,
-    Day03,
-    Day04,
-    Day05,
-    Day06,
-    Day07,
-    Day08,
-    Day09,
-    Day10,
-    Day11,
-    Day14,
-    Day15,
-    Day18
+year!(
+    Year2023, 2023, Day01, Day02, Day03, Day04, Day05, Day06, Day07, Day08, Day09, Day10, Day11,
+    Day14, Day15, Day18
 );

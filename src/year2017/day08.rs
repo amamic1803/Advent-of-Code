@@ -34,7 +34,10 @@ struct Cpu<'a> {
 impl<'a> Cpu<'a> {
     fn new(input: &'a str) -> Self {
         let registers = HashMap::new();
-        let instructions = input.lines().map(Instruction::new).collect::<Vec<Instruction>>();
+        let instructions = input
+            .lines()
+            .map(Instruction::new)
+            .collect::<Vec<Instruction>>();
 
         Self {
             registers,

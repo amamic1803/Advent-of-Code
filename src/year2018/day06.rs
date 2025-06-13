@@ -39,10 +39,14 @@ impl Day for Day06 {
             for (j, cell) in row.iter_mut().enumerate() {
                 let mut min_index = 0;
                 let mut min_count = 1;
-                let mut min_dist = manhattan_distance((i as i64, j as i64), (coords[0].0 as i64, coords[0].1 as i64));
+                let mut min_dist = manhattan_distance(
+                    (i as i64, j as i64),
+                    (coords[0].0 as i64, coords[0].1 as i64),
+                );
 
                 for (k, coord) in coords.iter().enumerate().skip(1) {
-                    let dist = manhattan_distance((i as i64, j as i64), (coord.0 as i64, coord.1 as i64));
+                    let dist =
+                        manhattan_distance((i as i64, j as i64), (coord.0 as i64, coord.1 as i64));
                     match dist.cmp(&min_dist) {
                         Ordering::Less => {
                             min_index = k;
@@ -100,7 +104,8 @@ impl Day for Day06 {
             for j in 0..=max_y {
                 let mut total_distances = 0;
                 for coord in coords.iter() {
-                    let dist = manhattan_distance((i as i64, j as i64), (coord.0 as i64, coord.1 as i64));
+                    let dist =
+                        manhattan_distance((i as i64, j as i64), (coord.0 as i64, coord.1 as i64));
                     total_distances += dist;
                     if total_distances >= Self::PART2_THRESHOLD {
                         break;

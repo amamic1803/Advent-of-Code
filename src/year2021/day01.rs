@@ -27,11 +27,17 @@ impl Day for Day01 {
     }
 
     fn part2(&self, input: &str) -> Result<String, Error> {
-        let input: Vec<usize> = input.trim().lines().map(|line| line.parse::<usize>().unwrap()).collect();
+        let input: Vec<usize> = input
+            .trim()
+            .lines()
+            .map(|line| line.parse::<usize>().unwrap())
+            .collect();
         let mut count = 0;
 
         for i in 0..(input.len() - 3) {
-            if (input[i + 1] + input[i + 2] + input[i + 3]) > (input[i] + input[i + 1] + input[i + 2]) {
+            if (input[i + 1] + input[i + 2] + input[i + 3])
+                > (input[i] + input[i + 1] + input[i + 2])
+            {
                 count += 1;
             }
         }

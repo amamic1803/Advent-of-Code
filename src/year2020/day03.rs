@@ -24,7 +24,11 @@ impl Day03 {
     }
 
     fn parse_input(input: &str) -> Vec<Vec<bool>> {
-        input.trim().lines().map(|line| line.chars().map(|c| c == '#').collect()).collect()
+        input
+            .trim()
+            .lines()
+            .map(|line| line.chars().map(|c| c == '#').collect())
+            .collect()
     }
 }
 impl Day for Day03 {
@@ -43,6 +47,10 @@ impl Day for Day03 {
 
     fn part2(&self, input: &str) -> Result<String, Error> {
         let map = Self::parse_input(input);
-        Ok(Self::SLOPES_PART2.into_iter().map(|slope| Self::count_trees(slope, &map)).product::<u64>().to_string())
+        Ok(Self::SLOPES_PART2
+            .into_iter()
+            .map(|slope| Self::count_trees(slope, &map))
+            .product::<u64>()
+            .to_string())
     }
 }

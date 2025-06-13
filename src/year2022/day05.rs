@@ -9,7 +9,13 @@ impl Day05 {
         let mut num_of_piles: usize = 0;
         for line in input.trim().lines() {
             if !line.contains('[') {
-                num_of_piles = line.trim().rsplit_once(' ').unwrap().1.parse::<usize>().unwrap();
+                num_of_piles = line
+                    .trim()
+                    .rsplit_once(' ')
+                    .unwrap()
+                    .1
+                    .parse::<usize>()
+                    .unwrap();
                 break;
             }
         }
@@ -45,7 +51,8 @@ impl Day for Day05 {
             } else if line.contains("move") {
                 move_vec = line.trim().split(' ').collect();
                 for _ in 0..move_vec[1].parse::<usize>().unwrap() {
-                    let character: char = piles[move_vec[3].parse::<usize>().unwrap() - 1][piles[move_vec[3].parse::<usize>().unwrap() - 1].len() - 1];
+                    let character: char = piles[move_vec[3].parse::<usize>().unwrap() - 1]
+                        [piles[move_vec[3].parse::<usize>().unwrap() - 1].len() - 1];
                     piles[move_vec[5].parse::<usize>().unwrap() - 1].push(character);
                     piles[move_vec[3].parse::<usize>().unwrap() - 1].pop();
                 }
@@ -79,7 +86,8 @@ impl Day for Day05 {
                 move_vec = line.trim().split(' ').collect();
                 let insert_ind = piles[move_vec[5].parse::<usize>().unwrap() - 1].len();
                 for _ in 0..move_vec[1].parse::<usize>().unwrap() {
-                    let character: char = piles[move_vec[3].parse::<usize>().unwrap() - 1][piles[move_vec[3].parse::<usize>().unwrap() - 1].len() - 1];
+                    let character: char = piles[move_vec[3].parse::<usize>().unwrap() - 1]
+                        [piles[move_vec[3].parse::<usize>().unwrap() - 1].len() - 1];
                     piles[move_vec[5].parse::<usize>().unwrap() - 1].insert(insert_ind, character);
                     piles[move_vec[3].parse::<usize>().unwrap() - 1].pop();
                 }

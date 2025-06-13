@@ -68,7 +68,11 @@ impl Day for Day14 {
             for m in 0..grid.len() {
                 for n in 0..grid[m].len() {
                     if grid[m][n] {
-                        if (m > 0 && grid[m - 1][n]) || (m < grid.len() - 1 && grid[m + 1][n]) || (n > 0 && grid[m][n - 1]) || (n < grid[m].len() - 1 && grid[m][n + 1]) {
+                        if (m > 0 && grid[m - 1][n])
+                            || (m < grid.len() - 1 && grid[m + 1][n])
+                            || (n > 0 && grid[m][n - 1])
+                            || (n < grid[m].len() - 1 && grid[m][n + 1])
+                        {
                             neighbors += 1;
                         } else {
                             solo += 1;

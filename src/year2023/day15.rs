@@ -47,7 +47,12 @@ impl Day for Day15 {
     }
 
     fn part1(&self, input: &str) -> Result<String, Error> {
-        Ok(input.trim().split(',').map(Self::calculate_hash).sum::<u32>().to_string())
+        Ok(input
+            .trim()
+            .split(',')
+            .map(Self::calculate_hash)
+            .sum::<u32>()
+            .to_string())
     }
 
     fn part2(&self, input: &str) -> Result<String, Error> {

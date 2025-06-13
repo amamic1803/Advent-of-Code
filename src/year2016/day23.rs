@@ -86,8 +86,10 @@ impl Keypad {
 
         while ins_ptr < self.instructions.len() {
             if ins_ptr == self.mul_loop.start {
-                self.registers[self.mul_loop.destination] =
-                    self.registers[self.mul_loop.multiplier] * (self.registers[self.mul_loop.addend] + self.registers[self.mul_loop.destination]);
+                self.registers[self.mul_loop.destination] = self.registers
+                    [self.mul_loop.multiplier]
+                    * (self.registers[self.mul_loop.addend]
+                        + self.registers[self.mul_loop.destination]);
                 self.registers[self.mul_loop.multiplier] = 0;
                 self.registers[self.mul_loop.clear] = 0;
                 ins_ptr = self.mul_loop.end;
@@ -157,18 +159,28 @@ impl Keypad {
 
     fn calculate_loop(&mut self) {
         for i in 0..(self.instructions.len() - 5) {
-            if let Instruction::Cpy(Operand::Register(addend), Operand::Register(clear)) = self.instructions[i] {
+            if let Instruction::Cpy(Operand::Register(addend), Operand::Register(clear)) =
+                self.instructions[i]
+            {
                 if let Instruction::Inc(Operand::Register(destination)) = self.instructions[i + 1] {
                     if let Instruction::Dec(Operand::Register(clr)) = self.instructions[i + 2] {
                         if clr != clear {
                             continue;
                         }
-                        if let Instruction::Jnz(Operand::Register(clr), Operand::Value(-2)) = self.instructions[i + 3] {
+                        if let Instruction::Jnz(Operand::Register(clr), Operand::Value(-2)) =
+                            self.instructions[i + 3]
+                        {
                             if clr != clear {
                                 continue;
                             }
-                            if let Instruction::Dec(Operand::Register(multiplier)) = self.instructions[i + 4] {
-                                if let Instruction::Jnz(Operand::Register(mul), Operand::Value(-5)) = self.instructions[i + 5] {
+                            if let Instruction::Dec(Operand::Register(multiplier)) =
+                                self.instructions[i + 4]
+                            {
+                                if let Instruction::Jnz(
+                                    Operand::Register(mul),
+                                    Operand::Value(-5),
+                                ) = self.instructions[i + 5]
+                                {
                                     if mul != multiplier {
                                         continue;
                                     }

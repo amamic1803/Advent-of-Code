@@ -24,7 +24,11 @@ impl Day for Day12 {
             }
         }
 
-        Ok(programs.into_iter().filter(|p| p.visited).count().to_string())
+        Ok(programs
+            .into_iter()
+            .filter(|p| p.visited)
+            .count()
+            .to_string())
     }
 
     fn part2(&self, input: &str) -> Result<String, Error> {
@@ -59,7 +63,15 @@ impl Program {
     fn new(input: &str) -> Self {
         let mut parts = input.split(" <-> ");
         parts.next().unwrap();
-        let pipes = parts.next().unwrap().split(", ").map(|x| x.parse().unwrap()).collect();
-        Self { visited: false, pipes }
+        let pipes = parts
+            .next()
+            .unwrap()
+            .split(", ")
+            .map(|x| x.parse().unwrap())
+            .collect();
+        Self {
+            visited: false,
+            pipes,
+        }
     }
 }

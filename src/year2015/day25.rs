@@ -10,12 +10,22 @@ impl Day25 {
         while element != "row" {
             element = line_iter.next().unwrap();
         }
-        let row = line_iter.next().unwrap().trim_end_matches([',', '.']).parse::<usize>().unwrap();
+        let row = line_iter
+            .next()
+            .unwrap()
+            .trim_end_matches([',', '.'])
+            .parse::<usize>()
+            .unwrap();
 
         while element != "column" {
             element = line_iter.next().unwrap();
         }
-        let col = line_iter.next().unwrap().trim_end_matches([',', '.']).parse::<usize>().unwrap();
+        let col = line_iter
+            .next()
+            .unwrap()
+            .trim_end_matches([',', '.'])
+            .parse::<usize>()
+            .unwrap();
 
         // (row, column)
         (row, col)

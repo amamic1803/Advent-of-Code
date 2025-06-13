@@ -3,7 +3,12 @@ use crate::{Day, Error};
 day!(Day22, 22, "Wizard Simulator 20XX");
 
 impl Day22 {
-    fn least_mana_to_win(mut boss_stats: [usize; 2], mut my_stats: [usize; 2], turn: bool, mut active_spells: [Option<((&str, usize), usize)>; 3]) -> (bool, usize) {
+    fn least_mana_to_win(
+        mut boss_stats: [usize; 2],
+        mut my_stats: [usize; 2],
+        turn: bool,
+        mut active_spells: [Option<((&str, usize), usize)>; 3],
+    ) -> (bool, usize) {
         // (true if I win, mana spent)
 
         // check if shield spell is active
@@ -61,7 +66,8 @@ impl Day22 {
             if new_boss_stats[0] == 0 {
                 return (true, mana); // return immediately because 53 is the least mana possible to spend
             } else {
-                let (new_victory, mut new_mana) = Self::least_mana_to_win(new_boss_stats, new_my_stats, !turn, active_spells);
+                let (new_victory, mut new_mana) =
+                    Self::least_mana_to_win(new_boss_stats, new_my_stats, !turn, active_spells);
                 new_mana += mana;
                 if victory {
                     // it was won already
@@ -90,7 +96,8 @@ impl Day22 {
                         least_mana = mana;
                     }
                 } else {
-                    let (new_victory, mut new_mana) = Self::least_mana_to_win(new_boss_stats, new_my_stats, !turn, active_spells);
+                    let (new_victory, mut new_mana) =
+                        Self::least_mana_to_win(new_boss_stats, new_my_stats, !turn, active_spells);
                     new_mana += mana;
                     if victory {
                         // it was won already
@@ -115,7 +122,8 @@ impl Day22 {
                 let new_my_stats = [my_stats[0], my_stats[1] - mana];
                 let mut new_active_spells = active_spells;
                 new_active_spells[0] = Some((Self::SPELLS[2], 6 - 1));
-                let (new_victory, mut new_mana) = Self::least_mana_to_win(boss_stats, new_my_stats, !turn, new_active_spells);
+                let (new_victory, mut new_mana) =
+                    Self::least_mana_to_win(boss_stats, new_my_stats, !turn, new_active_spells);
                 new_mana += mana;
                 if victory {
                     // it was won already
@@ -139,7 +147,8 @@ impl Day22 {
                 let new_my_stats = [my_stats[0], my_stats[1] - mana];
                 let mut new_active_spells = active_spells;
                 new_active_spells[1] = Some((Self::SPELLS[3], 6 - 1));
-                let (new_victory, mut new_mana) = Self::least_mana_to_win(boss_stats, new_my_stats, !turn, new_active_spells);
+                let (new_victory, mut new_mana) =
+                    Self::least_mana_to_win(boss_stats, new_my_stats, !turn, new_active_spells);
                 new_mana += mana;
                 if victory {
                     // it was won already
@@ -163,7 +172,8 @@ impl Day22 {
                 let new_my_stats = [my_stats[0], my_stats[1] - mana];
                 let mut new_active_spells = active_spells;
                 new_active_spells[2] = Some((Self::SPELLS[4], 5 - 1));
-                let (new_victory, mut new_mana) = Self::least_mana_to_win(boss_stats, new_my_stats, !turn, new_active_spells);
+                let (new_victory, mut new_mana) =
+                    Self::least_mana_to_win(boss_stats, new_my_stats, !turn, new_active_spells);
                 new_mana += mana;
                 if victory {
                     // it was won already
@@ -194,7 +204,12 @@ impl Day22 {
         }
     }
 
-    fn least_mana_to_win_hard(mut boss_stats: [usize; 2], mut my_stats: [usize; 2], turn: bool, mut active_spells: [Option<((&str, usize), usize)>; 3]) -> (bool, usize) {
+    fn least_mana_to_win_hard(
+        mut boss_stats: [usize; 2],
+        mut my_stats: [usize; 2],
+        turn: bool,
+        mut active_spells: [Option<((&str, usize), usize)>; 3],
+    ) -> (bool, usize) {
         // (true if I win, mana spent)
         if turn {
             my_stats[0] = my_stats[0].saturating_sub(1);
@@ -258,7 +273,12 @@ impl Day22 {
             if new_boss_stats[0] == 0 {
                 return (true, mana); // return immediately because 53 is the least mana possible to spend
             } else {
-                let (new_victory, mut new_mana) = Self::least_mana_to_win_hard(new_boss_stats, new_my_stats, !turn, active_spells);
+                let (new_victory, mut new_mana) = Self::least_mana_to_win_hard(
+                    new_boss_stats,
+                    new_my_stats,
+                    !turn,
+                    active_spells,
+                );
                 new_mana += mana;
                 if victory {
                     // it was won already
@@ -287,7 +307,12 @@ impl Day22 {
                         least_mana = mana;
                     }
                 } else {
-                    let (new_victory, mut new_mana) = Self::least_mana_to_win_hard(new_boss_stats, new_my_stats, !turn, active_spells);
+                    let (new_victory, mut new_mana) = Self::least_mana_to_win_hard(
+                        new_boss_stats,
+                        new_my_stats,
+                        !turn,
+                        active_spells,
+                    );
                     new_mana += mana;
                     if victory {
                         // it was won already
@@ -312,7 +337,12 @@ impl Day22 {
                 let new_my_stats = [my_stats[0], my_stats[1] - mana];
                 let mut new_active_spells = active_spells;
                 new_active_spells[0] = Some((Self::SPELLS[2], 6 - 1));
-                let (new_victory, mut new_mana) = Self::least_mana_to_win_hard(boss_stats, new_my_stats, !turn, new_active_spells);
+                let (new_victory, mut new_mana) = Self::least_mana_to_win_hard(
+                    boss_stats,
+                    new_my_stats,
+                    !turn,
+                    new_active_spells,
+                );
                 new_mana += mana;
                 if victory {
                     // it was won already
@@ -336,7 +366,12 @@ impl Day22 {
                 let new_my_stats = [my_stats[0], my_stats[1] - mana];
                 let mut new_active_spells = active_spells;
                 new_active_spells[1] = Some((Self::SPELLS[3], 6 - 1));
-                let (new_victory, mut new_mana) = Self::least_mana_to_win_hard(boss_stats, new_my_stats, !turn, new_active_spells);
+                let (new_victory, mut new_mana) = Self::least_mana_to_win_hard(
+                    boss_stats,
+                    new_my_stats,
+                    !turn,
+                    new_active_spells,
+                );
                 new_mana += mana;
                 if victory {
                     // it was won already
@@ -360,7 +395,12 @@ impl Day22 {
                 let new_my_stats = [my_stats[0], my_stats[1] - mana];
                 let mut new_active_spells = active_spells;
                 new_active_spells[2] = Some((Self::SPELLS[4], 5 - 1));
-                let (new_victory, mut new_mana) = Self::least_mana_to_win_hard(boss_stats, new_my_stats, !turn, new_active_spells);
+                let (new_victory, mut new_mana) = Self::least_mana_to_win_hard(
+                    boss_stats,
+                    new_my_stats,
+                    !turn,
+                    new_active_spells,
+                );
                 new_mana += mana;
                 if victory {
                     // it was won already
@@ -395,7 +435,12 @@ impl Day22 {
         let mut boss = [0; 2]; // health, damage
 
         for (i, line) in input.trim().lines().enumerate() {
-            boss[i] = line.split_whitespace().next_back().unwrap().parse::<usize>().unwrap();
+            boss[i] = line
+                .split_whitespace()
+                .next_back()
+                .unwrap()
+                .parse::<usize>()
+                .unwrap();
         }
 
         boss

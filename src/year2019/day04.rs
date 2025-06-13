@@ -9,7 +9,13 @@ impl Day04 {
         input
             .trim()
             .split('-')
-            .map(|s| s.chars().map(|c| c.to_digit(10).unwrap() as u8).collect::<Vec<u8>>().try_into().unwrap())
+            .map(|s| {
+                s.chars()
+                    .map(|c| c.to_digit(10).unwrap() as u8)
+                    .collect::<Vec<u8>>()
+                    .try_into()
+                    .unwrap()
+            })
             .collect_tuple()
             .unwrap()
     }

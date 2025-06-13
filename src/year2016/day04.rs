@@ -20,7 +20,13 @@ impl Day04 {
             }
             let mut char_counts: Vec<(char, usize)> = char_counts.into_iter().collect();
             char_counts.sort_by_key(|(c, count)| (Reverse(*count), *c));
-            let new_checksum: [char; 5] = char_counts.iter().map(|(c, _)| *c).take(5).collect::<Vec<char>>().try_into().unwrap();
+            let new_checksum: [char; 5] = char_counts
+                .iter()
+                .map(|(c, _)| *c)
+                .take(5)
+                .collect::<Vec<char>>()
+                .try_into()
+                .unwrap();
             if new_checksum == checksum {
                 filtered_rooms.push((name, id, checksum));
             }
@@ -97,7 +103,9 @@ impl Day for Day04 {
             .iter()
             .find(|(name, id, _)| {
                 let real_name = Self::rotate_name(name, *id);
-                real_name.contains("north") && real_name.contains("pole") && real_name.contains("object")
+                real_name.contains("north")
+                    && real_name.contains("pole")
+                    && real_name.contains("object")
             })
             .unwrap()
             .1

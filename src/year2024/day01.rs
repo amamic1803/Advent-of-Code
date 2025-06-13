@@ -22,7 +22,12 @@ impl Day for Day01 {
         });
         list1.sort();
         list2.sort();
-        Ok(list1.into_iter().zip(list2).map(|(a, b)| a.abs_diff(b)).sum::<u32>().to_string())
+        Ok(list1
+            .into_iter()
+            .zip(list2)
+            .map(|(a, b)| a.abs_diff(b))
+            .sum::<u32>()
+            .to_string())
     }
 
     fn part2(&self, input: &str) -> Result<String, Error> {
@@ -34,6 +39,10 @@ impl Day for Day01 {
             let num2 = line_split.next().unwrap().parse::<u32>().unwrap();
             *map2.entry(num2).or_insert(0) += 1;
         });
-        Ok(list1.into_iter().map(|n| n * map2.get(&n).unwrap_or(&0)).sum::<u32>().to_string())
+        Ok(list1
+            .into_iter()
+            .map(|n| n * map2.get(&n).unwrap_or(&0))
+            .sum::<u32>()
+            .to_string())
     }
 }

@@ -87,17 +87,23 @@ impl Day for Day09 {
                     _ => panic!(),
                 }
                 for i in 1..10 {
-                    if ((knot_pos[i - 1][0] - knot_pos[i][0]).abs() > 1) || ((knot_pos[i - 1][1] - knot_pos[i][1]).abs() > 1) {
+                    if ((knot_pos[i - 1][0] - knot_pos[i][0]).abs() > 1)
+                        || ((knot_pos[i - 1][1] - knot_pos[i][1]).abs() > 1)
+                    {
                         let temp2_pos = knot_pos[i];
 
-                        if (((knot_pos[i - 1][0] - knot_pos[i][0]).abs() > 1) && ((temp_pos[0] - knot_pos[i][0]).abs() == 1) && ((temp_pos[1] - knot_pos[i][1]).abs() == 0))
+                        if (((knot_pos[i - 1][0] - knot_pos[i][0]).abs() > 1)
+                            && ((temp_pos[0] - knot_pos[i][0]).abs() == 1)
+                            && ((temp_pos[1] - knot_pos[i][1]).abs() == 0))
                             || (((knot_pos[i - 1][1] - knot_pos[i][1]).abs() > 1)
                                 && ((temp_pos[1] - knot_pos[i][1]).abs() == 1)
                                 && ((temp_pos[0] - knot_pos[i][0]).abs() == 0))
                         {
                             knot_pos[i][0] += knot_pos[i - 1][0] - temp_pos[0];
                             knot_pos[i][1] += knot_pos[i - 1][1] - temp_pos[1];
-                        } else if ((knot_pos[i][0] - knot_pos[i - 1][0]).abs() > 1) && ((knot_pos[i][1] - knot_pos[i - 1][1]).abs() > 1) {
+                        } else if ((knot_pos[i][0] - knot_pos[i - 1][0]).abs() > 1)
+                            && ((knot_pos[i][1] - knot_pos[i - 1][1]).abs() > 1)
+                        {
                             if knot_pos[i][0] - knot_pos[i - 1][0] > 0 {
                                 knot_pos[i][0] -= 1;
                             } else {

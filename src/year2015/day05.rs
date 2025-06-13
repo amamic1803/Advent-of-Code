@@ -37,7 +37,10 @@ impl Day for Day05 {
                 last_char = c;
             }
 
-            let disallowed_substrings = string.contains("ab") || string.contains("cd") || string.contains("pq") || string.contains("xy");
+            let disallowed_substrings = string.contains("ab")
+                || string.contains("cd")
+                || string.contains("pq")
+                || string.contains("xy");
 
             vowel_count >= 3 && double_letter && !disallowed_substrings
         })

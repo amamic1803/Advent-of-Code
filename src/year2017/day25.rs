@@ -15,7 +15,14 @@ impl Day for Day25 {
 
     fn part1(&self, input: &str) -> Result<String, Error> {
         let mut input = input.trim().lines();
-        let start_state = input.next().unwrap().trim_start_matches("Begin in state ").trim_end_matches('.').chars().next().unwrap();
+        let start_state = input
+            .next()
+            .unwrap()
+            .trim_start_matches("Begin in state ")
+            .trim_end_matches('.')
+            .chars()
+            .next()
+            .unwrap();
         let steps = input
             .next()
             .unwrap()
@@ -29,7 +36,10 @@ impl Day for Day25 {
 
         let mut storage = HashSet::new();
         let mut cursor = 0;
-        let mut state = states.iter().position(|state| state.name == start_state).unwrap();
+        let mut state = states
+            .iter()
+            .position(|state| state.name == start_state)
+            .unwrap();
 
         for _ in 0..steps {
             if storage.contains(&cursor) {
@@ -80,15 +90,31 @@ impl State {
         for line in input.trim().lines() {
             let line = line.trim();
             if line.starts_with("In state ") {
-                name = line.trim_start_matches("In state ").trim_end_matches(':').chars().next().unwrap();
+                name = line
+                    .trim_start_matches("In state ")
+                    .trim_end_matches(':')
+                    .chars()
+                    .next()
+                    .unwrap();
             } else if line.starts_with("If the current value is ") {
-                let value = line.trim_start_matches("If the current value is ").trim_end_matches(':').parse::<u8>().unwrap();
+                let value = line
+                    .trim_start_matches("If the current value is ")
+                    .trim_end_matches(':')
+                    .parse::<u8>()
+                    .unwrap();
                 variant = value;
             } else if line.starts_with("- Write the value ") {
-                let value = line.trim_start_matches("- Write the value ").trim_end_matches('.').parse::<u8>().unwrap();
+                let value = line
+                    .trim_start_matches("- Write the value ")
+                    .trim_end_matches('.')
+                    .parse::<u8>()
+                    .unwrap();
                 write[variant as usize] = value == 1;
             } else if line.starts_with("- Move one slot to the ") {
-                move_direction[variant as usize] = match line.trim_start_matches("- Move one slot to the ").trim_end_matches('.') {
+                move_direction[variant as usize] = match line
+                    .trim_start_matches("- Move one slot to the ")
+                    .trim_end_matches('.')
+                {
                     "right" => 1,
                     "left" => -1,
                     _ => {
@@ -96,7 +122,12 @@ impl State {
                     }
                 };
             } else if line.starts_with("- Continue with state ") {
-                next_state[variant as usize] = line.trim_start_matches("- Continue with state ").trim_end_matches('.').chars().next().unwrap();
+                next_state[variant as usize] = line
+                    .trim_start_matches("- Continue with state ")
+                    .trim_end_matches('.')
+                    .chars()
+                    .next()
+                    .unwrap();
             } else if line.is_empty() {
                 states.push(State {
                     name,
@@ -117,8 +148,14 @@ impl State {
         });
 
         for i in 0..states.len() {
-            states[i].next_state_index[0] = states.iter().position(|other| states[i].next_state[0] == other.name).unwrap();
-            states[i].next_state_index[1] = states.iter().position(|other| states[i].next_state[1] == other.name).unwrap();
+            states[i].next_state_index[0] = states
+                .iter()
+                .position(|other| states[i].next_state[0] == other.name)
+                .unwrap();
+            states[i].next_state_index[1] = states
+                .iter()
+                .position(|other| states[i].next_state[1] == other.name)
+                .unwrap();
         }
 
         states

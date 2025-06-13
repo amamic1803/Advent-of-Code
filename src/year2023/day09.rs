@@ -7,7 +7,11 @@ impl Day09 {
         input
             .trim()
             .lines()
-            .map(|line| line.split_whitespace().map(|num| num.parse::<i64>().unwrap()).collect::<Vec<_>>())
+            .map(|line| {
+                line.split_whitespace()
+                    .map(|num| num.parse::<i64>().unwrap())
+                    .collect::<Vec<_>>()
+            })
             .collect()
     }
 
@@ -43,7 +47,10 @@ impl Day09 {
         }
 
         let mut result = 0;
-        first_values.into_iter().rev().for_each(|val| result = val - result);
+        first_values
+            .into_iter()
+            .rev()
+            .for_each(|val| result = val - result);
         result
     }
 }
@@ -58,11 +65,19 @@ impl Day for Day09 {
 
     fn part1(&self, input: &str) -> Result<String, Error> {
         let data = Self::parse_input(input);
-        Ok(data.into_iter().map(|row| Self::predict_next(&row)).sum::<i64>().to_string())
+        Ok(data
+            .into_iter()
+            .map(|row| Self::predict_next(&row))
+            .sum::<i64>()
+            .to_string())
     }
 
     fn part2(&self, input: &str) -> Result<String, Error> {
         let data = Self::parse_input(input);
-        Ok(data.into_iter().map(|row| Self::predict_prev(&row)).sum::<i64>().to_string())
+        Ok(data
+            .into_iter()
+            .map(|row| Self::predict_prev(&row))
+            .sum::<i64>()
+            .to_string())
     }
 }

@@ -7,7 +7,11 @@ impl Day02 {
         input
             .trim()
             .lines()
-            .map(|line| line.split_whitespace().map(|num| num.parse::<u32>().unwrap()).collect::<Vec<u32>>())
+            .map(|line| {
+                line.split_whitespace()
+                    .map(|num| num.parse::<u32>().unwrap())
+                    .collect::<Vec<u32>>()
+            })
             .collect::<Vec<Vec<u32>>>()
     }
 }

@@ -6,7 +6,8 @@ day!(Day03, 3, "Mull It Over");
 
 impl Day03 {
     fn execute_muls(hay: &str) -> u32 {
-        static MUL_RE: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"mul\((?<n1>[0-9]{1,3}),(?<n2>[0-9]{1,3})\)").unwrap()); // mul(1,2)
+        static MUL_RE: LazyLock<Regex> =
+            LazyLock::new(|| Regex::new(r"mul\((?<n1>[0-9]{1,3}),(?<n2>[0-9]{1,3})\)").unwrap()); // mul(1,2)
 
         let results = MUL_RE.captures_iter(hay).map(|caps| {
             let n1 = caps.name("n1").unwrap().as_str().parse::<u32>().unwrap();

@@ -8,7 +8,11 @@ impl Day04 {
         let mut boards = Vec::new();
 
         let mut lines = input.trim().lines();
-        lines.next().unwrap().split(',').for_each(|n| draws.push(n.parse::<u64>().unwrap()));
+        lines
+            .next()
+            .unwrap()
+            .split(',')
+            .for_each(|n| draws.push(n.parse::<u64>().unwrap()));
         lines.next();
 
         let mut board = Board::new(Vec::new());

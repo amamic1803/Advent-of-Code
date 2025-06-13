@@ -4,7 +4,11 @@ use std::collections::HashMap;
 day!(Day21, 21, "Fractal Art");
 
 impl Day21 {
-    const INITIAL_GRID: [[bool; 3]; 3] = [[false, true, false], [false, false, true], [true, true, true]];
+    const INITIAL_GRID: [[bool; 3]; 3] = [
+        [false, true, false],
+        [false, false, true],
+        [true, true, true],
+    ];
 
     fn parse_rules(input: &str) -> (Rules2x2, Rules3x3) {
         let mut rules_2x2 = HashMap::with_capacity(2_usize.pow(4));
@@ -149,7 +153,10 @@ impl Day21 {
 
             for (i, x) in (0..grid.len()).step_by(2).enumerate() {
                 for (j, y) in (0..grid.len()).step_by(2).enumerate() {
-                    let key = [[grid[x][y], grid[x][y + 1]], [grid[x + 1][y], grid[x + 1][y + 1]]];
+                    let key = [
+                        [grid[x][y], grid[x][y + 1]],
+                        [grid[x + 1][y], grid[x + 1][y + 1]],
+                    ];
                     let value = *rules_2x2.get(&key).unwrap();
 
                     for k in 0..3 {
@@ -199,7 +206,10 @@ impl Day for Day21 {
 
     fn part1(&self, input: &str) -> Result<String, Error> {
         let (rules_2x2, rules_3x3) = Self::parse_rules(input);
-        let mut grid = Self::INITIAL_GRID.into_iter().map(|row| row.to_vec()).collect::<Vec<_>>();
+        let mut grid = Self::INITIAL_GRID
+            .into_iter()
+            .map(|row| row.to_vec())
+            .collect::<Vec<_>>();
 
         for _ in 0..5 {
             Self::enhance_image(&mut grid, &rules_2x2, &rules_3x3);
@@ -210,7 +220,10 @@ impl Day for Day21 {
 
     fn part2(&self, input: &str) -> Result<String, Error> {
         let (rules_2x2, rules_3x3) = Self::parse_rules(input);
-        let mut grid = Self::INITIAL_GRID.into_iter().map(|row| row.to_vec()).collect::<Vec<_>>();
+        let mut grid = Self::INITIAL_GRID
+            .into_iter()
+            .map(|row| row.to_vec())
+            .collect::<Vec<_>>();
 
         for _ in 0..18 {
             Self::enhance_image(&mut grid, &rules_2x2, &rules_3x3);

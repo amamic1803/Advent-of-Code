@@ -23,4 +23,6 @@ pub use day08::Day08;
 #[doc(inline)]
 pub use day12::Day12;
 
-year!(Year2018, 2018, Day01, Day02, Day03, Day05, Day06, Day08, Day12);
+year!(
+    Year2018, 2018, Day01, Day02, Day03, Day05, Day06, Day08, Day12
+);

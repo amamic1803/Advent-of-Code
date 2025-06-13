@@ -26,7 +26,10 @@ impl Day24 {
             grid.push(row);
         }
         numbers_with_loc.sort_by_key(|num_with_loc| num_with_loc.0);
-        let numbers_locs = numbers_with_loc.into_iter().map(|num_with_loc| num_with_loc.1).collect::<Vec<_>>();
+        let numbers_locs = numbers_with_loc
+            .into_iter()
+            .map(|num_with_loc| num_with_loc.1)
+            .collect::<Vec<_>>();
 
         let mut graph = Graph::with_capacity(numbers_locs.last().unwrap().0 + 1);
         for i in 0..numbers_locs.len() {
@@ -110,7 +113,11 @@ impl Day for Day24 {
 
         Ok((0..numbers_locs.len())
             .skip(1)
-            .map(|num| graph.hamiltonian_path_fixed_ends_min(Vertex::new(0), Vertex::new(num)).0)
+            .map(|num| {
+                graph
+                    .hamiltonian_path_fixed_ends_min(Vertex::new(0), Vertex::new(num))
+                    .0
+            })
             .min()
             .unwrap()
             .to_string())

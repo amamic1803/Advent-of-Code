@@ -66,13 +66,23 @@ impl Day for Day02 {
             let id = ids.pop().unwrap();
             for id2 in ids.iter() {
                 if different_chars(id, id2) == 1 {
-                    return Ok(id.chars().zip(id2.chars()).filter(|(char1, char2)| char1 == char2).map(|(char1, _)| char1).collect());
+                    return Ok(id
+                        .chars()
+                        .zip(id2.chars())
+                        .filter(|(char1, char2)| char1 == char2)
+                        .map(|(char1, _)| char1)
+                        .collect());
                 }
             }
         }
 
         if different_chars(ids[0], ids[1]) == 1 {
-            Ok(ids[0].chars().zip(ids[1].chars()).filter(|(char1, char2)| char1 == char2).map(|(char1, _)| char1).collect())
+            Ok(ids[0]
+                .chars()
+                .zip(ids[1].chars())
+                .filter(|(char1, char2)| char1 == char2)
+                .map(|(char1, _)| char1)
+                .collect())
         } else {
             Err(Error::NoSolutionFound)
         }

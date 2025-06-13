@@ -68,22 +68,34 @@ impl Day for Day04 {
                 }
 
                 // NE
-                if top_padding && right_padding && Self::check_xmas(|k| text[i - k][j + k] == xmas_word[k]) {
+                if top_padding
+                    && right_padding
+                    && Self::check_xmas(|k| text[i - k][j + k] == xmas_word[k])
+                {
                     xmas_count += 1;
                 }
 
                 // NW
-                if top_padding && left_padding && Self::check_xmas(|k| text[i - k][j - k] == xmas_word[k]) {
+                if top_padding
+                    && left_padding
+                    && Self::check_xmas(|k| text[i - k][j - k] == xmas_word[k])
+                {
                     xmas_count += 1;
                 }
 
                 // SE
-                if bottom_padding && right_padding && Self::check_xmas(|k| text[i + k][j + k] == xmas_word[k]) {
+                if bottom_padding
+                    && right_padding
+                    && Self::check_xmas(|k| text[i + k][j + k] == xmas_word[k])
+                {
                     xmas_count += 1;
                 }
 
                 // SW
-                if bottom_padding && left_padding && Self::check_xmas(|k| text[i + k][j - k] == xmas_word[k]) {
+                if bottom_padding
+                    && left_padding
+                    && Self::check_xmas(|k| text[i + k][j - k] == xmas_word[k])
+                {
                     xmas_count += 1;
                 }
             }
@@ -110,22 +122,34 @@ impl Day for Day04 {
                 let bottom_padding = i + 2 < text.len();
 
                 // SE
-                if bottom_padding && right_padding && Self::check_x_mas(|m, n| text[i + m][j + n] == mas_word[m][n]) {
+                if bottom_padding
+                    && right_padding
+                    && Self::check_x_mas(|m, n| text[i + m][j + n] == mas_word[m][n])
+                {
                     mas_count += 1;
                 }
 
                 // SW
-                if bottom_padding && left_padding && Self::check_x_mas(|m, n| text[i + n][j - m] == mas_word[m][n]) {
+                if bottom_padding
+                    && left_padding
+                    && Self::check_x_mas(|m, n| text[i + n][j - m] == mas_word[m][n])
+                {
                     mas_count += 1;
                 }
 
                 // NW
-                if top_padding && left_padding && Self::check_x_mas(|m, n| text[i - m][j - n] == mas_word[m][n]) {
+                if top_padding
+                    && left_padding
+                    && Self::check_x_mas(|m, n| text[i - m][j - n] == mas_word[m][n])
+                {
                     mas_count += 1;
                 }
 
                 // NE
-                if top_padding && right_padding && Self::check_x_mas(|m, n| text[i - n][j + m] == mas_word[m][n]) {
+                if top_padding
+                    && right_padding
+                    && Self::check_x_mas(|m, n| text[i - n][j + m] == mas_word[m][n])
+                {
                     mas_count += 1;
                 }
             }

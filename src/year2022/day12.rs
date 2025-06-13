@@ -48,17 +48,19 @@ impl Day12 {
 
                 next_location.retain(|x| {
                     let not_visited = !visit_map[x[0]][x[1]];
-                    let possible_height = if height_map[x[0]][x[1]] > height_map[curr_loc[0]][curr_loc[1]] {
-                        height_map[x[0]][x[1]] - height_map[curr_loc[0]][curr_loc[1]] <= 1
-                    } else {
-                        true
-                    };
+                    let possible_height =
+                        if height_map[x[0]][x[1]] > height_map[curr_loc[0]][curr_loc[1]] {
+                            height_map[x[0]][x[1]] - height_map[curr_loc[0]][curr_loc[1]] <= 1
+                        } else {
+                            true
+                        };
                     not_visited && possible_height
                 });
 
                 for next_loc in &next_location {
                     visit_map[next_loc[0]][next_loc[1]] = true;
-                    distance_map[next_loc[0]][next_loc[1]] = distance_map[curr_loc[0]][curr_loc[1]] + 1;
+                    distance_map[next_loc[0]][next_loc[1]] =
+                        distance_map[curr_loc[0]][curr_loc[1]] + 1;
                     queue.push_back(*next_loc);
                 }
             }
@@ -110,17 +112,19 @@ impl Day12 {
 
                 next_location.retain(|x| {
                     let not_visited = !visit_map[x[0]][x[1]];
-                    let possible_height = if height_map[x[0]][x[1]] < height_map[curr_loc[0]][curr_loc[1]] {
-                        height_map[curr_loc[0]][curr_loc[1]] - height_map[x[0]][x[1]] <= 1
-                    } else {
-                        true
-                    };
+                    let possible_height =
+                        if height_map[x[0]][x[1]] < height_map[curr_loc[0]][curr_loc[1]] {
+                            height_map[curr_loc[0]][curr_loc[1]] - height_map[x[0]][x[1]] <= 1
+                        } else {
+                            true
+                        };
                     not_visited && possible_height
                 });
 
                 for next_loc in &next_location {
                     visit_map[next_loc[0]][next_loc[1]] = true;
-                    distance_map[next_loc[0]][next_loc[1]] = distance_map[curr_loc[0]][curr_loc[1]] + 1;
+                    distance_map[next_loc[0]][next_loc[1]] =
+                        distance_map[curr_loc[0]][curr_loc[1]] + 1;
                     queue.push_back(*next_loc);
                 }
             }

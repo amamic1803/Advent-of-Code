@@ -11,8 +11,10 @@ impl Day05 {
 
             let limit = polymer.len() - 1;
             while i < limit {
-                if (polymer[i].is_ascii_lowercase() && polymer[i + 1] == polymer[i].to_ascii_uppercase())
-                    || (polymer[i].is_ascii_uppercase() && polymer[i + 1] == polymer[i].to_ascii_lowercase())
+                if (polymer[i].is_ascii_lowercase()
+                    && polymer[i + 1] == polymer[i].to_ascii_uppercase())
+                    || (polymer[i].is_ascii_uppercase()
+                        && polymer[i + 1] == polymer[i].to_ascii_lowercase())
                 {
                     i += 2;
                 } else {
