@@ -47,7 +47,7 @@ impl Day for Day05 {
         let input_len = input_str.len();
         let mut hasher = Md5::new();
 
-        while password.iter().any(|&c| c == '_') {
+        while password.contains(&'_') {
             loop {
                 input_str.truncate(input_len);
                 write!(&mut input_str, "{}", i).unwrap();
