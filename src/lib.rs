@@ -88,7 +88,7 @@ use year2023::Year2023;
 use year2024::Year2024;
 
 /// An enum representing the errors that can occur when using these structures.
-#[derive(Clone, Debug, Eq, PartialEq, Hash)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)]
 pub enum Error {
     /// The requested year is unavailable.
     UnavailableYear,
